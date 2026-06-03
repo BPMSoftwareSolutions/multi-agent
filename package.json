@@ -5,6 +5,7 @@
   "bin": {
     "studio": "bin/studio.js",
     "worker-bee": "bin/worker-bee.js",
+    "taxonomy-scan": "bin/taxonomy-scan.js",
     "taxonomy-report": "bin/taxonomy-report.js"
   },
   "engines": {

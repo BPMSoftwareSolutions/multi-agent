@@ -181,15 +181,15 @@ function insertAnchor(absPath, anchorBlock) {
 
 // --- Anchor quality validation + replacement -------------------------------
 
+// Note: "none"/"n/a" are NOT placeholders — "None" is a legitimate value for an
+// input/output contract (a no-arg method). Treating it as a placeholder caused
+// non-convergence (the bee would rewrite a valid anchor forever).
 const PLACEHOLDER_TOKENS = new Set([
   "",
   "auto",
   "unknown",
   "tbd",
   "todo",
-  "n/a",
-  "na",
-  "none",
   "placeholder",
   "xxx",
 ]);
@@ -373,6 +373,29 @@ function analyzeFile(absPath, repoRoot, { layer = "both", mode = "all" } = {}) {
   };
 }
 
+// Trim work items to a JSON-serializable shape the bee can be driven from. The
+// scanner writes this; the bee consumes it without re-scanning.
+function serializeWork(work) {
+  return work.map((w) => ({
+    absPath: w.absPath,
+    path: w.path,
+    deterministic: w.deterministic,
+    doFile: w.doFile,
+    doMethods: w.doMethods,
+    fileExisting: w.fileExisting,
+    fileIssues: w.fileIssues,
+    methodsNeeding: w.methodsNeeding.map((d) => ({
+      id: d.id,
+      name: d.name,
+      indent: d.indent,
+      lineIdx: d.lineIdx,
+      existing: d.existing,
+      reason: d.reason,
+      issues: d.issues,
+    })),
+  }));
+}
+
 // Unified work finder. layer: "file" | "method" | "both". mode: "missing" |
 // "revalidate" | "all". Returns files needing any work for the requested layers.
 function findWork(root, repoRoot, { mode = "all", layer = "file", limit } = {}) {
@@ -407,6 +430,7 @@ module.exports = {
   isGenericResponsibility,
   findMissing,
   findWork,
+  serializeWork,
   analyzeFile,
   parseFileAnchor,
   assessAnchor,

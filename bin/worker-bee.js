@@ -43,6 +43,7 @@ function parseArgs(argv) {
       case "--json": rt.json = true; break;
       case "--status": rt.statusOnly = true; break;
       case "--packet": rt.packetFile = next(); break;
+      case "--from": rt.fromFile = next(); break;
       // packet overrides
       case "--layer": ov.layer = next(); break;
       case "--mode": ov.mode = next(); break;
@@ -71,6 +72,7 @@ Location / runtime:
   --repo-root <path>        Repo root for expected_location (default: ${DEFAULT_REPO_ROOT})
   --target <path>           Subtree to scan (default: same as repo-root)
   --limit <n>               Cap files this run (pilot mode)
+  --from <tracking.json>    Drive the bee from a taxonomy-scan file (no re-scan)
   --packet <file.json>      Load a packet that determines the bee workload
   --dry-run                 Classify and show anchors, write nothing
   --json                    Machine-readable output
@@ -141,7 +143,9 @@ async function main() {
     return 1;
   }
 
-  const maxPasses = rt.dryRun ? 1 : Math.max(1, packet.swarm.max_passes);
+  // When driven by a scan file, the bee does one pass over exactly what the scan
+  // marked untouched — it does not re-scan or re-derive work.
+  const maxPasses = rt.dryRun || rt.fromFile ? 1 : Math.max(1, packet.swarm.max_passes);
   const grand = { anchored: 0, updated: 0, methods_only: 0, planned: 0, error: 0, methods: 0 };
   let lastWorkCount = Infinity;
   let totalPython = 0;
@@ -158,11 +162,21 @@ async function main() {
   const relTarget = path.relative(repoRoot, target).split(path.sep).join("/") || ".";
 
   for (let pass = 1; pass <= maxPasses; pass += 1) {
-    const scan = findWork(target, repoRoot, {
-      mode: packet.mode,
-      layer: packet.layer,
-      limit: rt.limit > 0 ? rt.limit : undefined,
-    });
+    let scan;
+    if (rt.fromFile) {
+      const tracking = JSON.parse(fs.readFileSync(path.resolve(rt.fromFile), "utf8"));
+      scan = {
+        totalPython: tracking.summary ? tracking.summary.total_python : (tracking.work || []).length,
+        trustworthy: tracking.summary ? tracking.summary.touched_files : 0,
+        work: tracking.work || [],
+      };
+    } else {
+      scan = findWork(target, repoRoot, {
+        mode: packet.mode,
+        layer: packet.layer,
+        limit: rt.limit > 0 ? rt.limit : undefined,
+      });
+    }
     totalPython = scan.totalPython;
     trustworthy = scan.trustworthy;
     const work = scan.work;
