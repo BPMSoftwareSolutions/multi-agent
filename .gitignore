@@ -5,3 +5,4 @@ bin/.env.local
 npm-debug.log*
 .studio/
 test-results/
+reports/

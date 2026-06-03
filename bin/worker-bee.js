@@ -208,6 +208,30 @@ async function main() {
     console.log(`  python packages/warehouse-intelligence-scripts-executor/scripts/taxonomy_comment_scanner.py --packet ${tax}`);
   }
 
+  // Append a run record (audit trail of bee runs) unless this was a dry run.
+  if (!rt.dryRun) {
+    try {
+      const runsPath = path.join(root, "reports", "runs.jsonl");
+      fs.mkdirSync(path.dirname(runsPath), { recursive: true });
+      const record = {
+        ts: new Date().toISOString(),
+        target: path.relative(repoRoot, target).split(path.sep).join("/") || ".",
+        layer: packet.layer,
+        mode: packet.mode,
+        agents: packet.swarm.agents,
+        files_per_packet: packet.workload.max_files_per_packet,
+        anchor_budget: packet.workload.anchor_budget,
+        totalPython,
+        tally: grand,
+        outstanding_errors: finalErrors.length,
+        elapsed_seconds: Number(elapsed),
+      };
+      fs.appendFileSync(runsPath, JSON.stringify(record) + "\n", "utf8");
+    } catch (_e) {
+      /* run logging is best-effort */
+    }
+  }
+
   return grand.error > 0 ? 2 : 0;
 }
 

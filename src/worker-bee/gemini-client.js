@@ -88,7 +88,7 @@ function postJson(url, payload) {
 }
 
 // Call Gemini with a system instruction + user prompt, requesting JSON output.
-async function callGemini({ system, user, apiKey, model, maxTokens }) {
+async function callGemini({ system, user, apiKey, model, maxTokens, temperature = 0 }) {
   const key = getApiKey(apiKey);
   const useModel = model || DEFAULT_MODEL;
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${useModel}:generateContent?key=${key}`;
@@ -97,7 +97,7 @@ async function callGemini({ system, user, apiKey, model, maxTokens }) {
     systemInstruction: { parts: [{ text: system }] },
     contents: [{ role: "user", parts: [{ text: user }] }],
     generationConfig: {
-      temperature: 0,
+      temperature,
       responseMimeType: "application/json",
       maxOutputTokens: maxTokens || 4096,
     },
@@ -130,6 +130,11 @@ function isRetryable(error) {
     msg.includes("rate") ||
     msg.includes("could not extract json") ||
     msg.includes("unexpected token") ||
+    msg.includes("json at position") || // malformed JSON array/object
+    msg.includes("expected ','") ||
+    msg.includes("expected '") ||
+    msg.includes("in json") ||
+    msg.includes("no text") || // empty candidate / MAX_TOKENS finish
     msg.includes("timed out") ||
     error.code === "ECONNRESET" ||
     error.code === "ETIMEDOUT"
@@ -140,7 +145,10 @@ async function callGeminiJSON(params, maxAttempts = 5) {
   let lastError;
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     try {
-      const text = await callGemini(params);
+      // Retry at a rising temperature: at temp 0 a malformed-JSON generation is
+      // deterministic and would just repeat, so retries must vary the sampling.
+      const temperature = attempt === 1 ? 0 : Math.min(0.2 + 0.2 * attempt, 0.8);
+      const text = await callGemini({ ...params, temperature });
       return extractJSON(text);
     } catch (error) {
       lastError = error;

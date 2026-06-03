@@ -4,7 +4,8 @@
   "private": true,
   "bin": {
     "studio": "bin/studio.js",
-    "worker-bee": "bin/worker-bee.js"
+    "worker-bee": "bin/worker-bee.js",
+    "taxonomy-report": "bin/taxonomy-report.js"
   },
   "engines": {
     "node": ">=18.0.0"
