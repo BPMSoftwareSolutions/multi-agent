@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stage-Based Multi-Agent Studio</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <h1>Stage-Based Multi-Agent Studio</h1>
+        <p id="stage-status">Start a workshop session to begin.</p>
+        <div class="header-actions">
+          <span id="api-key-status">API key: not set</span>
+          <button id="set-api-key-btn" type="button">Set API Key</button>
+        </div>
+      </header>
+
+      <section id="error-banner" class="error-banner hidden"></section>
+
+      <section id="start-view" class="start-view">
+        <label for="brief-input">Brief</label>
+        <textarea id="brief-input" rows="5" placeholder="Describe what you want to build..."></textarea>
+        <button id="start-session-btn">Start Session</button>
+        <article class="start-inspector">
+          <div class="inspection-header">
+            <h2>Saved Sessions</h2>
+            <button id="refresh-start-sessions-btn" type="button">Refresh</button>
+          </div>
+          <p id="start-current-session-label">Current session: none</p>
+          <label for="start-session-select">Saved Sessions</label>
+          <select id="start-session-select"></select>
+          <div class="start-session-actions">
+            <button id="load-start-session-btn" type="button">Load Selected Session</button>
+            <button id="load-current-session-btn" type="button">Load Current Session</button>
+          </div>
+          <div id="start-session-inspection-content"></div>
+        </article>
+      </section>
+
+      <section id="working-view" class="hidden">
+        <article class="panel inspection-panel">
+          <div class="inspection-header">
+            <h2>Inspector</h2>
+            <button id="refresh-sessions-btn" type="button">Refresh Sessions</button>
+          </div>
+          <p id="current-session-label">Current session: none</p>
+          <label for="session-select">Saved Sessions</label>
+          <select id="session-select"></select>
+          <button id="load-session-btn" type="button">Load Selected Session</button>
+          <div id="session-inspection-content"></div>
+        </article>
+
+        <article class="panel drive-panel">
+          <h2>Google Drive</h2>
+          <p id="drive-auth-status">Drive: unknown</p>
+          <label for="drive-path-input">Drive Path</label>
+          <textarea id="drive-path-input" rows="2" placeholder="G:\My Drive\BPM Software Solutions"></textarea>
+          <div>
+            <button id="connect-drive-btn" type="button">Connect Drive</button>
+            <button id="resolve-drive-path-btn" type="button">Resolve Path</button>
+            <button id="import-drive-folder-btn" type="button">Import Folder</button>
+          </div>
+          <div id="drive-status-content"></div>
+        </article>
+
+        <div class="columns">
+          <article class="panel" id="builder-panel">
+            <h2>Planner</h2>
+            <div id="builder-content"></div>
+          </article>
+          <article class="panel" id="reviewer-panel">
+            <h2>Reviewer</h2>
+            <div id="reviewer-content"></div>
+          </article>
+          <article class="panel" id="human-panel">
+            <h2>Human</h2>
+            <label for="human-input">Interjection</label>
+            <textarea id="human-input" rows="8" placeholder="Optional instruction for this round..."></textarea>
+          </article>
+        </div>
+
+        <article class="panel artifact-panel">
+          <h2>Shared Artifact</h2>
+          <div id="artifact-content"></div>
+        </article>
+
+        <section class="actions">
+          <button id="run-round-btn">Run Round</button>
+          <button id="accept-artifact-btn">Accept Proposed Artifact</button>
+          <button id="approve-manual-action-btn">Approve Manual Action</button>
+          <button id="run-worker-btn">Run Worker</button>
+          <button id="advance-stage-btn">Advance Stage</button>
+          <button id="copy-json-btn">Copy JSON</button>
+          <button id="copy-markdown-btn">Copy Markdown</button>
+        </section>
+
+        <article class="panel observability-panel">
+          <div class="observability-header">
+            <h2>Observability</h2>
+            <button id="clear-log-btn" type="button">Clear Log</button>
+          </div>
+          <div id="observability-log" class="observability-log"></div>
+        </article>
+      </section>
+    </div>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

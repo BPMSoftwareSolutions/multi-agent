@@ -1,0 +1,25 @@
+{
+  "name": "multi-agent-studio",
+  "version": "1.0.0",
+  "private": true,
+  "bin": {
+    "studio": "bin/studio.js",
+    "worker-bee": "bin/worker-bee.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "cli": "node bin/studio.js",
+    "worker-bee": "node bin/worker-bee.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.0",
+    "googleapis": "^171.4.0",
+    "uuid": "^9.0.0"
+  }
+}

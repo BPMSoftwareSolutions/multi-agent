@@ -1,0 +1,19 @@
+{
+  "schema": "worker-bee-packet.v1",
+  "_comment": "Instruction that determines a bee's workload. The bee carries exactly what this packet says. Load with: node bin/worker-bee.js --target <pkg> --packet packets/taxonomy-both.packet.json",
+  "layer": "both",
+  "mode": "all",
+  "model": "gemini-2.5-flash",
+  "swarm": {
+    "agents": 5,
+    "max_passes": 3
+  },
+  "workload": {
+    "anchor_budget": 150,
+    "max_files_per_packet": 40,
+    "input_char_budget": 600000,
+    "file_char_budget": 400000,
+    "method_batch": 25,
+    "max_output_tokens": 16384
+  }
+}
