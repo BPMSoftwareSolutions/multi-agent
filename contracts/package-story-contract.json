@@ -1,0 +1,146 @@
+{
+  "schema": "package-story-contract.v1",
+  "description": "Contract that defines what constitutes a valid, coherent package story",
+  "purpose": "Use package story validation to identify false narratives, then fix them to enable accurate SDK grouping",
+
+  "package_story_rules": {
+    "responsibility_quality": {
+      "description": "Each file responsibility must be a real, human-readable description of purpose",
+      "rules": [
+        {
+          "name": "no_placeholders",
+          "description": "Reject placeholder responsibility tokens",
+          "invalid_patterns": [
+            "__init__ module",
+            "noqa:",
+            "^test_",
+            "^src/",
+            "\\.py$",
+            "^source_module$",
+            "^F[0-9]{3}$"
+          ]
+        },
+        {
+          "name": "no_linting_noise",
+          "description": "Responsibilities must not be linting directives",
+          "invalid": ["F401", "F403", "flake8", "noqa"]
+        },
+        {
+          "name": "prose_required",
+          "description": "Responsibility must contain a verb and explain WHAT the file does",
+          "requires": {
+            "min_length": 12,
+            "contains_verb": true,
+            "not_just_identifier": true
+          }
+        }
+      ]
+    },
+
+    "semantic_cohesion": {
+      "description": "A package should have consistent role, domain, and purpose across its files",
+      "rules": [
+        {
+          "name": "dominant_role",
+          "description": "One role should account for >70% of files",
+          "threshold": 0.7
+        },
+        {
+          "name": "single_domain",
+          "description": "Package should represent a single business/technical domain",
+          "constraint": "max 1-2 distinct responsibility domains"
+        },
+        {
+          "name": "consistent_actor",
+          "description": "Files should have same owning actor/team",
+          "threshold": 0.9
+        }
+      ]
+    },
+
+    "story_validity": {
+      "description": "A package story must be clear and internally consistent",
+      "rules": [
+        {
+          "name": "name_story_alignment",
+          "description": "Package name must align with story",
+          "examples": [
+            "✓ alignment-persistence-stores → 'Stores for alignment domain'",
+            "✓ charter-project-management → 'export/validate/manage charter project'",
+            "✗ code-intelligence-persistence-stores → 'projection compiler for code analysis' (name says stores, story says compiler)"
+          ]
+        },
+        {
+          "name": "non_contradictory_roles",
+          "description": "Dominant role must match package purpose",
+          "examples": [
+            "✓ *-persistence-stores → role: data_access (70%+)",
+            "✓ *-orchestration-* → role: orchestration (70%+)",
+            "✗ *-persistence-stores → role: projection_compiler (50%)"
+          ]
+        }
+      ]
+    }
+  },
+
+  "validation_process": {
+    "step_1_identify_false_narratives": {
+      "description": "Flag files/packages with unclear or contradictory responsibilities",
+      "output": "Contradiction report (package-contradiction-detector.js)"
+    },
+    "step_2_fix_responsibilities": {
+      "description": "Run worker-bee file-layer revalidate pass to improve unclear responsibilities",
+      "command": "node bin/worker-bee.js --layer file --mode revalidate --agents 5",
+      "target_outcome": "Responsibilities become clear, human-readable prose"
+    },
+    "step_3_revalidate_stories": {
+      "description": "Re-run package story analyzer to extract true narratives",
+      "output": "Updated package-story-analyzer.js output"
+    },
+    "step_4_verify_contract_compliance": {
+      "description": "Check updated stories against this contract",
+      "output": "Contract validation report"
+    },
+    "step_5_group_into_sdks": {
+      "description": "Once stories are validated, group packages by semantic cohesion",
+      "output": "SDK definitions (SDK catalog)"
+    }
+  },
+
+  "sdk_grouping_strategy": {
+    "description": "After validation, group packages into SDKs based on validated stories",
+    "criteria": [
+      "Shared business domain (e.g., all governance-related packages)",
+      "Shared technical layer (e.g., all persistence-stores packages)",
+      "Shared role (e.g., all orchestration packages)",
+      "Dependency relationships (packages that import each other)"
+    ],
+    "example_sdks": [
+      {
+        "name": "Persistence SDK",
+        "packages": ["*-persistence-stores", "persistence-stores-registry"],
+        "purpose": "Data access and storage layer"
+      },
+      {
+        "name": "Orchestration SDK",
+        "packages": ["*-orchestration-*", "workflow-execution"],
+        "purpose": "Workflow and execution coordination"
+      },
+      {
+        "name": "Governance SDK",
+        "packages": ["*-governance-*", "governance-authority", "compliance-*"],
+        "purpose": "Governance, compliance, and authority gates"
+      }
+    ]
+  },
+
+  "discovery_value": {
+    "description": "This contract enables cascading discoveries",
+    "value_chain": [
+      "Clear package stories → understand what system does",
+      "SDK boundaries → understand modular architecture",
+      "SDK dependencies → understand system design",
+      "Gap analysis → understand what's missing or needs refactoring"
+    ]
+  }
+}

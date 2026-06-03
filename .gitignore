@@ -6,3 +6,17 @@ npm-debug.log*
 .studio/
 test-results/
 reports/
+
+# Worker-bee operational files (transient, regenerated on each run)
+.worker-bee.log
+.worker-bee.err
+.worker-bee.*.log
+.monitor.log
+.monitor.err
+.snapshot-monitor.log
+.continuous-snapshot.log
+
+# Transient process output
+*.output
+.tmp/
+.cache/

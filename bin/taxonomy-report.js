@@ -12,11 +12,21 @@ const fs = require("fs");
 
 const { buildReport } = require("../src/worker-bee/report");
 
+// Load config from .worker-bee.json
+let config = {};
+const root = path.resolve(__dirname, "..");
+const configPath = path.join(root, ".worker-bee.json");
+if (fs.existsSync(configPath)) {
+  config = JSON.parse(fs.readFileSync(configPath, "utf8"));
+}
+
 const DEFAULT_REPO_ROOT =
-  process.env.WORKER_BEE_REPO_ROOT || "C:/source/repos/bpm/internal/ai-engine";
+  process.env.WORKER_BEE_REPO_ROOT || config.repoRoot || "C:/source/repos/bpm/internal/ai-engine";
+const DEFAULT_TARGET =
+  config.defaultTarget ? path.resolve(DEFAULT_REPO_ROOT, config.defaultTarget) : DEFAULT_REPO_ROOT;
 
 function parseArgs(argv) {
-  const args = { repoRoot: DEFAULT_REPO_ROOT, target: null, output: null, json: false };
+  const args = { repoRoot: DEFAULT_REPO_ROOT, target: DEFAULT_TARGET, output: null, json: false };
   for (let i = 0; i < argv.length; i += 1) {
     const next = () => argv[++i];
     switch (argv[i]) {

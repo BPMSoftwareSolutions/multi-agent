@@ -1,0 +1,11 @@
+{
+  "repoRoot": "C:/source/repos/bpm/internal/ai-engine",
+  "defaultTarget": "packages",
+  "defaultLayer": "file",
+  "defaultMode": "all",
+  "swarm": {
+    "agents": 5,
+    "files_per_packet": 50,
+    "anchor_budget": 150
+  }
+}

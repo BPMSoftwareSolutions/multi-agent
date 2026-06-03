@@ -18,18 +18,26 @@ for (const name of [".env.local", ".env"]) {
   if (fs.existsSync(p)) require("dotenv").config({ path: p });
 }
 
+// Load config from .worker-bee.json
+let config = {};
+const configPath = path.join(root, ".worker-bee.json");
+if (fs.existsSync(configPath)) {
+  config = JSON.parse(fs.readFileSync(configPath, "utf8"));
+}
+
 const { findWork } = require("../src/worker-bee/scan");
 const { runFileSwarm } = require("../src/worker-bee/run-file-swarm");
 const { buildPacket, describePacket } = require("../src/worker-bee/packet");
 const { newRunId, initRun, writePart, finalizeRun, readLatestStatus } = require("../src/worker-bee/ledger");
 
 const DEFAULT_REPO_ROOT =
-  process.env.WORKER_BEE_REPO_ROOT || "C:/source/repos/bpm/internal/ai-engine";
+  process.env.WORKER_BEE_REPO_ROOT || config.repoRoot || "C:/source/repos/bpm/internal/ai-engine";
 
 // Parse argv into runtime settings + a sparse packet-override object. Only flags
 // the user actually passes become overrides; everything else stays at packet/default.
 function parseArgs(argv) {
-  const rt = { repoRoot: DEFAULT_REPO_ROOT, target: null, limit: 0, dryRun: false, json: false, packetFile: null, help: false };
+  const defaultTarget = config.defaultTarget ? path.resolve(DEFAULT_REPO_ROOT, config.defaultTarget) : null;
+  const rt = { repoRoot: DEFAULT_REPO_ROOT, target: defaultTarget, limit: 0, dryRun: false, json: false, packetFile: null, help: false };
   const ov = { swarm: {}, workload: {} };
   for (let i = 0; i < argv.length; i += 1) {
     const a = argv[i];

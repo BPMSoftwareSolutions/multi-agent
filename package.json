@@ -6,7 +6,8 @@
     "studio": "bin/studio.js",
     "worker-bee": "bin/worker-bee.js",
     "taxonomy-scan": "bin/taxonomy-scan.js",
-    "taxonomy-report": "bin/taxonomy-report.js"
+    "taxonomy-report": "bin/taxonomy-report.js",
+    "runs-report": "bin/runs-report.js"
   },
   "engines": {
     "node": ">=18.0.0"
