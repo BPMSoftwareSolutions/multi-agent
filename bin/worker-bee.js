@@ -21,6 +21,7 @@ for (const name of [".env.local", ".env"]) {
 const { findWork } = require("../src/worker-bee/scan");
 const { runFileSwarm } = require("../src/worker-bee/run-file-swarm");
 const { buildPacket, describePacket } = require("../src/worker-bee/packet");
+const { newRunId, initRun, writePart, finalizeRun, readLatestStatus } = require("../src/worker-bee/ledger");
 
 const DEFAULT_REPO_ROOT =
   process.env.WORKER_BEE_REPO_ROOT || "C:/source/repos/bpm/internal/ai-engine";
@@ -40,6 +41,7 @@ function parseArgs(argv) {
       case "--limit": rt.limit = parseInt(next(), 10); break;
       case "--dry-run": rt.dryRun = true; break;
       case "--json": rt.json = true; break;
+      case "--status": rt.statusOnly = true; break;
       case "--packet": rt.packetFile = next(); break;
       // packet overrides
       case "--layer": ov.layer = next(); break;
@@ -72,6 +74,7 @@ Location / runtime:
   --packet <file.json>      Load a packet that determines the bee workload
   --dry-run                 Classify and show anchors, write nothing
   --json                    Machine-readable output
+  --status                  Print the live status ledger (reports/status-latest.json) and exit
 
 Packet overrides:
   --layer <file|method|both>        Which anchor layer(s)
@@ -85,10 +88,36 @@ Packet overrides:
   --max-output-tokens <n>           Model output cap per request
 `;
 
+function renderStatus(status, json) {
+  if (!status) {
+    console.log("No status ledger yet (reports/status-latest.json not found). Start a run first.");
+    return;
+  }
+  if (json) {
+    console.log(JSON.stringify(status, null, 2));
+    return;
+  }
+  const t = status.totals;
+  const pct = t.needs_work ? Math.round((t.done / t.needs_work) * 100) : 100;
+  console.log(`Worker-bee status [${status.state}]  run ${status.run_id}`);
+  console.log(`  target: ${status.target}   layer: ${status.layer}   ${status.packet.agents} bees x ${status.packet.files_per_packet}/packet`);
+  console.log(`  started: ${status.started_at}   updated: ${status.updated_at}`);
+  console.log(`  progress: ${t.done}/${t.needs_work} done (${pct}%)  remaining: ${t.remaining}  errors: ${t.outstanding_errors}  methods: ${t.methods_written}`);
+  console.log(`  packets completed: ${status.packets.completed}   pass: ${status.pass}`);
+  if (status.errors && status.errors.length) {
+    console.log("  outstanding errors:");
+    for (const e of status.errors.slice(0, 8)) console.log(`    - ${e.path}: ${e.reason}`);
+  }
+}
+
 async function main() {
   const { rt, ov } = parseArgs(process.argv.slice(2));
   if (rt.help) {
     process.stdout.write(HELP);
+    return 0;
+  }
+  if (rt.statusOnly) {
+    renderStatus(readLatestStatus(path.join(root, "reports")), rt.json);
     return 0;
   }
 
@@ -120,6 +149,14 @@ async function main() {
   let finalErrors = [];
   const started = Date.now();
 
+  // Live status ledger: written after every packet so a background run is
+  // observable while in flight. Read it with: node bin/worker-bee.js --status
+  const reportsDir = path.join(root, "reports");
+  const runId = newRunId();
+  const trackable = !rt.dryRun;
+  let runDir = null;
+  const relTarget = path.relative(repoRoot, target).split(path.sep).join("/") || ".";
+
   for (let pass = 1; pass <= maxPasses; pass += 1) {
     const scan = findWork(target, repoRoot, {
       mode: packet.mode,
@@ -148,6 +185,10 @@ async function main() {
       console.log("");
     }
 
+    if (pass === 1 && trackable) {
+      runDir = initRun(reportsDir, { runId, target: relTarget, layer: packet.layer, mode: packet.mode, packet, totalPython, needsWork: work.length });
+    }
+
     if (work.length === 0) {
       if (pass === 1 && !rt.json) console.log("Nothing to do — every Python file in target is trustworthy for this layer.");
       break;
@@ -167,15 +208,19 @@ async function main() {
       packet,
       apiKey: process.env.GEMINI_API_KEY,
       dryRun: rt.dryRun,
-      onProgress: rt.json
-        ? null
-        : ({ beeId, index, totalPackets, packetFiles, oversize, results }) => {
-            const ok = results.filter((r) => r.status !== "error").length;
-            const bad = results.filter((r) => r.status === "error").length;
-            const meth = results.reduce((n, r) => n + (r.methodsWritten || r.methodPlanned || 0), 0);
-            const tag = oversize ? "oversize" : `${packetFiles} files`;
-            console.log(`  [bee ${beeId}] packet ${index + 1}/${totalPackets} (${tag}): ${ok} ok, ${bad} error` + (meth ? `, +${meth} methods` : ""));
-          },
+      onProgress: ({ beeId, index, totalPackets, packetFiles, oversize, results }) => {
+        // Each bee writes its OWN packet file — no shared-file write contention.
+        if (trackable && runDir) {
+          writePart(runDir, { pass, packetIndex: index, oversize, results });
+        }
+        if (!rt.json) {
+          const ok = results.filter((r) => r.status !== "error").length;
+          const bad = results.filter((r) => r.status === "error").length;
+          const meth = results.reduce((n, r) => n + (r.methodsWritten || r.methodPlanned || 0), 0);
+          const tag = oversize ? "oversize" : `${packetFiles} files`;
+          console.log(`  [bee ${beeId}] packet ${index + 1}/${totalPackets} (${tag}): ${ok} ok, ${bad} error` + (meth ? `, +${meth} methods` : ""));
+        }
+      },
     });
 
     grand.anchored += tally.anchored;
@@ -190,6 +235,10 @@ async function main() {
   }
 
   const elapsed = ((Date.now() - started) / 1000).toFixed(1);
+
+  if (trackable && runDir) {
+    finalizeRun(reportsDir, runDir);
+  }
 
   if (rt.json) {
     console.log(JSON.stringify({ totalPython, trustworthy, packet, tally: grand, errors: finalErrors.map((e) => ({ path: e.path, reason: e.reason })), elapsedSeconds: Number(elapsed) }, null, 2));

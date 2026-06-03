@@ -202,14 +202,22 @@ function isPlaceholder(value) {
   return false;
 }
 
-// A responsibility should be specific. Reject placeholders and lazy phrasings
-// like "client module" / "x file" / single-word stubs.
+// A responsibility should be a human-readable description, not a placeholder and
+// not just the symbol/file name restated. Rejects:
+//  - placeholders ([auto], tbd, ...)
+//  - identifier-style tokens with no spaces (e.g. load_anchor_contract_from_disk)
+//    which is how the prior substrate run "filled" anchors — a name, not prose
+//  - lazy two-word stubs ("client module", "x file")
 function isGenericResponsibility(value) {
   if (isPlaceholder(value)) return true;
-  const v = String(value).trim().toLowerCase();
+  const v = String(value).trim();
   if (v.length < 8) return true;
-  const words = v.split(/\s+/);
-  if (words.length <= 2 && /(module|file|script|client|handler|util|utils|helper)$/.test(v)) {
+  // No whitespace at all => it's an identifier/name, not a description.
+  if (!/\s/.test(v)) return true;
+  // Mostly underscores with little prose (e.g. "do_thing here") also reads as a name.
+  const lower = v.toLowerCase();
+  const words = lower.split(/\s+/);
+  if (words.length <= 2 && /(module|file|script|client|handler|util|utils|helper)$/.test(lower)) {
     return true;
   }
   return false;

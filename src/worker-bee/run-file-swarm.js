@@ -143,7 +143,10 @@ async function processOversizeFile(item, { apiKey, model, dryRun, workload }) {
   return [applyToItem(item, fileFields, byId, dryRun)];
 }
 
-// Process one packet (one bee request, unless oversize).
+// Process one packet (one bee request, unless oversize). If a multi-file request
+// fails (e.g. the JSON output was too large and truncated), the packet splits in
+// half and each half is retried — so an over-heavy packet subdivides itself down
+// to a size the model can answer, instead of failing wholesale.
 async function processPacket(packet, opts) {
   if (packet.oversize) return processOversizeFile(packet.items[0], opts);
 
@@ -157,19 +160,44 @@ async function processPacket(packet, opts) {
       maxTokens: opts.workload.max_output_tokens,
     });
   } catch (error) {
+    if (packet.items.length > 1) {
+      const mid = Math.ceil(packet.items.length / 2);
+      const left = await processPacket({ items: packet.items.slice(0, mid) }, opts);
+      const right = await processPacket({ items: packet.items.slice(mid) }, opts);
+      return [...left, ...right];
+    }
     return packet.items.map((it) => ({ path: it.path, status: "error", reason: error.message }));
   }
 
   const byPath = new Map((Array.isArray(parsed.files) ? parsed.files : []).map((f) => [f.path, f]));
   const results = [];
+  const missing = [];
   for (const item of packet.items) {
     const entry = byPath.get(item.path);
     if (!entry) {
-      results.push({ path: item.path, status: "error", reason: "missing from packet response" });
+      missing.push(item);
       continue;
     }
     const methodsById = new Map((Array.isArray(entry.methods) ? entry.methods : []).map((m) => [Number(m.id), m]));
     results.push(applyToItem(item, entry.file || {}, methodsById, opts.dryRun));
+  }
+
+  // The model under-delivered (valid JSON, but omitted files — usually truncation).
+  if (missing.length) {
+    if (missing.length === packet.items.length) {
+      // Returned none usable: split to shrink the request, or error a lone file.
+      if (packet.items.length > 1) {
+        const mid = Math.ceil(packet.items.length / 2);
+        const left = await processPacket({ items: packet.items.slice(0, mid) }, opts);
+        const right = await processPacket({ items: packet.items.slice(mid) }, opts);
+        return [...left, ...right];
+      }
+      results.push({ path: missing[0].path, status: "error", reason: "missing from packet response" });
+    } else {
+      // Partial: re-request just the missing files (a smaller, easier request).
+      const retried = await processPacket({ items: missing }, opts);
+      results.push(...retried);
+    }
   }
   return results;
 }

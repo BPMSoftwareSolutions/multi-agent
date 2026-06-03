@@ -26,7 +26,7 @@ const DEFAULT_PACKET = {
     input_char_budget: 600000, // cap on input chars packed into one request
     file_char_budget: 400000, // per-file content cap when building a prompt
     method_batch: 25, // methods per call when a single file is oversize
-    max_output_tokens: 16384, // model output cap per request
+    max_output_tokens: 32768, // model output cap per request (gemini-2.5-flash allows up to 65536)
   },
 };
 

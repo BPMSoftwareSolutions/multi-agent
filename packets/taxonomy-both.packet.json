@@ -14,6 +14,6 @@
     "input_char_budget": 600000,
     "file_char_budget": 400000,
     "method_batch": 25,
-    "max_output_tokens": 16384
+    "max_output_tokens": 32768
   }
 }

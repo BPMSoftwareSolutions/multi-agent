@@ -168,6 +168,36 @@ Re-pointing the bee at an already-done package costs one filesystem scan and pri
 
 ---
 
+## 5b. Observability without I/O contention
+
+Bees fly async in the background; you watch a **ledger** built so no two writers
+ever touch the same file:
+
+```
+reports/runs/<run_id>/
+   manifest.json              ← written ONCE at start (target, layer, packet, needs_work)
+   packet-p1-0000.json        ← bee writes its OWN packet result file (immutable)
+   packet-p1-0001.json        ← another bee, another file
+   ...
+   status.json                ← combined ONCE at the end by the orchestrator
+reports/latest-run.json       ← pointer to the current run (written once)
+reports/status-latest.json    ← final combined status
+```
+
+- **Each bee writes only its own part file.** The orchestrator/monitor **combines**
+  manifest + all parts on read. So even when bees become separate processes, there
+  is no read/write contention on a shared status file.
+- **Monitor live, non-blocking:** `node bin/worker-bee.js --status` reads the pointer,
+  combines the parts, and prints progress (done / remaining / errors / methods /
+  packets) — while the run keeps going. The orchestration never blocks your visibility.
+- A **run log** (`reports/runs.jsonl`) appends one line per run for history.
+
+What "trustworthy" means for an anchor (the quality bar the ledger reports against):
+a responsibility must be a **human-readable description**, not a placeholder
+(`[auto]`) and not the symbol name restated (`load_anchor_contract_from_disk` — an
+identifier with no spaces). Identifier-style responsibilities are treated as
+low-quality and reworked into prose.
+
 ## 6. The grading loop (trust)
 
 The bee's own `assessAnchor`/`assessMethodAnchor` decide *what to work on*. The
@@ -193,7 +223,10 @@ source of truth; the bee just makes the scanner pass.
 | Whole-file diff churn | mixed CRLF/LF rewritten wholesale | minimal-diff writer touches only the anchor region |
 | Gemini "high demand" 503 | model overload | backoff (1→8s) + pass-loop retry; idempotent |
 | Truncated JSON on huge files | output-token cap on 200+ method files | **method batching** (25/call) keeps output bounded |
-| Model omits a method id | partial response | counted as `methodsMissingFromResponse`; re-run picks it up |
+| Packet JSON too large / invalid | model truncates a multi-file response | packet **auto-splits in half** and retries the halves, down to single files |
+| Model under-delivers (omits files) | valid JSON, fewer files than asked | missing files are **re-requested** (or split if none returned) |
+| Deterministic bad JSON at temp 0 | hot retry would repeat it | retries **escalate temperature** so a different (valid) generation is produced |
+| Identifier-style responsibility | prior run wrote `do_thing` not prose | flagged low-quality (no whitespace) → reworked into a human-readable description |
 | `forbidden` token in real body | would trip scanner RESPONSIBILITY_DRIFT | prompt forces abstract concept tokens, not code substrings |
 
 ---
