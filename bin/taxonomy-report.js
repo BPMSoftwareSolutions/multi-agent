@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Generates read-only taxonomy report snapshot showing anchor distribution by role, layer, and method coverage
+// actor: taxonomy_reporter
+// role: reporter
+// source_truth: implementation
+
 // Generate a taxonomy report (read-only projection) from the anchors currently in
 // a target subtree. This is the "lights on" snapshot: what's anchored, by role,
 // business_logic vs boundary_fabric, method coverage. It rescans the files each

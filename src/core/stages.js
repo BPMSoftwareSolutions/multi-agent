@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Defines the three-stage artifact lifecycle (idea, ASCII sketch, plan) with schemas and stage progression rules
+// actor: core_runtime
+// role: stage_definitions
+// source_truth: implementation
+
 const STAGE_ORDER = ["idea", "ascii", "plan"];
 
 const STAGES = {

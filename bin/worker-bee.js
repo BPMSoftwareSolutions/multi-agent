@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Main CLI orchestrator that distributes taxonomy anchor work to a swarm of Gemini agents via packet-driven workload
+// actor: worker_bee_swarm
+// role: orchestrator
+// source_truth: implementation
+
 // Worker-bee CLI: fan out taxonomy-anchor work to a swarm of Gemini bees.
 //
 // Thin, isolated process. It scans a target repo for Python files whose taxonomy

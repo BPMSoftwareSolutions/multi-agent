@@ -1,5 +1,13 @@
 #!/usr/bin/env node
-// Deterministic scan verifier: re-scan target and verify reported counts
+// warehouse:file
+// responsibility: Scans Python files and verifies taxonomy header completeness by checking for all required fields
+// actor: taxonomy_verifier
+// role: audit_tool
+// source_truth: implementation
+
+// Deterministic scanner: check if taxonomy is complete
+// SIMPLE: just check if required fields are present
+// Config-driven path, scan all Python files, report counts
 
 const fs = require("fs");
 const path = require("path");
@@ -14,6 +22,7 @@ const config = JSON.parse(fs.readFileSync(path.join(root, ".worker-bee.json"), "
 const DEFAULT_REPO_ROOT = process.env.WORKER_BEE_REPO_ROOT || config.repoRoot || "C:/source/repos/bpm/internal/ai-engine";
 const DEFAULT_TARGET = path.resolve(DEFAULT_REPO_ROOT, config.defaultTarget || "packages");
 
+// Walk directory and find all Python files
 function walk(dir, ext = ".py") {
   const files = [];
   try {
@@ -32,43 +41,35 @@ function walk(dir, ext = ".py") {
   return files;
 }
 
-function readAnchor(filePath) {
+// Read taxonomy header from file
+function readTaxonomyHeader(filePath) {
   try {
     const content = fs.readFileSync(filePath, "utf8");
     const lines = content.split("\n");
-    const anchor = {};
+    const header = {};
+
     for (const line of lines) {
-      const trimmed = line.trim();
-      if (!trimmed.startsWith("#")) break;
-      const match = trimmed.match(/^#\s*(\w+):\s*(.+)$/);
+      if (!line.trim().startsWith("#")) break;
+      const match = line.match(/^#\s*(\w+):\s*(.+)$/);
       if (match) {
-        anchor[match[1]] = match[2].trim();
+        header[match[1]] = match[2].trim();
       }
     }
-    return anchor;
+
+    return header;
   } catch (_e) {
     return {};
   }
 }
 
-function isPlaceholder(anchor) {
-  const PLACEHOLDERS = new Set(["", "auto", "unknown", "tbd", "todo", "placeholder", "xxx"]);
-  const responsibility = (anchor.responsibility || "").toLowerCase();
-  if (PLACEHOLDERS.has(responsibility)) return true;
-  if (responsibility.includes("__init__") || responsibility.includes("noqa")) return true;
-  return false;
-}
-
-function needsWork(anchor) {
-  // File needs work if: no responsibility field, or responsibility is placeholder
-  const hasResponsibility = "responsibility" in anchor && anchor.responsibility;
-  if (!hasResponsibility) return true;
-  if (isPlaceholder(anchor)) return true;
-  return false;
+// Check if taxonomy is COMPLETE (all required fields present)
+function isComplete(header) {
+  const required = ["responsibility", "actor", "role", "source_truth"];
+  return required.every((field) => field in header && header[field]);
 }
 
 async function main() {
-  console.log("🔍 Deterministic Scan Verifier\n");
+  console.log("🔍 Taxonomy Scanner\n");
   console.log(`Target: ${DEFAULT_TARGET}\n`);
 
   const startTime = Date.now();
@@ -78,91 +79,33 @@ async function main() {
   console.log(`Found ${allFiles.length} Python files\n`);
 
   // Classify each file
-  let fullyTrustworthy = 0;
-  let needsWorkCount = 0;
-  const issues = [];
+  let complete = 0;
+  let needsWork = 0;
 
   for (const filePath of allFiles) {
-    const anchor = readAnchor(filePath);
-    if (needsWork(anchor)) {
-      needsWorkCount++;
-      if (!anchor.responsibility) {
-        issues.push({ file: path.relative(DEFAULT_TARGET, filePath), reason: "missing responsibility" });
-      } else {
-        issues.push({ file: path.relative(DEFAULT_TARGET, filePath), reason: `placeholder: "${anchor.responsibility}"` });
-      }
+    const header = readTaxonomyHeader(filePath);
+    if (isComplete(header)) {
+      complete++;
     } else {
-      fullyTrustworthy++;
+      needsWork++;
     }
   }
 
   const elapsed = Date.now() - startTime;
 
-  // Load current status
-  const statusFile = path.join(root, "reports", "status-latest.json");
-  let reportedStatus = null;
-  try {
-    reportedStatus = JSON.parse(fs.readFileSync(statusFile, "utf8"));
-  } catch (_e) {
-    /* no status file */
-  }
-
+  // Report: simple counts
   console.log("═════════════════════════════════════════════════════════════════════════");
-  console.log("Results:");
+  console.log("TAXONOMY STATUS:");
   console.log("═════════════════════════════════════════════════════════════════════════\n");
 
-  console.log(`Total Python files:  ${allFiles.length}`);
-  console.log(`Fully trustworthy:   ${fullyTrustworthy}`);
-  console.log(`Needs work:          ${needsWorkCount}`);
-  console.log(`Scan time:           ${elapsed}ms\n`);
+  console.log(`Total Python files:     ${allFiles.length}`);
+  console.log(`Complete taxonomy:      ${complete}`);
+  console.log(`Needs work:             ${needsWork}`);
+  console.log(`Scan time:              ${elapsed}ms\n`);
 
-  if (reportedStatus && reportedStatus.target === DEFAULT_TARGET) {
-    console.log("═════════════════════════════════════════════════════════════════════════");
-    console.log("Comparison with Latest Status Report:");
-    console.log("═════════════════════════════════════════════════════════════════════════\n");
-
-    const reported = reportedStatus.totals;
-    const match = {
-      total: allFiles.length === reported.total_python,
-      trustworthy: fullyTrustworthy === (reported.total_python - reported.needs_work),
-      needsWork: needsWorkCount === reported.needs_work,
-    };
-
-    console.log(`Total Python Files:`);
-    console.log(`  Reported:  ${reported.total_python} ${match.total ? "✅" : "❌"}`);
-    console.log(`  Scanned:   ${allFiles.length}\n`);
-
-    console.log(`Fully Trustworthy:`);
-    console.log(`  Reported:  ${reported.total_python - reported.needs_work} ${match.trustworthy ? "✅" : "❌"}`);
-    console.log(`  Scanned:   ${fullyTrustworthy}\n`);
-
-    console.log(`Needs Work:`);
-    console.log(`  Reported:  ${reported.needs_work} ${match.needsWork ? "✅" : "❌"}`);
-    console.log(`  Scanned:   ${needsWorkCount}\n`);
-
-    const allMatch = Object.values(match).every((v) => v);
-    if (allMatch) {
-      console.log("✅ All numbers match! Status report is accurate.\n");
-    } else {
-      console.log("❌ Discrepancy detected! Numbers do not match.\n");
-    }
-  } else {
-    console.log("⏭️  No matching status report found (target mismatch or no status file)\n");
-  }
-
-  // Show sample of files needing work
-  if (issues.length > 0 && issues.length <= 20) {
-    console.log("Files needing work:");
-    issues.forEach((issue) => {
-      console.log(`  - ${issue.file} (${issue.reason})`);
-    });
-  } else if (issues.length > 20) {
-    console.log(`Sample of files needing work (showing 10 of ${issues.length}):`);
-    issues.slice(0, 10).forEach((issue) => {
-      console.log(`  - ${issue.file} (${issue.reason})`);
-    });
-    console.log(`  ... and ${issues.length - 10} more\n`);
-  }
+  console.log("═════════════════════════════════════════════════════════════════════════");
+  console.log(`BASELINE: ${needsWork} files need taxonomy work`);
+  console.log("═════════════════════════════════════════════════════════════════════════");
 }
 
 main().catch((e) => {

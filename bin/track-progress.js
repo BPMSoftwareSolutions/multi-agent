@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Continuously monitors worker-bee log for completion events and triggers alerts when processing stalls
+// actor: progress_tracker
+// role: monitor
+// source_truth: implementation
+
 // Continuous progress tracker: watch for new completion events and alert on stalls
 
 const fs = require("fs");

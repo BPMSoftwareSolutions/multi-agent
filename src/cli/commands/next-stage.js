@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Handles the next-stage command which advances the session to the next workflow stage
+// actor: cli
+// role: command_handler
+// source_truth: implementation
+
 const { getSession, getCurrentSessionId, saveSession } = require("../../core/session-store");
 const { advanceStage } = require("../../core/run-round");
 const { exit } = require("../print");

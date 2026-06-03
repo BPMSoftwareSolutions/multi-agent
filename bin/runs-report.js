@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Generates historical reports of worker-bee execution runs with aggregated statistics and per-target summaries
+// actor: run_ledger
+// role: reporter
+// source_truth: implementation
+
 // Worker-bee runs report: query the execution history and aggregate statistics.
 //
 // Usage:

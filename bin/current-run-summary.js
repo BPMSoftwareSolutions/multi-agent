@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Generates live executive summary of active worker-bee runs with progress percentage and ETA
+// actor: run_reporter
+// role: reporter
+// source_truth: implementation
+
 // Generate a live executive summary of the current worker-bee run with percentage complete
 
 const fs = require("fs");

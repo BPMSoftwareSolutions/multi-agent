@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Handles the start command which creates a new session with a brief and initializes the workflow intent
+// actor: cli
+// role: command_handler
+// source_truth: implementation
+
 const { createSession } = require("../../core/session-store");
 const { normalizeIntent } = require("../../core/run-round");
 const { renderSession, exit } = require("../print");

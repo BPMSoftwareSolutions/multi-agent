@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Provides formatting and rendering utilities for sessions, rounds, and artifacts to display in CLI output
+// actor: cli
+// role: output_formatter
+// source_truth: implementation
+
 const { STAGES } = require("../core/stages");
 const { summarizeOperations } = require("../shared/actions");
 

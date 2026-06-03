@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Scans target repository to classify files as TOUCHED or UNTOUCHED and writes authoritative tracking JSON for worker-bee
+// actor: taxonomy_scanner
+// role: scan_authority
+// source_truth: implementation
+
 // Taxonomy scanner. Scans a target, decides what is TOUCHED vs UNTOUCHED, and
 // writes a tracking JSON. Untouched = missing anchor, placeholder, or a
 // snake_case/identifier responsibility (a name, not a description).

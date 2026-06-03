@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Defines packet schema, workload defaults, and merges configuration from files and CLI overrides
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
+
 // The packet is the instruction that determines a bee's workload. The bee does
 // NOT decide how much it carries — the packet does. This mirrors the substrate
 // pattern in ai-engine: an external, declarative spec drives the worker.

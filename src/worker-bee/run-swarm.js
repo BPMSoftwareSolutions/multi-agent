@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Orchestrates concurrent bee agents pulling packets from a shared queue and writing anchors back to source files
+// actor: worker_bee_infrastructure
+// role: orchestration
+// source_truth: implementation
+
 // Worker-bee swarm orchestrator.
 //
 // Takes the list of files missing anchors, chunks them into packets, and runs a

@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Handles the status command which reports current session state in JSON format for programmatic access
+// actor: cli
+// role: command_handler
+// source_truth: implementation
+
 const { getSession, getCurrentSessionId } = require("../../core/session-store");
 const { summarizeOperations } = require("../../shared/actions");
 const { exit } = require("../print");

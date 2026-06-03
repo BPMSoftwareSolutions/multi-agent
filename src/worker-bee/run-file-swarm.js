@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Executes packet-driven swarm of bees for file and method anchor generation, with oversize-file batching and adaptive packet splitting
+// actor: worker_bee_infrastructure
+// role: orchestration
+// source_truth: implementation
+
 // Packet swarm: a few bees, each carrying a PACKET of many files in ONE Gemini
 // request. Packets are sized by an output-anchor budget so dozens of small files
 // ride together, while a method-heavy file splits into its own batched packet.

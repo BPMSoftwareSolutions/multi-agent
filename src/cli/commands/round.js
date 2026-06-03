@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Handles the round command which executes a planning and review cycle on the current stage
+// actor: cli
+// role: command_handler
+// source_truth: implementation
+
 const { getSession, getCurrentSessionId, saveSession } = require("../../core/session-store");
 const { runRound } = require("../../core/run-round");
 const { renderRound, exit } = require("../print");

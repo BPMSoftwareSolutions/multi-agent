@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Validates Gemini API keys and models for quota availability, latency, and fallback capability
+// actor: gemini_validator
+// role: diagnostic_tool
+// source_truth: implementation
+
 // Test Gemini API keys and models to validate quota and performance
 
 const https = require("https");

@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Scans filesystem for Python files, analyzes anchor state, and applies file/method anchors with deterministic field computation
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
+
 // Filesystem side of the worker-bee: find Python files that need a file anchor,
 // compute the deterministic anchor fields, and write anchor blocks back.
 //

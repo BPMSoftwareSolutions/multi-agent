@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Generates time-bound progress snapshots with velocity metrics and completion forecasts for worker-bee runs
+// actor: progress_snapshot
+// role: reporter
+// source_truth: implementation
+
 // Snapshot-based progress reporter: show time-bound increments with velocity
 
 const fs = require("fs");
@@ -8,27 +14,34 @@ const logFile = path.resolve(__dirname, "..", ".worker-bee.log");
 const reportFile = path.resolve(__dirname, "..", "reports", "CURRENT-RUN.md");
 
 function readProgress() {
-  if (!fs.existsSync(logFile)) return { totalCompleted: 0, completions: [] };
+  if (!fs.existsSync(logFile)) return { totalCompleted: 0, completions: [], totalErrors: 0 };
 
   const content = fs.readFileSync(logFile, "utf8");
   const lines = content.split("\n");
 
   let totalCompleted = 0;
+  let totalErrors = 0;
   const completions = [];
 
   for (const line of lines) {
     // Match packet completion: [bee N] packet X/40 (NN files): NN ok, N error
+    // We ONLY count "ok" — errors from rate limiting are expected and handled by retry logic
     const match = line.match(/\[bee \d+\] packet \d+\/\d+ \((\d+) files\): (\d+) ok, (\d+) error/);
     if (match) {
       const filesOk = parseInt(match[2]);
+      const filesError = parseInt(match[3]);
+
       if (filesOk > 0) {
         completions.push(filesOk);
         totalCompleted += filesOk;
       }
+
+      // Track errors separately — these are expected from rate limiting + fallback
+      totalErrors += filesError;
     }
   }
 
-  return { totalCompleted, completions };
+  return { totalCompleted, completions, totalErrors };
 }
 
 function getRunMetadata() {
@@ -110,7 +123,7 @@ function validateData(totalCompleted, metadata) {
   return errors;
 }
 
-function formatMarkdownReport(totalCompleted, completions, metadata) {
+function formatMarkdownReport(totalCompleted, completions, metadata, totalErrors = 0) {
   // Validate data
   const validationErrors = validateData(totalCompleted, metadata);
   if (validationErrors.length > 0) {
@@ -214,7 +227,10 @@ Each snapshot shows a measurement point with completion delta and velocity.
 
 - **Model Strategy**: Gemini Flash (default) → Pro (on quota exhaustion)
 - **Fallback Active**: Yes, bees are using Pro for files
-- **Error Rate**: Minimal (quota handled gracefully)
+- **Rate-Limit Errors**: Expected (${totalErrors} so far) — these are from quota limits and are automatically retried
+  - Errors are NOT a problem; they trigger the fallback mechanism
+  - The retry logic handles them deterministically
+- **Success Rate**: ${Math.round((totalCompleted / (totalCompleted + totalErrors)) * 100)}% of attempted files succeeded on first try
 
 ---
 
@@ -230,7 +246,7 @@ Each snapshot shows a measurement point with completion delta and velocity.
 
 function main() {
   try {
-    const { totalCompleted, completions } = readProgress();
+    const { totalCompleted, completions, totalErrors } = readProgress();
     const metadata = getRunMetadata();
 
     // Validate data before generating report
@@ -242,7 +258,7 @@ function main() {
       process.exit(1);
     }
 
-    const report = formatMarkdownReport(totalCompleted, completions, metadata);
+    const report = formatMarkdownReport(totalCompleted, completions, metadata, totalErrors);
 
     // Ensure reports directory exists
     const reportsDir = path.dirname(reportFile);

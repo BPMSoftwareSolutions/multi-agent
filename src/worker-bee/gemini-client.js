@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Handles API communication with Gemini, including timeout management and model fallback (Flash → Pro on quota exhaustion)
+// actor: worker_bee_infrastructure
+// role: api_client
+// source_truth: implementation
+
 // Minimal Gemini (Google AI Studio) client for the worker-bee.
 //
 // Uses the Generative Language REST API with an API key, mirroring the thin

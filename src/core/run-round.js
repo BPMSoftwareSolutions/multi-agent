@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Orchestrates a single round of agent-driven planning and review with artifact state transitions
+// actor: orchestration
+// role: round_execution
+// source_truth: implementation
+
 const {
   buildIntentPrompt,
   buildBuilderPrompt,

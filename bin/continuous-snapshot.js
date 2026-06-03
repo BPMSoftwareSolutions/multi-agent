@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Monitors worker-bee progress at 10-second intervals and refreshes the snapshot report
+// actor: progress_monitor
+// role: monitor
+// source_truth: implementation
+
 // Continuous snapshot monitor: update progress report every 10 seconds
 
 const fs = require("fs");

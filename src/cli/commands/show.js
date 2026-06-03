@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Handles the show command which displays the current session state including stages and operations
+// actor: cli
+// role: command_handler
+// source_truth: implementation
+
 const { getSession, getCurrentSessionId } = require("../../core/session-store");
 const { renderSession, exit } = require("../print");
 

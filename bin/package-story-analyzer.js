@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Extracts narrative package stories by aggregating and deduplicating file responsibilities from taxonomy reports
+// actor: story_generator
+// role: analyzer
+// source_truth: implementation
+
 // Package story analyzer: read the taxonomy report and extract what each package does
 // from the aggregated responsibilities of its files.
 

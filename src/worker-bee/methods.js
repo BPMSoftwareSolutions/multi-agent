@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Locates function definitions, parses and assesses method anchors, and applies trustworthy replacements with minimal-diff writes
+// actor: worker_bee_infrastructure
+// role: projection_compiler
+// source_truth: implementation
+
 // Method-anchor engine: locate functions, find/score their `# warehouse:method`
 // anchors, and apply trustworthy replacements with minimal-diff writes.
 

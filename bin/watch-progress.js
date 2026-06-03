@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Tails worker-bee log file to display real-time completion events, errors, and fallback triggers
+// actor: log_watcher
+// role: monitor
+// source_truth: implementation
+
 // Watch worker-bee progress in real-time: show actual completion events with timestamps
 
 const fs = require("fs");

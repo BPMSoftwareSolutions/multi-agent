@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Defines the taxonomy anchor specification, field vocabularies, and system instructions for classifying files and methods
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
+
 // Taxonomy anchor spec for the worker-bee.
 //
 // This mirrors the ai-engine contract at contracts/anchor_contract.json and the

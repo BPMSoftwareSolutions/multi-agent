@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Persists and retrieves session state including stages, artifacts, and operations from database storage
+// actor: core_runtime
+// role: session_persistence
+// source_truth: implementation
+
 const { v4: uuidv4 } = require("uuid");
 const { STAGE_ORDER, createEmptyArtifact } = require("./stages");
 const { buildOperationsState, ensureOperationsState } = require("../shared/actions");

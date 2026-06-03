@@ -1,4 +1,9 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Main CLI entry point for multi-agent studio with commands to start sessions, manage rounds, and queue actions
+// actor: studio_cli
+// role: command_router
+// source_truth: implementation
 
 require("dotenv").config();
 require("dotenv").config({ path: ".env.local", override: true });

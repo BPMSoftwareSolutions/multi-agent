@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Manages run lifecycle and status ledger without write contention, combining manifest and immutable part files into live status
+// actor: worker_bee_infrastructure
+// role: data_access
+// source_truth: implementation
+
 // Live status ledger WITHOUT shared-file write contention.
 //
 // Design: each completed packet writes its OWN immutable part file

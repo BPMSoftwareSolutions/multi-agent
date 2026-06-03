@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Handles the run-worker command which executes a pending approved action and updates file state
+// actor: cli
+// role: command_handler
+// source_truth: implementation
+
 const { getSession, getCurrentSessionId, saveSession } = require("../../core/session-store");
 const { runWorker } = require("../../shared/actions");
 const { executeDriveWorker } = require("../../../server/drive/service");

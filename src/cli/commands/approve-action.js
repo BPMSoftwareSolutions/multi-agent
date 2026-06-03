@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Handles the approve-action command which manually approves file system actions from a JSON payload
+// actor: cli
+// role: command_handler
+// source_truth: implementation
+
 const fs = require("fs");
 
 const { getSession, getCurrentSessionId, saveSession } = require("../../core/session-store");

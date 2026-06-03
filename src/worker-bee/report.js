@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Generates read-only taxonomy reports from file and method anchors, computing coverage metrics and quality assessment
+// actor: worker_bee_infrastructure
+// role: telemetry_evidence
+// source_truth: implementation
+
 // Taxonomy report: a READ-ONLY projection built from the anchors currently in the
 // source files. It is not a stateful ledger — it is regenerated from the files, so
 // it can never drift from the truth. The anchors in the .py files are the ledger;

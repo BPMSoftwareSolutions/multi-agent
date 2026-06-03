@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Constructs prompts for intent clarification, planner, and reviewer agents in the design workshop
+// actor: core_runtime
+// role: prompt_generation
+// source_truth: implementation
+
 const { STAGES } = require("./stages");
 
 // Helpers

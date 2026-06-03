@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Manages LLM API communication, request building, and response parsing with retry logic
+// actor: core_runtime
+// role: llm_interface
+// source_truth: implementation
+
 const https = require("https");
 
 const model = process.env.MODEL || "claude-sonnet-4-6";
