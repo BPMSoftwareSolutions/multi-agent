@@ -1,7 +1,18 @@
+// warehouse:file
+// responsibility: Coordinates getApiKey and extractJSON and fetchFromAnthropicRaw and callClaude and callClaudeWithRetry behavior with documented file and method taxonomy evidence
+// actor: server_runtime
+// role: runtime_component
+// source_truth: implementation
+
 const https = require("https");
 
 const model = process.env.MODEL || "claude-sonnet-4-6";
 
+// warehouse:method
+// responsibility: Coordinates getApiKey and extractJSON and fetchFromAnthropicRaw and callClaude and callClaudeWithRetry behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function getApiKey(overrideApiKey) {
   const apiKey = overrideApiKey || process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY;
   if (!apiKey) {
@@ -10,6 +21,11 @@ function getApiKey(overrideApiKey) {
   return apiKey;
 }
 
+// warehouse:method
+// responsibility: Coordinates getApiKey and extractJSON and fetchFromAnthropicRaw and callClaude and callClaudeWithRetry behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function extractJSON(text) {
   if (typeof text !== "string") {
     throw new Error("Model output is not text");
@@ -46,6 +62,11 @@ function extractJSON(text) {
   throw new Error("Could not extract JSON from model output");
 }
 
+// warehouse:method
+// responsibility: Coordinates getApiKey and extractJSON and fetchFromAnthropicRaw and callClaude and callClaudeWithRetry behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function fetchFromAnthropicRaw(endpoint, method, payload, apiKey) {
   const body = JSON.stringify(payload);
 
@@ -92,6 +113,11 @@ async function fetchFromAnthropicRaw(endpoint, method, payload, apiKey) {
   });
 }
 
+// warehouse:method
+// responsibility: Coordinates getApiKey and extractJSON and fetchFromAnthropicRaw and callClaude and callClaudeWithRetry behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function callClaude({ system, userMessages, maxTokens, apiKey }) {
   const key = getApiKey(apiKey);
 
@@ -116,6 +142,11 @@ async function callClaude({ system, userMessages, maxTokens, apiKey }) {
   return text;
 }
 
+// warehouse:method
+// responsibility: Coordinates getApiKey and extractJSON and fetchFromAnthropicRaw and callClaude and callClaudeWithRetry behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function callClaudeWithRetry(params, maxAttempts = 2) {
   const messages = [...(params.userMessages || [])];
   let lastError;

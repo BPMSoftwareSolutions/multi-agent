@@ -1,11 +1,16 @@
 // warehouse:file
-// responsibility: Deserializes session objects from database rows into normalized session objects
+// responsibility: Coordinates deserializeSession behavior with documented file and method taxonomy evidence
 // actor: core_runtime
 // role: session_deserializer
 // source_truth: implementation
 
 const { buildOperationsState, ensureOperationsState } = require("../../shared/actions");
 
+// warehouse:method
+// responsibility: Coordinates deserializeSession behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function deserializeSession(row) {
   if (!row) return null;
   const session = {

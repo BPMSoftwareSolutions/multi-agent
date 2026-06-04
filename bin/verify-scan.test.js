@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides setupTestData, cleanupTestData, readTaxonomyHeader functionality
+// responsibility: Test-driven validation: creates test data directory with sample Python files for header validation and Test-driven validation: removes test data directory and temporary Python test files and Test-driven validation: extracts taxonomy header fields from Python file comments and Test-driven validation: validates required taxonomy header fields are present and non-placeholder
 // actor: test_suite
 // role: test
 // source_truth: implementation
@@ -15,7 +15,7 @@ const path = require("path");
 const testDir = path.resolve(__dirname, "..", ".test-data");
 
 // warehouse:method
-// responsibility: Test-driven validation: creates test data directory with sample Python files for header validation
+// responsibility: Test-driven validation: creates test data directory with sample Python files for header validation and Test-driven validation: removes test data directory and temporary Python test files and Test-driven validation: extracts taxonomy header fields from Python file comments and Test-driven validation: validates required taxonomy header fields are present and non-placeholder
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -65,7 +65,7 @@ def authenticate():
 }
 
 // warehouse:method
-// responsibility: Test-driven validation: removes test data directory and temporary Python test files
+// responsibility: Test-driven validation: creates test data directory with sample Python files for header validation and Test-driven validation: removes test data directory and temporary Python test files and Test-driven validation: extracts taxonomy header fields from Python file comments and Test-driven validation: validates required taxonomy header fields are present and non-placeholder
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -78,7 +78,7 @@ function cleanupTestData() {
 }
 
 // warehouse:method
-// responsibility: Test-driven validation: extracts taxonomy header fields from Python file comments
+// responsibility: Test-driven validation: creates test data directory with sample Python files for header validation and Test-driven validation: removes test data directory and temporary Python test files and Test-driven validation: extracts taxonomy header fields from Python file comments and Test-driven validation: validates required taxonomy header fields are present and non-placeholder
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -99,7 +99,7 @@ function readTaxonomyHeader(filePath) {
 }
 
 // warehouse:method
-// responsibility: Test-driven validation: validates required taxonomy header fields are present and non-placeholder
+// responsibility: Test-driven validation: creates test data directory with sample Python files for header validation and Test-driven validation: removes test data directory and temporary Python test files and Test-driven validation: extracts taxonomy header fields from Python file comments and Test-driven validation: validates required taxonomy header fields are present and non-placeholder
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

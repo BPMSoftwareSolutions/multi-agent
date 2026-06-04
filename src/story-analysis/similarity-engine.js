@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides computeSimilarity, isBoilerplate, getAlignmentThreshold functionality
+// responsibility: Computes semantic alignment scores by extracting concept vocabularies, computing word overlap ratios, and normalizing alignment percentages for file-method coherence validation and Classifies method boilerplate status by pattern matching against infrastructure naming conventions (parse, render, validate, init, main) for alignment threshold determination and Determines alignment threshold percentage (30 for boilerplate, 50 for domain-specific) based on method boilerplate classification and Detects alignment red flags by analyzing responsibility text for generic terminology, maintenance tasks, error-only handling, and vagueness indicators
 // actor: coherence_analyzer
 // role: engine
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const { extractConcepts } = require("./concepts-extractor");
 
 // warehouse:method
-// responsibility: Computes semantic alignment scores by extracting concept vocabularies, computing word overlap ratios, and normalizing alignment percentages for file-method coherence validation
+// responsibility: Computes semantic alignment scores by extracting concept vocabularies, computing word overlap ratios, and normalizing alignment percentages for file-method coherence validation and Classifies method boilerplate status by pattern matching against infrastructure naming conventions (parse, render, validate, init, main) for alignment threshold determination and Determines alignment threshold percentage (30 for boilerplate, 50 for domain-specific) based on method boilerplate classification and Detects alignment red flags by analyzing responsibility text for generic terminology, maintenance tasks, error-only handling, and vagueness indicators
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -22,7 +22,7 @@ function computeSimilarity(fileResp, methodResp) {
 }
 
 // warehouse:method
-// responsibility: Classifies method boilerplate status by pattern matching against infrastructure naming conventions (parse, render, validate, init, main) for alignment threshold determination
+// responsibility: Computes semantic alignment scores by extracting concept vocabularies, computing word overlap ratios, and normalizing alignment percentages for file-method coherence validation and Classifies method boilerplate status by pattern matching against infrastructure naming conventions (parse, render, validate, init, main) for alignment threshold determination and Determines alignment threshold percentage (30 for boilerplate, 50 for domain-specific) based on method boilerplate classification and Detects alignment red flags by analyzing responsibility text for generic terminology, maintenance tasks, error-only handling, and vagueness indicators
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -38,7 +38,7 @@ function isBoilerplate(methodName) {
 }
 
 // warehouse:method
-// responsibility: Determines alignment threshold percentage (30 for boilerplate, 50 for domain-specific) based on method boilerplate classification
+// responsibility: Computes semantic alignment scores by extracting concept vocabularies, computing word overlap ratios, and normalizing alignment percentages for file-method coherence validation and Classifies method boilerplate status by pattern matching against infrastructure naming conventions (parse, render, validate, init, main) for alignment threshold determination and Determines alignment threshold percentage (30 for boilerplate, 50 for domain-specific) based on method boilerplate classification and Detects alignment red flags by analyzing responsibility text for generic terminology, maintenance tasks, error-only handling, and vagueness indicators
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -47,7 +47,7 @@ function getAlignmentThreshold(methodName) {
 }
 
 // warehouse:method
-// responsibility: Detects alignment red flags by analyzing responsibility text for generic terminology, maintenance tasks, error-only handling, and vagueness indicators
+// responsibility: Computes semantic alignment scores by extracting concept vocabularies, computing word overlap ratios, and normalizing alignment percentages for file-method coherence validation and Classifies method boilerplate status by pattern matching against infrastructure naming conventions (parse, render, validate, init, main) for alignment threshold determination and Determines alignment threshold percentage (30 for boilerplate, 50 for domain-specific) based on method boilerplate classification and Detects alignment red flags by analyzing responsibility text for generic terminology, maintenance tasks, error-only handling, and vagueness indicators
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

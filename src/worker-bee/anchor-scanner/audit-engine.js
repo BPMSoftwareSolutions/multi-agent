@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides assessAnchor, analyzeFile, findMissing functionality
+// responsibility: Assesses anchor completeness by validating all fields, checking vocabulary constraints, and detecting consistency issues and Analyzes Python file for anchor completeness across file and method layers, identifies missing and low-quality work items and Finds Python files missing file anchors and precomputes deterministic audit fields for work planning and Finds Python files needing anchor work across layers, audits completeness issues, and categorizes work items for bee task planning
 // actor: worker_bee_infrastructure
 // role: auditor
 // source_truth: implementation
@@ -11,7 +11,7 @@ const { listPythonFiles } = require("./file-discoverer");
 const { parseFileAnchorLines } = require("./anchor-parser");
 
 // warehouse:method
-// responsibility: Assesses anchor completeness by validating all fields, checking vocabulary constraints, and detecting consistency issues
+// responsibility: Assesses anchor completeness by validating all fields, checking vocabulary constraints, and detecting consistency issues and Analyzes Python file for anchor completeness across file and method layers, identifies missing and low-quality work items and Finds Python files missing file anchors and precomputes deterministic audit fields for work planning and Finds Python files needing anchor work across layers, audits completeness issues, and categorizes work items for bee task planning
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -32,7 +32,7 @@ function assessAnchor(fields, deterministic) {
 }
 
 // warehouse:method
-// responsibility: Analyzes Python file for anchor completeness across file and method layers, identifies missing and low-quality work items
+// responsibility: Assesses anchor completeness by validating all fields, checking vocabulary constraints, and detecting consistency issues and Analyzes Python file for anchor completeness across file and method layers, identifies missing and low-quality work items and Finds Python files missing file anchors and precomputes deterministic audit fields for work planning and Finds Python files needing anchor work across layers, audits completeness issues, and categorizes work items for bee task planning
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -90,7 +90,7 @@ function analyzeFile(absPath, repoRoot, { layer = "both", mode = "all" } = {}) {
 }
 
 // warehouse:method
-// responsibility: Finds Python files missing file anchors and precomputes deterministic audit fields for work planning
+// responsibility: Assesses anchor completeness by validating all fields, checking vocabulary constraints, and detecting consistency issues and Analyzes Python file for anchor completeness across file and method layers, identifies missing and low-quality work items and Finds Python files missing file anchors and precomputes deterministic audit fields for work planning and Finds Python files needing anchor work across layers, audits completeness issues, and categorizes work items for bee task planning
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -119,7 +119,7 @@ function findMissing(root, repoRoot, { limit } = {}) {
 }
 
 // warehouse:method
-// responsibility: Finds Python files needing anchor work across layers, audits completeness issues, and categorizes work items for bee task planning
+// responsibility: Assesses anchor completeness by validating all fields, checking vocabulary constraints, and detecting consistency issues and Analyzes Python file for anchor completeness across file and method layers, identifies missing and low-quality work items and Finds Python files missing file anchors and precomputes deterministic audit fields for work planning and Finds Python files needing anchor work across layers, audits completeness issues, and categorizes work items for bee task planning
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

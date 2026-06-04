@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides anchorCost, fileChars, packWork functionality
+// responsibility: Calculates anchor cost metric for work item: sums file anchor cost and method anchor cost for budget constraint and Measures file character size for character budget constraint during packing partition and Partitions work items into packets using greedy packing respecting anchor cost, file count, and character budgets
 // actor: worker_bee_infrastructure
 // role: packer
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const fs = require("fs");
 
 // warehouse:method
-// responsibility: Calculates anchor cost metric for work item: sums file anchor cost and method anchor cost for budget constraint
+// responsibility: Calculates anchor cost metric for work item: sums file anchor cost and method anchor cost for budget constraint and Measures file character size for character budget constraint during packing partition and Partitions work items into packets using greedy packing respecting anchor cost, file count, and character budgets
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -16,7 +16,7 @@ function anchorCost(item) {
 }
 
 // warehouse:method
-// responsibility: Measures file character size for character budget constraint during packing partition
+// responsibility: Calculates anchor cost metric for work item: sums file anchor cost and method anchor cost for budget constraint and Measures file character size for character budget constraint during packing partition and Partitions work items into packets using greedy packing respecting anchor cost, file count, and character budgets
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -29,7 +29,7 @@ function fileChars(item) {
 }
 
 // warehouse:method
-// responsibility: Partitions work items into packets using greedy packing respecting anchor cost, file count, and character budgets
+// responsibility: Calculates anchor cost metric for work item: sums file anchor cost and method anchor cost for budget constraint and Measures file character size for character budget constraint during packing partition and Partitions work items into packets using greedy packing respecting anchor cost, file count, and character budgets
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -39,6 +39,11 @@ function packWork(work, workload) {
   const charBudget = workload.input_char_budget;
   const packets = [];
   let cur = null;
+// warehouse:method
+// responsibility: Calculates anchor cost metric for work item: sums file anchor cost and method anchor cost for budget constraint and Measures file character size for character budget constraint during packing partition and Partitions work items into packets using greedy packing respecting anchor cost, file count, and character budgets
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
   const flush = () => {
     if (cur && cur.items.length) packets.push(cur);
     cur = null;

@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Coordinates createApp behavior with documented file and method taxonomy evidence
+// actor: server_runtime
+// role: runtime_component
+// source_truth: implementation
+
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
@@ -10,6 +16,11 @@ const workerRoutes = require("./routes/worker");
 const approvalRoutes = require("./routes/approval");
 const driveRoutes = require("./routes/drive");
 
+// warehouse:method
+// responsibility: Coordinates createApp behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function createApp() {
   const app = express();
 

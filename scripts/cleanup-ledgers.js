@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Coordinates cleanupLedgers behavior with documented file and method taxonomy evidence
+// actor: maintenance_script
+// role: implementation
+// source_truth: implementation
+
 /**
  * Cleanup Ledgers
  * Clears old worker-bee run ledgers to prevent stale data from polluting reports
@@ -10,6 +16,11 @@ const path = require('path');
 
 const runsDir = path.resolve(__dirname, '..', 'reports', 'runs');
 
+// warehouse:method
+// responsibility: Coordinates cleanupLedgers behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function cleanupLedgers() {
   try {
     if (fs.existsSync(runsDir)) {

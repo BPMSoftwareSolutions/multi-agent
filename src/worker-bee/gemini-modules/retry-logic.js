@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides isRetryable, getBackoffDelay functionality
+// responsibility: Determines retry eligibility for error conditions excluding authentication failures and Calculates exponential backoff delay strategy for API retry attempts
 // actor: worker_bee_infrastructure
 // role: retry_manager
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const RETRYABLE_STATUS = new Set([429, 500, 502, 503, 504, 529]);
 
 // warehouse:method
-// responsibility: Determines retry eligibility for error conditions excluding authentication failures
+// responsibility: Determines retry eligibility for error conditions excluding authentication failures and Calculates exponential backoff delay strategy for API retry attempts
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -34,7 +34,7 @@ function isRetryable(error) {
 }
 
 // warehouse:method
-// responsibility: Calculates exponential backoff delay strategy for API retry attempts
+// responsibility: Determines retry eligibility for error conditions excluding authentication failures and Calculates exponential backoff delay strategy for API retry attempts
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides chunk, anchorCost, fileChars functionality
+// responsibility: Partitions work items into packets: chunks array into fixed-size groups for packing and Partitions work items into packets: calculates anchor budget cost for packing and Partitions work items into packets: calculates file character size for packing budget and Partitions work items into packets: greedily packs within anchor, file, and char budgets
 // actor: worker_bee_infrastructure
 // role: packer
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const fs = require("fs");
 
 // warehouse:method
-// responsibility: Partitions work items into packets: chunks array into fixed-size groups for packing
+// responsibility: Partitions work items into packets: chunks array into fixed-size groups for packing and Partitions work items into packets: calculates anchor budget cost for packing and Partitions work items into packets: calculates file character size for packing budget and Partitions work items into packets: greedily packs within anchor, file, and char budgets
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -18,7 +18,7 @@ function chunk(items, size) {
 }
 
 // warehouse:method
-// responsibility: Partitions work items into packets: calculates anchor budget cost for packing
+// responsibility: Partitions work items into packets: chunks array into fixed-size groups for packing and Partitions work items into packets: calculates anchor budget cost for packing and Partitions work items into packets: calculates file character size for packing budget and Partitions work items into packets: greedily packs within anchor, file, and char budgets
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -27,7 +27,7 @@ function anchorCost(item) {
 }
 
 // warehouse:method
-// responsibility: Partitions work items into packets: calculates file character size for packing budget
+// responsibility: Partitions work items into packets: chunks array into fixed-size groups for packing and Partitions work items into packets: calculates anchor budget cost for packing and Partitions work items into packets: calculates file character size for packing budget and Partitions work items into packets: greedily packs within anchor, file, and char budgets
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -40,7 +40,7 @@ function fileChars(item) {
 }
 
 // warehouse:method
-// responsibility: Partitions work items into packets: greedily packs within anchor, file, and char budgets
+// responsibility: Partitions work items into packets: chunks array into fixed-size groups for packing and Partitions work items into packets: calculates anchor budget cost for packing and Partitions work items into packets: calculates file character size for packing budget and Partitions work items into packets: greedily packs within anchor, file, and char budgets
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -50,6 +50,11 @@ function packWork(work, workload) {
   const charBudget = workload.input_char_budget;
   const packets = [];
   let cur = null;
+// warehouse:method
+// responsibility: Partitions work items into packets: chunks array into fixed-size groups for packing and Partitions work items into packets: calculates anchor budget cost for packing and Partitions work items into packets: calculates file character size for packing budget and Partitions work items into packets: greedily packs within anchor, file, and char budgets
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
   const flush = () => {
     if (cur && cur.items.length) packets.push(cur);
     cur = null;

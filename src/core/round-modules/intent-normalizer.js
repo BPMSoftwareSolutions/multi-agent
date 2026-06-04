@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Extracts and normalizes intent from user briefs
+// responsibility: Coordinates normalizeIntent behavior with documented file and method taxonomy evidence
 // actor: orchestration
 // role: intent_extractor
 // source_truth: implementation
@@ -7,6 +7,11 @@
 const { buildIntentPrompt } = require("../prompt-builders");
 const { callClaudeWithRetry } = require("../llm-client");
 
+// warehouse:method
+// responsibility: Coordinates normalizeIntent behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function normalizeIntent(brief, apiKey) {
   const intentPrompt = buildIntentPrompt({ brief });
   try {

@@ -1,9 +1,14 @@
 // warehouse:file
-// responsibility: Reads SQL Server configuration from environment
+// responsibility: Coordinates getSqlConfig behavior with documented file and method taxonomy evidence
 // actor: shared_infrastructure
 // role: config_reader
 // source_truth: implementation
 
+// warehouse:method
+// responsibility: Coordinates getSqlConfig behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function getSqlConfig() {
   const server = process.env.LOC_SQL_SERVER || "localhost";
   const database = process.env.LOC_SQL_DATABASE || "master";

@@ -1,11 +1,16 @@
 // warehouse:file
-// responsibility: Parses worker-bee log file for packet completions and progress metrics
+// responsibility: Coordinates readProgress and getRunMetadata behavior with documented file and method taxonomy evidence
 // actor: log_parser
 // role: data_extractor
 // source_truth: implementation
 
 const fs = require("fs");
 
+// warehouse:method
+// responsibility: Coordinates readProgress and getRunMetadata behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function readProgress(logFile) {
   if (!fs.existsSync(logFile)) return { totalCompleted: 0, completions: [], totalErrors: 0 };
 
@@ -34,6 +39,11 @@ function readProgress(logFile) {
   return { totalCompleted, completions, totalErrors };
 }
 
+// warehouse:method
+// responsibility: Coordinates readProgress and getRunMetadata behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function getRunMetadata(logFile) {
   let totalNeeded = 0;
   let agents = 3;

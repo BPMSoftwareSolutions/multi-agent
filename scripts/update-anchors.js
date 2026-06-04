@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Coordinates parseArgs and printHelp and loadTaxonomy and buildTaxonomyIndex and parseFileHeader and generateFileHeader and findMethodBlocks and generateMethodHeader and updateFileAnchors and processFiles and main behavior with documented file and method taxonomy evidence
+// actor: maintenance_script
+// role: implementation
+// source_truth: implementation
+
 /**
  * Anchor Updater Script
  *
@@ -19,6 +25,11 @@ const PROJECT_ROOT = path.resolve(__dirname, "..");
 /**
  * Parse command-line arguments
  */
+// warehouse:method
+// responsibility: Coordinates parseArgs and printHelp and loadTaxonomy and buildTaxonomyIndex and parseFileHeader and generateFileHeader and findMethodBlocks and generateMethodHeader and updateFileAnchors and processFiles and main behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function parseArgs() {
   const args = process.argv.slice(2);
   let taxonomyPath = DEFAULT_TAXONOMY_PATH;
@@ -45,6 +56,11 @@ function parseArgs() {
   return { taxonomyPath, dryRun, verbose };
 }
 
+// warehouse:method
+// responsibility: Coordinates parseArgs and printHelp and loadTaxonomy and buildTaxonomyIndex and parseFileHeader and generateFileHeader and findMethodBlocks and generateMethodHeader and updateFileAnchors and processFiles and main behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function printHelp() {
   console.log(`
 Anchor Updater - Update taxonomy anchors in source files
@@ -68,6 +84,11 @@ Examples:
 /**
  * Load and validate taxonomy file
  */
+// warehouse:method
+// responsibility: Coordinates parseArgs and printHelp and loadTaxonomy and buildTaxonomyIndex and parseFileHeader and generateFileHeader and findMethodBlocks and generateMethodHeader and updateFileAnchors and processFiles and main behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function loadTaxonomy(filePath) {
   if (!fs.existsSync(filePath)) {
     throw new Error(`Taxonomy file not found: ${filePath}`);
@@ -93,6 +114,11 @@ function loadTaxonomy(filePath) {
 /**
  * Build taxonomy index for fast lookup
  */
+// warehouse:method
+// responsibility: Coordinates parseArgs and printHelp and loadTaxonomy and buildTaxonomyIndex and parseFileHeader and generateFileHeader and findMethodBlocks and generateMethodHeader and updateFileAnchors and processFiles and main behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function buildTaxonomyIndex(taxonomy) {
   const index = {};
 
@@ -134,6 +160,11 @@ function buildTaxonomyIndex(taxonomy) {
 /**
  * Parse warehouse:file header from file content
  */
+// warehouse:method
+// responsibility: Coordinates parseArgs and printHelp and loadTaxonomy and buildTaxonomyIndex and parseFileHeader and generateFileHeader and findMethodBlocks and generateMethodHeader and updateFileAnchors and processFiles and main behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function parseFileHeader(content) {
   const lines = content.split("\n");
   const headerLines = [];
@@ -173,6 +204,11 @@ function parseFileHeader(content) {
 /**
  * Generate warehouse:file comment block
  */
+// warehouse:method
+// responsibility: Coordinates parseArgs and printHelp and loadTaxonomy and buildTaxonomyIndex and parseFileHeader and generateFileHeader and findMethodBlocks and generateMethodHeader and updateFileAnchors and processFiles and main behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function generateFileHeader(fileData) {
   const lines = [
     "// warehouse:file",
@@ -187,6 +223,11 @@ function generateFileHeader(fileData) {
 /**
  * Find all warehouse:method blocks in file
  */
+// warehouse:method
+// responsibility: Coordinates parseArgs and printHelp and loadTaxonomy and buildTaxonomyIndex and parseFileHeader and generateFileHeader and findMethodBlocks and generateMethodHeader and updateFileAnchors and processFiles and main behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function findMethodBlocks(content) {
   const lines = content.split("\n");
   const blocks = [];
@@ -248,6 +289,11 @@ function findMethodBlocks(content) {
 /**
  * Generate warehouse:method comment block
  */
+// warehouse:method
+// responsibility: Coordinates parseArgs and printHelp and loadTaxonomy and buildTaxonomyIndex and parseFileHeader and generateFileHeader and findMethodBlocks and generateMethodHeader and updateFileAnchors and processFiles and main behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function generateMethodHeader(methodData) {
   const lines = [
     "// warehouse:method",
@@ -262,6 +308,11 @@ function generateMethodHeader(methodData) {
 /**
  * Update file with new anchors
  */
+// warehouse:method
+// responsibility: Coordinates parseArgs and printHelp and loadTaxonomy and buildTaxonomyIndex and parseFileHeader and generateFileHeader and findMethodBlocks and generateMethodHeader and updateFileAnchors and processFiles and main behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function updateFileAnchors(filePath, fileContent, fileData, methodsData) {
   let content = fileContent;
   let changes = {
@@ -359,6 +410,11 @@ function updateFileAnchors(filePath, fileContent, fileData, methodsData) {
 /**
  * Process all files
  */
+// warehouse:method
+// responsibility: Coordinates parseArgs and printHelp and loadTaxonomy and buildTaxonomyIndex and parseFileHeader and generateFileHeader and findMethodBlocks and generateMethodHeader and updateFileAnchors and processFiles and main behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function processFiles(taxonomyPath, dryRun, verbose) {
   const taxonomy = loadTaxonomy(taxonomyPath);
   const taxonomyIndex = buildTaxonomyIndex(taxonomy);
@@ -478,6 +534,11 @@ function processFiles(taxonomyPath, dryRun, verbose) {
 /**
  * Main entry point
  */
+// warehouse:method
+// responsibility: Coordinates parseArgs and printHelp and loadTaxonomy and buildTaxonomyIndex and parseFileHeader and generateFileHeader and findMethodBlocks and generateMethodHeader and updateFileAnchors and processFiles and main behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function main() {
   try {
     const { taxonomyPath, dryRun, verbose } = parseArgs();

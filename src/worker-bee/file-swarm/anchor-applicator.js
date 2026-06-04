@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides applyToItem, processOversizeFile, processPacket functionality
+// responsibility: Applicator: applies anchors to single file item via language model API, returns status with written count and Applicator: processes oversized file with adaptive packet splitting via batched language model calls with retry logic and Applicator: processes packet via language model API with adaptive splitting and retry logic on failures
 // actor: worker_bee_infrastructure
 // role: applicator
 // source_truth: implementation
@@ -12,7 +12,7 @@ const { buildPacketPrompt } = require("./prompt-builder");
 const { chunk } = require("./work-packer");
 
 // warehouse:method
-// responsibility: Applicator: applies anchors to single file item via language model API, returns status with written count
+// responsibility: Applicator: applies anchors to single file item via language model API, returns status with written count and Applicator: processes oversized file with adaptive packet splitting via batched language model calls with retry logic and Applicator: processes packet via language model API with adaptive splitting and retry logic on failures
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -44,7 +44,7 @@ function applyToItem(item, fileFields, methodsById, dryRun) {
 }
 
 // warehouse:method
-// responsibility: Applicator: processes oversized file with adaptive packet splitting via batched language model calls with retry logic
+// responsibility: Applicator: applies anchors to single file item via language model API, returns status with written count and Applicator: processes oversized file with adaptive packet splitting via batched language model calls with retry logic and Applicator: processes packet via language model API with adaptive splitting and retry logic on failures
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -78,7 +78,7 @@ async function processOversizeFile(item, { apiKey, model, dryRun, workload }) {
 }
 
 // warehouse:method
-// responsibility: Applicator: processes packet via language model API with adaptive splitting and retry logic on failures
+// responsibility: Applicator: applies anchors to single file item via language model API, returns status with written count and Applicator: processes oversized file with adaptive packet splitting via batched language model calls with retry logic and Applicator: processes packet via language model API with adaptive splitting and retry logic on failures
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

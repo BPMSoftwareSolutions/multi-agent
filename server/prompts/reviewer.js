@@ -1,5 +1,16 @@
+// warehouse:file
+// responsibility: Coordinates buildReviewerPrompt behavior with documented file and method taxonomy evidence
+// actor: server_runtime
+// role: runtime_component
+// source_truth: implementation
+
 const { schemaToText, toJSONString, formatHumanInterjection } = require("./helpers");
 
+// warehouse:method
+// responsibility: Coordinates buildReviewerPrompt behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function buildReviewerPrompt({
   stage,
   intent,

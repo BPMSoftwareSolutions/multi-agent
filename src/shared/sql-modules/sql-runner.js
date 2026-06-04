@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Executes SQL queries via sqlcmd and returns raw output
+// responsibility: Coordinates runSql behavior with documented file and method taxonomy evidence
 // actor: query_executor
 // role: query_runner
 // source_truth: implementation
@@ -9,6 +9,11 @@ const fs = require("fs");
 const tmp = require("tmp");
 const { buildSqlcmdArgs } = require("./command-builder");
 
+// warehouse:method
+// responsibility: Coordinates runSql behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function runSql(query, databaseOverride) {
   const tmpFile = tmp.fileSync({ suffix: ".sql" });
   fs.writeFileSync(tmpFile.name, query, "utf8");

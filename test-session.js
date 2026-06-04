@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Coordinates test session module behavior with documented file taxonomy evidence
+// actor: application_module
+// role: implementation
+// source_truth: implementation
+
 const https = require('https');
 
 const apiKey = process.env.CLAUDE_API_KEY;

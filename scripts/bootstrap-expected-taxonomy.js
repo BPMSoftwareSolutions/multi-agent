@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Coordinates bootstrap expected taxonomy module behavior with documented file taxonomy evidence
+// actor: maintenance_script
+// role: implementation
+// source_truth: implementation
+
 const fs = require('fs');
 const path = require('path');
 

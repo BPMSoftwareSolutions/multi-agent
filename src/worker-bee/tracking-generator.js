@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides generateTracking, writeTracking, reportTracking functionality
+// responsibility: Generates and persists taxonomy tracking JSON from scan results with reporting — generateTracking and Writes tracking JSON to output file with directory creation and Formats and outputs tracking summary in human or JSON format
 // actor: worker_bee_infrastructure
 // role: tracking_generator
 // source_truth: implementation
@@ -9,7 +9,7 @@ const fs = require("fs");
 const { serializeWork } = require("./scan");
 
 // warehouse:method
-// responsibility: Generates and persists taxonomy tracking JSON from scan results with reporting — generateTracking
+// responsibility: Generates and persists taxonomy tracking JSON from scan results with reporting — generateTracking and Writes tracking JSON to output file with directory creation and Formats and outputs tracking summary in human or JSON format
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -38,7 +38,7 @@ function generateTracking(args, scanResults, repoRoot, target) {
 }
 
 // warehouse:method
-// responsibility: Writes tracking JSON to output file with directory creation
+// responsibility: Generates and persists taxonomy tracking JSON from scan results with reporting — generateTracking and Writes tracking JSON to output file with directory creation and Formats and outputs tracking summary in human or JSON format
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -48,7 +48,7 @@ function writeTracking(tracking, outputPath) {
 }
 
 // warehouse:method
-// responsibility: Formats and outputs tracking summary in human or JSON format
+// responsibility: Generates and persists taxonomy tracking JSON from scan results with reporting — generateTracking and Writes tracking JSON to output file with directory creation and Formats and outputs tracking summary in human or JSON format
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

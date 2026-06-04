@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Coordinates testUpdater behavior with documented file and method taxonomy evidence
+// actor: test_runner
+// role: validator
+// source_truth: implementation
+
 /**
  * Verify Updater Test
  * Ensures updater produces files that match expected_taxonomy.json exactly
@@ -11,6 +17,11 @@ const { extractFromFile } = require('../src/taxonomy/extractor');
 const expectedPath = path.resolve(__dirname, '..', 'reports', 'expected_taxonomy.json');
 const projectRoot = path.resolve(__dirname, '..');
 
+// warehouse:method
+// responsibility: Coordinates testUpdater behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function testUpdater() {
   console.log('📋 Testing Updater Data-Driven Behavior\n');
 

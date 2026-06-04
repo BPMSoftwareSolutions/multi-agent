@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Coordinates fallbackIntent behavior with documented file and method taxonomy evidence
+// actor: server_runtime
+// role: runtime_component
+// source_truth: implementation
+
 const express = require("express");
 
 const { createSession, getSession } = require("../session/store");
@@ -12,6 +18,11 @@ const { summarizeOperations } = require("../../src/shared/actions");
 
 const router = express.Router();
 
+// warehouse:method
+// responsibility: Coordinates fallbackIntent behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function fallbackIntent(brief) {
   return {
     task_definition: brief,

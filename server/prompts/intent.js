@@ -1,3 +1,14 @@
+// warehouse:file
+// responsibility: Coordinates buildIntentPrompt behavior with documented file and method taxonomy evidence
+// actor: server_runtime
+// role: runtime_component
+// source_truth: implementation
+
+// warehouse:method
+// responsibility: Coordinates buildIntentPrompt behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function buildIntentPrompt({ brief }) {
   return {
     system: [

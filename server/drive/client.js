@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Coordinates getDriveConfig and ensureDriveConfigured and createOAuthClient and getDriveAuthUrl and exchangeDriveCode and getAuthorizedDrive and getDriveAuthStatus behavior with documented file and method taxonomy evidence
+// actor: server_runtime
+// role: runtime_component
+// source_truth: implementation
+
 const { google } = require("googleapis");
 
 const { readDriveTokens, writeDriveTokens } = require("./token-store");
@@ -7,6 +13,11 @@ const DRIVE_SCOPES = [
   "https://www.googleapis.com/auth/drive.metadata"
 ];
 
+// warehouse:method
+// responsibility: Coordinates getDriveConfig and ensureDriveConfigured and createOAuthClient and getDriveAuthUrl and exchangeDriveCode and getAuthorizedDrive and getDriveAuthStatus behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function getDriveConfig() {
   const clientId = process.env.GOOGLE_DRIVE_CLIENT_ID || "";
   const clientSecret = process.env.GOOGLE_DRIVE_CLIENT_SECRET || "";
@@ -21,6 +32,11 @@ function getDriveConfig() {
   };
 }
 
+// warehouse:method
+// responsibility: Coordinates getDriveConfig and ensureDriveConfigured and createOAuthClient and getDriveAuthUrl and exchangeDriveCode and getAuthorizedDrive and getDriveAuthStatus behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function ensureDriveConfigured() {
   const config = getDriveConfig();
   if (!config.clientId || !config.clientSecret || !config.redirectUri) {
@@ -33,11 +49,21 @@ function ensureDriveConfigured() {
   return config;
 }
 
+// warehouse:method
+// responsibility: Coordinates getDriveConfig and ensureDriveConfigured and createOAuthClient and getDriveAuthUrl and exchangeDriveCode and getAuthorizedDrive and getDriveAuthStatus behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function createOAuthClient() {
   const config = ensureDriveConfigured();
   return new google.auth.OAuth2(config.clientId, config.clientSecret, config.redirectUri);
 }
 
+// warehouse:method
+// responsibility: Coordinates getDriveConfig and ensureDriveConfigured and createOAuthClient and getDriveAuthUrl and exchangeDriveCode and getAuthorizedDrive and getDriveAuthStatus behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function getDriveAuthUrl() {
   const oauth2Client = createOAuthClient();
   return oauth2Client.generateAuthUrl({
@@ -47,6 +73,11 @@ function getDriveAuthUrl() {
   });
 }
 
+// warehouse:method
+// responsibility: Coordinates getDriveConfig and ensureDriveConfigured and createOAuthClient and getDriveAuthUrl and exchangeDriveCode and getAuthorizedDrive and getDriveAuthStatus behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function exchangeDriveCode(code) {
   const oauth2Client = createOAuthClient();
   const { tokens } = await oauth2Client.getToken(code);
@@ -55,6 +86,11 @@ async function exchangeDriveCode(code) {
   return tokens;
 }
 
+// warehouse:method
+// responsibility: Coordinates getDriveConfig and ensureDriveConfigured and createOAuthClient and getDriveAuthUrl and exchangeDriveCode and getAuthorizedDrive and getDriveAuthStatus behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function getAuthorizedDrive() {
   const oauth2Client = createOAuthClient();
   const tokens = readDriveTokens();
@@ -79,6 +115,11 @@ async function getAuthorizedDrive() {
   };
 }
 
+// warehouse:method
+// responsibility: Coordinates getDriveConfig and ensureDriveConfigured and createOAuthClient and getDriveAuthUrl and exchangeDriveCode and getAuthorizedDrive and getDriveAuthStatus behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function getDriveAuthStatus() {
   const tokens = readDriveTokens();
   const config = getDriveConfig();

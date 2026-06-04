@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Coordinates cleanFile behavior with documented file and method taxonomy evidence
+// actor: maintenance_script
+// role: implementation
+// source_truth: implementation
+
 /**
  * Clean Duplicate Headers
  * Removes duplicate warehouse:file and warehouse:method headers from source files
@@ -8,6 +14,11 @@ const fs = require('fs');
 const path = require('path');
 const { globSync } = require('glob');
 
+// warehouse:method
+// responsibility: Coordinates cleanFile behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function cleanFile(filePath) {
   let content = fs.readFileSync(filePath, 'utf8');
   const originalContent = content;

@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Coordinates runCommand and main and generateReport behavior with documented file and method taxonomy evidence
+// actor: application_module
+// role: implementation
+// source_truth: implementation
+
 
 const fs = require("fs");
 const path = require("path");
@@ -22,6 +28,11 @@ const results = {
   }
 };
 
+// warehouse:method
+// responsibility: Coordinates runCommand and main and generateReport behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function runCommand(name, command, description = "") {
   const startTime = Date.now();
   const cmdStartISO = new Date(startTime).toISOString();
@@ -82,6 +93,11 @@ function runCommand(name, command, description = "") {
   return result;
 }
 
+// warehouse:method
+// responsibility: Coordinates runCommand and main and generateReport behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function main() {
   console.log("=== Multi-Agent Studio CLI Test Suite ===");
   console.log(`Start time: ${TEST_START_TIME}\n`);
@@ -208,6 +224,11 @@ async function main() {
   process.exit(allPassed ? 0 : 1);
 }
 
+// warehouse:method
+// responsibility: Coordinates runCommand and main and generateReport behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function generateReport(results) {
   const lines = [
     "=== Multi-Agent Studio CLI Test Report ===",

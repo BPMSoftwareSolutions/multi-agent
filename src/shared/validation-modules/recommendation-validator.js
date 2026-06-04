@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Validates and normalizes action recommendation objects
+// responsibility: Coordinates normalizeActionRecommendation behavior with documented file and method taxonomy evidence
 // actor: shared_infrastructure
 // role: validator
 // source_truth: implementation
@@ -7,6 +7,11 @@
 const { toTrimmedString, toStringArray } = require("./string-normalizer");
 const { normalizeApprovalStatus, normalizeRiskLevel } = require("./status-validator");
 
+// warehouse:method
+// responsibility: Coordinates normalizeActionRecommendation behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function normalizeActionRecommendation(input, context = {}) {
   if (!input) return null;
 

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Lists all sessions from SQL database ordered by creation date
+// responsibility: Coordinates listSessionRows behavior with documented file and method taxonomy evidence
 // actor: persistence_layer
 // role: session_lister
 // source_truth: implementation
@@ -7,6 +7,11 @@
 const { getSqlConfig, runSqlJson } = require("../sql-helpers");
 const { ensureSchema } = require("./schema-manager");
 
+// warehouse:method
+// responsibility: Coordinates listSessionRows behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function listSessionRows() {
   ensureSchema();
   const { schema } = getSqlConfig();

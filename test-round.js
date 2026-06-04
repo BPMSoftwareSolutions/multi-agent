@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Coordinates runRound behavior with documented file and method taxonomy evidence
+// actor: application_module
+// role: implementation
+// source_truth: implementation
+
 const http = require('http');
 
 const apiKey = process.env.CLAUDE_API_KEY;
@@ -45,6 +51,11 @@ sessionReq.on('error', (e) => console.error('Session error:', e.message));
 sessionReq.write(sessionBody);
 sessionReq.end();
 
+// warehouse:method
+// responsibility: Coordinates runRound behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function runRound() {
   const roundBody = JSON.stringify({ stage: 'intent', sessionId });
   const roundOpts = {

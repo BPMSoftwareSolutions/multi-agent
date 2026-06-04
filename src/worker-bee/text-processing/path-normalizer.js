@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides repoRelative, normPath functionality
+// responsibility: Converts absolute path to repo-relative POSIX format for cross-platform consistency and Normalizes whitespace and path separators to forward slashes
 // actor: worker_bee_infrastructure
 // role: text_processor
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const path = require("path");
 
 // warehouse:method
-// responsibility: Converts absolute path to repo-relative POSIX format for cross-platform consistency
+// responsibility: Converts absolute path to repo-relative POSIX format for cross-platform consistency and Normalizes whitespace and path separators to forward slashes
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -16,7 +16,7 @@ function repoRelative(absPath, repoRoot) {
 }
 
 // warehouse:method
-// responsibility: Normalizes whitespace and path separators to forward slashes
+// responsibility: Converts absolute path to repo-relative POSIX format for cross-platform consistency and Normalizes whitespace and path separators to forward slashes
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Coordinates createEmptyArtifact behavior with documented file and method taxonomy evidence
+// actor: server_runtime
+// role: runtime_component
+// source_truth: implementation
+
 const STAGE_ORDER = ["idea", "ascii", "plan"];
 
 const STAGES = {
@@ -46,6 +52,11 @@ const STAGES = {
   }
 };
 
+// warehouse:method
+// responsibility: Coordinates createEmptyArtifact behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function createEmptyArtifact(stageId) {
   const stage = STAGES[stageId];
   if (!stage) {

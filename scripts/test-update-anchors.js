@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Coordinates assert and testLoadTaxonomy and testBuildIndex and testUpdateFileAnchors and testUpdateMethodAnchors and myFunction and testMissingHeader and testPreserveStructure and doSomething and runAllTests behavior with documented file and method taxonomy evidence
+// actor: maintenance_script
+// role: implementation
+// source_truth: implementation
+
 /**
  * Test suite for update-anchors.js
  * Validates the anchor updating logic without modifying real files
@@ -15,6 +21,11 @@ const TEST_TAXONOMY_PATH = path.join(TEST_PROJECT_ROOT, "reports", "taxonomy-ext
 let testsPassed = 0;
 let testsFailed = 0;
 
+// warehouse:method
+// responsibility: Coordinates assert and testLoadTaxonomy and testBuildIndex and testUpdateFileAnchors and testUpdateMethodAnchors and myFunction and testMissingHeader and testPreserveStructure and doSomething and runAllTests behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function assert(condition, message) {
   if (!condition) {
     console.error(`  ❌ FAIL: ${message}`);
@@ -30,6 +41,11 @@ function assert(condition, message) {
 /**
  * Test 1: Load taxonomy file
  */
+// warehouse:method
+// responsibility: Coordinates assert and testLoadTaxonomy and testBuildIndex and testUpdateFileAnchors and testUpdateMethodAnchors and myFunction and testMissingHeader and testPreserveStructure and doSomething and runAllTests behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function testLoadTaxonomy() {
   console.log("\n📋 Test 1: Load Taxonomy");
   try {
@@ -50,6 +66,11 @@ function testLoadTaxonomy() {
 /**
  * Test 2: Build taxonomy index
  */
+// warehouse:method
+// responsibility: Coordinates assert and testLoadTaxonomy and testBuildIndex and testUpdateFileAnchors and testUpdateMethodAnchors and myFunction and testMissingHeader and testPreserveStructure and doSomething and runAllTests behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function testBuildIndex() {
   console.log("\n📋 Test 2: Build Taxonomy Index");
   try {
@@ -71,6 +92,11 @@ function testBuildIndex() {
 /**
  * Test 3: Update file anchors (simple file)
  */
+// warehouse:method
+// responsibility: Coordinates assert and testLoadTaxonomy and testBuildIndex and testUpdateFileAnchors and testUpdateMethodAnchors and myFunction and testMissingHeader and testPreserveStructure and doSomething and runAllTests behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function testUpdateFileAnchors() {
   console.log("\n📋 Test 3: Update File Anchors");
 
@@ -111,6 +137,11 @@ main();
 /**
  * Test 4: Update method anchors
  */
+// warehouse:method
+// responsibility: Coordinates assert and testLoadTaxonomy and testBuildIndex and testUpdateFileAnchors and testUpdateMethodAnchors and myFunction and testMissingHeader and testPreserveStructure and doSomething and runAllTests behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function testUpdateMethodAnchors() {
   console.log("\n📋 Test 4: Update Method Anchors");
 
@@ -121,9 +152,9 @@ function testUpdateMethodAnchors() {
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Old method responsibility
-// actor: old_method_actor
-// role: old_method_role
+// responsibility: Coordinates assert and testLoadTaxonomy and testBuildIndex and testUpdateFileAnchors and testUpdateMethodAnchors and myFunction and testMissingHeader and testPreserveStructure and doSomething and runAllTests behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function myFunction() {
   return "test";
@@ -162,6 +193,11 @@ function myFunction() {
 /**
  * Test 5: Handle missing file header
  */
+// warehouse:method
+// responsibility: Coordinates assert and testLoadTaxonomy and testBuildIndex and testUpdateFileAnchors and testUpdateMethodAnchors and myFunction and testMissingHeader and testPreserveStructure and doSomething and runAllTests behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function testMissingHeader() {
   console.log("\n📋 Test 5: Handle Missing Header");
 
@@ -190,6 +226,11 @@ main();
 /**
  * Test 6: Preserve file structure
  */
+// warehouse:method
+// responsibility: Coordinates assert and testLoadTaxonomy and testBuildIndex and testUpdateFileAnchors and testUpdateMethodAnchors and myFunction and testMissingHeader and testPreserveStructure and doSomething and runAllTests behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function testPreserveStructure() {
   console.log("\n📋 Test 6: Preserve File Structure");
 
@@ -202,7 +243,11 @@ function testPreserveStructure() {
 const fs = require("fs");
 const path = require("path");
 
-// Some comment
+// warehouse:method
+// responsibility: Coordinates assert and testLoadTaxonomy and testBuildIndex and testUpdateFileAnchors and testUpdateMethodAnchors and myFunction and testMissingHeader and testPreserveStructure and doSomething and runAllTests behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function doSomething() {
   return 42;
 }
@@ -232,6 +277,11 @@ module.exports = { doSomething };
 /**
  * Run all tests
  */
+// warehouse:method
+// responsibility: Coordinates assert and testLoadTaxonomy and testBuildIndex and testUpdateFileAnchors and testUpdateMethodAnchors and myFunction and testMissingHeader and testPreserveStructure and doSomething and runAllTests behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function runAllTests() {
   console.log("\n" + "=".repeat(60));
   console.log("🧪 Anchor Updater Test Suite");

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides walk, readTaxonomyHeader, isComplete functionality
+// responsibility: Scans and traverses directory tree to collect all Python files for taxonomy audit coverage verification and completeness reporting and Parses Python file header comments to extract taxonomy fields and validate TOUCHED/UNTOUCHED status classification from complete header blocks and Validates taxonomy header completeness by checking all required fields (responsibility, actor, role, source_truth) for audit classification as TOUCHED or UNTOUCHED
 // actor: taxonomy_verifier
 // role: audit_tool
 // source_truth: implementation
@@ -30,7 +30,7 @@ if (!DEFAULT_REPO_ROOT) {
 const DEFAULT_TARGET = path.resolve(DEFAULT_REPO_ROOT, config.defaultTarget || "packages");
 
 // warehouse:method
-// responsibility: Scans and traverses directory tree to collect all Python files for taxonomy audit coverage verification and completeness reporting
+// responsibility: Scans and traverses directory tree to collect all Python files for taxonomy audit coverage verification and completeness reporting and Parses Python file header comments to extract taxonomy fields and validate TOUCHED/UNTOUCHED status classification from complete header blocks and Validates taxonomy header completeness by checking all required fields (responsibility, actor, role, source_truth) for audit classification as TOUCHED or UNTOUCHED
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -53,7 +53,7 @@ function walk(dir, ext = ".py") {
 }
 
 // warehouse:method
-// responsibility: Parses Python file header comments to extract taxonomy fields and validate TOUCHED/UNTOUCHED status classification from complete header blocks
+// responsibility: Scans and traverses directory tree to collect all Python files for taxonomy audit coverage verification and completeness reporting and Parses Python file header comments to extract taxonomy fields and validate TOUCHED/UNTOUCHED status classification from complete header blocks and Validates taxonomy header completeness by checking all required fields (responsibility, actor, role, source_truth) for audit classification as TOUCHED or UNTOUCHED
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -78,7 +78,7 @@ function readTaxonomyHeader(filePath) {
 }
 
 // warehouse:method
-// responsibility: Validates taxonomy header completeness by checking all required fields (responsibility, actor, role, source_truth) for audit classification as TOUCHED or UNTOUCHED
+// responsibility: Scans and traverses directory tree to collect all Python files for taxonomy audit coverage verification and completeness reporting and Parses Python file header comments to extract taxonomy fields and validate TOUCHED/UNTOUCHED status classification from complete header blocks and Validates taxonomy header completeness by checking all required fields (responsibility, actor, role, source_truth) for audit classification as TOUCHED or UNTOUCHED
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -87,6 +87,11 @@ function isComplete(header) {
   return required.every((field) => field in header && header[field]);
 }
 
+// warehouse:method
+// responsibility: Scans and traverses directory tree to collect all Python files for taxonomy audit coverage verification and completeness reporting and Parses Python file header comments to extract taxonomy fields and validate TOUCHED/UNTOUCHED status classification from complete header blocks and Validates taxonomy header completeness by checking all required fields (responsibility, actor, role, source_truth) for audit classification as TOUCHED or UNTOUCHED
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function main() {
   console.log("🔍 Taxonomy Scanner\n");
   console.log(`Target: ${DEFAULT_TARGET}\n`);

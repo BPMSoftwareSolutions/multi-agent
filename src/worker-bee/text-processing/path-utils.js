@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides repoRelative, computeRepoRootDepth, normPath functionality
+// responsibility: Converts paths to repo-relative POSIX format: normalizes absolute paths for cross-platform consistency and Converts paths to repo-relative POSIX format: computes directory depth from repo root and Converts paths to repo-relative POSIX format: normalizes whitespace and path separators
 // actor: worker_bee_infrastructure
 // role: path_normalizer
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const path = require("path");
 
 // warehouse:method
-// responsibility: Converts paths to repo-relative POSIX format: normalizes absolute paths for cross-platform consistency
+// responsibility: Converts paths to repo-relative POSIX format: normalizes absolute paths for cross-platform consistency and Converts paths to repo-relative POSIX format: computes directory depth from repo root and Converts paths to repo-relative POSIX format: normalizes whitespace and path separators
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -16,7 +16,7 @@ function repoRelative(absPath, repoRoot) {
 }
 
 // warehouse:method
-// responsibility: Converts paths to repo-relative POSIX format: computes directory depth from repo root
+// responsibility: Converts paths to repo-relative POSIX format: normalizes absolute paths for cross-platform consistency and Converts paths to repo-relative POSIX format: computes directory depth from repo root and Converts paths to repo-relative POSIX format: normalizes whitespace and path separators
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -27,7 +27,7 @@ function computeRepoRootDepth(text, relPosix) {
 }
 
 // warehouse:method
-// responsibility: Converts paths to repo-relative POSIX format: normalizes whitespace and path separators
+// responsibility: Converts paths to repo-relative POSIX format: normalizes absolute paths for cross-platform consistency and Converts paths to repo-relative POSIX format: computes directory depth from repo root and Converts paths to repo-relative POSIX format: normalizes whitespace and path separators
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

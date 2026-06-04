@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Retrieves a single session row from SQL database by session ID
+// responsibility: Coordinates getSessionRow behavior with documented file and method taxonomy evidence
 // actor: persistence_layer
 // role: session_reader
 // source_truth: implementation
@@ -7,6 +7,11 @@
 const { getSqlConfig, sqlStringLiteral, runSqlJson } = require("../sql-helpers");
 const { ensureSchema } = require("./schema-manager");
 
+// warehouse:method
+// responsibility: Coordinates getSessionRow behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function getSessionRow(sessionId) {
   ensureSchema();
   const { schema } = getSqlConfig();

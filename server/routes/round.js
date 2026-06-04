@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Coordinates makeTraceId and pushTrace and toClientError and normalizeReviewerOutput behavior with documented file and method taxonomy evidence
+// actor: server_runtime
+// role: runtime_component
+// source_truth: implementation
+
 const express = require("express");
 
 const { getSession, touchSession } = require("../session/store");
@@ -9,10 +15,20 @@ const { callClaudeWithRetry } = require("../llm/client");
 
 const router = express.Router();
 
+// warehouse:method
+// responsibility: Coordinates makeTraceId and pushTrace and toClientError and normalizeReviewerOutput behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function makeTraceId() {
   return `round_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
+// warehouse:method
+// responsibility: Coordinates makeTraceId and pushTrace and toClientError and normalizeReviewerOutput behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function pushTrace(trace, traceId, step, status, details) {
   const event = {
     ts: new Date().toISOString(),
@@ -24,6 +40,11 @@ function pushTrace(trace, traceId, step, status, details) {
   console.log(`[${traceId}] ${step} ${status}${details ? ` - ${details}` : ""}`);
 }
 
+// warehouse:method
+// responsibility: Coordinates makeTraceId and pushTrace and toClientError and normalizeReviewerOutput behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function toClientError(error) {
   const message = error && error.message ? String(error.message) : "Unknown LLM error";
 
@@ -68,6 +89,11 @@ function toClientError(error) {
   };
 }
 
+// warehouse:method
+// responsibility: Coordinates makeTraceId and pushTrace and toClientError and normalizeReviewerOutput behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function normalizeReviewerOutput(output, fallbackArtifact) {
   return {
     intent_issues: Array.isArray(output.intent_issues) ? output.intent_issues : [],

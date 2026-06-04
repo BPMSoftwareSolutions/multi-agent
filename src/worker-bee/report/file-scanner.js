@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides increment, scanFiles functionality
+// responsibility: Increments telemetry counter in map for given key, tracking cumulative evidence metrics during file scanning and Scans Python files to extract file anchors and method definitions, assesses quality trustworthiness, aggregates telemetry
 // actor: worker_bee_infrastructure
 // role: scanner
 // source_truth: implementation
@@ -16,7 +16,7 @@ const {
 const { findDefs, methodAnchorAbove, assessMethodAnchor } = require("../methods");
 
 // warehouse:method
-// responsibility: Increments telemetry counter in map for given key, tracking cumulative evidence metrics during file scanning
+// responsibility: Increments telemetry counter in map for given key, tracking cumulative evidence metrics during file scanning and Scans Python files to extract file anchors and method definitions, assesses quality trustworthiness, aggregates telemetry
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -25,7 +25,7 @@ function increment(map, key) {
 }
 
 // warehouse:method
-// responsibility: Scans Python files to extract file anchors and method definitions, assesses quality trustworthiness, aggregates telemetry
+// responsibility: Increments telemetry counter in map for given key, tracking cumulative evidence metrics during file scanning and Scans Python files to extract file anchors and method definitions, assesses quality trustworthiness, aggregates telemetry
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

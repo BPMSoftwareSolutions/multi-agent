@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Retrieves OAuth tokens from SQL database by provider
+// responsibility: Coordinates getOAuthToken behavior with documented file and method taxonomy evidence
 // actor: persistence_layer
 // role: token_reader
 // source_truth: implementation
@@ -7,6 +7,11 @@
 const { getSqlConfig, sqlStringLiteral, runSqlJson } = require("../sql-helpers");
 const { ensureSchema } = require("./schema-manager");
 
+// warehouse:method
+// responsibility: Coordinates getOAuthToken behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function getOAuthToken(provider) {
   ensureSchema();
   const { schema } = getSqlConfig();

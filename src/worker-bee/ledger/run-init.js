@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides newRunId, runsDir, initRun functionality
+// responsibility: Initializes new runs: generates unique run ID from timestamp with URL-safe formatting and Initializes new runs: constructs runs directory path within run structure and Initializes new runs: creates run directory, writes manifest, tracks run ID and metadata
 // actor: worker_bee_infrastructure
 // role: ledger_manager
 // source_truth: implementation
@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 
 // warehouse:method
-// responsibility: Initializes new runs: generates unique run ID from timestamp with URL-safe formatting
+// responsibility: Initializes new runs: generates unique run ID from timestamp with URL-safe formatting and Initializes new runs: constructs runs directory path within run structure and Initializes new runs: creates run directory, writes manifest, tracks run ID and metadata
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -17,7 +17,7 @@ function newRunId() {
 }
 
 // warehouse:method
-// responsibility: Initializes new runs: constructs runs directory path within run structure
+// responsibility: Initializes new runs: generates unique run ID from timestamp with URL-safe formatting and Initializes new runs: constructs runs directory path within run structure and Initializes new runs: creates run directory, writes manifest, tracks run ID and metadata
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -26,7 +26,7 @@ function runsDir(reportsDir) {
 }
 
 // warehouse:method
-// responsibility: Initializes new runs: creates run directory, writes manifest, tracks run ID and metadata
+// responsibility: Initializes new runs: generates unique run ID from timestamp with URL-safe formatting and Initializes new runs: constructs runs directory path within run structure and Initializes new runs: creates run directory, writes manifest, tracks run ID and metadata
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

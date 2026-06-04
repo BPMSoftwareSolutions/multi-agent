@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Coordinates stage module behavior with documented file taxonomy evidence
+// actor: server_runtime
+// role: runtime_component
+// source_truth: implementation
+
 const express = require("express");
 
 const { getSession, touchSession } = require("../session/store");

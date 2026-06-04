@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides hasFileAnchor, parseFileAnchorLines, parseFileAnchor functionality
+// responsibility: Tests whether Python file text contains a warehouse:file anchor marker and Parses first warehouse:file anchor block from Python text lines array and Parses and extracts warehouse:file anchor from Python file text
 // actor: worker_bee_infrastructure
 // role: parser
 // source_truth: implementation
@@ -9,7 +9,7 @@ const { stripBom } = require("../text-utils");
 const FILE_ANCHOR_RE = /^#\s+warehouse:file\s*$/m;
 
 // warehouse:method
-// responsibility: Tests whether Python file text contains a warehouse:file anchor marker
+// responsibility: Tests whether Python file text contains a warehouse:file anchor marker and Parses first warehouse:file anchor block from Python text lines array and Parses and extracts warehouse:file anchor from Python file text
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -18,7 +18,7 @@ function hasFileAnchor(text) {
 }
 
 // warehouse:method
-// responsibility: Parses first warehouse:file anchor block from Python text lines array
+// responsibility: Tests whether Python file text contains a warehouse:file anchor marker and Parses first warehouse:file anchor block from Python text lines array and Parses and extracts warehouse:file anchor from Python file text
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -45,7 +45,7 @@ function parseFileAnchorLines(lines) {
 }
 
 // warehouse:method
-// responsibility: Parses and extracts warehouse:file anchor from Python file text
+// responsibility: Tests whether Python file text contains a warehouse:file anchor marker and Parses first warehouse:file anchor block from Python text lines array and Parses and extracts warehouse:file anchor from Python file text
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

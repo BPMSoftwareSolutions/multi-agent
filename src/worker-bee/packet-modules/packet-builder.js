@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides mergePacket, buildPacket, describePacket functionality
+// responsibility: Builds packet configurations: merges base and override with shallow-deep strategy for swarm and workload and Builds effective packet configuration by layering defaults, file configuration, and CLI overrides and Builds packet configurations: describes packet in human-readable format for introspection
 // actor: worker_bee_infrastructure
 // role: packet_builder
 // source_truth: implementation
@@ -27,7 +27,7 @@ const DEFAULT_PACKET = {
 };
 
 // warehouse:method
-// responsibility: Builds packet configurations: merges base and override with shallow-deep strategy for swarm and workload
+// responsibility: Builds packet configurations: merges base and override with shallow-deep strategy for swarm and workload and Builds effective packet configuration by layering defaults, file configuration, and CLI overrides and Builds packet configurations: describes packet in human-readable format for introspection
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -43,7 +43,7 @@ function mergePacket(base, override) {
 }
 
 // warehouse:method
-// responsibility: Builds effective packet configuration by layering defaults, file configuration, and CLI overrides
+// responsibility: Builds packet configurations: merges base and override with shallow-deep strategy for swarm and workload and Builds effective packet configuration by layering defaults, file configuration, and CLI overrides and Builds packet configurations: describes packet in human-readable format for introspection
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -55,7 +55,7 @@ function buildPacket({ file, overrides } = {}) {
 }
 
 // warehouse:method
-// responsibility: Builds packet configurations: describes packet in human-readable format for introspection
+// responsibility: Builds packet configurations: merges base and override with shallow-deep strategy for swarm and workload and Builds effective packet configuration by layering defaults, file configuration, and CLI overrides and Builds packet configurations: describes packet in human-readable format for introspection
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

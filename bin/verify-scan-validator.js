@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides readTaxonomyHeader, isComplete functionality
+// responsibility: Test-driven validation: extracts taxonomy header fields from Python file comments and Test-driven validation: validates required taxonomy header fields are present and non-placeholder
 // actor: test_infrastructure
 // role: validator
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const fs = require("fs");
 
 // warehouse:method
-// responsibility: Test-driven validation: extracts taxonomy header fields from Python file comments
+// responsibility: Test-driven validation: extracts taxonomy header fields from Python file comments and Test-driven validation: validates required taxonomy header fields are present and non-placeholder
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -28,7 +28,7 @@ function readTaxonomyHeader(filePath) {
 }
 
 // warehouse:method
-// responsibility: Test-driven validation: validates required taxonomy header fields are present and non-placeholder
+// responsibility: Test-driven validation: extracts taxonomy header fields from Python file comments and Test-driven validation: validates required taxonomy header fields are present and non-placeholder
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

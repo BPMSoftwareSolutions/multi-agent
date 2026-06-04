@@ -1,9 +1,14 @@
 // warehouse:file
-// responsibility: Validates progress data consistency and sanity checks
+// responsibility: Coordinates validateData behavior with documented file and method taxonomy evidence
 // actor: data_validator
 // role: validator
 // source_truth: implementation
 
+// warehouse:method
+// responsibility: Coordinates validateData behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function validateData(totalCompleted, metadata) {
   const errors = [];
 

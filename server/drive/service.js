@@ -1,12 +1,28 @@
+// warehouse:file
+// responsibility: Coordinates escapeDriveQueryValue and normalizeDrivePermissions and updateDriveFileState and updateDriveFolderState and listFolderChildren and sanitizeDrivePath and resolveDrivePath and importDriveFolderToSession and getDriveFileMetadata and executeDriveWorker and fail behavior with documented file and method taxonomy evidence
+// actor: server_runtime
+// role: runtime_component
+// source_truth: implementation
+
 const { ensureOperationsState } = require("../../src/shared/actions");
 const { getAuthorizedDrive } = require("./client");
 
 const FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
 
+// warehouse:method
+// responsibility: Coordinates escapeDriveQueryValue and normalizeDrivePermissions and updateDriveFileState and updateDriveFolderState and listFolderChildren and sanitizeDrivePath and resolveDrivePath and importDriveFolderToSession and getDriveFileMetadata and executeDriveWorker and fail behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function escapeDriveQueryValue(value) {
   return String(value || "").replace(/\\/g, "\\\\").replace(/'/g, "\\'");
 }
 
+// warehouse:method
+// responsibility: Coordinates escapeDriveQueryValue and normalizeDrivePermissions and updateDriveFileState and updateDriveFolderState and listFolderChildren and sanitizeDrivePath and resolveDrivePath and importDriveFolderToSession and getDriveFileMetadata and executeDriveWorker and fail behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function normalizeDrivePermissions(capabilities = {}) {
   return {
     canMove: Boolean(
@@ -20,6 +36,11 @@ function normalizeDrivePermissions(capabilities = {}) {
   };
 }
 
+// warehouse:method
+// responsibility: Coordinates escapeDriveQueryValue and normalizeDrivePermissions and updateDriveFileState and updateDriveFolderState and listFolderChildren and sanitizeDrivePath and resolveDrivePath and importDriveFolderToSession and getDriveFileMetadata and executeDriveWorker and fail behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function updateDriveFileState(operations, file) {
   operations.files[file.id] = {
     ...(operations.files[file.id] || {}),
@@ -42,6 +63,11 @@ function updateDriveFileState(operations, file) {
   };
 }
 
+// warehouse:method
+// responsibility: Coordinates escapeDriveQueryValue and normalizeDrivePermissions and updateDriveFileState and updateDriveFolderState and listFolderChildren and sanitizeDrivePath and resolveDrivePath and importDriveFolderToSession and getDriveFileMetadata and executeDriveWorker and fail behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function updateDriveFolderState(operations, folder) {
   operations.folders[folder.id] = {
     ...(operations.folders[folder.id] || {}),
@@ -56,6 +82,11 @@ function updateDriveFolderState(operations, folder) {
   };
 }
 
+// warehouse:method
+// responsibility: Coordinates escapeDriveQueryValue and normalizeDrivePermissions and updateDriveFileState and updateDriveFolderState and listFolderChildren and sanitizeDrivePath and resolveDrivePath and importDriveFolderToSession and getDriveFileMetadata and executeDriveWorker and fail behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function listFolderChildren(folderId = "root", pageSize = 200) {
   const { drive } = await getAuthorizedDrive();
   const files = [];
@@ -80,6 +111,11 @@ async function listFolderChildren(folderId = "root", pageSize = 200) {
   return files;
 }
 
+// warehouse:method
+// responsibility: Coordinates escapeDriveQueryValue and normalizeDrivePermissions and updateDriveFileState and updateDriveFolderState and listFolderChildren and sanitizeDrivePath and resolveDrivePath and importDriveFolderToSession and getDriveFileMetadata and executeDriveWorker and fail behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function sanitizeDrivePath(inputPath) {
   const normalized = String(inputPath || "").trim().replace(/[\\]+/g, "/");
   const myDriveIndex = normalized.toLowerCase().indexOf("my drive/");
@@ -90,6 +126,11 @@ function sanitizeDrivePath(inputPath) {
     .filter(Boolean);
 }
 
+// warehouse:method
+// responsibility: Coordinates escapeDriveQueryValue and normalizeDrivePermissions and updateDriveFileState and updateDriveFolderState and listFolderChildren and sanitizeDrivePath and resolveDrivePath and importDriveFolderToSession and getDriveFileMetadata and executeDriveWorker and fail behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function resolveDrivePath(inputPath) {
   const segments = sanitizeDrivePath(inputPath);
   const { drive } = await getAuthorizedDrive();
@@ -137,6 +178,11 @@ async function resolveDrivePath(inputPath) {
   };
 }
 
+// warehouse:method
+// responsibility: Coordinates escapeDriveQueryValue and normalizeDrivePermissions and updateDriveFileState and updateDriveFolderState and listFolderChildren and sanitizeDrivePath and resolveDrivePath and importDriveFolderToSession and getDriveFileMetadata and executeDriveWorker and fail behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function importDriveFolderToSession(session, { folderId, drivePath = null, maxDepth = 4, maxItems = 500 }) {
   const operations = ensureOperationsState(session);
   const { drive } = await getAuthorizedDrive();
@@ -191,6 +237,11 @@ async function importDriveFolderToSession(session, { folderId, drivePath = null,
   };
 }
 
+// warehouse:method
+// responsibility: Coordinates escapeDriveQueryValue and normalizeDrivePermissions and updateDriveFileState and updateDriveFolderState and listFolderChildren and sanitizeDrivePath and resolveDrivePath and importDriveFolderToSession and getDriveFileMetadata and executeDriveWorker and fail behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function getDriveFileMetadata(fileId) {
   const { drive } = await getAuthorizedDrive();
   const response = await drive.files.get({
@@ -202,6 +253,11 @@ async function getDriveFileMetadata(fileId) {
   return response.data;
 }
 
+// warehouse:method
+// responsibility: Coordinates escapeDriveQueryValue and normalizeDrivePermissions and updateDriveFileState and updateDriveFolderState and listFolderChildren and sanitizeDrivePath and resolveDrivePath and importDriveFolderToSession and getDriveFileMetadata and executeDriveWorker and fail behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function executeDriveWorker(session, { actionId, actor = "drive_worker" }) {
   const operations = ensureOperationsState(session);
   const action = actionId
@@ -244,6 +300,11 @@ async function executeDriveWorker(session, { actionId, actor = "drive_worker" })
     errorMessage: null
   };
 
+// warehouse:method
+// responsibility: Coordinates escapeDriveQueryValue and normalizeDrivePermissions and updateDriveFileState and updateDriveFolderState and listFolderChildren and sanitizeDrivePath and resolveDrivePath and importDriveFolderToSession and getDriveFileMetadata and executeDriveWorker and fail behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
   const fail = (code, message, status = "failed") => {
     const finishedAt = new Date().toISOString();
     action.status = status;

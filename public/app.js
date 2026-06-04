@@ -1,3 +1,9 @@
+// warehouse:file
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: browser_client
+// role: implementation
+// source_truth: implementation
+
 const AppState = {
   apiKey: null,
   logs: [],
@@ -88,6 +94,11 @@ const els = {
   observabilityLog: document.getElementById("observability-log")
 };
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function addLog(level, message, details) {
   const entry = {
     ts: new Date().toISOString(),
@@ -100,11 +111,21 @@ function addLog(level, message, details) {
   renderObservability();
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function clearLogs() {
   AppState.logs = [];
   renderObservability();
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function renderObservability() {
   if (!els.observabilityLog) {
     return;
@@ -129,6 +150,11 @@ function renderObservability() {
     .join("");
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function escapeHtml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
@@ -138,6 +164,11 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function renderList(items) {
   const safeItems = Array.isArray(items) ? items : [];
   if (!safeItems.length) {
@@ -146,21 +177,41 @@ function renderList(items) {
   return `<ul>${safeItems.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function currentStageState() {
   return AppState.currentStage ? AppState.stages[AppState.currentStage] : null;
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function setError(message) {
   AppState.error = message;
   addLog("error", message);
   renderAll();
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function saveApiKey(key) {
   AppState.apiKey = key;
   localStorage.setItem(API_KEY_STORAGE_KEY, key);
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function promptForApiKey() {
   const existing = AppState.apiKey || "";
   const entered = window.prompt(
@@ -176,6 +227,11 @@ function promptForApiKey() {
   renderAll();
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function ensureApiKeyAtStartup() {
   const stored = localStorage.getItem(API_KEY_STORAGE_KEY);
   if (stored && stored.trim()) {
@@ -186,6 +242,11 @@ function ensureApiKeyAtStartup() {
   promptForApiKey();
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function api(path, options = {}) {
   const start = performance.now();
   const headers = {
@@ -218,6 +279,11 @@ async function api(path, options = {}) {
   return payload;
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function fetchDriveStatus() {
   try {
     const status = await api("/drive/auth/status");
@@ -235,6 +301,11 @@ async function fetchDriveStatus() {
   }
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function fetchSessionCatalog() {
   try {
     const payload = await api("/session");
@@ -247,6 +318,11 @@ async function fetchSessionCatalog() {
   }
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function tryAutoLoadCurrentSession() {
   const currentSessionId = AppState.sessionCatalog.currentSessionId;
   if (!currentSessionId || AppState.sessionId) {
@@ -262,6 +338,11 @@ async function tryAutoLoadCurrentSession() {
   }
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function applySession(session) {
   AppState.sessionId = session.id;
   AppState.currentStage = session.currentStage;
@@ -274,6 +355,11 @@ function applySession(session) {
   }
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function startRoundProgressTicker() {
   const steps = [
     "Running Planner...",
@@ -292,6 +378,11 @@ function startRoundProgressTicker() {
   }, 2500);
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function connectDrive() {
   try {
     const response = await api("/drive/auth/url");
@@ -299,6 +390,11 @@ async function connectDrive() {
     addLog("info", "Opened Google Drive authorization window");
 
     let attempts = 0;
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
     const poll = async () => {
       attempts += 1;
       const status = await fetchDriveStatus();
@@ -314,6 +410,11 @@ async function connectDrive() {
   }
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function resolveDrivePathAction() {
   const drivePath = els.drivePathInput.value.trim();
   if (!drivePath) {
@@ -342,6 +443,11 @@ async function resolveDrivePathAction() {
   }
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function importDriveFolder() {
   if (!AppState.sessionId) {
     setError("Start a session before importing a Drive folder.");
@@ -382,6 +488,11 @@ async function importDriveFolder() {
   }
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function stopRoundProgressTicker() {
   if (AppState.loadingTicker) {
     clearInterval(AppState.loadingTicker);
@@ -389,11 +500,21 @@ function stopRoundProgressTicker() {
   }
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function fetchSession() {
   const session = await api(`/session/${AppState.sessionId}`);
   applySession(session);
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function loadSelectedSession() {
   const sessionId = AppState.view === "start" ? els.startSessionSelect.value : els.sessionSelect.value;
   if (!sessionId) {
@@ -418,6 +539,11 @@ async function loadSelectedSession() {
   }
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function loadCurrentSession() {
   const sessionId = AppState.sessionCatalog.currentSessionId;
   if (!sessionId) {
@@ -434,6 +560,11 @@ async function loadCurrentSession() {
   await loadSelectedSession();
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function startSession() {
   const brief = els.briefInput.value.trim();
   if (!brief) {
@@ -463,6 +594,11 @@ async function startSession() {
   }
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function runRound() {
   if (!AppState.sessionId || !AppState.currentStage) {
     return;
@@ -526,6 +662,11 @@ async function runRound() {
   }
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function acceptArtifact() {
   if (!AppState.sessionId) {
     return;
@@ -552,6 +693,11 @@ async function acceptArtifact() {
   }
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function runWorker() {
   if (!AppState.sessionId) {
     return;
@@ -579,6 +725,11 @@ async function runWorker() {
   }
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function approveManualAction() {
   if (!AppState.sessionId) {
     return;
@@ -636,6 +787,11 @@ async function approveManualAction() {
   }
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function renderActionRecommendationList(actions) {
   const safeActions = Array.isArray(actions) ? actions : [];
   if (!safeActions.length) {
@@ -657,6 +813,11 @@ function renderActionRecommendationList(actions) {
   `;
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function renderOperationsSummary() {
   const operations = AppState.operations || {};
   const approvedActions = Array.isArray(operations.approvedActions) ? operations.approvedActions : [];
@@ -712,6 +873,11 @@ function renderOperationsSummary() {
   return `<hr />${queueHtml}${humanReviewHtml}${attemptsHtml}`;
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function renderSessionInspector() {
   const catalog = AppState.sessionCatalog || { currentSessionId: null, sessions: [] };
   const sessions = Array.isArray(catalog.sessions) ? catalog.sessions : [];
@@ -786,6 +952,11 @@ function renderSessionInspector() {
   `;
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function renderStartSessionInspector() {
   const catalog = AppState.sessionCatalog || { currentSessionId: null, sessions: [] };
   const sessions = Array.isArray(catalog.sessions) ? catalog.sessions : [];
@@ -826,6 +997,11 @@ function renderStartSessionInspector() {
   `;
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function advanceStage() {
   if (!AppState.sessionId) {
     return;
@@ -852,6 +1028,11 @@ async function advanceStage() {
   }
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function renderIdeaArtifact(artifact) {
   return `
     <p><strong>Name:</strong> ${escapeHtml(artifact.name)}</p>
@@ -864,6 +1045,11 @@ function renderIdeaArtifact(artifact) {
   `;
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function renderAsciiArtifact(artifact) {
   return `
     <p><strong>Layout</strong></p>
@@ -876,6 +1062,11 @@ function renderAsciiArtifact(artifact) {
   `;
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function renderPlanArtifact(artifact) {
   return `
     <p><strong>MVP Scope:</strong></p>${renderList(artifact.mvp_scope)}
@@ -887,6 +1078,11 @@ function renderPlanArtifact(artifact) {
   `;
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function renderArtifact() {
   const stage = currentStageState();
   if (!stage) {
@@ -924,6 +1120,11 @@ function renderArtifact() {
   els.artifactContent.innerHTML = `${badge}${body}${metadata}${renderOperationsSummary()}`;
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function renderBuilderPanel() {
   const stage = currentStageState();
   if (!stage) {
@@ -952,6 +1153,11 @@ function renderBuilderPanel() {
   els.builderContent.innerHTML = html;
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function renderDrivePanel() {
   const status = AppState.drive.authStatus;
   const resolved = AppState.drive.resolvedFolder;
@@ -990,6 +1196,11 @@ function renderDrivePanel() {
   els.driveStatusContent.innerHTML = html;
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function renderReviewerPanel() {
   const stage = currentStageState();
   if (!stage) {
@@ -1036,6 +1247,11 @@ function renderReviewerPanel() {
   els.reviewerContent.innerHTML = html;
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function serializeMarkdown() {
   const stage = currentStageState();
   if (!stage) {
@@ -1062,6 +1278,11 @@ function serializeMarkdown() {
   return lines.join("\n");
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function copyJson() {
   const stage = currentStageState();
   if (!stage) {
@@ -1072,10 +1293,20 @@ async function copyJson() {
   await navigator.clipboard.writeText(JSON.stringify(artifact, null, 2));
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 async function copyMarkdown() {
   await navigator.clipboard.writeText(serializeMarkdown());
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function renderHeader() {
   els.apiKeyStatus.textContent = AppState.apiKey
     ? "API key: set"
@@ -1096,6 +1327,11 @@ function renderHeader() {
   els.stageStatus.textContent = `Stage: ${stageLabels[AppState.currentStage]} | Rounds: ${rounds}${AppState.loadingMessage ? ` | ${AppState.loadingMessage}` : ""}`;
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function renderActions() {
   const stage = currentStageState();
   const disabled = AppState.loading || AppState.view !== "working";
@@ -1114,6 +1350,11 @@ function renderActions() {
   els.copyMarkdownBtn.disabled = disabled;
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function renderError() {
   if (!AppState.error) {
     els.errorBanner.classList.add("hidden");
@@ -1124,6 +1365,11 @@ function renderError() {
   els.errorBanner.textContent = AppState.error;
 }
 
+// warehouse:method
+// responsibility: Coordinates addLog and clearLogs and renderObservability and escapeHtml and renderList and currentStageState and setError and saveApiKey and promptForApiKey and ensureApiKeyAtStartup and api and fetchDriveStatus and fetchSessionCatalog and tryAutoLoadCurrentSession and applySession and startRoundProgressTicker and connectDrive and poll and resolveDrivePathAction and importDriveFolder and stopRoundProgressTicker and fetchSession and loadSelectedSession and loadCurrentSession and startSession and runRound and acceptArtifact and runWorker and approveManualAction and renderActionRecommendationList and renderOperationsSummary and renderSessionInspector and renderStartSessionInspector and advanceStage and renderIdeaArtifact and renderAsciiArtifact and renderPlanArtifact and renderArtifact and renderBuilderPanel and renderDrivePanel and renderReviewerPanel and serializeMarkdown and copyJson and copyMarkdown and renderHeader and renderActions and renderError and renderAll behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function renderAll() {
   renderHeader();
   renderError();

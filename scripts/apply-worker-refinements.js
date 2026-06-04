@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+// warehouse:file
+// responsibility: Coordinates apply worker refinements module behavior with documented file taxonomy evidence
+// actor: maintenance_script
+// role: implementation
+// source_truth: implementation
+
 // Apply Worker 1 refinements (27 files)
 
 const fs = require('fs');

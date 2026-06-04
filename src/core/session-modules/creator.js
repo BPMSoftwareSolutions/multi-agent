@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Creates and initializes new sessions with all required state
+// responsibility: Coordinates createSession behavior with documented file and method taxonomy evidence
 // actor: core_runtime
 // role: session_creator
 // source_truth: implementation
@@ -9,6 +9,11 @@ const { createEmptyArtifact } = require("../stages");
 const { buildOperationsState } = require("../../shared/actions");
 const { ensureSchema, saveSessionRow } = require("../../shared/sql-server");
 
+// warehouse:method
+// responsibility: Coordinates createSession behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function createSession(brief, intent = null) {
   ensureSchema();
   const sessionId = uuidv4();

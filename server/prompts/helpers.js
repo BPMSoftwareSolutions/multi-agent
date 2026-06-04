@@ -1,3 +1,14 @@
+// warehouse:file
+// responsibility: Coordinates schemaToText and toJSONString and buildRoundContext and formatHumanInterjection behavior with documented file and method taxonomy evidence
+// actor: server_runtime
+// role: runtime_component
+// source_truth: implementation
+
+// warehouse:method
+// responsibility: Coordinates schemaToText and toJSONString and buildRoundContext and formatHumanInterjection behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function schemaToText(schema) {
   const lines = ["Fields required in your JSON response:"];
 
@@ -8,10 +19,20 @@ function schemaToText(schema) {
   return lines.join("\n");
 }
 
+// warehouse:method
+// responsibility: Coordinates schemaToText and toJSONString and buildRoundContext and formatHumanInterjection behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function toJSONString(value) {
   return JSON.stringify(value, null, 2);
 }
 
+// warehouse:method
+// responsibility: Coordinates schemaToText and toJSONString and buildRoundContext and formatHumanInterjection behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function buildRoundContext(lastRound) {
   if (!lastRound) {
     return "No previous round context available.";
@@ -30,6 +51,11 @@ function buildRoundContext(lastRound) {
   ].join("\n");
 }
 
+// warehouse:method
+// responsibility: Coordinates schemaToText and toJSONString and buildRoundContext and formatHumanInterjection behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function formatHumanInterjection(text) {
   if (typeof text !== "string" || text.trim() === "") {
     return "(no human instruction for this round)";

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides buildAnchorBlock, insertAnchor, replaceAnchor functionality
+// responsibility: Constructs and applies file anchors: assembles file-anchor comment block from model fields with formatting and Constructs and applies file anchors: inserts anchor block with line-ending preservation and Constructs and applies file anchors: replaces existing anchor or inserts with formatting preservation
 // actor: worker_bee_infrastructure
 // role: anchor_builder
 // source_truth: implementation
@@ -10,7 +10,7 @@ const { stripBom, dominantEol } = require("../text-utils");
 const { hasFileAnchor } = require("./anchor-parser");
 
 // warehouse:method
-// responsibility: Constructs and applies file anchors: assembles file-anchor comment block from model fields with formatting
+// responsibility: Constructs and applies file anchors: assembles file-anchor comment block from model fields with formatting and Constructs and applies file anchors: inserts anchor block with line-ending preservation and Constructs and applies file anchors: replaces existing anchor or inserts with formatting preservation
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -37,7 +37,7 @@ function buildAnchorBlock(modelFields, deterministic) {
 }
 
 // warehouse:method
-// responsibility: Constructs and applies file anchors: inserts anchor block with line-ending preservation
+// responsibility: Constructs and applies file anchors: assembles file-anchor comment block from model fields with formatting and Constructs and applies file anchors: inserts anchor block with line-ending preservation and Constructs and applies file anchors: replaces existing anchor or inserts with formatting preservation
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -65,7 +65,7 @@ function insertAnchor(absPath, anchorBlock) {
 const FILE_ANCHOR_BLOCK_RE = /[ \t]*#[ \t]+warehouse:file[ \t]*(?:\r?\n[ \t]*#[^\n]*)*/;
 
 // warehouse:method
-// responsibility: Constructs and applies file anchors: replaces existing anchor or inserts with formatting preservation
+// responsibility: Constructs and applies file anchors: assembles file-anchor comment block from model fields with formatting and Constructs and applies file anchors: inserts anchor block with line-ending preservation and Constructs and applies file anchors: replaces existing anchor or inserts with formatting preservation
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
