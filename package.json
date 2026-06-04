@@ -21,6 +21,8 @@
     "test:evidence": "node tests/verify-evidence-bundle.js",
     "taxonomy-case": "node bin/taxonomy-case-file.js",
     "test:taxonomy-case": "node tests/verify-taxonomy-case-file.js",
+    "taxonomy-heal": "node bin/taxonomy-heal.js",
+    "test:taxonomy-heal": "node tests/verify-taxonomy-heal.js",
     "fractal-scan": "node bin/fractal-taxonomy-scanner.js",
     "worker-bee": "node bin/worker-bee.js"
   },
