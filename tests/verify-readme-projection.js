@@ -107,6 +107,8 @@ function verifyMarkdownProjection(projection) {
   assert.match(markdown, /do_not_hand_edit: true/);
   assert.match(markdown, /README Integrity Rule/);
   assert.match(markdown, /Taxonomy scan report/);
+  assert.match(markdown, /SDK Package Surface/);
+  assert.match(markdown, /@loc\/taxonomy-coherence/);
   assert.match(markdown, /No residue queue items/);
   assert.doesNotMatch(markdown, /```yaml/);
   assert.doesNotMatch(markdown, /Everything is clean/);

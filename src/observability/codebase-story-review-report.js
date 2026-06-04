@@ -273,6 +273,7 @@ function isSmallFileBoundaryJustified(row) {
   const basename = path.basename(file);
   return (
     file.startsWith("bin/") ||
+    file.startsWith("packages/") ||
     file.startsWith("scripts/") ||
     file.startsWith("tests/") ||
     file === "server/app.js" ||

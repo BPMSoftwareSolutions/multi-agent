@@ -8,8 +8,8 @@ This README is a generated architecture projection over verified taxonomy scan a
 
 <!--
 generated_from:
-  source_scan: scan-2026-06-04T19-01-31-255Z
-  source_story_review: codebase-story-review-2026-06-04T19-01-37-868Z
+  source_scan: scan-2026-06-04T19-08-56-873Z
+  source_story_review: codebase-story-review-2026-06-04T19-09-03-239Z
   source_truth: taxonomy_scan_plus_codebase_story_review
   do_not_hand_edit: true
   regeneration_command: npm run taxonomy:readme
@@ -26,11 +26,11 @@ generated_from:
 | Story posture | earned |
 | Overall story coherence | 100/100 earned |
 | Local taxonomy tie-out | 100/100 |
-| Files reviewed | 327 |
-| Locally trusted files | 327 |
+| Files reviewed | 330 |
+| Locally trusted files | 330 |
 | Weak files | 0 |
 | Missing taxonomy | 0 |
-| Method anchors | 664/664 |
+| Method anchors | 677/677 |
 | Canonical residue pressure | 0 |
 | File economy posture | pass |
 | Small boundaries reviewed | 231 |
@@ -51,6 +51,12 @@ The studio is organized around governed multi-agent work: command entry points, 
 | Anchor healing | `bin/taxonomy-heal-run.js` | orchestration boundary distinct from direct anchor mutation utilities | document boundary | Heal-run owns governed lifecycle/reporting; taxonomy-heal and update-anchors are lower-level mutation utilities. |
 | Worker reporting | `src/worker-bee/report/file-scanner.js` | worker-local reporting stack distinct from global observability | document boundary | Worker report modules own worker-local assembly/formatting/telemetry; global observability owns operator-level scan and swarm reports. |
 
+## SDK Package Surface
+
+| Package | Boundary | Mutation Authority | Primary API |
+| --- | --- | --- | --- |
+| `@loc/taxonomy-coherence` | Read-only taxonomy scanning, story review, governance verdicts, and README projections. | Forbidden in core package; healing requires a separate authority surface. | `scanTaxonomy`, `buildCodebaseStoryReview`, `generateReadmeProjection` |
+
 ## Residue Queue
 
 | File | Reason | Decision |
@@ -64,6 +70,7 @@ The studio is organized around governed multi-agent work: command entry points, 
 | `npm run taxonomy-coherence-scan -- .` | Regenerate taxonomy scan evidence and latest scan report. |
 | `npm run codebase-story-review-report` | Regenerate codebase story review from latest scan and swarm evidence. |
 | `npm run taxonomy:readme` | Regenerate this README projection and README staleness report. |
+| `node packages/taxonomy-coherence/bin/loc-taxonomy.js story-review --root .` | Use the SDK package CLI to emit structured governance verdicts. |
 | `npm run test:readme-projection` | Verify README generation and staleness detection contracts. |
 
 ## README Integrity Rule

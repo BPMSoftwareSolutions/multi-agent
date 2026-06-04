@@ -178,6 +178,20 @@ function formatReadmeProjection(projection) {
       canonicalRows
     ),
     "",
+    "## SDK Package Surface",
+    "",
+    markdownTable(
+      ["Package", "Boundary", "Mutation Authority", "Primary API"],
+      [
+        [
+          "`@loc/taxonomy-coherence`",
+          "Read-only taxonomy scanning, story review, governance verdicts, and README projections.",
+          "Forbidden in core package; healing requires a separate authority surface.",
+          "`scanTaxonomy`, `buildCodebaseStoryReview`, `generateReadmeProjection`",
+        ],
+      ]
+    ),
+    "",
     "## Residue Queue",
     "",
     markdownTable(["File", "Reason", "Decision"], residueRows),
@@ -190,6 +204,7 @@ function formatReadmeProjection(projection) {
         ["`npm run taxonomy-coherence-scan -- .`", "Regenerate taxonomy scan evidence and latest scan report."],
         ["`npm run codebase-story-review-report`", "Regenerate codebase story review from latest scan and swarm evidence."],
         ["`npm run taxonomy:readme`", "Regenerate this README projection and README staleness report."],
+        ["`node packages/taxonomy-coherence/bin/loc-taxonomy.js story-review --root .`", "Use the SDK package CLI to emit structured governance verdicts."],
         ["`npm run test:readme-projection`", "Verify README generation and staleness detection contracts."],
       ]
     ),
