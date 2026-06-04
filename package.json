@@ -17,6 +17,8 @@
     "dev": "node --watch server/index.js",
     "cli": "node bin/studio.js",
     "coherence-check": "node bin/coherence-check.js",
+    "evidence-bundle": "node bin/taxonomy-evidence-bundle.js",
+    "test:evidence": "node tests/verify-evidence-bundle.js",
     "fractal-scan": "node bin/fractal-taxonomy-scanner.js",
     "worker-bee": "node bin/worker-bee.js"
   },
