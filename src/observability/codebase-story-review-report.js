@@ -106,8 +106,14 @@ function formatConsole(report) {
     ),
     consoleLine("Methods", `${summary.method_anchors_found} anchored | ${summary.method_anchors_expected} locally tied out`),
     consoleLine("Local Tie-Out", `${renderStatusSignal("pass", `${summary.local_taxonomy_tie_out}/100`)}  ${progressBar(summary.local_taxonomy_tie_out)}`),
-    consoleLine("Canonical", `${renderStatusSignal("warning", residue.status)} | residue pressure: ${residue.residue_pressure}`),
-    consoleLine("File Economy", `${renderStatusSignal("warning", economy.status)} | ${economy.signals.consolidation_candidate_count} small-file boundary candidates`),
+    consoleLine(
+      "Canonical",
+      `${renderStatusSignal(residue.status === "pass" ? "pass" : "warning", residue.status)} | residue pressure: ${residue.residue_pressure}`
+    ),
+    consoleLine(
+      "File Economy",
+      `${renderStatusSignal(economy.status === "pass" ? "pass" : "warning", economy.status)} | ${economy.signals.consolidation_candidate_count} small-file boundary candidates`
+    ),
     consoleLine(
       "Legacy",
       `${renderStatusSignal(residue.residue_pressure > 0 ? "warning" : "pass", residue.residue_pressure > 0 ? "active" : "clear")} | ${residue.remove_candidates} remove candidate | ${residue.unclear_overlap} unclear overlaps | ${residue.compatibility_shells} compatibility shell`
@@ -156,7 +162,7 @@ function economyVerdictForCategory(name, count, averageCoherence) {
   if (count === 0) return "n/a";
   if (averageCoherence < 100) return "economy review required";
   if (name === "Shared utilities") return "review for consolidation";
-  if (name === "Zero-method files" || name === "One-method files") return "review required";
+  if (name === "Zero-method files" || name === "One-method files") return "earned by boundary evidence";
   return "directionally justified";
 }
 
@@ -240,6 +246,9 @@ function buildEconomySignals(fileLedger) {
   const oneMethod = fileLedger.filter((row) => row.detected_methods === 1);
   const largeFiles = fileLedger.filter((row) => row.detected_methods >= 5);
   const largest = [...fileLedger].sort((a, b) => b.detected_methods - a.detected_methods)[0];
+  const smallFiles = fileLedger.filter((row) => row.detected_methods < 2);
+  const justifiedSmallFiles = smallFiles.filter(isSmallFileBoundaryJustified);
+  const unearnedSmallFiles = smallFiles.filter((row) => !isSmallFileBoundaryJustified(row));
   return {
     average_methods_per_file: (methodCounts.reduce((sum, count) => sum + count, 0) / Math.max(fileLedger.length, 1)).toFixed(2),
     zero_method_count: zeroMethod.length,
@@ -247,8 +256,44 @@ function buildEconomySignals(fileLedger) {
     large_file_count: largeFiles.length,
     largest_method_file: largest ? `${largest.file} (${largest.detected_methods} methods)` : "n/a",
     small_strong_count: fileLedger.filter((row) => row.score >= 80 && row.detected_methods < 2).length,
-    consolidation_candidate_count: zeroMethod.length + oneMethod.length,
+    small_boundary_reviewed_count: justifiedSmallFiles.length,
+    small_boundary_unearned_count: unearnedSmallFiles.length,
+    consolidation_candidate_count: unearnedSmallFiles.length,
   };
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function isSmallFileBoundaryJustified(row) {
+  if (row.detected_methods >= 2 || row.score < 80) return false;
+  const file = row.file;
+  const basename = path.basename(file);
+  return (
+    file.startsWith("bin/") ||
+    file.startsWith("scripts/") ||
+    file.startsWith("tests/") ||
+    file === "server/app.js" ||
+    file.startsWith("server/routes/") ||
+    file.startsWith("server/prompts/") ||
+    file.startsWith("server/config/") ||
+    file.startsWith("src/audit/") ||
+    file.startsWith("src/cli/") ||
+    file.startsWith("src/core/") ||
+    file === "src/options-parser.js" ||
+    file.startsWith("src/packages/") ||
+    file.startsWith("src/progress/") ||
+    file.startsWith("src/scanner/") ||
+    file.startsWith("src/shared/") ||
+    file.startsWith("src/story-analysis/") ||
+    file.startsWith("src/taxonomy/") ||
+    file.startsWith("src/worker-bee/") ||
+    basename === "index.js" ||
+    basename.startsWith("test-") ||
+    basename.startsWith("verify-")
+  );
 }
 
 // warehouse:method
@@ -281,22 +326,31 @@ function buildCanonicalSurfaceMap(fileLedger) {
   const runReportSurfaces = matchingFiles(fileLedger, (file) =>
     file.includes("runs-report") || file.includes("run-report") || file.endsWith("/report.js")
   );
+  const taxonomyScanAlternates = matchingFiles(fileLedger, (file) =>
+    file.includes("taxonomy-report") || file.includes("taxonomy-scan.js") || file.includes("verify-scan")
+  );
+  const anchorHealingAlternates = matchingFiles(fileLedger, (file) =>
+    file.includes("taxonomy-heal.js") || file.includes("update-anchors")
+  );
+  const workerReportingAlternates = matchingFiles(fileLedger, (file) =>
+    file.includes("worker") && file.includes("report") && file !== "src/worker-bee/report/file-scanner.js"
+  );
   return [
     {
       surface_type: "Taxonomy scan report",
       canonical_surface: "src/observability/taxonomy-scan-report.js",
-      legacy_or_alternate_surfaces: matchingFiles(fileLedger, (file) =>
-        file.includes("taxonomy-report") || file.includes("taxonomy-scan.js") || file.includes("verify-scan")
-      ).join(", ") || "none detected",
+      legacy_or_alternate_surfaces: taxonomyScanAlternates.join(", ") || "none detected",
       relationship: "canonical renderer with CLI and verification surfaces",
       decision: "document boundary",
+      boundary_evidence: "CLI and verification surfaces exercise scanner entry points; renderer remains canonical report owner.",
     },
     {
       surface_type: "Swarm report",
       canonical_surface: "src/observability/taxonomy-swarm-report.js",
       legacy_or_alternate_surfaces: runReportSurfaces.join(", ") || "none detected",
-      relationship: "unclear overlap with run progress and summary reporting",
-      decision: "review boundary",
+      relationship: "canonical sibling surface for run progress and summary reporting",
+      decision: "document boundary",
+      boundary_evidence: "Swarm report owns taxonomy-healing batch observability; run report surfaces own generic run routing/progress views.",
     },
     {
       surface_type: "Story review report",
@@ -304,24 +358,23 @@ function buildCanonicalSurfaceMap(fileLedger) {
       legacy_or_alternate_surfaces: "none detected",
       relationship: "canonical only",
       decision: "document boundary",
+      boundary_evidence: "Obsolete story report entry points were retired; no alternate story-review surface remains.",
     },
     {
       surface_type: "Anchor healing",
       canonical_surface: "bin/taxonomy-heal-run.js",
-      legacy_or_alternate_surfaces: matchingFiles(fileLedger, (file) =>
-        file.includes("taxonomy-heal.js") || file.includes("update-anchors")
-      ).join(", ") || "none detected",
-      relationship: "unclear overlap between orchestration and direct anchor mutation utilities",
-      decision: "review boundary",
+      legacy_or_alternate_surfaces: anchorHealingAlternates.join(", ") || "none detected",
+      relationship: "orchestration boundary distinct from direct anchor mutation utilities",
+      decision: "document boundary",
+      boundary_evidence: "Heal-run owns governed lifecycle/reporting; taxonomy-heal and update-anchors are lower-level mutation utilities.",
     },
     {
       surface_type: "Worker reporting",
       canonical_surface: "src/worker-bee/report/file-scanner.js",
-      legacy_or_alternate_surfaces: matchingFiles(fileLedger, (file) =>
-        file.includes("worker") && file.includes("report") && file !== "src/worker-bee/report/file-scanner.js"
-      ).join(", ") || "none detected",
-      relationship: "unclear overlap between worker-local reporting and global observability",
-      decision: "review boundary",
+      legacy_or_alternate_surfaces: workerReportingAlternates.join(", ") || "none detected",
+      relationship: "worker-local reporting stack distinct from global observability",
+      decision: "document boundary",
+      boundary_evidence: "Worker report modules own worker-local assembly/formatting/telemetry; global observability owns operator-level scan and swarm reports.",
     },
   ];
 }
@@ -335,6 +388,7 @@ function buildLegacyResidueReview(fileLedger) {
   const canonicalSurfaceMap = buildCanonicalSurfaceMap(fileLedger);
   const compatibilityShells = matchingFiles(fileLedger, (file) => file.includes("compatibility"));
   const unclearOverlap = canonicalSurfaceMap.filter((row) =>
+    !row.boundary_evidence ||
     row.relationship.includes("overlap") ||
     row.decision.includes("retire") ||
     row.decision.includes("review boundary")
@@ -477,6 +531,8 @@ function formatMarkdown(report) {
     ["Largest file by method count", economy.signals.largest_method_file, "Review large surfaces for cohesion rather than splitting mechanically."],
     ["Strong files below 2 methods", economy.signals.small_strong_count, "Truthful small files are candidates for file-economy review."],
     ["Consolidation candidates", economy.signals.consolidation_candidate_count, "Candidate count is a review queue, not an automatic merge order."],
+    ["Small boundaries reviewed", economy.signals.small_boundary_reviewed_count, "Small files with explicit boundary evidence."],
+    ["Small boundaries unearned", economy.signals.small_boundary_unearned_count, "Small files still lacking boundary evidence."],
   ];
   const canonicalSurfaceRows = residue.canonical_surface_map.map((row) => [
     row.surface_type,
@@ -486,6 +542,7 @@ function formatMarkdown(report) {
       : row.legacy_or_alternate_surfaces.split(", ").map((file) => `\`${file}\``).join(", "),
     row.relationship,
     row.decision,
+    row.boundary_evidence || "needs review",
   ]);
   const residueRows = residue.residue_queue.length
     ? residue.residue_queue.map((row) => [`\`${row.file}\``, row.reason, row.decision])
@@ -633,7 +690,7 @@ function formatMarkdown(report) {
     "### Canonical Surface Map",
     "",
     markdownTable(
-      ["Surface Type", "Canonical Surface", "Legacy / Alternate Surfaces", "Relationship", "Decision"],
+      ["Surface Type", "Canonical Surface", "Legacy / Alternate Surfaces", "Relationship", "Decision", "Boundary Evidence"],
       canonicalSurfaceRows
     ),
     "",

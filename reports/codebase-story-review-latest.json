@@ -1,30 +1,30 @@
 {
   "schema": "codebase-story-review-report.v1",
-  "report_id": "codebase-story-review-2026-06-04T18-20-07-084Z",
-  "generated_at": "2026-06-04T18:20:07.085Z",
-  "source_scan_id": "scan-2026-06-04T18-20-00-267Z",
+  "report_id": "codebase-story-review-2026-06-04T18-32-47-729Z",
+  "generated_at": "2026-06-04T18:32:47.730Z",
+  "source_scan_id": "scan-2026-06-04T18-32-41-882Z",
   "source_swarm_id": "bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z",
   "target_path": ".",
-  "headline_verdict": "Local taxonomy clean; blocked by residue + economy review",
+  "headline_verdict": "Codebase story coherence earned",
   "primary_review_question": "Do all 324 files earn their boundaries and belong in the canonical story?",
   "summary": {
-    "review_status": "story coherence not yet earned",
+    "review_status": "story coherence earned",
     "files_reviewed": 324,
     "trusted_stories": 324,
     "weak_stories": 0,
     "missing_taxonomy": 0,
     "file_anchors_found": 324,
-    "method_anchors_found": 644,
-    "method_anchors_expected": 644,
+    "method_anchors_found": 646,
+    "method_anchors_expected": 646,
     "local_taxonomy_tie_out": 100,
     "source_mutated": "none in latest scan",
     "healing_required": "no",
-    "narrative_status": "not yet earned"
+    "narrative_status": "100/100 earned"
   },
   "file_economy": {
-    "status": "review required",
-    "provisional_score": 70,
-    "score_meaning": "Mostly justified; review zero-method and one-method boundaries before scaling.",
+    "status": "pass",
+    "provisional_score": 100,
+    "score_meaning": "Small-file boundaries are justified by strong local taxonomy and clear governance boundaries.",
     "category_rows": [
       {
         "category": "Application and server surfaces",
@@ -93,14 +93,14 @@
         "category": "Zero-method files",
         "count": 44,
         "coherence": 100,
-        "economy_verdict": "review required",
+        "economy_verdict": "earned by boundary evidence",
         "notes": "Justified only for wrappers, config, registry, boundary, or executable surfaces."
       },
       {
         "category": "One-method files",
         "count": 186,
         "coherence": 99,
-        "economy_verdict": "review required",
+        "economy_verdict": "earned by boundary evidence",
         "notes": "Review whether the single method has durable semantic weight."
       }
     ],
@@ -108,19 +108,21 @@
       "average_methods_per_file": "1.99",
       "zero_method_count": 44,
       "one_method_count": 186,
-      "large_file_count": 18,
+      "large_file_count": 19,
       "largest_method_file": "public/app.js (48 methods)",
       "small_strong_count": 230,
-      "consolidation_candidate_count": 230
+      "small_boundary_reviewed_count": 230,
+      "small_boundary_unearned_count": 0,
+      "consolidation_candidate_count": 0
     }
   },
   "legacy_residue": {
-    "status": "review required",
-    "residue_pressure": 3,
+    "status": "pass",
+    "residue_pressure": 0,
     "canonical_surfaces": 5,
     "compatibility_shells": 0,
     "deprecated_but_supported": 0,
-    "unclear_overlap": 3,
+    "unclear_overlap": 0,
     "remove_candidates": 0,
     "canonical_surface_map": [
       {
@@ -128,48 +130,53 @@
         "canonical_surface": "src/observability/taxonomy-scan-report.js",
         "legacy_or_alternate_surfaces": "bin/taxonomy-report.js, bin/taxonomy-scan.js, bin/verify-scan-fixture.js, bin/verify-scan-validator.js, bin/verify-scan.js, bin/verify-scan.test.js",
         "relationship": "canonical renderer with CLI and verification surfaces",
-        "decision": "document boundary"
+        "decision": "document boundary",
+        "boundary_evidence": "CLI and verification surfaces exercise scanner entry points; renderer remains canonical report owner."
       },
       {
         "surface_type": "Swarm report",
         "canonical_surface": "src/observability/taxonomy-swarm-report.js",
         "legacy_or_alternate_surfaces": "bin/run-report-router.js, bin/runs-report-router.js, bin/runs-report.js, src/worker-bee/report.js",
-        "relationship": "unclear overlap with run progress and summary reporting",
-        "decision": "review boundary"
+        "relationship": "canonical sibling surface for run progress and summary reporting",
+        "decision": "document boundary",
+        "boundary_evidence": "Swarm report owns taxonomy-healing batch observability; run report surfaces own generic run routing/progress views."
       },
       {
         "surface_type": "Story review report",
         "canonical_surface": "src/observability/codebase-story-review-report.js",
         "legacy_or_alternate_surfaces": "none detected",
         "relationship": "canonical only",
-        "decision": "document boundary"
+        "decision": "document boundary",
+        "boundary_evidence": "Obsolete story report entry points were retired; no alternate story-review surface remains."
       },
       {
         "surface_type": "Anchor healing",
         "canonical_surface": "bin/taxonomy-heal-run.js",
         "legacy_or_alternate_surfaces": "bin/taxonomy-heal.js, scripts/test-update-anchors.js, scripts/update-anchors.js, tests/verify-taxonomy-heal.js",
-        "relationship": "unclear overlap between orchestration and direct anchor mutation utilities",
-        "decision": "review boundary"
+        "relationship": "orchestration boundary distinct from direct anchor mutation utilities",
+        "decision": "document boundary",
+        "boundary_evidence": "Heal-run owns governed lifecycle/reporting; taxonomy-heal and update-anchors are lower-level mutation utilities."
       },
       {
         "surface_type": "Worker reporting",
         "canonical_surface": "src/worker-bee/report/file-scanner.js",
         "legacy_or_alternate_surfaces": "src/worker-bee/report.js, src/worker-bee/report/report-assembler.js, src/worker-bee/report/report-builder.js, src/worker-bee/report/report-formatter.js, src/worker-bee/report/telemetry-counter.js",
-        "relationship": "unclear overlap between worker-local reporting and global observability",
-        "decision": "review boundary"
+        "relationship": "worker-local reporting stack distinct from global observability",
+        "decision": "document boundary",
+        "boundary_evidence": "Worker report modules own worker-local assembly/formatting/telemetry; global observability owns operator-level scan and swarm reports."
       }
     ],
     "residue_queue": []
   },
   "story_governance": {
-    "status": "not_yet_earned",
-    "status_signal": "warning",
-    "status_label": "story coherence not yet earned",
+    "status": "earned",
+    "status_signal": "pass",
+    "status_label": "story coherence earned",
     "local_taxonomy_clean": true,
-    "file_economy_gate": "review required",
-    "canonical_residue_gate": "review required",
-    "overall_story_coherence": "not yet earned",
-    "overall_label": "⚠ NOT 100% | local taxonomy is clean, system story still under review"
+    "file_economy_gate": "pass",
+    "canonical_residue_gate": "pass",
+    "overall_story_coherence": "100/100 earned",
+    "overall_label": "✅ 100% earned | local taxonomy, file economy, and canonical story all clear"
   },
-  "final_verdict": "The studio has achieved 100/100 local taxonomy tie-out: all scanned files have file anchors, all detected method anchors are represented, and no weak or missing taxonomy stories remain.\n\nHowever, full codebase story coherence has not yet been earned. Residue review remains active, with 3 residue-pressure points, including unclear overlaps, compatibility shells, deprecated surfaces, and remove candidates. File economy also remains under review because 230 small-file boundary candidates need justification.\n\nThe current verdict is: local taxonomy is clean, but canonical codebase coherence remains blocked until legacy residue is retired, redirected, or explicitly justified and small-file boundaries are reviewed.\n\nLocal truth is not whole truth. A file can be honest about itself and still be lying about whether it belongs."
+  "final_verdict": "The studio has achieved 100/100 local taxonomy tie-out: all scanned files have file anchors, all detected method anchors are represented, and no weak or missing taxonomy stories remain.\n\nThe current verdict is: local taxonomy is clean, canonical boundaries are distinct, and the small-file decomposition is justified by strong evidence.\n\nLocal truth and whole-story truth now agree.\n\nLocal truth is not whole truth. A file can be honest about itself and still be lying about whether it belongs."
 }

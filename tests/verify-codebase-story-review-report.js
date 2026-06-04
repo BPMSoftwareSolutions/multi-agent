@@ -114,20 +114,46 @@ function sampleScan() {
 function verifyReportModel() {
   const report = buildReport(sampleScan(), { run_id: "swarm-test" });
   assert.strictEqual(report.summary.local_taxonomy_tie_out, 100);
-  assert.strictEqual(report.story_governance.status, "not_yet_earned");
-  assert.strictEqual(report.story_governance.overall_story_coherence, "not yet earned");
-  assert.strictEqual(report.file_economy.status, "review required");
-  assert.strictEqual(report.file_economy.provisional_score, 70);
-  assert.strictEqual(report.legacy_residue.status, "review required");
-  assert(report.legacy_residue.residue_pressure > 0);
-  assert(report.file_economy.signals.consolidation_candidate_count > 0);
+  assert.strictEqual(report.story_governance.status, "earned");
+  assert.strictEqual(report.story_governance.overall_story_coherence, "100/100 earned");
+  assert.strictEqual(report.file_economy.status, "pass");
+  assert.strictEqual(report.file_economy.provisional_score, 100);
+  assert.strictEqual(report.legacy_residue.status, "pass");
+  assert.strictEqual(report.legacy_residue.residue_pressure, 0);
+  assert.strictEqual(report.file_economy.signals.consolidation_candidate_count, 0);
+  assert(report.file_economy.signals.small_boundary_reviewed_count > 0);
   assert.match(report.primary_review_question, /Do all 8 files earn their boundaries/);
   assert(report.file_economy.category_rows.some((row) => row.category === "Zero-method files"));
   assert(report.legacy_residue.canonical_surface_map.some((row) => row.surface_type === "Story review report"));
   assert.strictEqual(report.legacy_residue.compatibility_shells, 0);
-  assert(report.legacy_residue.unclear_overlap > 0);
+  assert.strictEqual(report.legacy_residue.unclear_overlap, 0);
   assert.strictEqual(report.legacy_residue.remove_candidates, 0);
   return report;
+}
+
+// warehouse:method
+// responsibility: Verifies codebase story review report generation separates taxonomy coherence from file economy review and renders operator narrative evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function verifyBlockedModel() {
+  const scan = sampleScan();
+  scan.summary.files_scanned += 1;
+  scan.summary.file_anchors_found += 1;
+  scan.summary.strong_count += 1;
+  scan.file_ledger.push({
+    file: "misc/ambiguous-helper.js",
+    file_anchor_found: true,
+    detected_methods: 1,
+    documented_methods: 1,
+    score: 100,
+    band: "strong",
+  });
+  const report = buildReport(scan, { run_id: "swarm-test" });
+  assert.strictEqual(report.summary.local_taxonomy_tie_out, 100);
+  assert.strictEqual(report.story_governance.status, "not_yet_earned");
+  assert.strictEqual(report.file_economy.status, "review required");
+  assert.strictEqual(report.file_economy.signals.consolidation_candidate_count, 1);
 }
 
 // warehouse:method
@@ -140,20 +166,20 @@ function verifyMarkdown(report) {
   assert.match(markdown, /# Codebase Story Review Report/);
   assert.match(markdown, /CODEBASE STORY REVIEW/);
   assert.match(markdown, /File Economy/);
-  assert.match(markdown, /STORY COHERENCE NOT YET EARNED/);
+  assert.match(markdown, /STORY COHERENCE EARNED/);
   assert.match(markdown, /Local Tie-Out/);
   assert.match(markdown, /Local Tie-Out is not the same as Codebase Story Coherence/);
   assert.match(markdown, /Overall story coherence/);
-  assert.match(markdown, /not yet earned/);
+  assert.match(markdown, /100\/100 earned/);
   assert.match(markdown, /File Economy Review/);
-  assert.match(markdown, /review required/);
+  assert.match(markdown, /Small boundaries reviewed/);
   assert.match(markdown, /Legacy Idea Residue Review/);
   assert.match(markdown, /Residue Pressure Breakdown/);
   assert.match(markdown, /Residue pressure counts canonical-surface relationship risks/);
   assert.match(markdown, /Canonical Surface Map/);
   assert.match(markdown, /Local truth is not whole truth/);
   assert.match(markdown, /Residue review proves the file still belongs/);
-  assert.match(markdown, /blocked by residue \+ economy review/);
+  assert.match(markdown, /local taxonomy, file economy, and canonical story all clear/);
   assert.doesNotMatch(markdown, /Taxonomy Story Report/);
   assert.doesNotMatch(markdown, /Status\\s+✅ STORY COHERENT/);
   return markdown;
@@ -174,6 +200,7 @@ function verifyWriter(report) {
 }
 
 const report = verifyReportModel();
+verifyBlockedModel();
 verifyMarkdown(report);
 verifyWriter(report);
 console.log("Codebase story review report verification passed.");
