@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Runs observable single file taxonomy healing by rendering ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
 // actor: taxonomy_heal_runner
 // role: orchestrator
 // source_truth: implementation
@@ -10,9 +10,32 @@ const path = require("path");
 const { buildTaxonomyCaseFile } = require("./taxonomy-case-file");
 const { applyExpectedTaxonomy } = require("./taxonomy-heal");
 const { buildFileEvidence } = require("./taxonomy-evidence-bundle");
+const { renderProgressBar } = require("../src/observability/ascii-components");
+
+const HEALING_PROGRESS_CONTRACT = {
+  component_key: "taxonomy_healing_score_progress",
+  component_kind: "ascii.progress",
+  contract_version: "ascii_component.v1",
+  bindings: {
+    value: "$.score.current",
+    max: "$.score.max",
+    label: "$.score.label",
+    status: "$.state",
+  },
+  rendering: {
+    width: 24,
+    style: "digital_block",
+    show_percent: true,
+    show_fraction: false,
+  },
+  authority: {
+    source_truth_required: true,
+    fail_on_missing_binding: true,
+  },
+};
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by rendering ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -24,7 +47,7 @@ function markdownValue(value) {
 }
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by rendering ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -37,7 +60,7 @@ function markdownTable(headers, rows) {
 }
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by rendering ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -46,7 +69,7 @@ function formatScore(score) {
 }
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by rendering ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -58,7 +81,7 @@ function formatBooleanBadge(value) {
 }
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by rendering ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -75,33 +98,26 @@ function formatStatusBadge(state) {
 }
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by rendering ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
-// actor: method_implementation
-// role: implementation
-// source_truth: implementation
-function clampPercent(value) {
-  if (typeof value !== "number") {
-    return null;
-  }
-  return Math.max(0, Math.min(100, value));
-}
-
-// warehouse:method
-// responsibility: Runs observable single file taxonomy healing by rendering ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 function formatProgressBar(value, width = 24) {
-  const percent = clampPercent(value);
-  if (percent === null) {
-    return `[${"-".repeat(width)}] pending`;
-  }
-  const filled = Math.round((percent / 100) * width);
-  return `[${"#".repeat(filled)}${"-".repeat(width - filled)}] ${percent}%`;
+  return renderProgressBar({
+    value,
+    max: 100,
+    contract: {
+      ...HEALING_PROGRESS_CONTRACT,
+      rendering: {
+        ...HEALING_PROGRESS_CONTRACT.rendering,
+        width,
+      },
+    },
+  });
 }
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by rendering ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -122,7 +138,17 @@ function formatPhaseTrail(currentPhase) {
 }
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by rendering ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function formatScoreProjection(score) {
+  const label = formatScore(score) || "pending";
+  return `${label.padEnd(8, " ")} ${formatProgressBar(score)}`;
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -135,7 +161,7 @@ function consoleText(value, width) {
 }
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by rendering ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -144,14 +170,14 @@ function consoleLine(label, value) {
 }
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by rendering ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 function formatOperatorConsole(status) {
   const border = "+---------------------------------------------------------------------------------------+";
-  const scoreBefore = formatProgressBar(status.score_before);
-  const scoreAfter = formatProgressBar(status.score_after);
+  const scoreBefore = formatScoreProjection(status.score_before);
+  const scoreAfter = formatScoreProjection(status.score_after);
   const lines = [
     "```text",
     border,
@@ -171,7 +197,7 @@ function formatOperatorConsole(status) {
 }
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by rendering ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -184,7 +210,7 @@ function formatScoreDelta(before, after) {
 }
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by rendering ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -259,7 +285,7 @@ function formatHealingMarkdown(status) {
 }
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by rendering ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -273,7 +299,7 @@ function writeHealingStatus(reportsDir, runDir, status) {
 }
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by rendering ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -339,7 +365,7 @@ function runObservableTaxonomyHeal(filePath, root, reportsDir) {
 }
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by rendering ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -372,6 +398,7 @@ module.exports = {
   formatOperatorConsole,
   formatPhaseTrail,
   formatProgressBar,
+  formatScoreProjection,
   formatStatusBadge,
   markdownTable,
   markdownValue,
