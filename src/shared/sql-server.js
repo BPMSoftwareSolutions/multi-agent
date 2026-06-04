@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides SQL Server integration for session persistence, app state storage, and OAuth token management via SQL queries
+// responsibility: Persists and retrieves session state, app state, and OAuth tokens from SQL Server database
 // actor: shared
 // role: persistence_provider
 // source_truth: implementation
@@ -18,109 +18,8 @@ const {
 
 let schemaReady = false;
 
-// warehouse:method
-// responsibility: Reads SQL Server configuration from environment variables, returns connection config with defaults
-// actor: shared
-// role: config_provider
-// source_truth: implementation
-function getSqlConfig() {
-  return {
-    server: process.env.SQL_SERVER_INSTANCE || process.env.SQL_SERVER || "BPMHOMEOFFICE",
-    database: process.env.SQL_DATABASE || "ai-engine",
-    schema: process.env.SQL_SCHEMA || "studio",
-    username: process.env.SQL_USER || "",
-    password: process.env.SQL_PASSWORD || ""
-  };
-}
-
-// warehouse:method
-// responsibility: Escapes and wraps value as SQL string literal with Unicode prefix and null handling
-// actor: shared
-// role: sql_literal_escaper
-// source_truth: implementation
-function sqlStringLiteral(value) {
-  if (value === null || value === undefined) {
-    return "NULL";
-  }
-
-  const normalized = String(value).replace(/'/g, "''");
-  return `N'${normalized}'`;
-}
-
-// warehouse:method
-// responsibility: Builds sqlcmd command-line arguments array with server, database, auth, and output formatting options
-// actor: shared
-// role: sqlcmd_args_builder
-// source_truth: implementation
-function buildSqlcmdArgs(databaseOverride, inputFile) {
-  const config = getSqlConfig();
-  const args = ["-S", config.server, "-d", databaseOverride || config.database];
-
-  if (config.username && config.password) {
-    args.push("-U", config.username, "-P", config.password);
-  } else {
-    args.push("-E");
-  }
-
-  args.push("-i", inputFile, "-w", "65535", "-y", "0", "-Y", "0");
-  return args;
-}
-
-// warehouse:method
-// responsibility: Writes SQL query to temp file, executes via sqlcmd, cleans up temp file, returns raw output
-// actor: shared
-// role: sql_executor
-// source_truth: implementation
-function runSql(query, databaseOverride) {
-  const tempFile = path.join(
-    os.tmpdir(),
-    `multi-agent-studio-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.sql`
-  );
-
-  fs.writeFileSync(tempFile, query, "utf8");
-  try {
-    const output = execFileSync("sqlcmd", buildSqlcmdArgs(databaseOverride, tempFile), {
-      cwd: process.cwd(),
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "pipe"]
-    });
-
-    return String(output || "").trim();
-  } finally {
-    try {
-      fs.unlinkSync(tempFile);
-    } catch {
-      // Ignore cleanup failures for temp SQL files.
-    }
-  }
-}
-
-// warehouse:method
-// responsibility: Executes SQL query and parses JSON output, finds first JSON object or array, handles empty results
-// actor: shared
-// role: sql_json_parser
-// source_truth: implementation
-function runSqlJson(query, databaseOverride) {
-  const output = runSql(query, databaseOverride).trim();
-  if (!output) {
-    return null;
-  }
-
-  const objectIndex = output.indexOf("{");
-  const arrayIndex = output.indexOf("[");
-  let jsonStart = -1;
-
-  if (arrayIndex !== -1 && objectIndex !== -1) {
-    jsonStart = Math.min(arrayIndex, objectIndex);
-  } else {
-    jsonStart = arrayIndex !== -1 ? arrayIndex : objectIndex;
-  }
-
-  if (jsonStart > 0) {
-    return JSON.parse(output.slice(jsonStart));
-  }
-  return JSON.parse(output);
-}
+// Note: getSqlConfig, sqlStringLiteral, buildSqlcmdArgs, runSql, and runSqlJson
+// are imported from sql-helpers.js
 
 // warehouse:method
 // responsibility: Ensures schema exists and creates required tables (sessions, app_state, oauth_tokens) if missing

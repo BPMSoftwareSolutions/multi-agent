@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides action queuing, approval workflow, and worker execution for file operations, including recommendation validation and status management
+// responsibility: Provides action queuing, approval workflow, and worker execution for file operations across the system
 // actor: shared
 // role: action_handler
 // source_truth: implementation
@@ -83,107 +83,8 @@ function ensureOperationsState(session) {
   return session.operations;
 }
 
-// warehouse:method
-// responsibility: Normalizes value to trimmed string or null, used for safe value coercion
-// actor: shared
-// role: string_normalizer
-// source_truth: implementation
-function toTrimmedString(value) {
-  return typeof value === "string" && value.trim() ? value.trim() : null;
-}
-
-// warehouse:method
-// responsibility: Normalizes value to array of trimmed strings, filters empty items, used for tags and similar lists
-// actor: shared
-// role: array_normalizer
-// source_truth: implementation
-function toStringArray(value) {
-  return Array.isArray(value)
-    ? value.map((item) => String(item || "").trim()).filter(Boolean)
-    : [];
-}
-
-// warehouse:method
-// responsibility: Validates and normalizes approval status to approved, needs_human_review, or rejected; defaults to approved
-// actor: shared
-// role: approval_status_normalizer
-// source_truth: implementation
-function normalizeApprovalStatus(value) {
-  const normalized = toTrimmedString(value);
-  if (normalized && APPROVAL_STATUSES.has(normalized)) {
-    return normalized;
-  }
-  return "approved";
-}
-
-// warehouse:method
-// responsibility: Validates and normalizes risk level to low, medium, or high; defaults to medium
-// actor: shared
-// role: risk_level_normalizer
-// source_truth: implementation
-function normalizeRiskLevel(value) {
-  const normalized = toTrimmedString(value);
-  if (["low", "medium", "high"].includes(normalized)) {
-    return normalized;
-  }
-  return "medium";
-}
-
-// warehouse:method
-// responsibility: Normalizes action recommendation input, validates fields, assigns defaults for ids, creates idempotency key based on action identity
-// actor: shared
-// role: recommendation_normalizer
-// source_truth: implementation
-function normalizeActionRecommendation(input, context = {}) {
-  if (!input || typeof input !== "object") {
-    return null;
-  }
-
-  const actionType = toTrimmedString(input.action_type || input.actionType);
-  if (!actionType || !ACTION_TYPES.has(actionType)) {
-    return null;
-  }
-
-  const fileId =
-    toTrimmedString(input.file_id || input.fileId) ||
-    toTrimmedString(input.item_id || input.itemId) ||
-    `file_${uuidv4()}`;
-
-  const itemId =
-    toTrimmedString(input.item_id || input.itemId) ||
-    toTrimmedString(input.file_id || input.fileId) ||
-    fileId;
-
-  const currentParentId =
-    toTrimmedString(input.current_parent_id || input.currentParentId) || "inbox";
-  const currentName = toTrimmedString(input.current_name || input.currentName) || fileId;
-  const expectedRevision = Number(input.expected_revision || input.expectedRevision || 1);
-
-  return {
-    recommendationId:
-      toTrimmedString(input.recommendation_id || input.recommendationId) || `rec_${uuidv4()}`,
-    itemId,
-    fileId,
-    provider: toTrimmedString(input.provider) || null,
-    actionType,
-    approvalStatus: normalizeApprovalStatus(input.approval_status || input.approvalStatus),
-    approvedBy:
-      toTrimmedString(input.approved_by || input.approvedBy) ||
-      context.approvedBy ||
-      "reviewer+rules",
-    rationale: toTrimmedString(input.rationale) || "",
-    riskLevel: normalizeRiskLevel(input.risk_level || input.riskLevel),
-    currentParentId,
-    currentName,
-    targetParentId: toTrimmedString(input.target_parent_id || input.targetParentId),
-    newName: toTrimmedString(input.new_name || input.newName),
-    tags: toStringArray(input.tags),
-    expectedRevision: Number.isFinite(expectedRevision) && expectedRevision > 0 ? expectedRevision : 1,
-    idempotencyKey:
-      toTrimmedString(input.idempotency_key || input.idempotencyKey) ||
-      `${context.sessionId || "session"}-${itemId}-${actionType}-${context.stageId || "stage"}-${context.roundNumber || 0}`
-  };
-}
+// Note: toTrimmedString, toStringArray, normalizeApprovalStatus, normalizeRiskLevel,
+// and normalizeActionRecommendation are imported from validation-helpers.js
 
 // warehouse:method
 // responsibility: Registers folder in operations state with metadata and current timestamp

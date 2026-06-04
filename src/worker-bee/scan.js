@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Scans filesystem for Python files, analyzes anchor state, applies file/method anchors with deterministic field computation, and provides text/path utilities for anchor processing
+// responsibility: Scans filesystem for Python files, analyzes anchor state, applies file/method anchors with deterministic field computation
 // actor: worker_bee_infrastructure
 // role: script_executor
 // source_truth: implementation
@@ -84,17 +84,7 @@ function hasFileAnchor(text) {
   return FILE_ANCHOR_RE.test(stripBom(text));
 }
 
-// warehouse:method
-// responsibility: Computes parents[N] index for repo root from code literal or path depth
-// actor: worker_bee_infrastructure
-// role: anchor_generator
-// source_truth: implementation
-function computeRepoRootDepth(text, relPosix) {
-  const literal = text.match(/\.parents\[(\d+)\]/);
-  if (literal) return parseInt(literal[1], 10);
-  const parts = relPosix.split("/");
-  return Math.max(parts.length - 1, 0);
-}
+// Note: computeRepoRootDepth is imported from text-utils.js
 
 // warehouse:method
 // responsibility: Finds Python files missing file anchors with precomputed deterministic fields
@@ -151,36 +141,7 @@ function buildAnchorBlock(modelFields, deterministic) {
   return lines.join("\n");
 }
 
-// warehouse:method
-// responsibility: Detects dominant line-ending style (CRLF or LF)
-// actor: worker_bee_infrastructure
-// role: script_executor
-// source_truth: implementation
-function dominantEol(text) {
-  return /\r\n/.test(text) ? "\r\n" : "\n";
-}
-
-// warehouse:method
-// responsibility: Splits text into segments preserving individual line endings
-// actor: worker_bee_infrastructure
-// role: script_executor
-// source_truth: implementation
-function splitKeepEnds(text) {
-  const segments = [];
-  const re = /([^\r\n]*)(\r\n|\r|\n|$)/g;
-  let m;
-  while ((m = re.exec(text)) !== null) {
-    segments.push({ text: m[1], eol: m[2] });
-    if (m[0] === "" && re.lastIndex >= text.length) break; // final empty match
-    if (re.lastIndex === m.index && m[2] === "") break;
-  }
-  // The trailing "$" match appends one empty segment; drop it if it duplicates EOF.
-  if (segments.length > 1) {
-    const last = segments[segments.length - 1];
-    if (last.text === "" && last.eol === "") segments.pop();
-  }
-  return segments;
-}
+// Note: dominantEol and splitKeepEnds are imported from text-utils.js
 
 // warehouse:method
 // responsibility: Inserts anchor block after shebang/coding declaration at file start
@@ -210,60 +171,7 @@ function insertAnchor(absPath, anchorBlock) {
 
 // --- Anchor quality validation + replacement -------------------------------
 
-// Note: "none"/"n/a" are NOT placeholders — "None" is a legitimate value for an
-// input/output contract (a no-arg method). Treating it as a placeholder caused
-// non-convergence (the bee would rewrite a valid anchor forever).
-const PLACEHOLDER_TOKENS = new Set([
-  "",
-  "auto",
-  "unknown",
-  "tbd",
-  "todo",
-  "placeholder",
-  "xxx",
-]);
-
-// warehouse:method
-// responsibility: Determines whether a value is a placeholder or missing
-// actor: worker_bee_infrastructure
-// role: script_executor
-// source_truth: implementation
-function isPlaceholder(value) {
-  if (value === undefined || value === null) return true;
-  const v = String(value).trim().toLowerCase();
-  if (PLACEHOLDER_TOKENS.has(v)) return true;
-  if (v.startsWith("[") && v.endsWith("]")) return true;
-  return false;
-}
-
-// warehouse:method
-// responsibility: Validates responsibility field for specificity and prose quality
-// actor: worker_bee_infrastructure
-// role: script_executor
-// source_truth: implementation
-function isGenericResponsibility(value) {
-  if (isPlaceholder(value)) return true;
-  const v = String(value).trim();
-  if (v.length < 8) return true;
-  // No whitespace at all => it's an identifier/name, not a description.
-  if (!/\s/.test(v)) return true;
-  // Mostly underscores with little prose (e.g. "do_thing here") also reads as a name.
-  const lower = v.toLowerCase();
-  const words = lower.split(/\s+/);
-  if (words.length <= 2 && /(module|file|script|client|handler|util|utils|helper)$/.test(lower)) {
-    return true;
-  }
-  return false;
-}
-
-// warehouse:method
-// responsibility: Normalizes path to forward slashes and trims whitespace
-// actor: worker_bee_infrastructure
-// role: script_executor
-// source_truth: implementation
-function normPath(p) {
-  return String(p || "").replace(/\\/g, "/").trim();
-}
+// Note: isPlaceholder, isGenericResponsibility, and normPath are imported from text-utils.js
 
 // warehouse:method
 // responsibility: Parses first warehouse:file anchor block from lines array
