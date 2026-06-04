@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Approve-action command handler: parses action payload from CLI args or file, approves manual action, queues it to session operations, saves session state
+// responsibility: Orchestrates approve-action command: parses payload, queues action, saves session
 // actor: cli
 // role: command_handler
 // source_truth: implementation
@@ -7,11 +7,11 @@
 const fs = require("fs");
 
 const { getSession, getCurrentSessionId, saveSession } = require("../../core/session-store");
-const { approveManualAction } = require("../../shared/actions");
+const { parsePayload, queueApprovedAction } = require("./approval-processor");
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: Approve-action command handler: parses action payload and queues approved action to session
+// responsibility: Orchestrates action approval workflow: validates session, parses payload, queues and saves
 // actor: cli
 // role: command_handler
 // source_truth: implementation
@@ -26,27 +26,17 @@ async function approveActionCommand(options = {}) {
       exit(1, "Error: approve-action requires --payload or --payload-file.");
     }
 
-    let payload;
-    try {
-      const rawPayload = options.payloadFile
-        ? fs.readFileSync(options.payloadFile, "utf8")
-        : options.payload;
-      payload = JSON.parse(rawPayload);
-    } catch (error) {
-      exit(1, `Error: Invalid JSON payload: ${error.message}`);
-    }
+    const rawPayload = options.payloadFile
+      ? fs.readFileSync(options.payloadFile, "utf8")
+      : options.payload;
+    const payload = parsePayload(rawPayload);
 
     const session = getSession(sessionId);
     if (!session) {
       exit(1, `Error: Session not found: ${sessionId}`);
     }
 
-    const summary = approveManualAction(session, payload, {
-      stageId: session.currentStage,
-      roundNumber: session.stages[session.currentStage].rounds.length,
-      approvedBy: "manual_cli"
-    });
-
+    const summary = queueApprovedAction(session, payload);
     saveSession(session);
 
     if (options.json) {
