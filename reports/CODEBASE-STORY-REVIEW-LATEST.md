@@ -2,8 +2,8 @@
 
 **Subtitle:** A narrative review of taxonomy coherence, responsibility boundaries, and file-count justification.
 
-**Generated:** 2026-06-04T16:59:42.053Z
-**Source scan:** `scan-2026-06-04T16-56-42-122Z`
+**Generated:** 2026-06-04T17:08:21.327Z
+**Source scan:** `scan-2026-06-04T17-08-16-051Z`
 **Source swarm:** `bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z`
 
 ```text
@@ -12,14 +12,14 @@
 +------------------------------------------------------------------------------------------------+
 | Status        ⚠ STORY COHERENCE NOT YET EARNED                                                 |
 | Target        📁 .                                                                             |
-| Files         326 reviewed | 326 locally trusted | 0 weak | 0 missing                          |
+| Files         324 reviewed | 324 locally trusted | 0 weak | 0 missing                          |
 | Methods       644 anchored | 644 locally tied out                                              |
 | Local Tie-Out ✅ 100/100  ████████████████████████ 100%                                         |
-| Canonical     ⚠ REVIEW REQUIRED | residue pressure: 6                                          |
-| File Economy  ⚠ REVIEW REQUIRED | 233 small-file boundary candidates                           |
-| Legacy        ⚠ ACTIVE | 1 remove candidate | 4 unclear overlaps | 1 compatibility shell       |
+| Canonical     ⚠ REVIEW REQUIRED | residue pressure: 3                                          |
+| File Economy  ⚠ REVIEW REQUIRED | 230 small-file boundary candidates                           |
+| Legacy        ⚠ ACTIVE | 0 remove candidate | 3 unclear overlaps | 0 compatibility shell       |
 | Overall       ⚠ NOT 100% | local taxonomy is clean, system story still under review            |
-| Main Question Do all 326 files earn their boundaries and belong in the canonical story?        |
+| Main Question Do all 324 files earn their boundaries and belong in the canonical story?        |
 | Verdict       Local taxonomy clean; blocked by residue + economy review                        |
 +------------------------------------------------------------------------------------------------+
 ```
@@ -46,17 +46,17 @@ The studio has reached a trusted local taxonomy state. Every scanned file has a 
 
 That does not mean whole-codebase story coherence has been earned. The earlier false-narrative problem has been resolved at the local file/method taxonomy layer, but residue and boundary review still decide whether those files belong in the current architecture.
 
-The current governance posture is not yet earned. This review evaluates whether 326 files represent healthy responsibility separation or unnecessary fragmentation, and whether any legacy surfaces still preserve old system ideas that should be retired, redirected, or explicitly justified.
+The current governance posture is not yet earned. This review evaluates whether 324 files represent healthy responsibility separation or unnecessary fragmentation, and whether any legacy surfaces still preserve old system ideas that should be retired, redirected, or explicitly justified.
 
 ## Current Story Snapshot
 
 | Signal | Value |
 | --- | --- |
-| Files reviewed | 326 |
-| Locally trusted stories | 326 |
+| Files reviewed | 324 |
+| Locally trusted stories | 324 |
 | Weak stories | 0 |
 | Missing taxonomy | 0 |
-| File anchors | 326/326 |
+| File anchors | 324/324 |
 | Method anchors | 644/644 |
 | Local taxonomy tie-out | 100/100 |
 | Overall story coherence | not yet earned |
@@ -66,7 +66,7 @@ The current governance posture is not yet earned. This review evaluates whether 
 | Economy status | review required |
 | File economy score | 70/100 provisional |
 | Residue status | review required |
-| Residue pressure | 6 |
+| Residue pressure | 3 |
 
 ## Local Taxonomy Verdict
 
@@ -74,7 +74,7 @@ The local taxonomy tie-out result is accepted. The scanner found complete file-l
 
 | Evidence Layer | Result | Meaning |
 | --- | --- | --- |
-| File anchors | 326/326 | Every scanned file has a file-level taxonomy story. |
+| File anchors | 324/324 | Every scanned file has a file-level taxonomy story. |
 | Method anchors | 644/644 | Detected behavior is represented in method taxonomy. |
 | File-method tie-out | 100/100 | File responsibilities and method responsibilities align locally. |
 | Missing taxonomy | 0 | No dark files remain in the latest scan. |
@@ -87,7 +87,7 @@ The local taxonomy tie-out result is accepted. The scanner found complete file-l
 ### Main Question
 
 ```text
-Do all 326 files earn their boundaries and belong in the canonical story?
+Do all 324 files earn their boundaries and belong in the canonical story?
 ```
 
 ### Short Answer
@@ -105,7 +105,7 @@ The remaining review question is whether zero-method and one-method files carry 
 | Category | Count | Coherence | Economy Verdict | Notes |
 | --- | --- | --- | --- | --- |
 | Application and server surfaces | 80 | 99/100 | economy review required | Justified when API, browser, route, and integration boundaries stay navigable. |
-| CLI and command surfaces | 51 | 100/100 | directionally justified | Justified when command behavior and operator entry points stay isolated. |
+| CLI and command surfaces | 49 | 100/100 | directionally justified | Justified when command behavior and operator entry points stay isolated. |
 | Core runtime | 40 | 100/100 | directionally justified | Justified when each module owns one runtime responsibility. |
 | Observability and reports | 2 | 100/100 | directionally justified | Justified when report rendering stays isolated from scoring and healing. |
 | Shared utilities | 42 | 99/100 | economy review required | Review for helper fragmentation and repeated one-method modules. |
@@ -113,20 +113,20 @@ The remaining review question is whether zero-method and one-method files carry 
 | Taxonomy scanning | 14 | 100/100 | directionally justified | Justified when scanning, extraction, evidence, and healing stay separable. |
 | Tests and verification | 6 | 100/100 | directionally justified | Justified when tests protect coherence governance and report contracts. |
 | Worker-bee swarm | 73 | 100/100 | directionally justified | Justified when decomposition keeps agent work packets small and governable. |
-| Zero-method files | 45 | 100/100 | review required | Justified only for wrappers, config, registry, boundary, or executable surfaces. |
-| One-method files | 188 | 99/100 | review required | Review whether the single method has durable semantic weight. |
+| Zero-method files | 44 | 100/100 | review required | Justified only for wrappers, config, registry, boundary, or executable surfaces. |
+| One-method files | 186 | 99/100 | review required | Review whether the single method has durable semantic weight. |
 
 ## File Economy Signals
 
 | Signal | Value | Interpretation |
 | --- | --- | --- |
-| Average methods per file | 1.98 | Low averages may be justified by agent-safe boundaries, but deserve review. |
-| Files with 0 methods | 45 | Boundary, config, executable, and registry files may be legitimate. |
-| Files with 1 method | 188 | One-method files need semantic weight or test/governance value. |
+| Average methods per file | 1.99 | Low averages may be justified by agent-safe boundaries, but deserve review. |
+| Files with 0 methods | 44 | Boundary, config, executable, and registry files may be legitimate. |
+| Files with 1 method | 186 | One-method files need semantic weight or test/governance value. |
 | Files with 5+ methods | 18 | Larger files may be justified when they hold cohesive UI or orchestration flow. |
 | Largest file by method count | public/app.js (48 methods) | Review large surfaces for cohesion rather than splitting mechanically. |
-| Strong files below 2 methods | 233 | Truthful small files are candidates for file-economy review. |
-| Consolidation candidates | 233 | Candidate count is a review queue, not an automatic merge order. |
+| Strong files below 2 methods | 230 | Truthful small files are candidates for file-economy review. |
+| Consolidation candidates | 230 | Candidate count is a review queue, not an automatic merge order. |
 
 ## Legacy Idea Residue Review
 
@@ -145,11 +145,11 @@ Residue review proves the file still belongs in the current system story.
 | Metric | Value |
 | --- | --- |
 | Canonical surfaces | 5 |
-| Compatibility shells | 1 |
-| Deprecated but supported | 1 |
-| Unclear overlap | 4 |
-| Remove candidates | 1 |
-| Residue pressure | 6 |
+| Compatibility shells | 0 |
+| Deprecated but supported | 0 |
+| Unclear overlap | 3 |
+| Remove candidates | 0 |
+| Residue pressure | 3 |
 
 ### Residue Pressure Breakdown
 
@@ -157,11 +157,11 @@ Residue pressure counts canonical-surface relationship risks, not only individua
 
 | Pressure Type | Count | Meaning |
 | --- | --- | --- |
-| Compatibility shell | 1 | Old surface kept to redirect or support callers. |
-| Deprecated but supported | 1 | Old surface still intentionally supported. |
-| Unclear overlap | 4 | Canonical relationship not fully resolved. |
-| Remove candidate | 1 | Candidate for retirement. |
-| Actionable file queue | 2 | File-level items requiring a decision. |
+| Compatibility shell | 0 | Old surface kept to redirect or support callers. |
+| Deprecated but supported | 0 | Old surface still intentionally supported. |
+| Unclear overlap | 3 | Canonical relationship not fully resolved. |
+| Remove candidate | 0 | Candidate for retirement. |
+| Actionable file queue | 0 | File-level items requiring a decision. |
 
 ### Canonical Surface Map
 
@@ -169,7 +169,7 @@ Residue pressure counts canonical-surface relationship risks, not only individua
 | --- | --- | --- | --- | --- |
 | Taxonomy scan report | `src/observability/taxonomy-scan-report.js` | `bin/taxonomy-report.js`, `bin/taxonomy-scan.js`, `bin/verify-scan-fixture.js`, `bin/verify-scan-validator.js`, `bin/verify-scan.js`, `bin/verify-scan.test.js` | canonical renderer with CLI and verification surfaces | document boundary |
 | Swarm report | `src/observability/taxonomy-swarm-report.js` | `bin/run-report-router.js`, `bin/runs-report-router.js`, `bin/runs-report.js`, `src/worker-bee/report.js` | partial overlap with run progress and summary reporting | document boundary |
-| Story review report | `src/observability/codebase-story-review-report.js` | `bin/generate-story-report.js`, `bin/story-report-formatter.js` | legacy command redirected to canonical report | keep redirect only if needed; retire unused alternate surfaces |
+| Story review report | `src/observability/codebase-story-review-report.js` | none detected | canonical only | document boundary |
 | Anchor healing | `bin/taxonomy-heal-run.js` | `bin/taxonomy-heal.js`, `scripts/test-update-anchors.js`, `scripts/update-anchors.js`, `tests/verify-taxonomy-heal.js` | operational overlap between expected taxonomy healing and direct anchor mutation | choose mutation path per governance policy |
 | Worker reporting | `src/worker-bee/report/file-scanner.js` | `src/worker-bee/report.js`, `src/worker-bee/report/report-assembler.js`, `src/worker-bee/report/report-builder.js`, `src/worker-bee/report/report-formatter.js`, `src/worker-bee/report/telemetry-counter.js` | worker-specific reporting versus global observability | classify as canonical worker-local or retire |
 
@@ -177,8 +177,7 @@ Residue pressure counts canonical-surface relationship risks, not only individua
 
 | File | Reason | Decision |
 | --- | --- | --- |
-| `bin/generate-story-report.js` | Compatibility shell remains after canonical report surface was introduced. | Keep only while documented, otherwise retire. |
-| `bin/story-report-formatter.js` | Story-report naming overlaps with canonical Codebase Story Review narrative. | Retire, redirect, or justify as a distinct package artifact. |
+| none | No current residue queue items were detected from the scan ledger. | continue monitoring |
 
 ## Architecture Narrative
 
@@ -188,7 +187,7 @@ That decomposition is aligned with the operating model: agents need small, named
 
 ## Why The Current Decomposition May Be Justified
 
-The 326-file shape may be justified because coherence governance benefits from narrow boundaries. Smaller files can reduce the blast radius of automated repair, make worker assignment clearer, keep reports and scanners independently testable, and give agents stronger navigation cues.
+The 324-file shape may be justified because coherence governance benefits from narrow boundaries. Smaller files can reduce the blast radius of automated repair, make worker assignment clearer, keep reports and scanners independently testable, and give agents stronger navigation cues.
 
 ## Where The Current Decomposition May Be Excessive
 
@@ -239,7 +238,7 @@ Residue review tells us whether the story still belongs in the current canonical
 
 The studio has achieved 100/100 local taxonomy tie-out: all scanned files have file anchors, all detected method anchors are represented, and no weak or missing taxonomy stories remain.
 
-However, full codebase story coherence has not yet been earned. Residue review remains active, with 6 residue-pressure points, including unclear overlaps, compatibility shells, deprecated surfaces, and remove candidates. File economy also remains under review because 233 small-file boundary candidates need justification.
+However, full codebase story coherence has not yet been earned. Residue review remains active, with 3 residue-pressure points, including unclear overlaps, compatibility shells, deprecated surfaces, and remove candidates. File economy also remains under review because 230 small-file boundary candidates need justification.
 
 The current verdict is: local taxonomy is clean, but canonical codebase coherence remains blocked until legacy residue is retired, redirected, or explicitly justified and small-file boundaries are reviewed.
 
@@ -249,8 +248,8 @@ Local truth is not whole truth. A file can be honest about itself and still be l
 
 | Field | Value |
 | --- | --- |
-| Report ID | codebase-story-review-2026-06-04T16-59-42-051Z |
-| Source scan ID | scan-2026-06-04T16-56-42-122Z |
+| Report ID | codebase-story-review-2026-06-04T17-08-21-325Z |
+| Source scan ID | scan-2026-06-04T17-08-16-051Z |
 | Source swarm ID | bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z |
 | Target path | . |
-| Generated at | 2026-06-04T16:59:42.053Z |
+| Generated at | 2026-06-04T17:08:21.327Z |

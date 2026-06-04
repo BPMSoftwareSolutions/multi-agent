@@ -1,19 +1,19 @@
 {
   "schema": "codebase-story-review-report.v1",
-  "report_id": "codebase-story-review-2026-06-04T16-59-42-051Z",
-  "generated_at": "2026-06-04T16:59:42.053Z",
-  "source_scan_id": "scan-2026-06-04T16-56-42-122Z",
+  "report_id": "codebase-story-review-2026-06-04T17-08-21-325Z",
+  "generated_at": "2026-06-04T17:08:21.327Z",
+  "source_scan_id": "scan-2026-06-04T17-08-16-051Z",
   "source_swarm_id": "bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z",
   "target_path": ".",
   "headline_verdict": "Local taxonomy clean; blocked by residue + economy review",
-  "primary_review_question": "Do all 326 files earn their boundaries and belong in the canonical story?",
+  "primary_review_question": "Do all 324 files earn their boundaries and belong in the canonical story?",
   "summary": {
     "review_status": "story coherence not yet earned",
-    "files_reviewed": 326,
-    "trusted_stories": 326,
+    "files_reviewed": 324,
+    "trusted_stories": 324,
     "weak_stories": 0,
     "missing_taxonomy": 0,
-    "file_anchors_found": 326,
+    "file_anchors_found": 324,
     "method_anchors_found": 644,
     "method_anchors_expected": 644,
     "local_taxonomy_tie_out": 100,
@@ -35,7 +35,7 @@
       },
       {
         "category": "CLI and command surfaces",
-        "count": 51,
+        "count": 49,
         "coherence": 100,
         "economy_verdict": "directionally justified",
         "notes": "Justified when command behavior and operator entry points stay isolated."
@@ -91,37 +91,37 @@
       },
       {
         "category": "Zero-method files",
-        "count": 45,
+        "count": 44,
         "coherence": 100,
         "economy_verdict": "review required",
         "notes": "Justified only for wrappers, config, registry, boundary, or executable surfaces."
       },
       {
         "category": "One-method files",
-        "count": 188,
+        "count": 186,
         "coherence": 99,
         "economy_verdict": "review required",
         "notes": "Review whether the single method has durable semantic weight."
       }
     ],
     "signals": {
-      "average_methods_per_file": "1.98",
-      "zero_method_count": 45,
-      "one_method_count": 188,
+      "average_methods_per_file": "1.99",
+      "zero_method_count": 44,
+      "one_method_count": 186,
       "large_file_count": 18,
       "largest_method_file": "public/app.js (48 methods)",
-      "small_strong_count": 233,
-      "consolidation_candidate_count": 233
+      "small_strong_count": 230,
+      "consolidation_candidate_count": 230
     }
   },
   "legacy_residue": {
     "status": "review required",
-    "residue_pressure": 6,
+    "residue_pressure": 3,
     "canonical_surfaces": 5,
-    "compatibility_shells": 1,
-    "deprecated_but_supported": 1,
-    "unclear_overlap": 4,
-    "remove_candidates": 1,
+    "compatibility_shells": 0,
+    "deprecated_but_supported": 0,
+    "unclear_overlap": 3,
+    "remove_candidates": 0,
     "canonical_surface_map": [
       {
         "surface_type": "Taxonomy scan report",
@@ -140,9 +140,9 @@
       {
         "surface_type": "Story review report",
         "canonical_surface": "src/observability/codebase-story-review-report.js",
-        "legacy_or_alternate_surfaces": "bin/generate-story-report.js, bin/story-report-formatter.js",
-        "relationship": "legacy command redirected to canonical report",
-        "decision": "keep redirect only if needed; retire unused alternate surfaces"
+        "legacy_or_alternate_surfaces": "none detected",
+        "relationship": "canonical only",
+        "decision": "document boundary"
       },
       {
         "surface_type": "Anchor healing",
@@ -159,18 +159,7 @@
         "decision": "classify as canonical worker-local or retire"
       }
     ],
-    "residue_queue": [
-      {
-        "file": "bin/generate-story-report.js",
-        "reason": "Compatibility shell remains after canonical report surface was introduced.",
-        "decision": "Keep only while documented, otherwise retire."
-      },
-      {
-        "file": "bin/story-report-formatter.js",
-        "reason": "Story-report naming overlaps with canonical Codebase Story Review narrative.",
-        "decision": "Retire, redirect, or justify as a distinct package artifact."
-      }
-    ]
+    "residue_queue": []
   },
   "story_governance": {
     "status": "not_yet_earned",
@@ -182,5 +171,5 @@
     "overall_story_coherence": "not yet earned",
     "overall_label": "⚠ NOT 100% | local taxonomy is clean, system story still under review"
   },
-  "final_verdict": "The studio has achieved 100/100 local taxonomy tie-out: all scanned files have file anchors, all detected method anchors are represented, and no weak or missing taxonomy stories remain.\n\nHowever, full codebase story coherence has not yet been earned. Residue review remains active, with 6 residue-pressure points, including unclear overlaps, compatibility shells, deprecated surfaces, and remove candidates. File economy also remains under review because 233 small-file boundary candidates need justification.\n\nThe current verdict is: local taxonomy is clean, but canonical codebase coherence remains blocked until legacy residue is retired, redirected, or explicitly justified and small-file boundaries are reviewed.\n\nLocal truth is not whole truth. A file can be honest about itself and still be lying about whether it belongs."
+  "final_verdict": "The studio has achieved 100/100 local taxonomy tie-out: all scanned files have file anchors, all detected method anchors are represented, and no weak or missing taxonomy stories remain.\n\nHowever, full codebase story coherence has not yet been earned. Residue review remains active, with 3 residue-pressure points, including unclear overlaps, compatibility shells, deprecated surfaces, and remove candidates. File economy also remains under review because 230 small-file boundary candidates need justification.\n\nThe current verdict is: local taxonomy is clean, but canonical codebase coherence remains blocked until legacy residue is retired, redirected, or explicitly justified and small-file boundaries are reviewed.\n\nLocal truth is not whole truth. A file can be honest about itself and still be lying about whether it belongs."
 }

@@ -200,7 +200,7 @@ NEW: "Persists and retrieves session state, app state, and OAuth tokens
 
 ### Analysis Tools Enhanced (2)
 - `bin/analyze-story.js` — Boilerplate detection + weighted scoring
-- `bin/generate-story-report.js` — Regenerated with new data
+- `bin/codebase-story-review-report.js` — Regenerated with new data
 
 ### Configuration/Documentation (1)
 - `docs/PHASE-2-COMPLETION-REPORT.md` — This document
@@ -236,4 +236,3 @@ NEW: "Persists and retrieves session state, app state, and OAuth tokens
 4. Commit and generate Phase 3 report
 
 **Expected timeline**: Phase 3 should complete health score improvement to 38-42/100.
-

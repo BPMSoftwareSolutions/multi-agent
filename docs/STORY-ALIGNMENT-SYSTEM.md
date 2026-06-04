@@ -97,11 +97,11 @@ Action: Repair / Split / Re-anchor / Govern
 - Flag issues: too generic, isolated maintenance tasks, error-only methods
 - Score = (methods_aligned / total_methods) × 100
 
-### 3. Report Phase (`bin/generate-story-report.js`)
+### 3. Report Phase (`bin/codebase-story-review-report.js`)
 
-- Generates human-readable markdown narrative
-- Shows what each file claims vs. what methods do
-- Explains reasoning for coherence verdict
+- Generates the canonical codebase story review report
+- Separates taxonomy coherence from file-economy and residue review
+- Explains reasoning for the governance verdict
 - Outputs: `reports/CODEBASE-STORY-REVIEW-LATEST.md`
 
 ---

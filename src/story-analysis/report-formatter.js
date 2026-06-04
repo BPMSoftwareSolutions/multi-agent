@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: Formats coherence analysis into colored console output with weak/strong file scores and method alignment details
+// responsibility: Formats story analysis outputs into console coherence summaries and package story report JSON payloads
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Formats coherence analysis into colored console output with weak/strong file scores and method alignment details
+// responsibility: Formats story analysis outputs into console coherence summaries and package story report JSON payloads
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -49,4 +49,18 @@ function formatReport(report) {
   return output.join("\n");
 }
 
-module.exports = { formatReport };
+// warehouse:method
+// responsibility: Formats story analysis outputs into console coherence summaries and package story report JSON payloads
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function formatStoryReport(stories) {
+  return {
+    generated_at: new Date().toISOString(),
+    total_packages: stories.length,
+    packages_with_stories: stories.filter((story) => story.story !== "(responsibilities need clarity)").length,
+    stories,
+  };
+}
+
+module.exports = { formatReport, formatStoryReport };

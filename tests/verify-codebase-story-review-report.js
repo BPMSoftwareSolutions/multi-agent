@@ -47,18 +47,18 @@ function sampleScan() {
         band: "strong",
       },
       {
-        file: "bin/generate-story-report.js",
+        file: "src/story-analysis/report-formatter.js",
         file_anchor_found: true,
-        detected_methods: 0,
-        documented_methods: 0,
+        detected_methods: 2,
+        documented_methods: 2,
         score: 100,
         band: "strong",
       },
       {
-        file: "bin/story-report-formatter.js",
+        file: "src/observability/codebase-story-review-report.js",
         file_anchor_found: true,
-        detected_methods: 1,
-        documented_methods: 1,
+        detected_methods: 18,
+        documented_methods: 18,
         score: 100,
         band: "strong",
       },
@@ -99,6 +99,8 @@ function verifyReportModel() {
   assert.match(report.primary_review_question, /Do all 5 files earn their boundaries/);
   assert(report.file_economy.category_rows.some((row) => row.category === "Zero-method files"));
   assert(report.legacy_residue.canonical_surface_map.some((row) => row.surface_type === "Story review report"));
+  assert.strictEqual(report.legacy_residue.compatibility_shells, 0);
+  assert.strictEqual(report.legacy_residue.remove_candidates, 0);
   return report;
 }
 

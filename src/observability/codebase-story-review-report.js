@@ -287,6 +287,12 @@ function buildCanonicalSurfaceMap(fileLedger) {
   const runReportSurfaces = matchingFiles(fileLedger, (file) =>
     file.includes("runs-report") || file.includes("run-report") || file.endsWith("/report.js")
   );
+  const storyReviewRelationship = compatibilityStory.length || alternateStory.length
+    ? "legacy command redirected to canonical report"
+    : "canonical only";
+  const storyReviewDecision = compatibilityStory.length || alternateStory.length
+    ? "keep redirect only if needed; retire unused alternate surfaces"
+    : "document boundary";
   return [
     {
       surface_type: "Taxonomy scan report",
@@ -308,8 +314,8 @@ function buildCanonicalSurfaceMap(fileLedger) {
       surface_type: "Story review report",
       canonical_surface: "src/observability/codebase-story-review-report.js",
       legacy_or_alternate_surfaces: [...compatibilityStory, ...alternateStory].join(", ") || "none detected",
-      relationship: compatibilityStory.length ? "legacy command redirected to canonical report" : "canonical only",
-      decision: "keep redirect only if needed; retire unused alternate surfaces",
+      relationship: storyReviewRelationship,
+      decision: storyReviewDecision,
     },
     {
       surface_type: "Anchor healing",
