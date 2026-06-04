@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Packet schema and configuration: type-checks objects, merges swarm/workload packets with shallow-deep logic, removes undefined values, loads packet defaults from files, applies CLI overrides
+// responsibility: Delegator for packet schema and configuration management
 // actor: worker_bee_infrastructure
-// role: infrastructure
+// role: delegator
 // source_truth: implementation
 
 // The packet is the instruction that determines a bee's workload. The bee does
@@ -9,108 +9,14 @@
 // pattern in ai-engine: an external, declarative spec drives the worker.
 //
 // Nothing in run-file-swarm.js hardcodes a limit; every workload number is read
-// from the packet. Defaults live HERE, in one place, and can be overridden by a
-// packet file (--packet) or by CLI flags.
+// from the packet. Defaults live in packet-modules/packet-builder.js, in one place,
+// and can be overridden by a packet file (--packet) or by CLI flags.
 
-const fs = require("fs");
 const { DEFAULT_MODEL } = require("./gemini-client");
+const { DEFAULT_PACKET: BASE_PACKET, buildPacket, mergePacket, describePacket } = require("./packet-modules/packet-builder");
+const { loadPacketFile } = require("./packet-modules/packet-loader");
 
-// The one place workload defaults are defined.
-const DEFAULT_PACKET = {
-  schema: "worker-bee-packet.v1",
-  layer: "file", // file | method | both
-  mode: "all", // all | missing | revalidate
-  model: DEFAULT_MODEL,
-  swarm: {
-    agents: 5, // how many bees fly at once
-    max_passes: 3, // self-heal: re-run until clean or no progress
-  },
-  workload: {
-    // "How much weight a bee carries per request."
-    anchor_budget: 150, // approx anchors (file + methods) per Gemini request
-    max_files_per_packet: 40, // cap on files packed into one request
-    input_char_budget: 600000, // cap on input chars packed into one request
-    file_char_budget: 400000, // per-file content cap when building a prompt
-    method_batch: 25, // methods per call when a single file is oversize
-    max_output_tokens: 32768, // model output cap per request (gemini-2.5-flash allows up to 65536)
-  },
-};
-
-// warehouse:method
-// responsibility: Type-checks whether a value is a plain object (excludes arrays and nulls)
-// actor: worker_bee_infrastructure
-// role: infrastructure
-// source_truth: implementation
-function isObject(v) {
-  return v && typeof v === "object" && !Array.isArray(v);
-}
-
-// warehouse:method
-// responsibility: Merges base and override packets with shallow-deep merge for swarm/workload objects
-// actor: worker_bee_infrastructure
-// role: infrastructure
-// source_truth: implementation
-function mergePacket(base, override) {
-  if (!isObject(override)) return base;
-  const out = { ...base };
-  for (const [key, value] of Object.entries(override)) {
-    if (value === undefined || value === null) continue;
-    if (isObject(value) && isObject(base[key])) out[key] = { ...base[key], ...prune(value) };
-    else out[key] = value;
-  }
-  return out;
-}
-
-// warehouse:method
-// responsibility: Removes undefined/null values from object to prevent blanking defaults during merge
-// actor: worker_bee_infrastructure
-// role: infrastructure
-// source_truth: implementation
-function prune(obj) {
-  const out = {};
-  for (const [k, v] of Object.entries(obj)) {
-    if (v === undefined || v === null) continue;
-    out[k] = v;
-  }
-  return out;
-}
-
-// warehouse:method
-// responsibility: Loads and unwraps packet configuration from JSON file (bare or wrapped format)
-// actor: worker_bee_infrastructure
-// role: infrastructure
-// source_truth: implementation
-function loadPacketFile(path) {
-  const raw = fs.readFileSync(path, "utf8");
-  const parsed = JSON.parse(raw);
-  // Accept either a bare packet or { packet: {...} }.
-  return parsed.packet && isObject(parsed.packet) ? parsed.packet : parsed;
-}
-
-// warehouse:method
-// responsibility: Composes effective packet by layering defaults, file config, and CLI overrides
-// actor: worker_bee_infrastructure
-// role: infrastructure
-// source_truth: implementation
-function buildPacket({ file, overrides } = {}) {
-  let packet = DEFAULT_PACKET;
-  if (file) packet = mergePacket(packet, loadPacketFile(file));
-  if (overrides) packet = mergePacket(packet, overrides);
-  return packet;
-}
-
-// warehouse:method
-// responsibility: Formats packet configuration into human-readable multi-line description
-// actor: worker_bee_infrastructure
-// role: infrastructure
-// source_truth: implementation
-function describePacket(packet) {
-  const w = packet.workload;
-  return [
-    `  layer: ${packet.layer}   mode: ${packet.mode}   model: ${packet.model}`,
-    `  swarm: ${packet.swarm.agents} bees, up to ${packet.swarm.max_passes} passes`,
-    `  workload/bee: anchor_budget=${w.anchor_budget}, max_files=${w.max_files_per_packet}, method_batch=${w.method_batch}, max_output_tokens=${w.max_output_tokens}`,
-  ].join("\n");
-}
+// Re-export with model override applied
+const DEFAULT_PACKET = { ...BASE_PACKET, model: DEFAULT_MODEL };
 
 module.exports = { DEFAULT_PACKET, buildPacket, mergePacket, loadPacketFile, describePacket };
