@@ -45,6 +45,33 @@ function computeSimilarity(fileResp, methodResp) {
 }
 
 // warehouse:method
+// responsibility: Determines whether a method is boilerplate (parse args, format output, validate input) deserving lenient scoring
+// actor: similarity_engine
+// role: classifier
+// source_truth: implementation
+function isBoilerplate(methodName) {
+  const boilerplatePatterns = [
+    /parse[_a-z]*(arg|option|flag|param)/i,
+    /render|format|display|output|print|log/i,
+    /validate|check|ensure|verify/i,
+    /init|setup|configure/i,
+    /main|run|execute/i,
+  ];
+  return boilerplatePatterns.some((pattern) => pattern.test(methodName));
+}
+
+// warehouse:method
+// responsibility: Adjusts alignment threshold based on whether method is boilerplate or core business logic
+// actor: similarity_engine
+// role: scorer
+// source_truth: implementation
+function getAlignmentThreshold(methodName) {
+  // Boilerplate methods (parsing, rendering, setup) get 30% threshold
+  // Core business logic gets 50% threshold
+  return isBoilerplate(methodName) ? 30 : 50;
+}
+
+// warehouse:method
 // responsibility: Detects red flags indicating method responsibility contradicts file responsibility
 // actor: contradiction_detector
 // role: validator
@@ -77,7 +104,7 @@ function detectRedFlags(fileResp, methodResp) {
 }
 
 // warehouse:method
-// responsibility: Evaluates coherence of a single file against its methods using multiple heuristics
+// responsibility: Evaluates coherence of a single file against its methods using weighted thresholds for boilerplate vs core logic
 // actor: coherence_evaluator
 // role: scorer
 // source_truth: implementation
@@ -101,15 +128,18 @@ function evaluateFileCoherence(file) {
   for (const method of file.methods) {
     const similarity = computeSimilarity(fileResp, method.taxonomy.responsibility);
     const flags = detectRedFlags(fileResp, method.taxonomy.responsibility);
+    const threshold = getAlignmentThreshold(method.name);
 
-    if (similarity >= 50) {
+    if (similarity >= threshold) {
       alignedMethods++;
     } else {
       issues.push({
         method: method.name,
         methodResp: method.taxonomy.responsibility,
         similarity: Math.round(similarity),
+        threshold,
         flags,
+        isBoilerplate: isBoilerplate(method.name),
       });
     }
 

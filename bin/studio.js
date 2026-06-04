@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Main CLI entry point for multi-agent studio with commands to start sessions, manage rounds, and queue actions
+// responsibility: Main CLI entry point. Parses command-line arguments and routes to handlers (start, show, round, accept, etc.) for managing sessions, rounds, and actions
 // actor: studio_cli
 // role: command_router
 // source_truth: implementation

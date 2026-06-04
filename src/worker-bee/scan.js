@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Scans filesystem for Python files, analyzes anchor state, and applies file/method anchors with deterministic field computation
+// responsibility: Scans filesystem for Python files, analyzes anchor state, applies file/method anchors with deterministic field computation, and provides text/path utilities for anchor processing
 // actor: worker_bee_infrastructure
 // role: script_executor
 // source_truth: implementation
@@ -18,6 +18,16 @@ const {
   SOURCE_TRUTH_VOCAB,
   MUTATION_POLICY_VOCAB,
 } = require("./anchor-spec");
+const {
+  stripBom,
+  repoRelative,
+  computeRepoRootDepth,
+  dominantEol,
+  splitKeepEnds,
+  isPlaceholder,
+  isGenericResponsibility,
+  normPath,
+} = require("./text-utils");
 
 // Mirrors SKIP_DIR_NAMES in taxonomy_comment_scanner.py.
 const SKIP_DIRS = new Set([
@@ -38,18 +48,9 @@ const SKIP_DIRS = new Set([
 const FILE_ANCHOR_RE = /^#\s+warehouse:file\s*$/m;
 
 // warehouse:method
-// responsibility: Removes leading UTF-8 BOM from text
+// responsibility: Recursively collects Python files in directory tree, skipping excluded folders
 // actor: worker_bee_infrastructure
-// role: infrastructure
-// source_truth: implementation
-function stripBom(text) {
-  return text && text.charCodeAt(0) === 0xfeff ? text.slice(1) : text;
-}
-
-// warehouse:method
-// responsibility: Recursively collects Python files, skipping excluded directories
-// actor: worker_bee_infrastructure
-// role: script_executor
+// role: file_scanner
 // source_truth: implementation
 function listPythonFiles(root) {
   const out = [];
@@ -77,25 +78,16 @@ function listPythonFiles(root) {
 // warehouse:method
 // responsibility: Tests whether text contains a warehouse:file anchor marker
 // actor: worker_bee_infrastructure
-// role: script_executor
+// role: anchor_detector
 // source_truth: implementation
 function hasFileAnchor(text) {
   return FILE_ANCHOR_RE.test(stripBom(text));
 }
 
 // warehouse:method
-// responsibility: Converts absolute path to repo-relative POSIX path
+// responsibility: Computes parents[N] index for repo root from code literal or path depth
 // actor: worker_bee_infrastructure
-// role: script_executor
-// source_truth: implementation
-function repoRelative(absPath, repoRoot) {
-  return path.relative(repoRoot, absPath).split(path.sep).join("/");
-}
-
-// warehouse:method
-// responsibility: Computes parents[N] index for repo root (from code literal or path depth)
-// actor: worker_bee_infrastructure
-// role: script_executor
+// role: anchor_generator
 // source_truth: implementation
 function computeRepoRootDepth(text, relPosix) {
   const literal = text.match(/\.parents\[(\d+)\]/);

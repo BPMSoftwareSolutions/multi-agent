@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Main CLI orchestrator that distributes taxonomy anchor work to a swarm of Gemini agents via packet-driven workload
+// responsibility: Main CLI entry point and orchestrator. Parses runtime arguments, orchestrates Gemini swarm to distribute taxonomy anchor work via packets, and renders live status from job ledger
 // actor: worker_bee_swarm
 // role: orchestrator
 // source_truth: implementation
