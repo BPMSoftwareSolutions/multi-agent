@@ -199,10 +199,10 @@ function formatReadmeProjection(projection) {
       ["Package", "Boundary", "Mutation Authority", "Primary API"],
       [
         [
-          "`@loc/taxonomy-coherence`",
-          "Read-only JavaScript and Python taxonomy scanning, story review, governance verdicts, and README projections.",
+          "`@loc/story-coherence`",
+          "Read-only JavaScript and Python scanning, story review, AI-ready reasoning packets, governance verdicts, and README projections.",
           "Forbidden in core package; healing requires a separate authority surface.",
-          "`scanTaxonomy`, `buildCodebaseStoryReview`, `generateReadmeProjection`",
+          "`scanTaxonomy`, `buildCodebaseStoryReview`, `buildStoryReasoningPacket`, `checkCodebaseStory`, `explainStoryPath`",
         ],
       ]
     ),
@@ -218,8 +218,10 @@ function formatReadmeProjection(projection) {
       [
         ["`npm run taxonomy-coherence-scan -- .`", "Regenerate taxonomy scan evidence and latest scan report."],
         ["`npm run codebase-story-review-report`", "Regenerate codebase story review from latest scan and swarm evidence."],
+        ["`npm run story:packet`", "Generate an AI-ready story reasoning packet from deterministic evidence."],
+        ["`npm run story:check`", "Check story coherence and README projection staleness."],
         ["`npm run taxonomy:readme`", "Regenerate this README projection and README staleness report."],
-        ["`node packages/taxonomy-coherence/bin/loc-taxonomy.js story-review --root .`", "Use the SDK package CLI to emit structured governance verdicts."],
+        ["`node packages/story-coherence/bin/loc-story.js review --root .`", "Use the SDK package CLI to emit structured governance verdicts."],
         ["`npm run test:readme-projection`", "Verify README generation and staleness detection contracts."],
       ]
     ),

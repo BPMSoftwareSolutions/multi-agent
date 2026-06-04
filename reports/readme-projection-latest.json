@@ -1,13 +1,13 @@
 {
   "schema": "taxonomy-readme-staleness-report.v1",
-  "generated_at": "2026-06-04T20:14:51.589Z",
+  "generated_at": "2026-06-04T21:15:37.050Z",
   "rows": [
     {
       "readme": "README.md",
-      "source_scan": "scan-2026-06-04T19-57-04-115Z",
-      "current_scan": "scan-2026-06-04T19-57-04-115Z",
-      "source_story_review": "codebase-story-review-2026-06-04T20-14-50-964Z",
-      "current_story_review": "codebase-story-review-2026-06-04T20-14-50-964Z",
+      "source_scan": "scan-2026-06-04T21-15-35-835Z",
+      "current_scan": "scan-2026-06-04T21-15-35-835Z",
+      "source_story_review": "codebase-story-review-2026-06-04T21-15-36-473Z",
+      "current_story_review": "codebase-story-review-2026-06-04T21-15-36-473Z",
       "status": "current"
     }
   ],

@@ -8,8 +8,8 @@ This README is a generated architecture projection over verified taxonomy scan a
 
 <!--
 generated_from:
-  source_scan: scan-2026-06-04T19-57-04-115Z
-  source_story_review: codebase-story-review-2026-06-04T20-14-50-964Z
+  source_scan: scan-2026-06-04T21-15-35-835Z
+  source_story_review: codebase-story-review-2026-06-04T21-15-36-473Z
   source_truth: taxonomy_scan_plus_codebase_story_review
   do_not_hand_edit: true
   regeneration_command: npm run taxonomy:readme
@@ -35,7 +35,7 @@ generated_from:
 | Locally trusted files | 330 |
 | Weak files | 0 |
 | Missing taxonomy | 0 |
-| Method anchors | 684/684 |
+| Method anchors | 693/693 |
 | Canonical residue pressure | 0 |
 | File economy posture | pass |
 | Small boundaries reviewed | 231 |
@@ -60,7 +60,7 @@ The studio is organized around governed multi-agent work: command entry points, 
 
 | Package | Boundary | Mutation Authority | Primary API |
 | --- | --- | --- | --- |
-| `@loc/taxonomy-coherence` | Read-only JavaScript and Python taxonomy scanning, story review, governance verdicts, and README projections. | Forbidden in core package; healing requires a separate authority surface. | `scanTaxonomy`, `buildCodebaseStoryReview`, `generateReadmeProjection` |
+| `@loc/story-coherence` | Read-only JavaScript and Python scanning, story review, AI-ready reasoning packets, governance verdicts, and README projections. | Forbidden in core package; healing requires a separate authority surface. | `scanTaxonomy`, `buildCodebaseStoryReview`, `buildStoryReasoningPacket`, `checkCodebaseStory`, `explainStoryPath` |
 
 ## Residue Queue
 
@@ -74,8 +74,10 @@ The studio is organized around governed multi-agent work: command entry points, 
 | --- | --- |
 | `npm run taxonomy-coherence-scan -- .` | Regenerate taxonomy scan evidence and latest scan report. |
 | `npm run codebase-story-review-report` | Regenerate codebase story review from latest scan and swarm evidence. |
+| `npm run story:packet` | Generate an AI-ready story reasoning packet from deterministic evidence. |
+| `npm run story:check` | Check story coherence and README projection staleness. |
 | `npm run taxonomy:readme` | Regenerate this README projection and README staleness report. |
-| `node packages/taxonomy-coherence/bin/loc-taxonomy.js story-review --root .` | Use the SDK package CLI to emit structured governance verdicts. |
+| `node packages/story-coherence/bin/loc-story.js review --root .` | Use the SDK package CLI to emit structured governance verdicts. |
 | `npm run test:readme-projection` | Verify README generation and staleness detection contracts. |
 
 ## README Integrity Rule

@@ -2,8 +2,8 @@
 
 **Subtitle:** A narrative review of taxonomy coherence, filesystem language, README alignment, canonical ownership, and file-boundary justification.
 
-**Generated:** 2026-06-04T20:14:50.965Z
-**Source scan:** `scan-2026-06-04T19-57-04-115Z`
+**Generated:** 2026-06-04T21:15:36.474Z
+**Source scan:** `scan-2026-06-04T21-15-35-835Z`
 **Source swarm:** `bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z`
 
 ```text
@@ -13,7 +13,7 @@
 | Status        ✅ STORY COHERENCE EARNED                                                         |
 | Target        📁 .                                                                             |
 | Files         330 reviewed | 330 locally trusted | 0 weak | 0 missing                          |
-| Methods       684 anchored | 684 locally tied out                                              |
+| Methods       693 anchored | 693 locally tied out                                              |
 | Local Tie-Out ✅ 100/100  ████████████████████████ 100%                                         |
 | Filesystem    ✅ 100/100 | 0 path-language issue(s)                                             |
 | Canonical     ✅ PASS | residue pressure: 0                                                     |
@@ -60,7 +60,7 @@ The current governance posture is 100/100 earned. This review evaluates whether 
 | Weak stories | 0 |
 | Missing taxonomy | 0 |
 | File anchors | 330/330 |
-| Method anchors | 684/684 |
+| Method anchors | 693/693 |
 | Local taxonomy tie-out | 100/100 |
 | Filesystem story score | 100/100 |
 | Filesystem status | pass |
@@ -83,7 +83,7 @@ The local taxonomy tie-out result is accepted. The scanner found complete file-l
 | Evidence Layer | Result | Meaning |
 | --- | --- | --- |
 | File anchors | 330/330 | Every scanned file has a file-level taxonomy story. |
-| Method anchors | 684/684 | Detected behavior is represented in method taxonomy. |
+| Method anchors | 693/693 | Detected behavior is represented in method taxonomy. |
 | File-method tie-out | 100/100 | File responsibilities and method responsibilities align locally. |
 | Filesystem story | 100/100 | Folder paths, file names, and canonical domain boundaries align with the codebase story. |
 | README alignment | pass | Generated documentation is governed by the current scan and codebase story review sources. |
@@ -119,7 +119,7 @@ The README projection is not independent source truth. It earns alignment when i
 | --- | --- |
 | Status | pass |
 | Source truth | projection-ready from current scan and story review |
-| Source scan | `scan-2026-06-04T19-57-04-115Z` |
+| Source scan | `scan-2026-06-04T21-15-35-835Z` |
 | Source story review | this report |
 | Staleness check | covered by README projection report |
 | Stale artifact count | 0 |
@@ -151,8 +151,8 @@ Zero-method and one-method files were reviewed under the file-economy lens. The 
 | Core runtime | 40 | 100/100 | directionally justified | Justified when each module owns one runtime responsibility. |
 | Observability and reports | 3 | 100/100 | directionally justified | Justified when report rendering stays isolated from scoring and healing. |
 | Shared utilities | 42 | 99/100 | monitor local score variance | Monitor helper fragmentation and repeated one-method modules. |
-| Story analysis | 18 | 99/100 | monitor local score variance | Justified when evaluator pieces remain independently testable. |
-| Taxonomy scanning | 17 | 100/100 | directionally justified | Justified when scanning, extraction, evidence, and healing stay separable. |
+| Story analysis | 21 | 99/100 | monitor local score variance | Justified when evaluator pieces remain independently testable. |
+| Taxonomy scanning | 14 | 100/100 | directionally justified | Justified when scanning, extraction, evidence, and healing stay separable. |
 | Tests and verification | 7 | 100/100 | directionally justified | Justified when tests protect coherence governance and report contracts. |
 | Worker-bee swarm | 73 | 100/100 | directionally justified | Justified when decomposition keeps agent work packets small and governable. |
 | Zero-method files | 44 | 100/100 | earned by boundary evidence | Justified only for wrappers, config, registry, boundary, or executable surfaces. |
@@ -162,7 +162,7 @@ Zero-method and one-method files were reviewed under the file-economy lens. The 
 
 | Signal | Value | Interpretation |
 | --- | --- | --- |
-| Average methods per file | 2.07 | Low averages are currently justified by agent-safe boundaries and remain monitored. |
+| Average methods per file | 2.10 | Low averages are currently justified by agent-safe boundaries and remain monitored. |
 | Files with 0 methods | 44 | Boundary, config, executable, and registry files may be legitimate. |
 | Files with 1 method | 187 | One-method files need semantic weight or test/governance value. |
 | Files with 5+ methods | 23 | Larger files are monitored for cohesion rather than split mechanically. |
@@ -292,8 +292,8 @@ The standing doctrine remains: local truth is not automatically whole truth. Fut
 
 | Field | Value |
 | --- | --- |
-| Report ID | codebase-story-review-2026-06-04T20-14-50-964Z |
-| Source scan ID | scan-2026-06-04T19-57-04-115Z |
+| Report ID | codebase-story-review-2026-06-04T21-15-36-473Z |
+| Source scan ID | scan-2026-06-04T21-15-35-835Z |
 | Source swarm ID | bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z |
 | Target path | . |
-| Generated at | 2026-06-04T20:14:50.965Z |
+| Generated at | 2026-06-04T21:15:36.474Z |

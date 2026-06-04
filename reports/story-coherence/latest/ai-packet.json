@@ -1,0 +1,101 @@
+{
+  "schema": "story-coherence-reasoning-packet.v1",
+  "generated_at": "2026-06-04T21:15:37.577Z",
+  "purpose": "ai-story-review",
+  "target": ".",
+  "status": "story_coherence_earned",
+  "source": {
+    "scan": "scan-2026-06-04T21-15-35-835Z",
+    "story_review": "codebase-story-review-2026-06-04T21-15-36-473Z",
+    "truth": "taxonomy_scan_plus_codebase_story_review",
+    "authority": "advisory packet; LOC governance decides"
+  },
+  "localTieOut": {
+    "score": 100,
+    "filesReviewed": 330,
+    "filesTrusted": 330,
+    "methodsAnchored": 693,
+    "weakStories": 0,
+    "missingTaxonomy": 0
+  },
+  "filesystemStory": {
+    "status": "pass",
+    "score": 100,
+    "pathLanguageIssues": 0,
+    "misplacedFiles": 0,
+    "ambiguousFolders": 0
+  },
+  "readmeAlignment": {
+    "status": "pass",
+    "sourceTruth": "projection-ready from current scan and story review",
+    "staleArtifactCount": 0
+  },
+  "residue": {
+    "status": "pass",
+    "pressure": 0,
+    "unclearOverlap": 0,
+    "removeCandidates": 0,
+    "compatibilityShells": 0
+  },
+  "fileEconomy": {
+    "status": "pass",
+    "score": 100,
+    "smallBoundariesReviewed": 231,
+    "smallBoundariesUnearned": 0
+  },
+  "canonicalSurfaces": [
+    {
+      "surface_type": "Taxonomy scan report",
+      "canonical_surface": "src/observability/taxonomy-scan-report.js",
+      "legacy_or_alternate_surfaces": "bin/taxonomy-report.js, bin/taxonomy-scan.js, bin/verify-scan-fixture.js, bin/verify-scan-validator.js, bin/verify-scan.js, bin/verify-scan.test.js",
+      "relationship": "canonical renderer with CLI and verification surfaces",
+      "decision": "document boundary",
+      "boundary_evidence": "CLI and verification surfaces exercise scanner entry points; renderer remains canonical report owner."
+    },
+    {
+      "surface_type": "Swarm report",
+      "canonical_surface": "src/observability/taxonomy-swarm-report.js",
+      "legacy_or_alternate_surfaces": "bin/run-report-router.js, bin/runs-report-router.js, bin/runs-report.js, src/worker-bee/report.js",
+      "relationship": "canonical sibling surface for run progress and summary reporting",
+      "decision": "document boundary",
+      "boundary_evidence": "Swarm report owns taxonomy-healing batch observability; run report surfaces own generic run routing/progress views."
+    },
+    {
+      "surface_type": "Story review report",
+      "canonical_surface": "src/observability/codebase-story-review-report.js",
+      "legacy_or_alternate_surfaces": "none detected",
+      "relationship": "canonical only",
+      "decision": "document boundary",
+      "boundary_evidence": "Obsolete story report entry points were retired; no alternate story-review surface remains."
+    },
+    {
+      "surface_type": "Anchor healing",
+      "canonical_surface": "bin/taxonomy-heal-run.js",
+      "legacy_or_alternate_surfaces": "bin/taxonomy-heal.js, scripts/test-update-anchors.js, scripts/update-anchors.js, tests/verify-taxonomy-heal.js",
+      "relationship": "orchestration boundary distinct from direct anchor mutation utilities",
+      "decision": "document boundary",
+      "boundary_evidence": "Heal-run owns governed lifecycle/reporting; taxonomy-heal and update-anchors are lower-level mutation utilities."
+    },
+    {
+      "surface_type": "Worker reporting",
+      "canonical_surface": "src/worker-bee/report/file-scanner.js",
+      "legacy_or_alternate_surfaces": "src/worker-bee/report.js, src/worker-bee/report/report-assembler.js, src/worker-bee/report/report-builder.js, src/worker-bee/report/report-formatter.js, src/worker-bee/report/telemetry-counter.js",
+      "relationship": "worker-local reporting stack distinct from global observability",
+      "decision": "document boundary",
+      "boundary_evidence": "Worker report modules own worker-local assembly/formatting/telemetry; global observability owns operator-level scan and swarm reports."
+    }
+  ],
+  "openQuestions": [],
+  "aiReviewRules": [
+    "Do not invent file evidence.",
+    "Cite packet fields by path or key.",
+    "If evidence is missing, mark review_required.",
+    "Do not recommend mutation unless the packet identifies a concrete failing gate.",
+    "Keep local taxonomy truth separate from whole-codebase story truth."
+  ],
+  "authorityBoundary": {
+    "package": "observed evidence and projections",
+    "ai": "advisory interpretation and recommendations",
+    "loc": "governance decision authority"
+  }
+}

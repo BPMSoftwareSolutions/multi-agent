@@ -1,18 +1,22 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Provides loc taxonomy CLI commands for read only scan story review README projection and residue verdicts
-// actor: loc_taxonomy_cli
+// responsibility: Provides loc story CLI commands for read only scan review packet check explain README projection and residue verdicts
+// actor: loc_story_cli
 // role: package_command
 // source_truth: implementation
 
 const {
   buildCodebaseStoryReview,
+  buildStoryReasoningPacket,
+  checkCodebaseStory,
+  explainStoryPath,
   generateReadmeProjection,
   scanTaxonomy,
+  writeStoryReasoningPacket,
 } = require("../src/index");
 
 // warehouse:method
-// responsibility: Provides loc taxonomy CLI commands for read only scan story review README projection and residue verdicts
+// responsibility: Provides loc story CLI commands for read only scan review packet check explain README projection and residue verdicts
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -25,7 +29,7 @@ function optionValue(args, name, fallback = null) {
 }
 
 // warehouse:method
-// responsibility: Provides loc taxonomy CLI commands for read only scan story review README projection and residue verdicts
+// responsibility: Provides loc story CLI commands for read only scan review packet check explain README projection and residue verdicts
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -35,34 +39,38 @@ function positionalTarget(args) {
 }
 
 // warehouse:method
-// responsibility: Provides loc taxonomy CLI commands for read only scan story review README projection and residue verdicts
+// responsibility: Provides loc story CLI commands for read only scan review packet check explain README projection and residue verdicts
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 function printUsage() {
   console.log([
-    "Usage: loc-taxonomy <command> [target] [options]",
+    "Usage: loc-story <command> [target] [options]",
     "",
     "Commands:",
-    "  scan [target]            Run read-only taxonomy scan",
-    "  story-review             Build codebase story review from latest scan",
+    "  scan [target]            Run deterministic taxonomy scan",
+    "  review                   Build codebase story review from latest scan",
+    "  packet                   Emit AI-ready story reasoning packet",
+    "  check                    Check story coherence and README staleness",
+    "  explain [target]         Explain the story boundary for a path",
     "  readme [target]          Generate README projection from latest scan/story review",
     "  residue                  Print residue verdict from latest story review",
     "",
     "Options:",
     "  --root <path>            Repository root (default: current directory)",
     "  --reports-dir <path>     Reports directory relative to root (default: reports)",
-    "  --out <path>             README output path for readme command",
+    "  --out <path>             Output path for readme or packet command",
+    "  --for-ai                 Mark packet intent as AI review substrate",
     "  --write                  Write scan/story report artifacts",
   ].join("\n"));
 }
 
 // warehouse:method
-// responsibility: Provides loc taxonomy CLI commands for read only scan story review README projection and residue verdicts
+// responsibility: Provides loc story CLI commands for read only scan review packet check explain README projection and residue verdicts
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
-function runLocTaxonomy(argv = process.argv.slice(2)) {
+function runLocStory(argv = process.argv.slice(2)) {
   const [command, ...args] = argv;
   const rootDir = optionValue(args, "--root", process.cwd());
   const reportsDir = optionValue(args, "--reports-dir", "reports");
@@ -80,7 +88,7 @@ function runLocTaxonomy(argv = process.argv.slice(2)) {
     console.log(JSON.stringify(result.report.summary, null, 2));
     return result.report.summary.folder_coherence === 100 ? 0 : 1;
   }
-  if (command === "story-review") {
+  if (command === "review" || command === "story-review") {
     const result = buildCodebaseStoryReview({
       rootDir,
       reportsDir,
@@ -88,6 +96,36 @@ function runLocTaxonomy(argv = process.argv.slice(2)) {
     });
     console.log(JSON.stringify(result.verdict, null, 2));
     return result.verdict.overall.earned ? 0 : 1;
+  }
+  if (command === "packet") {
+    const options = {
+      rootDir,
+      reportsDir,
+      out: optionValue(args, "--out", null),
+      purpose: args.includes("--for-ai") ? "ai-story-review" : "loc-governance-review",
+    };
+    const result = args.includes("--write") || options.out
+      ? writeStoryReasoningPacket(options)
+      : { packet: buildStoryReasoningPacket(options), outPath: null };
+    console.log(JSON.stringify(result.packet, null, 2));
+    if (result.outPath) {
+      console.error(`Story reasoning packet written: ${result.outPath}`);
+    }
+    return result.packet.status === "story_coherence_earned" ? 0 : 1;
+  }
+  if (command === "check") {
+    const result = checkCodebaseStory({ rootDir, reportsDir });
+    console.log(JSON.stringify(result, null, 2));
+    return result.exitCode;
+  }
+  if (command === "explain") {
+    const result = explainStoryPath({
+      rootDir,
+      reportsDir,
+      targetPath: positionalTarget(args),
+    });
+    console.log(JSON.stringify(result, null, 2));
+    return result.role.includes("not inferred") ? 1 : 0;
   }
   if (command === "readme") {
     const result = generateReadmeProjection({
@@ -114,13 +152,13 @@ function runLocTaxonomy(argv = process.argv.slice(2)) {
 
 if (require.main === module) {
   try {
-    process.exit(runLocTaxonomy());
+    process.exit(runLocStory());
   } catch (error) {
-    console.error(`loc-taxonomy failed: ${error.message}`);
+    console.error(`loc-story failed: ${error.message}`);
     process.exit(1);
   }
 }
 
 module.exports = {
-  runLocTaxonomy,
+  runLocStory,
 };

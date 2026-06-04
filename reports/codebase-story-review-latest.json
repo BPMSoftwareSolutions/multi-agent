@@ -1,8 +1,8 @@
 {
   "schema": "codebase-story-review-report.v1",
-  "report_id": "codebase-story-review-2026-06-04T20-14-50-964Z",
-  "generated_at": "2026-06-04T20:14:50.965Z",
-  "source_scan_id": "scan-2026-06-04T19-57-04-115Z",
+  "report_id": "codebase-story-review-2026-06-04T21-15-36-473Z",
+  "generated_at": "2026-06-04T21:15:36.474Z",
+  "source_scan_id": "scan-2026-06-04T21-15-35-835Z",
   "source_swarm_id": "bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z",
   "target_path": ".",
   "headline_verdict": "Codebase story coherence earned",
@@ -14,8 +14,8 @@
     "weak_stories": 0,
     "missing_taxonomy": 0,
     "file_anchors_found": 330,
-    "method_anchors_found": 684,
-    "method_anchors_expected": 684,
+    "method_anchors_found": 693,
+    "method_anchors_expected": 693,
     "local_taxonomy_tie_out": 100,
     "source_mutated": "none in latest scan",
     "healing_required": "no",
@@ -63,14 +63,14 @@
       },
       {
         "category": "Story analysis",
-        "count": 18,
+        "count": 21,
         "coherence": 99,
         "economy_verdict": "monitor local score variance",
         "notes": "Justified when evaluator pieces remain independently testable."
       },
       {
         "category": "Taxonomy scanning",
-        "count": 17,
+        "count": 14,
         "coherence": 100,
         "economy_verdict": "directionally justified",
         "notes": "Justified when scanning, extraction, evidence, and healing stay separable."
@@ -105,7 +105,7 @@
       }
     ],
     "signals": {
-      "average_methods_per_file": "2.07",
+      "average_methods_per_file": "2.10",
       "zero_method_count": 44,
       "one_method_count": 187,
       "large_file_count": 23,
@@ -128,7 +128,7 @@
   "readme_alignment": {
     "status": "pass",
     "source_truth": "projection-ready from current scan and story review",
-    "source_scan_id": "scan-2026-06-04T19-57-04-115Z",
+    "source_scan_id": "scan-2026-06-04T21-15-35-835Z",
     "source_story_review_id": "this report",
     "staleness_check": "covered by README projection report",
     "stale_count": 0

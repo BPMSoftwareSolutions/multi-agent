@@ -128,7 +128,10 @@ function verifyMarkdownProjection(projection) {
   assert.match(markdown, /README stale artifacts/);
   assert.match(markdown, /Taxonomy scan report/);
   assert.match(markdown, /SDK Package Surface/);
-  assert.match(markdown, /@loc\/taxonomy-coherence/);
+  assert.match(markdown, /@loc\/story-coherence/);
+  assert.match(markdown, /buildStoryReasoningPacket/);
+  assert.match(markdown, /npm run story:packet/);
+  assert.match(markdown, /npm run story:check/);
   assert.match(markdown, /No residue queue items/);
   assert.doesNotMatch(markdown, /```yaml/);
   assert.doesNotMatch(markdown, /Everything is clean/);
