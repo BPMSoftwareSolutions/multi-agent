@@ -75,7 +75,7 @@ function sampleScan() {
         file_anchor_found: true,
         detected_methods: 0,
         documented_methods: 0,
-        score: 100,
+        score: 99,
         band: "strong",
       },
     ],
@@ -114,13 +114,18 @@ function verifyMarkdown(report) {
   assert.match(markdown, /File Economy/);
   assert.match(markdown, /STORY COHERENCE NOT YET EARNED/);
   assert.match(markdown, /Local Tie-Out/);
+  assert.match(markdown, /Local Tie-Out is not the same as Codebase Story Coherence/);
   assert.match(markdown, /Overall story coherence/);
   assert.match(markdown, /not yet earned/);
   assert.match(markdown, /File Economy Review/);
+  assert.match(markdown, /economy review required/);
   assert.match(markdown, /Legacy Idea Residue Review/);
+  assert.match(markdown, /Residue Pressure Breakdown/);
+  assert.match(markdown, /Residue pressure counts canonical-surface relationship risks/);
   assert.match(markdown, /Canonical Surface Map/);
   assert.match(markdown, /Local truth is not whole truth/);
   assert.match(markdown, /Residue review proves the file still belongs/);
+  assert.match(markdown, /blocked by residue \+ economy review/);
   assert.doesNotMatch(markdown, /Taxonomy Story Report/);
   assert.doesNotMatch(markdown, /Status\\s+✅ STORY COHERENT/);
   return markdown;

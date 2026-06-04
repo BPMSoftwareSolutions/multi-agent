@@ -2,7 +2,7 @@
 
 **Subtitle:** A narrative review of taxonomy coherence, responsibility boundaries, and file-count justification.
 
-**Generated:** 2026-06-04T16:57:14.333Z
+**Generated:** 2026-06-04T16:59:42.053Z
 **Source scan:** `scan-2026-06-04T16-56-42-122Z`
 **Source swarm:** `bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z`
 
@@ -20,9 +20,11 @@
 | Legacy        ⚠ ACTIVE | 1 remove candidate | 4 unclear overlaps | 1 compatibility shell       |
 | Overall       ⚠ NOT 100% | local taxonomy is clean, system story still under review            |
 | Main Question Do all 326 files earn their boundaries and belong in the canonical story?        |
-| Verdict       Local taxonomy clean; story coherence blocked by residue                         |
+| Verdict       Local taxonomy clean; blocked by residue + economy review                        |
 +------------------------------------------------------------------------------------------------+
 ```
+
+Important: Local Tie-Out is not the same as Codebase Story Coherence. Local Tie-Out verifies file/method truth. Codebase Story Coherence also requires canonical ownership and earned file boundaries.
 
 ## Narrative Purpose
 
@@ -102,12 +104,12 @@ The remaining review question is whether zero-method and one-method files carry 
 
 | Category | Count | Coherence | Economy Verdict | Notes |
 | --- | --- | --- | --- | --- |
-| Application and server surfaces | 80 | 99/100 | review coherence first | Justified when API, browser, route, and integration boundaries stay navigable. |
+| Application and server surfaces | 80 | 99/100 | economy review required | Justified when API, browser, route, and integration boundaries stay navigable. |
 | CLI and command surfaces | 51 | 100/100 | directionally justified | Justified when command behavior and operator entry points stay isolated. |
 | Core runtime | 40 | 100/100 | directionally justified | Justified when each module owns one runtime responsibility. |
 | Observability and reports | 2 | 100/100 | directionally justified | Justified when report rendering stays isolated from scoring and healing. |
-| Shared utilities | 42 | 99/100 | review coherence first | Review for helper fragmentation and repeated one-method modules. |
-| Story analysis | 18 | 99/100 | review coherence first | Justified when evaluator pieces remain independently testable. |
+| Shared utilities | 42 | 99/100 | economy review required | Review for helper fragmentation and repeated one-method modules. |
+| Story analysis | 18 | 99/100 | economy review required | Justified when evaluator pieces remain independently testable. |
 | Taxonomy scanning | 14 | 100/100 | directionally justified | Justified when scanning, extraction, evidence, and healing stay separable. |
 | Tests and verification | 6 | 100/100 | directionally justified | Justified when tests protect coherence governance and report contracts. |
 | Worker-bee swarm | 73 | 100/100 | directionally justified | Justified when decomposition keeps agent work packets small and governable. |
@@ -148,6 +150,18 @@ Residue review proves the file still belongs in the current system story.
 | Unclear overlap | 4 |
 | Remove candidates | 1 |
 | Residue pressure | 6 |
+
+### Residue Pressure Breakdown
+
+Residue pressure counts canonical-surface relationship risks, not only individual retire/remove candidates. The queue below lists the currently actionable file-level residue items.
+
+| Pressure Type | Count | Meaning |
+| --- | --- | --- |
+| Compatibility shell | 1 | Old surface kept to redirect or support callers. |
+| Deprecated but supported | 1 | Old surface still intentionally supported. |
+| Unclear overlap | 4 | Canonical relationship not fully resolved. |
+| Remove candidate | 1 | Candidate for retirement. |
+| Actionable file queue | 2 | File-level items requiring a decision. |
 
 ### Canonical Surface Map
 
@@ -235,8 +249,8 @@ Local truth is not whole truth. A file can be honest about itself and still be l
 
 | Field | Value |
 | --- | --- |
-| Report ID | codebase-story-review-2026-06-04T16-57-14-332Z |
+| Report ID | codebase-story-review-2026-06-04T16-59-42-051Z |
 | Source scan ID | scan-2026-06-04T16-56-42-122Z |
 | Source swarm ID | bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z |
 | Target path | . |
-| Generated at | 2026-06-04T16:57:14.333Z |
+| Generated at | 2026-06-04T16:59:42.053Z |

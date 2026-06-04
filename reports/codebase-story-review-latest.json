@@ -1,11 +1,11 @@
 {
   "schema": "codebase-story-review-report.v1",
-  "report_id": "codebase-story-review-2026-06-04T16-57-14-332Z",
-  "generated_at": "2026-06-04T16:57:14.333Z",
+  "report_id": "codebase-story-review-2026-06-04T16-59-42-051Z",
+  "generated_at": "2026-06-04T16:59:42.053Z",
   "source_scan_id": "scan-2026-06-04T16-56-42-122Z",
   "source_swarm_id": "bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z",
   "target_path": ".",
-  "headline_verdict": "Local taxonomy clean; story coherence blocked by residue",
+  "headline_verdict": "Local taxonomy clean; blocked by residue + economy review",
   "primary_review_question": "Do all 326 files earn their boundaries and belong in the canonical story?",
   "summary": {
     "review_status": "story coherence not yet earned",
@@ -30,7 +30,7 @@
         "category": "Application and server surfaces",
         "count": 80,
         "coherence": 99,
-        "economy_verdict": "review coherence first",
+        "economy_verdict": "economy review required",
         "notes": "Justified when API, browser, route, and integration boundaries stay navigable."
       },
       {
@@ -58,14 +58,14 @@
         "category": "Shared utilities",
         "count": 42,
         "coherence": 99,
-        "economy_verdict": "review coherence first",
+        "economy_verdict": "economy review required",
         "notes": "Review for helper fragmentation and repeated one-method modules."
       },
       {
         "category": "Story analysis",
         "count": 18,
         "coherence": 99,
-        "economy_verdict": "review coherence first",
+        "economy_verdict": "economy review required",
         "notes": "Justified when evaluator pieces remain independently testable."
       },
       {

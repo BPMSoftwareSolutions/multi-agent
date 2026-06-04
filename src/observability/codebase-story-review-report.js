@@ -154,7 +154,7 @@ function average(values) {
 // source_truth: implementation
 function economyVerdictForCategory(name, count, averageCoherence) {
   if (count === 0) return "n/a";
-  if (averageCoherence < 100) return "review coherence first";
+  if (averageCoherence < 100) return "economy review required";
   if (name === "Shared utilities") return "review for consolidation";
   if (name === "Zero-method files" || name === "One-method files") return "review required";
   return "directionally justified";
@@ -423,7 +423,7 @@ function buildReport(scan, swarm = null) {
     target_path: scan.target_path || ".",
     headline_verdict: storyGovernance.status === "earned"
       ? "Codebase story coherence earned"
-      : "Local taxonomy clean; story coherence blocked by residue",
+      : "Local taxonomy clean; blocked by residue + economy review",
     primary_review_question: `Do all ${summary.files_scanned} files earn their boundaries and belong in the canonical story?`,
     summary: {
       review_status: storyGovernance.status_label,
@@ -496,6 +496,13 @@ function formatMarkdown(report) {
   const residueRows = residue.residue_queue.length
     ? residue.residue_queue.map((row) => [`\`${row.file}\``, row.reason, row.decision])
     : [["none", "No current residue queue items were detected from the scan ledger.", "continue monitoring"]];
+  const residuePressureRows = [
+    ["Compatibility shell", residue.compatibility_shells, "Old surface kept to redirect or support callers."],
+    ["Deprecated but supported", residue.deprecated_but_supported, "Old surface still intentionally supported."],
+    ["Unclear overlap", residue.unclear_overlap, "Canonical relationship not fully resolved."],
+    ["Remove candidate", residue.remove_candidates, "Candidate for retirement."],
+    ["Actionable file queue", residue.residue_queue.length, "File-level items requiring a decision."],
+  ];
   return [
     "# Codebase Story Review Report",
     "",
@@ -506,6 +513,8 @@ function formatMarkdown(report) {
     report.source_swarm_id ? `**Source swarm:** \`${report.source_swarm_id}\`` : null,
     "",
     formatConsole(report),
+    "",
+    "Important: Local Tie-Out is not the same as Codebase Story Coherence. Local Tie-Out verifies file/method truth. Codebase Story Coherence also requires canonical ownership and earned file boundaries.",
     "",
     "## Narrative Purpose",
     "",
@@ -620,6 +629,12 @@ function formatMarkdown(report) {
         ["Residue pressure", residue.residue_pressure],
       ]
     ),
+    "",
+    "### Residue Pressure Breakdown",
+    "",
+    "Residue pressure counts canonical-surface relationship risks, not only individual retire/remove candidates. The queue below lists the currently actionable file-level residue items.",
+    "",
+    markdownTable(["Pressure Type", "Count", "Meaning"], residuePressureRows),
     "",
     "### Canonical Surface Map",
     "",
