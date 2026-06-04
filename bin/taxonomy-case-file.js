@@ -16,10 +16,26 @@ const { buildFileEvidence } = require("./taxonomy-evidence-bundle");
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
+function synthesizeExpectedResponsibility(taxonomy, evidence) {
+  const methodResponsibilities = taxonomy.methods
+    .filter((method) => method.taxonomy && method.taxonomy.responsibility)
+    .map((method) => method.taxonomy.responsibility.replace(/\s+/g, " ").trim());
+  if (methodResponsibilities.length > 0) {
+    return methodResponsibilities.join(" and ");
+  }
+  const functionNames = evidence.detected_functions.map((fn) => fn.name).join(" and ");
+  return `Coordinates ${functionNames} behavior with documented file and method taxonomy evidence`;
+}
+
+// warehouse:method
+// responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function buildExpectedCoherence(filePath, taxonomy, analysis, evidence) {
   const methodNames = evidence.detected_functions.map((fn) => fn.name);
   const hasGeneratedProvidesAnchor = /^Provides .+ functionality$/i.test(taxonomy.file.responsibility || "");
-  const sharedResponsibility = `Monitors worker-bee log progress by reading completion counts formatting stall durations and reporting progress or stall alerts`;
+  const sharedResponsibility = synthesizeExpectedResponsibility(taxonomy, evidence);
   const expectedMethods = methodNames.map((name) => ({
     name,
     taxonomy: {
@@ -186,6 +202,7 @@ if (require.main === module) {
 }
 
 module.exports = {
+  synthesizeExpectedResponsibility,
   buildExpectedCoherence,
   formatIncoherenceReport,
   buildTaxonomyCaseFile,

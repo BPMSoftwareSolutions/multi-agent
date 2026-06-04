@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides lineHandler, summaryHandler functionality
+// responsibility: Watches worker-bee log stream for real-time packet completion events, extracts progress counts and fallback triggers with timestamps and Outputs final progress summary with completion tallies from log watcher, reports recency status and stall indicators
 // actor: log_watcher
 // role: monitor
 // source_truth: implementation
@@ -30,7 +30,7 @@ const stream = fs.createReadStream(logFile, { encoding: "utf8" });
 const rl = readline.createInterface({ input: stream, crlfDelay: Infinity });
 
 // warehouse:method
-// responsibility: Watches worker-bee log stream for real-time packet completion events, extracts progress counts and fallback triggers with timestamps
+// responsibility: Watches worker-bee log stream for real-time packet completion events, extracts progress counts and fallback triggers with timestamps and Outputs final progress summary with completion tallies from log watcher, reports recency status and stall indicators
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -64,7 +64,7 @@ const lineHandler = (line) => {
 };
 
 // warehouse:method
-// responsibility: Outputs final progress summary with completion tallies from log watcher, reports recency status and stall indicators
+// responsibility: Watches worker-bee log stream for real-time packet completion events, extracts progress counts and fallback triggers with timestamps and Outputs final progress summary with completion tallies from log watcher, reports recency status and stall indicators
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
