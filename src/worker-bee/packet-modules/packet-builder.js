@@ -27,7 +27,7 @@ const DEFAULT_PACKET = {
 };
 
 // warehouse:method
-// responsibility: Merges base and override packets with shallow-deep merge for swarm/workload objects
+// responsibility: Builds packet configurations: merges base and override with shallow-deep strategy for swarm and workload
 // actor: worker_bee_infrastructure
 // role: infrastructure
 // source_truth: implementation
@@ -43,7 +43,7 @@ function mergePacket(base, override) {
 }
 
 // warehouse:method
-// responsibility: Composes effective packet by layering defaults, file config, and CLI overrides
+// responsibility: Builds effective packet configuration by layering defaults, file configuration, and CLI overrides
 // actor: worker_bee_infrastructure
 // role: infrastructure
 // source_truth: implementation
@@ -55,7 +55,7 @@ function buildPacket({ file, overrides } = {}) {
 }
 
 // warehouse:method
-// responsibility: Formats packet configuration into human-readable multi-line description
+// responsibility: Builds packet configurations: describes packet in human-readable format for introspection
 // actor: worker_bee_infrastructure
 // role: infrastructure
 // source_truth: implementation

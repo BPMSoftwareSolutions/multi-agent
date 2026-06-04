@@ -7,7 +7,7 @@
 const { extractConcepts } = require("./concepts-extractor");
 
 // warehouse:method
-// responsibility: Computes semantic similarity between two responsibility texts using word overlap
+// responsibility: Computes semantic alignment scores by extracting concept vocabularies, computing word overlap ratios, and normalizing alignment percentages for file-method coherence validation
 // actor: similarity_engine
 // role: comparator
 // source_truth: implementation
@@ -22,7 +22,7 @@ function computeSimilarity(fileResp, methodResp) {
 }
 
 // warehouse:method
-// responsibility: Determines whether a method is boilerplate (parse args, format output, validate input) deserving lenient scoring
+// responsibility: Classifies method boilerplate status by pattern matching against infrastructure naming conventions (parse, render, validate, init, main) for alignment threshold determination
 // actor: similarity_engine
 // role: classifier
 // source_truth: implementation
@@ -38,7 +38,7 @@ function isBoilerplate(methodName) {
 }
 
 // warehouse:method
-// responsibility: Adjusts alignment threshold based on whether method is boilerplate or core business logic
+// responsibility: Determines alignment threshold percentage (30 for boilerplate, 50 for domain-specific) based on method boilerplate classification
 // actor: similarity_engine
 // role: scorer
 // source_truth: implementation
@@ -47,7 +47,7 @@ function getAlignmentThreshold(methodName) {
 }
 
 // warehouse:method
-// responsibility: Detects red flags indicating method responsibility contradicts file responsibility
+// responsibility: Detects alignment red flags by analyzing responsibility text for generic terminology, maintenance tasks, error-only handling, and vagueness indicators
 // actor: contradiction_detector
 // role: validator
 // source_truth: implementation

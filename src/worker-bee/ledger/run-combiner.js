@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 
 // warehouse:method
-// responsibility: Merges manifest and all part files into a read-only live status view with aggregated metrics
+// responsibility: Merges manifest and packet parts into read-only live status view with aggregated metrics and completion tracking
 // actor: worker_bee_infrastructure
 // role: data_access
 // source_truth: implementation
@@ -69,7 +69,7 @@ function combineRun(runDir) {
 }
 
 // warehouse:method
-// responsibility: Finalizes run by marking manifest done, combining status, and writing completion snapshot
+// responsibility: Finalizes run by marking manifest done, combining packet parts status, and writing aggregated completion snapshot
 // actor: worker_bee_infrastructure
 // role: data_access
 // source_truth: implementation
@@ -90,7 +90,7 @@ function finalizeRun(reportsDir, runDir, { completionStatus } = {}) {
 }
 
 // warehouse:method
-// responsibility: Reads latest run's live status by following pointer and combining parts
+// responsibility: Reads latest run's live status by following pointer and combining packet parts with aggregated metrics
 // actor: worker_bee_infrastructure
 // role: data_access
 // source_truth: implementation

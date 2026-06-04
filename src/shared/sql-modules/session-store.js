@@ -8,7 +8,7 @@ const { getSqlConfig, sqlStringLiteral, runSql, runSqlJson } = require("../sql-h
 const { ensureSchema } = require("./schema-manager");
 
 // warehouse:method
-// responsibility: Persists session to database using MERGE statement, handles insert or update based on session id
+// responsibility: Persists and retrieves session objects: writes session to database using MERGE statement
 // actor: shared
 // role: session_persistence
 // source_truth: implementation
@@ -49,7 +49,7 @@ WHEN NOT MATCHED THEN INSERT (
 }
 
 // warehouse:method
-// responsibility: Retrieves single session from database by id, converts columns to JSON, returns JSON object or null
+// responsibility: Persists and retrieves session objects: retrieves session from database and converts to JSON
 // actor: shared
 // role: session_persistence
 // source_truth: implementation
@@ -75,7 +75,7 @@ FOR JSON PATH, WITHOUT_ARRAY_WRAPPER;
 }
 
 // warehouse:method
-// responsibility: Retrieves all sessions from database ordered by creation date, returns JSON array with id and timestamp
+// responsibility: Persists and retrieves session objects: lists all sessions from database ordered by creation date
 // actor: shared
 // role: session_persistence
 // source_truth: implementation

@@ -8,7 +8,7 @@ const fs = require("fs");
 const { isObject } = require("./object-utils");
 
 // warehouse:method
-// responsibility: Loads and unwraps packet configuration from JSON file (bare or wrapped format)
+// responsibility: Loads packet configuration from JSON file and unwraps from wrapper if present, normalizing to bare packet format
 // actor: worker_bee_infrastructure
 // role: infrastructure
 // source_truth: implementation

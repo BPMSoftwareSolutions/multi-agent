@@ -7,7 +7,7 @@
 const { repoRelative } = require("../scan");
 
 // warehouse:method
-// responsibility: Generates taxonomy report from file and method anchors with coverage metrics and quality assessment
+// responsibility: Assembles taxonomy report: compiles file/method anchors with coverage metrics and quality assessment
 // actor: worker_bee_infrastructure
 // role: telemetry_evidence
 // source_truth: implementation

@@ -11,7 +11,7 @@ const METHOD_MARKER_RE = /^\s*#\s+warehouse:(method|function)\s*$/;
 const REQUIRED_METHOD_FIELDS = ["responsibility", "input_contract", "output_contract", "forbidden", "validation"];
 
 // warehouse:method
-// responsibility: Finds existing warehouse:method anchor comment block above a function definition
+// responsibility: Finds existing warehouse:method anchor comment block above function definition for quality validation
 // actor: worker_bee_infrastructure
 // role: projection_compiler
 // source_truth: implementation
@@ -46,7 +46,7 @@ function methodAnchorAbove(lines, defIdx) {
 }
 
 // warehouse:method
-// responsibility: Validates method anchor fields for completeness and quality
+// responsibility: Assesses and validates method anchor fields for completeness and quality
 // actor: worker_bee_infrastructure
 // role: projection_compiler
 // source_truth: implementation
@@ -60,7 +60,7 @@ function assessMethodAnchor(fields) {
 }
 
 // warehouse:method
-// responsibility: Constructs properly indented method-anchor comment block from field values
+// responsibility: Constructs properly indented method anchor comment block with validated field values
 // actor: worker_bee_infrastructure
 // role: projection_compiler
 // source_truth: implementation

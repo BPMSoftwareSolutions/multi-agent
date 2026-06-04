@@ -9,7 +9,7 @@ const { stripBom } = require("../text-utils");
 const FILE_ANCHOR_RE = /^#\s+warehouse:file\s*$/m;
 
 // warehouse:method
-// responsibility: Tests whether text contains a warehouse:file anchor marker
+// responsibility: Tests whether Python file text contains a warehouse:file anchor marker
 // actor: worker_bee_infrastructure
 // role: detector
 // source_truth: implementation
@@ -18,7 +18,7 @@ function hasFileAnchor(text) {
 }
 
 // warehouse:method
-// responsibility: Parses first warehouse:file anchor block from lines array
+// responsibility: Parses first warehouse:file anchor block from Python text lines array
 // actor: worker_bee_infrastructure
 // role: parser
 // source_truth: implementation
@@ -45,7 +45,7 @@ function parseFileAnchorLines(lines) {
 }
 
 // warehouse:method
-// responsibility: Parses warehouse:file anchor from text
+// responsibility: Parses and extracts warehouse:file anchor from Python file text
 // actor: worker_bee_infrastructure
 // role: parser
 // source_truth: implementation

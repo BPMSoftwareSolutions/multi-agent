@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 
 // warehouse:method
-// responsibility: Extracts warehouse:file header from JavaScript file into a key-value object
+// responsibility: Extracts warehouse:file header from JavaScript file into taxonomy structure and key-value object
 // actor: header_parser
 // role: extractor
 // source_truth: implementation
@@ -39,7 +39,7 @@ function extractFileHeader(content) {
 }
 
 // warehouse:method
-// responsibility: Extracts all warehouse:method headers from JavaScript file into an array of method taxonomies
+// responsibility: Extracts all warehouse:method headers from JavaScript file into taxonomy array of documented methods
 // actor: header_parser
 // role: extractor
 // source_truth: implementation
@@ -90,7 +90,7 @@ function extractMethodHeaders(content) {
 }
 
 // warehouse:method
-// responsibility: Validates that taxonomy object contains required warehouse, responsibility, actor, and role fields
+// responsibility: Validates that taxonomy object contains required warehouse:file and warehouse:method header fields
 // actor: taxonomy_validator
 // role: validator
 // source_truth: implementation
@@ -100,7 +100,7 @@ function isValidTaxonomy(taxonomy) {
 }
 
 // warehouse:method
-// responsibility: Processes a JavaScript file and extracts both file-level and method-level taxonomy with validation
+// responsibility: Processes a JavaScript file and extracts both warehouse:file and warehouse:method level taxonomy structures with validation
 // actor: taxonomy_extractor
 // role: processor
 // source_truth: implementation

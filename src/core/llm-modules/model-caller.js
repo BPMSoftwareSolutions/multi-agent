@@ -10,7 +10,7 @@ const { getApiKey } = require("./api-key-resolver");
 const model = process.env.MODEL || "claude-sonnet-4-6";
 
 // warehouse:method
-// responsibility: Invokes language model API with system prompt and messages, extracting text from response
+// responsibility: Invokes language model API with system prompt and message chain, extracting and returning text response from model output
 // actor: core_runtime
 // role: model_invoker
 // source_truth: implementation

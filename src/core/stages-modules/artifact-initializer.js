@@ -7,7 +7,7 @@
 const { STAGES } = require("./stage-schemas");
 
 // warehouse:method
-// responsibility: Creates an empty artifact object with proper field types (strings and arrays) for a given stage
+// responsibility: Initializes empty artifacts: creates typed fields for specified stage schema
 // actor: core_runtime
 // role: artifact_factory
 // source_truth: implementation

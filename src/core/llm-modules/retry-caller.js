@@ -8,7 +8,7 @@ const { callClaude } = require("./model-caller");
 const { extractJSON } = require("./json-extractor");
 
 // warehouse:method
-// responsibility: Calls Claude and retries on JSON parse errors up to maxAttempts, appending repair prompts to message chain
+// responsibility: Calls Claude language model API with JSON parsing retry and repair logic up to maxAttempts
 // actor: core_runtime
 // role: retry_orchestrator
 // source_truth: implementation

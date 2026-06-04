@@ -7,7 +7,7 @@
 const { schemaToText, toJSONString } = require("./schema-formatter");
 
 // warehouse:method
-// responsibility: Constructs prompt for planner agent to propose artifact improvements based on stage goals and human feedback
+// responsibility: Constructs planner agent prompt for artifact development by combining stage goals, task intent, current artifact, and human interjection feedback
 // actor: core_runtime
 // role: agent_guidance
 // source_truth: implementation
@@ -59,7 +59,7 @@ function buildBuilderPrompt({ stage, intent, artifact, lastRound, humanInterject
 }
 
 // warehouse:method
-// responsibility: Constructs prompt for reviewer agent to identify intent, complexity, and validity issues with proposed artifact changes
+// responsibility: Constructs reviewer agent prompt to evaluate proposed artifact changes against task intent, identifying alignment issues and complexity assessment
 // actor: core_runtime
 // role: agent_guidance
 // source_truth: implementation

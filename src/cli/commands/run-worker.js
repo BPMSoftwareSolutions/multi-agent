@@ -10,7 +10,7 @@ const { executeDriveWorker } = require("../../../server/drive/service");
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: Finds and executes pending action
+// responsibility: Run-worker command: loads session, finds pending action, executes via worker handler, saves updated session state
 // actor: cli
 // role: run_worker_command
 // source_truth: implementation

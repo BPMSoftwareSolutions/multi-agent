@@ -7,9 +7,9 @@
 const fs = require("fs");
 
 // warehouse:method
-// responsibility: Partitions array into fixed-size chunks
+// responsibility: Partitions work items into packets: chunks array into fixed-size groups for packing
 // actor: worker_bee_infrastructure
-// role: infrastructure
+// role: packer
 // source_truth: implementation
 function chunk(items, size) {
   const out = [];
@@ -18,18 +18,18 @@ function chunk(items, size) {
 }
 
 // warehouse:method
-// responsibility: Calculates anchor cost for work item (file + method count)
+// responsibility: Partitions work items into packets: calculates anchor budget cost for packing
 // actor: worker_bee_infrastructure
-// role: calculator
+// role: packer
 // source_truth: implementation
 function anchorCost(item) {
   return (item.doFile ? 1 : 0) + (item.doMethods ? item.methodsNeeding.length : 0);
 }
 
 // warehouse:method
-// responsibility: Gets file size in bytes for packing calculation
+// responsibility: Partitions work items into packets: calculates file character size for packing budget
 // actor: worker_bee_infrastructure
-// role: calculator
+// role: packer
 // source_truth: implementation
 function fileChars(item) {
   try {
@@ -40,7 +40,7 @@ function fileChars(item) {
 }
 
 // warehouse:method
-// responsibility: Greedily partitions work items into packets within anchor, file, and char budgets
+// responsibility: Partitions work items into packets: greedily packs within anchor, file, and char budgets
 // actor: worker_bee_infrastructure
 // role: packer
 // source_truth: implementation

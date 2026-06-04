@@ -36,7 +36,7 @@ const TEST_PROMPT = {
 };
 
 // warehouse:method
-// responsibility: Sends JSON POST request to HTTPS endpoint
+// responsibility: Language model API validator: sends JSON POST request with timeout handling and error parsing
 // actor: http_client
 // role: network_requestor
 // source_truth: implementation
@@ -88,8 +88,8 @@ function postJson(url, body, timeoutMs = 10000) {
 }
 
 // warehouse:method
-// responsibility: Tests language model API key and measures latency
-// actor: api_tester
+// responsibility: Language model API validator: validates API key and model with quota/latency diagnostics
+// actor: api_validator
 // role: diagnostic_tool
 // source_truth: implementation
 async function testKey(keyName, keyValue, model) {
@@ -135,8 +135,8 @@ async function testKey(keyName, keyValue, model) {
 }
 
 // warehouse:method
-// responsibility: Orchestrates API key testing across all configured keys
-// actor: test_runner
+// responsibility: Language model API validator: orchestrates diagnostic report across configured keys and models
+// actor: api_validator
 // role: orchestrator
 // source_truth: implementation
 async function main() {

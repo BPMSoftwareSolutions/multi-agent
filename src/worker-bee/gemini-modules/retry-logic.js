@@ -7,7 +7,7 @@
 const RETRYABLE_STATUS = new Set([429, 500, 502, 503, 504, 529]);
 
 // warehouse:method
-// responsibility: Determines whether an error condition should trigger a retry (excluding auth failures)
+// responsibility: Determines retry eligibility for error conditions excluding authentication failures
 // actor: worker_bee_infrastructure
 // role: retry_manager
 // source_truth: implementation
@@ -34,7 +34,7 @@ function isRetryable(error) {
 }
 
 // warehouse:method
-// responsibility: Calculates exponential backoff delay for retry attempt
+// responsibility: Calculates exponential backoff delay strategy for API retry attempts
 // actor: worker_bee_infrastructure
 // role: retry_manager
 // source_truth: implementation

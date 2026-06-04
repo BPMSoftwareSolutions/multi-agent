@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 
 // warehouse:method
-// responsibility: Generates a unique run ID from current timestamp with URL-safe formatting
+// responsibility: Initializes new runs: generates unique run ID from timestamp with URL-safe formatting
 // actor: worker_bee_infrastructure
 // role: infrastructure
 // source_truth: implementation
@@ -17,7 +17,7 @@ function newRunId() {
 }
 
 // warehouse:method
-// responsibility: Constructs the runs directory path under the reports root
+// responsibility: Initializes new runs: constructs runs directory path within run structure
 // actor: worker_bee_infrastructure
 // role: infrastructure
 // source_truth: implementation
@@ -26,7 +26,7 @@ function runsDir(reportsDir) {
 }
 
 // warehouse:method
-// responsibility: Initializes a new run by creating directory, writing manifest, and updating latest-run pointer
+// responsibility: Initializes new runs: creates run directory, writes manifest, tracks run ID and metadata
 // actor: worker_bee_infrastructure
 // role: data_access
 // source_truth: implementation

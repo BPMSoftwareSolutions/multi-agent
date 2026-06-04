@@ -7,7 +7,7 @@
 const path = require("path");
 
 // warehouse:method
-// responsibility: Converts absolute file path to repo-relative POSIX-style path
+// responsibility: Converts paths to repo-relative POSIX format: normalizes absolute paths for cross-platform consistency
 // actor: worker_bee_infrastructure
 // role: path_normalizer
 // source_truth: implementation
@@ -16,7 +16,7 @@ function repoRelative(absPath, repoRoot) {
 }
 
 // warehouse:method
-// responsibility: Computes parents[N] index for repo root from code literal or path depth
+// responsibility: Converts paths to repo-relative POSIX format: computes directory depth from repo root
 // actor: worker_bee_infrastructure
 // role: path_calculator
 // source_truth: implementation
@@ -27,7 +27,7 @@ function computeRepoRootDepth(text, relPosix) {
 }
 
 // warehouse:method
-// responsibility: Normalizes path to forward slashes and trims whitespace for consistent comparison
+// responsibility: Converts paths to repo-relative POSIX format: normalizes whitespace and path separators
 // actor: worker_bee_infrastructure
 // role: path_normalizer
 // source_truth: implementation

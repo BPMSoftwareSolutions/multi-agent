@@ -8,9 +8,9 @@ const { getSession, getCurrentSessionId } = require("../../core/session-store");
 const { renderSession, exit } = require("../print");
 
 // warehouse:method
-// responsibility: Retrieves and displays session state
+// responsibility: Retrieves current session state and renders formatted output of stages and operations
 // actor: cli
-// role: show_command
+// role: command_handler
 // source_truth: implementation
 async function show(sessionId = null, options = {}) {
   try {

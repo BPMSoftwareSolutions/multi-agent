@@ -20,7 +20,7 @@ if (fs.existsSync(configPath)) {
 }
 
 // warehouse:method
-// responsibility: Routes command flow between summary/detailed run reporting
+// responsibility: Delegates worker-bee run reporting: routes command flow between summary/detailed modes, orchestrates report generation
 // actor: command_dispatcher
 // role: orchestrator
 // source_truth: implementation

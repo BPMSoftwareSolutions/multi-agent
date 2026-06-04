@@ -9,9 +9,9 @@ const { normalizeIntent } = require("../../core/run-round");
 const { renderSession, exit } = require("../print");
 
 // warehouse:method
-// responsibility: Validates brief and creates session
+// responsibility: Start command handler: validates brief, creates session with normalized intent from user input
 // actor: cli
-// role: start_command
+// role: command_handler
 // source_truth: implementation
 async function start(brief, apiKey, options = {}) {
   if (!brief || typeof brief !== "string") {

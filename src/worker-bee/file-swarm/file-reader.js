@@ -8,7 +8,7 @@ const fs = require("fs");
 const { stripBom } = require("../text-utils");
 
 // warehouse:method
-// responsibility: Reads file and truncates to budget with ellipsis marker
+// responsibility: Reads file and truncates content to character budget for prompt embedding with ellipsis marker
 // actor: worker_bee_infrastructure
 // role: reader
 // source_truth: implementation

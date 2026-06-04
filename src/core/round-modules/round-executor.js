@@ -13,7 +13,7 @@ const { STAGES } = require("../stages");
 const { normalizeReviewerOutput } = require("./intent-normalizer");
 
 // warehouse:method
-// responsibility: Executes a single round of planning and review phases, orchestrating planner and reviewer agents and storing results
+// responsibility: Executes design workshop round by invoking planner and reviewer agents sequentially, orchestrating prompts and storing round results
 // actor: orchestration
 // role: round_execution
 // source_truth: implementation

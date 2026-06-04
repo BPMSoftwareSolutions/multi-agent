@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 
 // warehouse:method
-// responsibility: Recursively walks directory tree collecting .js files
+// responsibility: Recursively traverses directory tree collecting all JavaScript file paths
 // actor: file_scanner
 // role: traverser
 // source_truth: implementation

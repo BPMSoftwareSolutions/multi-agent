@@ -10,9 +10,9 @@ const { registerFile } = require("./item-registrar");
 const { ensureOperationsState } = require("./operations-builder");
 
 // warehouse:method
-// responsibility: Creates human review queue item from recommendation, checks for duplicates, adds to queue with generated review id
+// responsibility: Queues human review item from recommendation with deduplication check and review id generation for approval workflow
 // actor: shared
-// role: human_review_queuer
+// role: action_queuer
 // source_truth: implementation
 function queueHumanReviewItem(operations, recommendation, context = {}) {
   const existing = operations.humanReviewQueue.find(
@@ -42,7 +42,7 @@ function queueHumanReviewItem(operations, recommendation, context = {}) {
 }
 
 // warehouse:method
-// responsibility: Processes array of recommendations, normalizes each, registers files/folders, queues approved actions or human reviews, returns summary
+// responsibility: Queues action recommendations by normalizing input, registering files, deduplicating with idempotency, and routing to approval or human review
 // actor: shared
 // role: action_queuer
 // source_truth: implementation
@@ -133,9 +133,9 @@ function queueActionRecommendations(session, recommendations, context = {}) {
 }
 
 // warehouse:method
-// responsibility: Wraps single recommendation as array and queues it, enabling manual approval workflow from CLI
+// responsibility: Wraps manual recommendation for queueing to enable CLI-driven action approval workflow and manual action integration
 // actor: shared
-// role: manual_action_approver
+// role: action_queuer
 // source_truth: implementation
 function approveManualAction(session, recommendationInput, context = {}) {
   return queueActionRecommendations(session, [recommendationInput], context);

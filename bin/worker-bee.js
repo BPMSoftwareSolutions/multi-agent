@@ -39,8 +39,7 @@ const { newRunId, initRun, writePart, finalizeRun, readLatestStatus } = require(
 const DEFAULT_REPO_ROOT =
   process.env.WORKER_BEE_REPO_ROOT || config.repoRoot || "C:/source/repos/bpm/internal/ai-engine";
 
-// warehouse:method
-// responsibility: Parses command arguments into runtime config
+// responsibility: Parses command-line arguments and packet overrides into swarm runtime configuration and execution parameters with defaults
 // actor: argument_parser
 // role: config_builder
 // source_truth: implementation
@@ -108,7 +107,7 @@ Packet overrides:
 `;
 
 // warehouse:method
-// responsibility: Renders worker-bee status from ledger
+// responsibility: Renders swarm status from ledger showing progress metrics, packet completion counts, error tallies, and live state for CLI monitoring
 // actor: status_renderer
 // role: display_engine
 // source_truth: implementation
@@ -135,7 +134,7 @@ function renderStatus(status, json) {
 }
 
 // warehouse:method
-// responsibility: Orchestrates worker-bee swarm execution
+// responsibility: Orchestrates complete swarm execution workflow: scanning for work, distributing packets to bees, tracking progress via ledger, managing retries until convergence, and reporting results
 // actor: bee_orchestrator
 // role: orchestrator
 // source_truth: implementation

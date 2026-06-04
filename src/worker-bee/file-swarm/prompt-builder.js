@@ -7,7 +7,7 @@
 const { readForPrompt } = require("./file-reader");
 
 // warehouse:method
-// responsibility: Formats method list for prompt with IDs, names, and line numbers
+// responsibility: Formatter: formats method list for language model prompts with IDs, names, line numbers from metadata
 // actor: worker_bee_infrastructure
 // role: formatter
 // source_truth: implementation
@@ -17,7 +17,7 @@ function methodList(item) {
 }
 
 // warehouse:method
-// responsibility: Constructs multi-file packet prompt with file content and method IDs
+// responsibility: Builder: constructs language model prompts from work items combining file content and method metadata
 // actor: worker_bee_infrastructure
 // role: builder
 // source_truth: implementation

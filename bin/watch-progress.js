@@ -31,7 +31,7 @@ const stream = fs.createReadStream(logFile, { encoding: "utf8" });
 const rl = readline.createInterface({ input: stream, crlfDelay: Infinity });
 
 // warehouse:method
-// responsibility: Processes log lines for completion events
+// responsibility: Watches worker-bee log stream for real-time packet completion events, extracts progress counts and fallback triggers with timestamps
 // actor: event_processor
 // role: stream_handler
 // source_truth: implementation
@@ -65,7 +65,7 @@ const lineHandler = (line) => {
 };
 
 // warehouse:method
-// responsibility: Outputs final summary with completion tally
+// responsibility: Outputs final progress summary with completion tallies from log watcher, reports recency status and stall indicators
 // actor: summary_printer
 // role: display_engine
 // source_truth: implementation

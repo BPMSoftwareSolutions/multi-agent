@@ -12,7 +12,7 @@ const { buildPacketPrompt } = require("./prompt-builder");
 const { chunk } = require("./work-packer");
 
 // warehouse:method
-// responsibility: Applies anchors to single file item and returns result status
+// responsibility: Applicator: applies anchors to single file item via language model API, returns status with written count
 // actor: worker_bee_infrastructure
 // role: applicator
 // source_truth: implementation
@@ -44,7 +44,7 @@ function applyToItem(item, fileFields, methodsById, dryRun) {
 }
 
 // warehouse:method
-// responsibility: Processes oversize file via repeated method-batched Gemini calls
+// responsibility: Applicator: processes oversized file with adaptive packet splitting via batched language model calls with retry logic
 // actor: worker_bee_infrastructure
 // role: applicator
 // source_truth: implementation
@@ -78,7 +78,7 @@ async function processOversizeFile(item, { apiKey, model, dryRun, workload }) {
 }
 
 // warehouse:method
-// responsibility: Processes packet via Gemini call with adaptive splitting on partial/failed responses
+// responsibility: Applicator: processes packet via language model API with adaptive splitting and retry logic on failures
 // actor: worker_bee_infrastructure
 // role: applicator
 // source_truth: implementation

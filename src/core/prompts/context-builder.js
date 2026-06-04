@@ -7,7 +7,7 @@
 const { toJSONString } = require("./schema-formatter");
 
 // warehouse:method
-// responsibility: Formats previous round details including human interjection and artifact changes for context injection
+// responsibility: Context builder: formats previous round context with human interjection and artifact changes for agent prompts
 // actor: core_runtime
 // role: context_builder
 // source_truth: implementation
@@ -28,7 +28,7 @@ function buildRoundContext(lastRound) {
 }
 
 // warehouse:method
-// responsibility: Normalizes human interjection text, returning placeholder if empty or invalid
+// responsibility: Normalizer: validates and normalizes human interjection text for agent prompt context handling
 // actor: core_runtime
 // role: normalizer
 // source_truth: implementation

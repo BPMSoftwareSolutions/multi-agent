@@ -9,7 +9,7 @@ const { toTrimmedString } = require("../validation-helpers");
 const { ensureOperationsState } = require("./operations-builder");
 
 // warehouse:method
-// responsibility: Marks action as failed or blocked, records error details in attempt object, pushes to action attempts log
+// responsibility: Executes failure handling within action execution: marks action as failed/blocked, records error state in attempt log
 // actor: shared
 // role: attempt_failure_handler
 // source_truth: implementation
@@ -38,7 +38,7 @@ function failAttempt({ operations, action, attempt, code, message, status = "fai
 }
 
 // warehouse:method
-// responsibility: Executes pending action, validates file and state, applies action mutations, records attempt, manages external service callbacks
+// responsibility: Executes pending action with file validation, applies mutations, records attempt lifecycle
 // actor: shared
 // role: worker_executor
 // source_truth: implementation
@@ -282,7 +282,7 @@ async function runWorker(session, options = {}) {
 }
 
 // warehouse:method
-// responsibility: Aggregates operation counts by status (pending, running, done, failed, blocked), returns summary with human review and attempt counts
+// responsibility: Summarizes operations: aggregates action execution counts by status, returns attempt and review metrics
 // actor: shared
 // role: operations_summarizer
 // source_truth: implementation

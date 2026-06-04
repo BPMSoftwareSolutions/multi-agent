@@ -25,7 +25,7 @@ const DEFAULT_REPO_ROOT =
   process.env.WORKER_BEE_REPO_ROOT || "C:/source/repos/bpm/internal/ai-engine";
 
 // warehouse:method
-// responsibility: Parses command arguments for taxonomy scan
+// responsibility: Python taxonomy scanner: parses and validates command arguments for taxonomy scanning
 // actor: argument_parser
 // role: config_builder
 // source_truth: implementation
@@ -47,9 +47,9 @@ function parseArgs(argv) {
 }
 
 // warehouse:method
-// responsibility: Scans target and generates tracking JSON
-// actor: scan_runner
-// role: orchestrator
+// responsibility: Python taxonomy scanner: scans target and writes tracking JSON marking TOUCHED vs UNTOUCHED
+// actor: taxonomy_scanner
+// role: scan_authority
 // source_truth: implementation
 function main() {
   const args = parseArgs(process.argv.slice(2));

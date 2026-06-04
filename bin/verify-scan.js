@@ -23,7 +23,7 @@ const DEFAULT_REPO_ROOT = process.env.WORKER_BEE_REPO_ROOT || config.repoRoot ||
 const DEFAULT_TARGET = path.resolve(DEFAULT_REPO_ROOT, config.defaultTarget || "packages");
 
 // warehouse:method
-// responsibility: Traverses directory and collects files
+// responsibility: Scans and traverses directory tree to collect all Python files for taxonomy audit coverage verification and completeness reporting
 // actor: file_scanner
 // role: traverser
 // source_truth: implementation
@@ -46,7 +46,7 @@ function walk(dir, ext = ".py") {
 }
 
 // warehouse:method
-// responsibility: Parses Python file header for taxonomy
+// responsibility: Parses Python file header comments to extract taxonomy fields and validate TOUCHED/UNTOUCHED status classification from complete header blocks
 // actor: header_parser
 // role: extractor
 // source_truth: implementation
@@ -71,7 +71,7 @@ function readTaxonomyHeader(filePath) {
 }
 
 // warehouse:method
-// responsibility: Validates taxonomy header completeness
+// responsibility: Validates taxonomy header completeness by checking all required fields (responsibility, actor, role, source_truth) for audit classification as TOUCHED or UNTOUCHED
 // actor: header_validator
 // role: validator
 // source_truth: implementation

@@ -8,7 +8,7 @@ const { getSqlConfig, sqlStringLiteral, runSql, runSqlJson } = require("../sql-h
 const { ensureSchema } = require("./schema-manager");
 
 // warehouse:method
-// responsibility: Persists OAuth token JSON to database by provider using MERGE, creates or updates token
+// responsibility: Persists and retrieves OAuth tokens: writes token JSON to database by provider using MERGE
 // actor: shared
 // role: oauth_token_persistence
 // source_truth: implementation
@@ -34,7 +34,7 @@ VALUES (source.provider, source.token_json, source.updated_at);
 }
 
 // warehouse:method
-// responsibility: Retrieves OAuth token JSON from database by provider, returns token string or null if not found
+// responsibility: Persists and retrieves OAuth tokens: retrieves token JSON from database by provider
 // actor: shared
 // role: oauth_token_persistence
 // source_truth: implementation

@@ -14,7 +14,7 @@ const logFile = path.resolve(__dirname, "..", ".worker-bee.log");
 const reportFile = path.resolve(__dirname, "..", "reports", "CURRENT-RUN.md");
 
 // warehouse:method
-// responsibility: Generates markdown snapshot with validated progress metrics, velocity calculations, and ETA forecast
+// responsibility: Generates progress snapshot: formats markdown report with velocity metrics, completion calculations, forecast
 // actor: report_formatter
 // role: formatter
 // source_truth: implementation
@@ -140,7 +140,7 @@ Each snapshot shows a measurement point with completion delta and velocity.
 }
 
 // warehouse:method
-// responsibility: Orchestrates progress report generation by reading log, validating data, and writing markdown snapshot
+// responsibility: Generates progress snapshot: reads completion log, validates metrics, writes formatted markdown report
 // actor: report_writer
 // role: orchestrator
 // source_truth: implementation

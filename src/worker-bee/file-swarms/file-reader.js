@@ -9,7 +9,7 @@ const fs = require("fs");
 const CHARS_PER_FILE = 6000;
 
 // warehouse:method
-// responsibility: Reads file and truncates to CHARS_PER_FILE budget with ellipsis marker
+// responsibility: Reads file and truncates content to character budget for classification with truncation marker
 // actor: worker_bee_infrastructure
 // role: reader
 // source_truth: implementation

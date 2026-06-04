@@ -8,7 +8,7 @@ const { STAGES } = require("../core/stages");
 const { summarizeOperations } = require("../shared/actions");
 
 // warehouse:method
-// responsibility: Formats artifact into readable key-value pairs
+// responsibility: Renders artifact into human-readable CLI output with nested key-value pairs and structured formatting
 // actor: cli
 // role: artifact_formatter
 // source_truth: implementation
@@ -36,7 +36,7 @@ function renderArtifact(stageId, artifact) {
 }
 
 // warehouse:method
-// responsibility: Renders complete session state
+// responsibility: Renders complete session state to human-readable CLI output showing stages, rounds, operations, and artifact progression
 // actor: cli
 // role: session_renderer
 // source_truth: implementation
@@ -148,7 +148,7 @@ function renderSession(session, options = {}) {
 }
 
 // warehouse:method
-// responsibility: Renders round data
+// responsibility: Formats and renders round data to human-readable CLI output with planner, reviewer results, and change summaries
 // actor: cli
 // role: round_renderer
 // source_truth: implementation
@@ -242,7 +242,7 @@ function renderRound(round, options = {}) {
 }
 
 // warehouse:method
-// responsibility: Logs exit message and terminates process
+// responsibility: Outputs exit message to console and terminates process with given exit code
 // actor: cli
 // role: process_terminator
 // source_truth: implementation

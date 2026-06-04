@@ -9,7 +9,7 @@ const { getSqlConfig, runSql } = require("../sql-helpers");
 let schemaReady = false;
 
 // warehouse:method
-// responsibility: Ensures schema exists and creates required tables (sessions, app_state, oauth_tokens) if missing
+// responsibility: Ensures SQL Server schema exists and creates persistence tables (sessions, app_state, oauth_tokens)
 // actor: shared
 // role: schema_manager
 // source_truth: implementation

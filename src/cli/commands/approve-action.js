@@ -11,9 +11,9 @@ const { approveManualAction } = require("../../shared/actions");
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: Parses payload and approves manual action
+// responsibility: Approve-action command handler: parses action payload and queues approved action to session
 // actor: cli
-// role: approve_action_command
+// role: command_handler
 // source_truth: implementation
 async function approveActionCommand(options = {}) {
   try {

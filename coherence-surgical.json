@@ -1,0 +1,22 @@
+{
+  "schema": "worker-bee-packet.v1",
+  "layer": "file",
+  "mode": "coherence-surgical",
+  "workload": {
+    "target_files": [
+      "bin/runs-report.js",
+      "src/shared/actions-modules/action-executor.js",
+      "src/worker-bee/anchor-scanner/anchor-builder.js",
+      "bin/studio.js",
+      "bin/taxonomy-report.js",
+      "src/story-analysis/similarity-engine.js",
+      "bin/track-progress.js",
+      "src/cli/print.js",
+      "src/worker-bee/anchor-scanner/file-discoverer.js",
+      "src/worker-bee/file-swarm/file-reader.js"
+    ],
+    "instruction": "Analyze semantic alignment between file anchor and method anchors. Regenerate method anchors to maximize vocabulary overlap with file anchor vocabulary. Goal: improve alignment from current 0-20% to 60%+.",
+    "max_files_per_packet": 10,
+    "method_batch": 5
+  }
+}

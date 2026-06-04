@@ -21,7 +21,7 @@ const { approveActionCommand } = require("../src/cli/commands/approve-action");
 const { exit } = require("../src/cli/print");
 
 // warehouse:method
-// responsibility: Orchestrates CLI command routing
+// responsibility: Orchestrates studio CLI by parsing command-line arguments and routing to appropriate command handlers for session, round, and workflow management
 // actor: command_router
 // role: orchestrator
 // source_truth: implementation
@@ -128,7 +128,7 @@ Examples:
 }
 
 // warehouse:method
-// responsibility: Parses command arguments into options
+// responsibility: Parses CLI command-line arguments into structured studio configuration options and flags for handler routing
 // actor: argument_parser
 // role: config_builder
 // source_truth: implementation

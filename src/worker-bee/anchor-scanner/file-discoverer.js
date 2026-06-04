@@ -13,7 +13,7 @@ const SKIP_DIRS = new Set([
 ]);
 
 // warehouse:method
-// responsibility: Recursively collects Python files in directory tree, skipping excluded folders
+// responsibility: Recursively discovers and collects Python files in directory tree with skip list filtering and sorting
 // actor: worker_bee_infrastructure
 // role: scanner
 // source_truth: implementation

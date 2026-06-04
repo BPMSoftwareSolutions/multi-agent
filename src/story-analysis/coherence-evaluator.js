@@ -9,8 +9,8 @@ const path = require("path");
 const { computeSimilarity, isBoilerplate, getAlignmentThreshold, detectRedFlags } = require("./similarity-engine");
 
 // warehouse:method
-// responsibility: Evaluates coherence of a single file against its methods using weighted thresholds for boilerplate vs core logic
-// actor: coherence_evaluator
+// responsibility: Evaluates file coherence by computing semantic similarity between file responsibility and method responsibilities, applying weighted alignment thresholds and detecting misalignment issues
+// actor: report_generator
 // role: scorer
 // source_truth: implementation
 function evaluateFileCoherence(file) {
@@ -63,9 +63,9 @@ function evaluateFileCoherence(file) {
 }
 
 // warehouse:method
-// responsibility: Generates human-readable narrative analysis of story coherence across all files
+// responsibility: Generates human-readable narrative coherence analysis by evaluating all files, aggregating coherence scores, and categorizing strong vs weak story findings
 // actor: report_generator
-// role: formatter
+// role: orchestrator
 // source_truth: implementation
 function generateReport(taxonomyData) {
   const analyses = [];
@@ -94,8 +94,8 @@ function generateReport(taxonomyData) {
 }
 
 // warehouse:method
-// responsibility: Formats and outputs story analysis report to console and JSON file
-// actor: report_writer
+// responsibility: Formats and writes coherence narrative findings to console output and JSON report file, rendering analysis metrics and weak story diagnostics
+// actor: report_generator
 // role: formatter
 // source_truth: implementation
 function writeReport(report, taxonomyPath) {
@@ -144,8 +144,8 @@ function writeReport(report, taxonomyPath) {
 }
 
 // warehouse:method
-// responsibility: Orchestrates loading taxonomy JSON and running complete story coherence analysis
-// actor: story_analyzer
+// responsibility: Orchestrates coherence analysis workflow by loading taxonomy data, generating aggregated coherence report, and writing narrative analysis findings
+// actor: report_generator
 // role: orchestrator
 // source_truth: implementation
 function main() {

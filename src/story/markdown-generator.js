@@ -7,7 +7,7 @@
 const { buildNarrative } = require("./narrative-builder");
 
 // warehouse:method
-// responsibility: Generates markdown report with summary and file narratives
+// responsibility: Generates markdown document with front matter, summary, and individual file narratives
 // actor: story_reporter
 // role: generator
 // source_truth: implementation

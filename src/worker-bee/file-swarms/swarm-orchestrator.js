@@ -11,7 +11,7 @@ const { chunk } = require("./work-chunker");
 const { readTruncated } = require("./file-reader");
 
 // warehouse:method
-// responsibility: Constructs multi-file prompt for file-level anchor classification
+// responsibility: Prompt builder: constructs multi-file prompt for language model anchor classification of concurrent agents
 // actor: worker_bee_infrastructure
 // role: prompt_builder
 // source_truth: implementation
@@ -27,7 +27,7 @@ function buildUserPrompt(packet) {
 }
 
 // warehouse:method
-// responsibility: Processes packet via Gemini classification and writes file anchors
+// responsibility: Processor: processes file packet via language model APIs to classify and write anchors to concurrent files
 // actor: worker_bee_infrastructure
 // role: processor
 // source_truth: implementation
@@ -89,7 +89,7 @@ async function processPacket(packet, { apiKey, model, dryRun }) {
 }
 
 // warehouse:method
-// responsibility: Orchestrates concurrent agents processing file-anchor packets from shared queue
+// responsibility: Orchestrator: orchestrates concurrent agents processing file packets with language model APIs from shared queue
 // actor: worker_bee_infrastructure
 // role: orchestrator
 // source_truth: implementation
