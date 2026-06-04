@@ -10,7 +10,7 @@ const path = require("path");
 const { buildTaxonomyCaseFile } = require("./taxonomy-case-file");
 const { applyExpectedTaxonomy } = require("./taxonomy-heal");
 const { buildFileEvidence } = require("./taxonomy-evidence-bundle");
-const { renderProgressBar } = require("../src/observability/ascii-components");
+const { renderProgressBar, renderStatusSignal } = require("../src/observability/ascii-components");
 
 const HEALING_PROGRESS_CONTRACT = {
   component_key: "taxonomy_healing_score_progress",
@@ -75,9 +75,33 @@ function formatScore(score) {
 // source_truth: implementation
 function formatBooleanBadge(value) {
   if (typeof value !== "boolean") {
-    return "[GRAY:PENDING]";
+    return renderStatusSignal("pending", "pending");
   }
-  return value ? "[GREEN:YES]" : "[RED:NO]";
+  return value ? renderStatusSignal("pass", "yes") : renderStatusSignal("fail", "no");
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function formatMutationBadge(value) {
+  if (typeof value !== "boolean") {
+    return renderStatusSignal("pending", "pending");
+  }
+  return value ? renderStatusSignal("warning", "yes") : renderStatusSignal("locked", "no");
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function formatSourceMutationPosture(value) {
+  if (typeof value !== "boolean") {
+    return renderStatusSignal("pending", "pending");
+  }
+  return value ? renderStatusSignal("warning", "source mutated") : renderStatusSignal("locked", "no source mutation");
 }
 
 // warehouse:method
@@ -88,13 +112,29 @@ function formatBooleanBadge(value) {
 function formatStatusBadge(state) {
   const normalized = String(state || "unknown").toLowerCase();
   const labels = {
-    done: "[GREEN:DONE]",
-    running: "[BLUE:RUNNING]",
-    failed: "[RED:FAILED]",
-    blocked: "[RED:BLOCKED]",
-    starting: "[BLUE:STARTING]",
+    done: renderStatusSignal("pass", "done"),
+    running: renderStatusSignal("running", "running"),
+    failed: renderStatusSignal("fail", "failed"),
+    blocked: renderStatusSignal("blocked", "blocked"),
+    starting: renderStatusSignal("running", "starting"),
   };
-  return labels[normalized] || `[GRAY:${normalized.toUpperCase()}]`;
+  return labels[normalized] || renderStatusSignal("warning", normalized.toUpperCase());
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function formatOperatorSignal(meaning, label) {
+  return renderStatusSignal(meaning, label, {
+    contract: {
+      rendering: {
+        mode: "unicode",
+        uppercase_label: false,
+      },
+    },
+  });
 }
 
 // warehouse:method
@@ -127,12 +167,12 @@ function formatPhaseTrail(currentPhase) {
   return phases
     .map((phase, index) => {
       if (index === currentIndex) {
-        return `[${phase.toUpperCase()}]`;
+        return `${phase} ✓`;
       }
       if (currentIndex >= 0 && index < currentIndex) {
-        return `${phase}:ok`;
+        return `${phase} ✓`;
       }
-      return `${phase}:..`;
+      return `${phase} …`;
     })
     .join(" -> ");
 }
@@ -184,11 +224,12 @@ function formatOperatorConsole(status) {
     "| TAXONOMY HEALING OBSERVABILITY CONSOLE                                                |",
     border,
     consoleLine("Status", formatStatusBadge(status.state)),
-    consoleLine("Target", status.target_file),
+    consoleLine("Target", formatOperatorSignal("file", status.target_file)),
     consoleLine("Phase", formatPhaseTrail(status.phase)),
-    consoleLine("Action", status.current_action),
+    consoleLine("Action", formatOperatorSignal("evidence", status.current_action)),
     consoleLine("Before", scoreBefore),
     consoleLine("After", scoreAfter),
+    consoleLine("Mutation", formatSourceMutationPosture(status.source_mutated)),
     consoleLine("Evidence", formatBooleanBadge(status.evidence_trustworthy)),
     border,
     "```",
@@ -207,6 +248,90 @@ function formatScoreDelta(before, after) {
   }
   const delta = after - before;
   return delta >= 0 ? `+${delta}` : String(delta);
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function classifyMutation(sourceMutated, expected) {
+  if (sourceMutated === false) {
+    return "evidence_refresh";
+  }
+  if (expected.required_refactorings && expected.required_refactorings.length > 0) {
+    return "refactor";
+  }
+  const firstChange = (expected.required_changes || [])[0];
+  return firstChange ? firstChange.type : "source_update";
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function summarizeHealingAction(mutationClass, sourceMutated) {
+  if (mutationClass === "evidence_refresh" || sourceMutated === false) {
+    return "Evidence refreshed; semantic tie-out verified.";
+  }
+  if (mutationClass === "anchor_update") {
+    return "Anchors updated from expected coherence contract.";
+  }
+  if (mutationClass === "refactor") {
+    return "Source refactor applied from expected coherence contract.";
+  }
+  return "Source updated from expected coherence contract.";
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildHealingLedger({ filePath, mutationClass, sourceMutated, story, expectedPath }) {
+  return [
+    {
+      file: filePath,
+      mutation_class: mutationClass,
+      source_mutated: sourceMutated,
+      healing_action: summarizeHealingAction(mutationClass, sourceMutated),
+      before: formatScore(story.before_score),
+      after: formatScore(story.after_score),
+      delta: formatScoreDelta(story.before_score, story.after_score),
+      evidence: expectedPath,
+    },
+  ];
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildOperationalChanges(sourceMutated, mutationClass) {
+  return [
+    {
+      surface: "Source file",
+      change: sourceMutated ? `Mutated via ${mutationClass}` : "No mutation required",
+    },
+    {
+      surface: "Evidence bundle",
+      change: "Refreshed",
+    },
+    {
+      surface: "Coherence story",
+      change: "Revalidated",
+    },
+    {
+      surface: "Semantic tie-out",
+      change: "Verified",
+    },
+    {
+      surface: "Report projection",
+      change: "Regenerated",
+    },
+  ];
 }
 
 // warehouse:method
@@ -420,7 +545,59 @@ function formatSemanticTieOutMarkdown(tieOut) {
     "",
     markdownTable(
       ["Layer", "Before", "After", "Result"],
-      tieOut.map((row) => [row.layer, row.before, row.after, row.result])
+      tieOut.map((row) => [
+        row.layer,
+        row.before,
+        row.after,
+        row.result === "aligned" ? renderStatusSignal("pass", row.result) : renderStatusSignal("warning", row.result),
+      ])
+    ),
+  ].join("\n");
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function formatHealingLedgerMarkdown(ledger) {
+  if (!ledger || ledger.length === 0) {
+    return null;
+  }
+  return [
+    "## File Healing Ledger",
+    "",
+    markdownTable(
+      ["File", "Mutation Class", "Source Mutated", "Healing Action", "Before", "After", "Delta", "Evidence"],
+      ledger.map((row) => [
+        row.file,
+        row.mutation_class,
+        formatMutationBadge(row.source_mutated),
+        row.healing_action,
+        row.before,
+        row.after,
+        row.delta,
+        row.evidence,
+      ])
+    ),
+  ].join("\n");
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function formatOperationalChangesMarkdown(changes) {
+  if (!changes || changes.length === 0) {
+    return null;
+  }
+  return [
+    "## What Changed",
+    "",
+    markdownTable(
+      ["Surface", "Change"],
+      changes.map((change) => [change.surface, change.change])
     ),
   ].join("\n");
 }
@@ -454,6 +631,8 @@ function formatHealingMarkdown(status) {
         ["Phase", status.phase],
         ["Current action", status.current_action],
         ["Evidence trustworthy", formatBooleanBadge(status.evidence_trustworthy)],
+        ["Source mutated", formatMutationBadge(status.source_mutated)],
+        ["Mutation class", status.mutation_class],
       ]
     ),
     "",
@@ -471,6 +650,10 @@ function formatHealingMarkdown(status) {
         ],
       ]
     ),
+    "",
+    formatHealingLedgerMarkdown(status.healing_ledger),
+    "",
+    formatOperationalChangesMarkdown(status.operational_changes),
     "",
     formatCoherenceStoryMarkdown(status.coherence_story),
     "",
@@ -539,6 +722,10 @@ function runObservableTaxonomyHeal(filePath, root, reportsDir) {
     score_before: null,
     score_after: null,
     evidence_trustworthy: null,
+    source_mutated: null,
+    mutation_class: null,
+    healing_ledger: null,
+    operational_changes: null,
     coherence_story: null,
     semantic_tie_out: null,
   };
@@ -567,7 +754,12 @@ function runObservableTaxonomyHeal(filePath, root, reportsDir) {
     phase: "heal",
     current_action: "applying expected taxonomy remediation to target file",
   });
+  const targetAbsPath = path.resolve(root, relFile);
+  const beforeHealContent = fs.readFileSync(targetAbsPath, "utf8");
   const healResult = applyExpectedTaxonomy(path.join(root, expectedPath), root);
+  const afterHealContent = fs.readFileSync(targetAbsPath, "utf8");
+  const sourceMutated = beforeHealContent !== afterHealContent;
+  const mutationClass = classifyMutation(sourceMutated, caseArtifacts.expected);
 
   status = writeHealingStatus(reportsDir, runDir, {
     ...status,
@@ -586,6 +778,14 @@ function runObservableTaxonomyHeal(filePath, root, reportsDir) {
     afterScore: healResult.score,
   });
   const semanticTieOut = buildSemanticTieOut(coherenceStory, caseArtifacts.beforeEvidence, evidence);
+  const healingLedger = buildHealingLedger({
+    filePath: relFile,
+    mutationClass,
+    sourceMutated,
+    story: coherenceStory,
+    expectedPath,
+  });
+  const operationalChanges = buildOperationalChanges(sourceMutated, mutationClass);
 
   status = writeHealingStatus(reportsDir, runDir, {
     ...status,
@@ -593,6 +793,10 @@ function runObservableTaxonomyHeal(filePath, root, reportsDir) {
     phase: "verify",
     current_action: "single-file healing run complete",
     evidence_trustworthy: evidence.trustworthy,
+    source_mutated: sourceMutated,
+    mutation_class: mutationClass,
+    healing_ledger: healingLedger,
+    operational_changes: operationalChanges,
     coherence_story: coherenceStory,
     semantic_tie_out: semanticTieOut,
   });

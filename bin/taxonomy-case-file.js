@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
+// responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence deduplicating subsumed responsibilities planning expected coherent taxonomy and writing remediation evidence and Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
 // actor: taxonomy_case_builder
 // role: evidence_builder
 // source_truth: implementation
@@ -12,7 +12,7 @@ const { evaluateFileCoherence } = require("../src/story-analysis/coherence-evalu
 const { buildFileEvidence } = require("./taxonomy-evidence-bundle");
 
 // warehouse:method
-// responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
+// responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence deduplicating subsumed responsibilities planning expected coherent taxonomy and writing remediation evidence and Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -27,11 +27,29 @@ function collapseRepeatedResponsibility(responsibility) {
     }
     index = responsibility.indexOf(marker, index + marker.length);
   }
+  const parts = responsibility.split(marker).map((part) => part.trim()).filter(Boolean);
+  if (parts.length > 1) {
+    const collapsedParts = removeSubsumedResponsibilities(parts);
+    if (collapsedParts.length < parts.length) {
+      return collapsedParts.join(marker);
+    }
+  }
   return responsibility;
 }
 
 // warehouse:method
-// responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
+// responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence deduplicating subsumed responsibilities planning expected coherent taxonomy and writing remediation evidence and Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function removeSubsumedResponsibilities(responsibilities) {
+  return responsibilities.filter((responsibility) => {
+    return !responsibilities.some((other) => other !== responsibility && other.includes(responsibility));
+  });
+}
+
+// warehouse:method
+// responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence deduplicating subsumed responsibilities planning expected coherent taxonomy and writing remediation evidence and Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -39,7 +57,7 @@ function synthesizeExpectedResponsibility(taxonomy, evidence) {
   const methodResponsibilities = taxonomy.methods
     .filter((method) => method.taxonomy && method.taxonomy.responsibility)
     .map((method) => collapseRepeatedResponsibility(method.taxonomy.responsibility.replace(/\s+/g, " ").trim()));
-  const uniqueResponsibilities = [...new Set(methodResponsibilities)];
+  const uniqueResponsibilities = removeSubsumedResponsibilities([...new Set(methodResponsibilities)]);
   if (uniqueResponsibilities.length > 0) {
     return uniqueResponsibilities.join(" and ");
   }
@@ -48,7 +66,7 @@ function synthesizeExpectedResponsibility(taxonomy, evidence) {
 }
 
 // warehouse:method
-// responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
+// responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence deduplicating subsumed responsibilities planning expected coherent taxonomy and writing remediation evidence and Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -105,7 +123,7 @@ function buildExpectedCoherence(filePath, taxonomy, analysis, evidence) {
 }
 
 // warehouse:method
-// responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
+// responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence deduplicating subsumed responsibilities planning expected coherent taxonomy and writing remediation evidence and Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -154,7 +172,7 @@ function formatIncoherenceReport(filePath, analysis, evidence, expected) {
 }
 
 // warehouse:method
-// responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
+// responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence deduplicating subsumed responsibilities planning expected coherent taxonomy and writing remediation evidence and Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -187,7 +205,7 @@ function buildTaxonomyCaseFile(filePath, root, outputRoot) {
 }
 
 // warehouse:method
-// responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
+// responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence deduplicating subsumed responsibilities planning expected coherent taxonomy and writing remediation evidence and Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -223,6 +241,7 @@ if (require.main === module) {
 
 module.exports = {
   collapseRepeatedResponsibility,
+  removeSubsumedResponsibilities,
   synthesizeExpectedResponsibility,
   buildExpectedCoherence,
   formatIncoherenceReport,

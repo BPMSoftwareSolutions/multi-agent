@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Verifies taxonomy case file workflow scans incoherent code produces actual evidence diagnosis expected taxonomy and remediation artifacts
+// responsibility: Verifies taxonomy case file workflow scans incoherent code deduplicates subsumed responsibilities and produces actual evidence diagnosis expected taxonomy and remediation artifacts
 // actor: taxonomy_case_test
 // role: validator
 // source_truth: implementation
@@ -8,10 +8,34 @@
 const assert = require("assert");
 const fs = require("fs");
 const path = require("path");
-const { buildTaxonomyCaseFile } = require("../bin/taxonomy-case-file");
+const {
+  buildTaxonomyCaseFile,
+  collapseRepeatedResponsibility,
+  removeSubsumedResponsibilities,
+} = require("../bin/taxonomy-case-file");
 
 // warehouse:method
-// responsibility: Verifies taxonomy case file workflow scans incoherent code produces actual evidence diagnosis expected taxonomy and remediation artifacts
+// responsibility: Verifies taxonomy case file workflow scans incoherent code deduplicates subsumed responsibilities and produces actual evidence diagnosis expected taxonomy and remediation artifacts
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function verifySubsumedResponsibilitiesCollapse() {
+  const concise = "Renders contract driven observability ascii components including reusable progress bars";
+  const richer = "Renders contract driven observability ascii components including reusable progress bars status icons with named console styles fallback modes and pending state handling";
+  assert.deepStrictEqual(
+    removeSubsumedResponsibilities([concise, richer]),
+    [richer],
+    "expected taxonomy should keep richer responsibility and drop subsumed fragment"
+  );
+  assert.strictEqual(
+    collapseRepeatedResponsibility(`${concise} and ${richer}`),
+    richer,
+    "single responsibility text should collapse subsumed joined fragments"
+  );
+}
+
+// warehouse:method
+// responsibility: Verifies taxonomy case file workflow scans incoherent code deduplicates subsumed responsibilities and produces actual evidence diagnosis expected taxonomy and remediation artifacts
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -78,11 +102,12 @@ function verifyIncoherentFileCaseArtifacts() {
 }
 
 // warehouse:method
-// responsibility: Verifies taxonomy case file workflow scans incoherent code produces actual evidence diagnosis expected taxonomy and remediation artifacts
+// responsibility: Verifies taxonomy case file workflow scans incoherent code deduplicates subsumed responsibilities and produces actual evidence diagnosis expected taxonomy and remediation artifacts
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 function runTaxonomyCaseFileVerification() {
+  verifySubsumedResponsibilitiesCollapse();
   verifyIncoherentFileCaseArtifacts();
   console.log("Taxonomy case file verification passed.");
   return 0;
@@ -92,4 +117,8 @@ if (require.main === module) {
   process.exit(runTaxonomyCaseFileVerification());
 }
 
-module.exports = { verifyIncoherentFileCaseArtifacts, runTaxonomyCaseFileVerification };
+module.exports = {
+  verifySubsumedResponsibilitiesCollapse,
+  verifyIncoherentFileCaseArtifacts,
+  runTaxonomyCaseFileVerification,
+};

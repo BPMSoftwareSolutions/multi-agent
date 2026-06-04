@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Verifies contract driven observability ascii progress components render named console styles pending states and numeric summaries
+// responsibility: Verifies contract driven observability ascii components render progress bars status icons fallback modes pending states and numeric summaries
 // actor: ascii_component_test
 // role: validator
 // source_truth: implementation
@@ -9,11 +9,13 @@ const assert = require("assert");
 const {
   formatProgressPercent,
   mergeProgressContract,
+  mergeStatusIconContract,
   renderProgressBar,
+  renderStatusSignal,
 } = require("../src/observability/ascii-components");
 
 // warehouse:method
-// responsibility: Verifies contract driven observability ascii progress components render named console styles pending states and numeric summaries
+// responsibility: Verifies contract driven observability ascii components render progress bars status icons fallback modes pending states and numeric summaries
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -56,12 +58,37 @@ function verifyProgressComponentContract() {
 }
 
 // warehouse:method
-// responsibility: Verifies contract driven observability ascii progress components render named console styles pending states and numeric summaries
+// responsibility: Verifies contract driven observability ascii components render progress bars status icons fallback modes pending states and numeric summaries
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function verifyStatusIconComponentContract() {
+  const unicodeContract = mergeStatusIconContract({
+    rendering: {
+      mode: "unicode",
+    },
+  });
+  const fallbackContract = mergeStatusIconContract({
+    rendering: {
+      mode: "ascii_safe",
+    },
+  });
+
+  assert.strictEqual(renderStatusSignal("pass", "done", { contract: unicodeContract }), "✅ DONE", "unicode pass icon should be primary");
+  assert.strictEqual(renderStatusSignal("fail", "no", { contract: unicodeContract }), "❌ NO", "unicode fail icon should be primary");
+  assert.strictEqual(renderStatusSignal("locked", "no source mutation", { contract: unicodeContract }), "🔒 NO SOURCE MUTATION", "unicode lock icon should be primary");
+  assert.strictEqual(renderStatusSignal("pass", "done", { contract: fallbackContract }), "[OK] DONE", "ASCII fallback should render pass safely");
+  assert.strictEqual(renderStatusSignal("locked", "read-only", { contract: fallbackContract }), "[LOCKED] READ-ONLY", "ASCII fallback should render lock safely");
+}
+
+// warehouse:method
+// responsibility: Verifies contract driven observability ascii components render progress bars status icons fallback modes pending states and numeric summaries
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 function runAsciiComponentVerification() {
   verifyProgressComponentContract();
+  verifyStatusIconComponentContract();
   console.log("ASCII component verification passed.");
   return 0;
 }
@@ -70,4 +97,8 @@ if (require.main === module) {
   process.exit(runAsciiComponentVerification());
 }
 
-module.exports = { verifyProgressComponentContract, runAsciiComponentVerification };
+module.exports = {
+  verifyProgressComponentContract,
+  verifyStatusIconComponentContract,
+  runAsciiComponentVerification,
+};
