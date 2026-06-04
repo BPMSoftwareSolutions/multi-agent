@@ -2,8 +2,8 @@
 
 **Subtitle:** A narrative review of taxonomy coherence, responsibility boundaries, and file-count justification.
 
-**Generated:** 2026-06-04T17:08:21.327Z
-**Source scan:** `scan-2026-06-04T17-08-16-051Z`
+**Generated:** 2026-06-04T18:20:07.085Z
+**Source scan:** `scan-2026-06-04T18-20-00-267Z`
 **Source swarm:** `bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z`
 
 ```text
@@ -168,10 +168,10 @@ Residue pressure counts canonical-surface relationship risks, not only individua
 | Surface Type | Canonical Surface | Legacy / Alternate Surfaces | Relationship | Decision |
 | --- | --- | --- | --- | --- |
 | Taxonomy scan report | `src/observability/taxonomy-scan-report.js` | `bin/taxonomy-report.js`, `bin/taxonomy-scan.js`, `bin/verify-scan-fixture.js`, `bin/verify-scan-validator.js`, `bin/verify-scan.js`, `bin/verify-scan.test.js` | canonical renderer with CLI and verification surfaces | document boundary |
-| Swarm report | `src/observability/taxonomy-swarm-report.js` | `bin/run-report-router.js`, `bin/runs-report-router.js`, `bin/runs-report.js`, `src/worker-bee/report.js` | partial overlap with run progress and summary reporting | document boundary |
+| Swarm report | `src/observability/taxonomy-swarm-report.js` | `bin/run-report-router.js`, `bin/runs-report-router.js`, `bin/runs-report.js`, `src/worker-bee/report.js` | unclear overlap with run progress and summary reporting | review boundary |
 | Story review report | `src/observability/codebase-story-review-report.js` | none detected | canonical only | document boundary |
-| Anchor healing | `bin/taxonomy-heal-run.js` | `bin/taxonomy-heal.js`, `scripts/test-update-anchors.js`, `scripts/update-anchors.js`, `tests/verify-taxonomy-heal.js` | operational overlap between expected taxonomy healing and direct anchor mutation | choose mutation path per governance policy |
-| Worker reporting | `src/worker-bee/report/file-scanner.js` | `src/worker-bee/report.js`, `src/worker-bee/report/report-assembler.js`, `src/worker-bee/report/report-builder.js`, `src/worker-bee/report/report-formatter.js`, `src/worker-bee/report/telemetry-counter.js` | worker-specific reporting versus global observability | classify as canonical worker-local or retire |
+| Anchor healing | `bin/taxonomy-heal-run.js` | `bin/taxonomy-heal.js`, `scripts/test-update-anchors.js`, `scripts/update-anchors.js`, `tests/verify-taxonomy-heal.js` | unclear overlap between orchestration and direct anchor mutation utilities | review boundary |
+| Worker reporting | `src/worker-bee/report/file-scanner.js` | `src/worker-bee/report.js`, `src/worker-bee/report/report-assembler.js`, `src/worker-bee/report/report-builder.js`, `src/worker-bee/report/report-formatter.js`, `src/worker-bee/report/telemetry-counter.js` | unclear overlap between worker-local reporting and global observability | review boundary |
 
 ### Residue Queue
 
@@ -248,8 +248,8 @@ Local truth is not whole truth. A file can be honest about itself and still be l
 
 | Field | Value |
 | --- | --- |
-| Report ID | codebase-story-review-2026-06-04T17-08-21-325Z |
-| Source scan ID | scan-2026-06-04T17-08-16-051Z |
+| Report ID | codebase-story-review-2026-06-04T18-20-07-084Z |
+| Source scan ID | scan-2026-06-04T18-20-00-267Z |
 | Source swarm ID | bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z |
 | Target path | . |
-| Generated at | 2026-06-04T17:08:21.327Z |
+| Generated at | 2026-06-04T18:20:07.085Z |

@@ -24,13 +24,13 @@ function sampleScan() {
     run_id: "scan-test",
     target_path: ".",
     summary: {
-      files_scanned: 5,
-      file_anchors_found: 5,
-      method_anchor_files: 2,
-      method_anchors_found: 5,
-      detected_methods: 5,
+      files_scanned: 8,
+      file_anchors_found: 8,
+      method_anchor_files: 5,
+      method_anchors_found: 8,
+      detected_methods: 8,
       folder_coherence: 100,
-      strong_count: 5,
+      strong_count: 8,
       moderate_count: 0,
       weak_count: 0,
       missing_count: 0,
@@ -59,6 +59,30 @@ function sampleScan() {
         file_anchor_found: true,
         detected_methods: 18,
         documented_methods: 18,
+        score: 100,
+        band: "strong",
+      },
+      {
+        file: "bin/runs-report.js",
+        file_anchor_found: true,
+        detected_methods: 1,
+        documented_methods: 1,
+        score: 100,
+        band: "strong",
+      },
+      {
+        file: "bin/taxonomy-heal.js",
+        file_anchor_found: true,
+        detected_methods: 1,
+        documented_methods: 1,
+        score: 100,
+        band: "strong",
+      },
+      {
+        file: "src/worker-bee/report.js",
+        file_anchor_found: true,
+        detected_methods: 1,
+        documented_methods: 1,
         score: 100,
         band: "strong",
       },
@@ -96,10 +120,12 @@ function verifyReportModel() {
   assert.strictEqual(report.file_economy.provisional_score, 70);
   assert.strictEqual(report.legacy_residue.status, "review required");
   assert(report.legacy_residue.residue_pressure > 0);
-  assert.match(report.primary_review_question, /Do all 5 files earn their boundaries/);
+  assert(report.file_economy.signals.consolidation_candidate_count > 0);
+  assert.match(report.primary_review_question, /Do all 8 files earn their boundaries/);
   assert(report.file_economy.category_rows.some((row) => row.category === "Zero-method files"));
   assert(report.legacy_residue.canonical_surface_map.some((row) => row.surface_type === "Story review report"));
   assert.strictEqual(report.legacy_residue.compatibility_shells, 0);
+  assert(report.legacy_residue.unclear_overlap > 0);
   assert.strictEqual(report.legacy_residue.remove_candidates, 0);
   return report;
 }
@@ -120,7 +146,7 @@ function verifyMarkdown(report) {
   assert.match(markdown, /Overall story coherence/);
   assert.match(markdown, /not yet earned/);
   assert.match(markdown, /File Economy Review/);
-  assert.match(markdown, /economy review required/);
+  assert.match(markdown, /review required/);
   assert.match(markdown, /Legacy Idea Residue Review/);
   assert.match(markdown, /Residue Pressure Breakdown/);
   assert.match(markdown, /Residue pressure counts canonical-surface relationship risks/);

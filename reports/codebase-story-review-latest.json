@@ -1,8 +1,8 @@
 {
   "schema": "codebase-story-review-report.v1",
-  "report_id": "codebase-story-review-2026-06-04T17-08-21-325Z",
-  "generated_at": "2026-06-04T17:08:21.327Z",
-  "source_scan_id": "scan-2026-06-04T17-08-16-051Z",
+  "report_id": "codebase-story-review-2026-06-04T18-20-07-084Z",
+  "generated_at": "2026-06-04T18:20:07.085Z",
+  "source_scan_id": "scan-2026-06-04T18-20-00-267Z",
   "source_swarm_id": "bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z",
   "target_path": ".",
   "headline_verdict": "Local taxonomy clean; blocked by residue + economy review",
@@ -134,8 +134,8 @@
         "surface_type": "Swarm report",
         "canonical_surface": "src/observability/taxonomy-swarm-report.js",
         "legacy_or_alternate_surfaces": "bin/run-report-router.js, bin/runs-report-router.js, bin/runs-report.js, src/worker-bee/report.js",
-        "relationship": "partial overlap with run progress and summary reporting",
-        "decision": "document boundary"
+        "relationship": "unclear overlap with run progress and summary reporting",
+        "decision": "review boundary"
       },
       {
         "surface_type": "Story review report",
@@ -148,15 +148,15 @@
         "surface_type": "Anchor healing",
         "canonical_surface": "bin/taxonomy-heal-run.js",
         "legacy_or_alternate_surfaces": "bin/taxonomy-heal.js, scripts/test-update-anchors.js, scripts/update-anchors.js, tests/verify-taxonomy-heal.js",
-        "relationship": "operational overlap between expected taxonomy healing and direct anchor mutation",
-        "decision": "choose mutation path per governance policy"
+        "relationship": "unclear overlap between orchestration and direct anchor mutation utilities",
+        "decision": "review boundary"
       },
       {
         "surface_type": "Worker reporting",
         "canonical_surface": "src/worker-bee/report/file-scanner.js",
         "legacy_or_alternate_surfaces": "src/worker-bee/report.js, src/worker-bee/report/report-assembler.js, src/worker-bee/report/report-builder.js, src/worker-bee/report/report-formatter.js, src/worker-bee/report/telemetry-counter.js",
-        "relationship": "worker-specific reporting versus global observability",
-        "decision": "classify as canonical worker-local or retire"
+        "relationship": "unclear overlap between worker-local reporting and global observability",
+        "decision": "review boundary"
       }
     ],
     "residue_queue": []
