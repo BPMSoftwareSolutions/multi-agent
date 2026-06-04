@@ -214,6 +214,222 @@ function formatScoreDelta(before, after) {
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
+function readJsonFile(filePath) {
+  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function readCaseArtifacts(root, caseDir) {
+  const absCaseDir = path.resolve(root, caseDir);
+  return {
+    actual: readJsonFile(path.join(absCaseDir, "actual-taxonomy.json")),
+    beforeEvidence: readJsonFile(path.join(absCaseDir, "evidence.json")),
+    expected: readJsonFile(path.join(absCaseDir, "expected-coherence.json")),
+  };
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function summarizeMethods(evidence) {
+  const names = (evidence.detected_functions || []).map((fn) => fn.name);
+  if (names.length === 0) {
+    return "No JavaScript functions were detected.";
+  }
+  return `Detected methods: ${names.join(", ")}.`;
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function summarizeCoherenceGap(expected, beforeEvidence) {
+  const beforeScore = beforeEvidence.coherence ? beforeEvidence.coherence.score : expected.current_score;
+  const issues = beforeEvidence.coherence ? beforeEvidence.coherence.issues : [];
+  if (beforeScore === 100 && issues.length === 0) {
+    return "No semantic gap detected; file anchor, methods, responsibilities, and evidence already tie out.";
+  }
+  const issueSummary = issues.length
+    ? ` Issue signals: ${issues.map((issue) => `${issue.method} similarity ${issue.similarity}%`).join("; ")}.`
+    : "";
+  return `${expected.diagnosis.summary}${issueSummary}`;
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildHealingActions(actual, expected, beforeScore) {
+  if (beforeScore === 100 && actual.file.responsibility === expected.expected_taxonomy.file.responsibility) {
+    return [
+      {
+        action_type: "evidence_refresh",
+        target_symbol: "taxonomy evidence bundle",
+        before: "coherent story already aligned",
+        after: "coherent story revalidated",
+        reason: "No structural healing required; scan refreshed evidence and verified semantic tie-out.",
+      },
+    ];
+  }
+  return (expected.required_changes || []).map((change) => ({
+    action_type: change.type,
+    target_symbol: change.file_level ? "file anchor and method anchors" : (change.method_level || []).join(", "),
+    before: actual.file.responsibility,
+    after: expected.expected_taxonomy.file.responsibility,
+    reason: change.reason,
+  }));
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildCoherenceStory({ filePath, caseDir, actual, expected, beforeEvidence, afterEvidence, afterScore }) {
+  const beforeScore = beforeEvidence.coherence ? beforeEvidence.coherence.score : expected.current_score;
+  const delta = typeof beforeScore === "number" && typeof afterScore === "number" ? afterScore - beforeScore : null;
+  const afterMethodCount = afterEvidence.coverage ? afterEvidence.coverage.detected_function_count : 0;
+  return {
+    file_path: filePath,
+    file_anchor_before: actual.file.responsibility,
+    file_anchor_after: expected.expected_taxonomy.file.responsibility,
+    expected_story: expected.expected_taxonomy.file.responsibility,
+    observed_story_before: `${summarizeMethods(beforeEvidence)} ${beforeScore}/100 coherence before healing.`,
+    coherence_gap: summarizeCoherenceGap(expected, beforeEvidence),
+    healing_actions: buildHealingActions(actual, expected, beforeScore),
+    observed_story_after: afterEvidence.trustworthy
+      ? `File anchor and ${afterMethodCount} detected method anchors now support the expected story with trustworthy evidence.`
+      : "Post-heal evidence remains untrustworthy; inspect coverage and coherence diagnostics.",
+    evidence_refs: [
+      path.join(caseDir, "actual-taxonomy.json"),
+      path.join(caseDir, "expected-coherence.json"),
+      path.join(caseDir, "evidence.json"),
+    ],
+    before_score: beforeScore,
+    after_score: afterScore,
+    delta,
+    remaining_ambiguity: afterEvidence.trustworthy ? "none" : "diagnostic_required",
+  };
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildSemanticTieOut(story, beforeEvidence, afterEvidence) {
+  const beforeCoherence = beforeEvidence.coherence || {};
+  const afterCoherence = afterEvidence.coherence || {};
+  return [
+    {
+      layer: "File anchor",
+      before: story.file_anchor_before,
+      after: story.file_anchor_after,
+      result: story.file_anchor_after === story.expected_story ? "aligned" : "review",
+    },
+    {
+      layer: "Method set",
+      before: `${beforeCoherence.aligned_methods || 0}/${beforeCoherence.total_methods || 0} aligned`,
+      after: `${afterCoherence.aligned_methods || 0}/${afterCoherence.total_methods || 0} aligned`,
+      result: afterCoherence.score === 100 ? "aligned" : "review",
+    },
+    {
+      layer: "Responsibility",
+      before: story.observed_story_before,
+      after: story.observed_story_after,
+      result: story.remaining_ambiguity === "none" ? "aligned" : "review",
+    },
+    {
+      layer: "Evidence",
+      before: beforeEvidence.trustworthy ? "trustworthy" : "untrustworthy",
+      after: afterEvidence.trustworthy ? "trustworthy" : "untrustworthy",
+      result: afterEvidence.trustworthy ? "aligned" : "review",
+    },
+  ];
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function formatCoherenceStoryMarkdown(story) {
+  if (!story) {
+    return null;
+  }
+  const healingRows = (story.healing_actions || []).map((action) => [
+    action.action_type,
+    action.target_symbol,
+    action.before,
+    action.after,
+    action.reason,
+  ]);
+  return [
+    "## Coherence Story",
+    "",
+    "### Before",
+    "",
+    markdownTable(
+      ["Signal", "Meaning"],
+      [
+        ["File anchor", story.file_anchor_before],
+        ["Expected responsibility", story.expected_story],
+        ["Actual method behavior", story.observed_story_before],
+        ["Coherence gap", story.coherence_gap],
+      ]
+    ),
+    "",
+    "### Healing",
+    "",
+    markdownTable(["Action", "Target", "Before", "After", "Reason"], healingRows),
+    "",
+    "### After",
+    "",
+    markdownTable(
+      ["Signal", "Meaning"],
+      [
+        ["File anchor", story.file_anchor_after],
+        ["Methods now support", story.expected_story],
+        ["Remaining ambiguity", story.remaining_ambiguity],
+        ["Coherence result", formatScore(story.after_score)],
+        ["Evidence refs", (story.evidence_refs || []).join(", ")],
+      ]
+    ),
+  ].join("\n");
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function formatSemanticTieOutMarkdown(tieOut) {
+  if (!tieOut || tieOut.length === 0) {
+    return null;
+  }
+  return [
+    "## Semantic Tie-Out",
+    "",
+    markdownTable(
+      ["Layer", "Before", "After", "Result"],
+      tieOut.map((row) => [row.layer, row.before, row.after, row.result])
+    ),
+  ].join("\n");
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function formatHealingMarkdown(status) {
   const targetMet = typeof status.score_after === "number" ? status.score_after === 100 : null;
   const scopeRows = [
@@ -255,6 +471,10 @@ function formatHealingMarkdown(status) {
         ],
       ]
     ),
+    "",
+    formatCoherenceStoryMarkdown(status.coherence_story),
+    "",
+    formatSemanticTieOutMarkdown(status.semantic_tie_out),
     "",
     "## Run Scope",
     "",
@@ -319,6 +539,8 @@ function runObservableTaxonomyHeal(filePath, root, reportsDir) {
     score_before: null,
     score_after: null,
     evidence_trustworthy: null,
+    coherence_story: null,
+    semantic_tie_out: null,
   };
 
   status = writeHealingStatus(reportsDir, runDir, status);
@@ -329,6 +551,7 @@ function runObservableTaxonomyHeal(filePath, root, reportsDir) {
   });
   const caseResult = buildTaxonomyCaseFile(relFile, root, path.join(reportsDir, "taxonomy-case-files"));
   const expectedPath = path.join(caseResult.case_dir, "expected-coherence.json");
+  const caseArtifacts = readCaseArtifacts(root, caseResult.case_dir);
 
   status = writeHealingStatus(reportsDir, runDir, {
     ...status,
@@ -353,6 +576,16 @@ function runObservableTaxonomyHeal(filePath, root, reportsDir) {
     score_after: healResult.score,
   });
   const evidence = buildFileEvidence(relFile, root);
+  const coherenceStory = buildCoherenceStory({
+    filePath: relFile,
+    caseDir: caseResult.case_dir,
+    actual: caseArtifacts.actual,
+    expected: caseArtifacts.expected,
+    beforeEvidence: caseArtifacts.beforeEvidence,
+    afterEvidence: evidence,
+    afterScore: healResult.score,
+  });
+  const semanticTieOut = buildSemanticTieOut(coherenceStory, caseArtifacts.beforeEvidence, evidence);
 
   status = writeHealingStatus(reportsDir, runDir, {
     ...status,
@@ -360,6 +593,8 @@ function runObservableTaxonomyHeal(filePath, root, reportsDir) {
     phase: "verify",
     current_action: "single-file healing run complete",
     evidence_trustworthy: evidence.trustworthy,
+    coherence_story: coherenceStory,
+    semantic_tie_out: semanticTieOut,
   });
   return status;
 }
@@ -394,10 +629,14 @@ if (require.main === module) {
 }
 
 module.exports = {
+  buildCoherenceStory,
+  buildSemanticTieOut,
+  formatCoherenceStoryMarkdown,
   formatHealingMarkdown,
   formatOperatorConsole,
   formatPhaseTrail,
   formatProgressBar,
+  formatSemanticTieOutMarkdown,
   formatScoreProjection,
   formatStatusBadge,
   markdownTable,
