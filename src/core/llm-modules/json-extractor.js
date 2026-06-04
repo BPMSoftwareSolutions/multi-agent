@@ -1,15 +1,14 @@
 // warehouse:file
-// responsibility: Extracts valid JSON from model output, attempting multiple parsing strategies (direct, code fence, brace extraction)
+// responsibility: Extracts JSON from model output with multiple parsing strategies
 // actor: core_runtime
 // role: parser
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Extracts valid JSON from model output, attempting multiple parsing strategies (direct, code fence, brace extraction)
+// actor: core_runtime
+// role: parser
 // source_truth: implementation
-
 function extractJSON(text) {
   if (typeof text !== "string") {
     throw new Error("Model output is not text");

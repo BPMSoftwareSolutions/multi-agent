@@ -8,11 +8,10 @@ const { callClaude } = require("./model-caller");
 const { extractJSON } = require("./json-extractor");
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Calls Claude language model API with JSON parsing retry and repair logic up to maxAttempts
+// actor: core_runtime
+// role: retry_orchestrator
 // source_truth: implementation
-
 async function callClaudeWithRetry(params, maxAttempts = 2) {
   const messages = [...(params.userMessages || [])];
   let lastError;

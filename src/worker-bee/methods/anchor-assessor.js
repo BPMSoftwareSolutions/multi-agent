@@ -11,13 +11,6 @@ const METHOD_MARKER_RE = /^\s*#\s+warehouse:(method|function)\s*$/;
 const REQUIRED_METHOD_FIELDS = ["responsibility", "input_contract", "output_contract", "forbidden", "validation"];
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
-// source_truth: implementation
-
-// warehouse:method
-// warehouse:method
 // warehouse:method
 // responsibility: Finds existing warehouse:method anchor comment block above function definition by scanning upward
 // actor: method_implementation
@@ -54,11 +47,10 @@ function methodAnchorAbove(lines, defIdx) {
 }
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Assesses method anchor fields by validating completeness of required fields and detecting generic or problematic responsibility text
+// actor: worker_bee_infrastructure
+// role: projection_compiler
 // source_truth: implementation
-
 function assessMethodAnchor(fields) {
   const issues = [];
   for (const key of REQUIRED_METHOD_FIELDS) {

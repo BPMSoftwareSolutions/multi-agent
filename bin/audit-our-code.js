@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // warehouse:file
 // responsibility: Delegator: audits JavaScript files for taxonomy header completeness and displays summary
 // actor: taxonomy_auditor

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // warehouse:file
 // responsibility: Delegator: analyzes packages and generates story report as JSON
 // actor: story_generator

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // warehouse:file
 // responsibility: Delegator: analyzes package taxonomy and detects contradictions
 // actor: contradiction_analyzer

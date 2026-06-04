@@ -1,15 +1,14 @@
 // warehouse:file
+// responsibility: Initializes and validates operations state
+// actor: shared
+// role: state_initializer, state_validator
+// source_truth: implementation
+
+// warehouse:method
 // responsibility: Initializes operations state with empty action queues, sync state, and file/folder registries
 // actor: shared
 // role: state_initializer
 // source_truth: implementation
-
-// warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
-// source_truth: implementation
-
 function buildOperationsState() {
   return {
     approvedActions: [],
@@ -29,11 +28,10 @@ function buildOperationsState() {
 }
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Ensures session has valid operations state, merges with defaults, and validates array/object types
+// actor: shared
+// role: state_validator
 // source_truth: implementation
-
 function ensureOperationsState(session) {
   if (!session.operations || typeof session.operations !== "object") {
     session.operations = buildOperationsState();

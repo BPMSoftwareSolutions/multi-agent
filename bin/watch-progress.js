@@ -1,5 +1,6 @@
+#!/usr/bin/env node
 // warehouse:file
-// responsibility: Log watcher: tails worker-bee log file and displays real-time events
+// responsibility: Log watcher: tails worker-bee log file, displays real-time completion events with timestamps, shows errors and fallback triggers
 // actor: log_watcher
 // role: monitor
 // source_truth: implementation
@@ -9,8 +10,6 @@
 const fs = require("fs");
 const path = require("path");
 const readline = require("readline");
-const { createLineHandler } = require("../src/worker-bee/monitor/log-event-handler");
-const { generateSummary } = require("../src/worker-bee/monitor/progress-summary");
 
 const logFile = path.resolve(__dirname, "..", ".worker-bee.log");
 
@@ -31,23 +30,64 @@ let totalCompleted = 0;
 const stream = fs.createReadStream(logFile, { encoding: "utf8" });
 const rl = readline.createInterface({ input: stream, crlfDelay: Infinity });
 
-// Create handlers
-const lineHandler = createLineHandler(
-  ({ timestamp, filesOk, filesInPacket, message }) => {
-    lastProgressTime = timestamp;
-    totalCompleted += filesOk;
-    console.log(message);
-  },
-  ({ timestamp, filesError, message }) => {
-    console.log(message);
-  },
-  ({ timestamp, message }) => {
-    console.log(message);
-  }
-);
+// warehouse:method
+// responsibility: Watches worker-bee log stream for real-time packet completion events, extracts progress counts and fallback triggers with timestamps
+// actor: event_processor
+// role: stream_handler
+// source_truth: implementation
+const lineHandler = (line) => {
+  // Match packet completion: [bee N] packet X/40 (NN files): NN ok, N error
+  const packetMatch = line.match(/\[bee \d+\] packet \d+\/\d+ \((\d+) files\): (\d+) ok, (\d+) error/);
+  if (packetMatch) {
+    const filesInPacket = parseInt(packetMatch[1]);
+    const filesOk = parseInt(packetMatch[2]);
+    const filesError = parseInt(packetMatch[3]);
 
+    if (filesOk > 0) {
+      const now = new Date();
+      lastProgressTime = now;
+      totalCompleted += filesOk;
+
+      console.log(`✅ [${now.toLocaleTimeString()}] ${filesOk} files completed (packet: ${filesInPacket})`);
+    }
+
+    if (filesError > 0) {
+      const now = new Date();
+      console.log(`⚠️  [${now.toLocaleTimeString()}] ${filesError} errors in packet`);
+    }
+  }
+
+  // Match fallback events
+  if (line.includes("falling back to Pro")) {
+    const now = new Date();
+    console.log(`↔️  [${now.toLocaleTimeString()}] Fallback triggered: Flash → Pro`);
+  }
+};
+
+// warehouse:method
+// responsibility: Outputs final progress summary with completion tallies from log watcher, reports recency status and stall indicators
+// actor: summary_printer
+// role: display_engine
+// source_truth: implementation
 const summaryHandler = () => {
-  console.log(generateSummary(totalCompleted, lastProgressTime));
+  // Final summary
+  console.log("\n═════════════════════════════════════════════════════════════════════════");
+  console.log("Summary:");
+  console.log("═════════════════════════════════════════════════════════════════════════");
+  console.log(`Total files completed: ${totalCompleted}`);
+  if (lastProgressTime) {
+    console.log(`Last progress: ${lastProgressTime.toLocaleTimeString()}`);
+    const secondsAgo = Math.floor((Date.now() - lastProgressTime.getTime()) / 1000);
+    if (secondsAgo < 60) {
+      console.log(`⏱️  Progress is RECENT (${secondsAgo}s ago) ✅`);
+    } else if (secondsAgo < 300) {
+      console.log(`⏱️  Last update ${Math.floor(secondsAgo / 60)}m ago`);
+    } else {
+      console.log(`⚠️  STALLED — last progress ${Math.floor(secondsAgo / 60)}m ago`);
+    }
+  } else {
+    console.log("❌ No progress detected");
+  }
 };
 
 rl.on("line", lineHandler);

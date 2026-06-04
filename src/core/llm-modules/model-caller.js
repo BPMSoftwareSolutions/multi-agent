@@ -4,8 +4,10 @@
 // role: model_orchestrator
 // source_truth: implementation
 
-const { invokeModel } = require("./model-invoker");
-const { extractTextFromResponse } = require("./response-extractor");
+const { fetchFromAnthropicRaw } = require("./http-transport");
+const { getApiKey } = require("./api-key-resolver");
+
+const model = process.env.MODEL || "claude-sonnet-4-6";
 
 // warehouse:method
 // responsibility: Invokes Claude API with system context and user messages, extracts and returns response text
@@ -13,14 +15,27 @@ const { extractTextFromResponse } = require("./response-extractor");
 // role: implementation
 // source_truth: implementation
 async function callClaude({ system, userMessages, maxTokens, apiKey }) {
-  const response = await invokeModel({
-    system,
-    userMessages,
-    maxTokens,
-    apiKey
-  });
+  const key = getApiKey(apiKey);
 
-  return extractTextFromResponse(response);
+  const response = await fetchFromAnthropicRaw(
+    "https://api.anthropic.com/v1/messages",
+    "POST",
+    {
+      model,
+      max_tokens: maxTokens,
+      system,
+      messages: userMessages
+    },
+    key
+  );
+
+  const text = (response.content || [])
+    .filter((item) => item.type === "text")
+    .map((item) => item.text)
+    .join("\n")
+    .trim();
+
+  return text;
 }
 
 module.exports = { callClaude };

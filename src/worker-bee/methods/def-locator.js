@@ -7,11 +7,10 @@
 const DEF_RE = /^(\s*)(?:async\s+)?def\s+([A-Za-z_]\w*)/;
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Locates all function/method definitions in source lines and assigns sequential IDs
+// actor: worker_bee_infrastructure
+// role: projection_compiler
 // source_truth: implementation
-
 function findDefs(lines) {
   const defs = [];
   let id = 0;

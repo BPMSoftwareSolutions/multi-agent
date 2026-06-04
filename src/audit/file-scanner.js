@@ -8,11 +8,10 @@ const fs = require("fs");
 const path = require("path");
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Recursively traverses directory tree collecting all JavaScript file paths
+// actor: file_scanner
+// role: traverser
 // source_truth: implementation
-
 function walk(dir) {
   const files = [];
   try {

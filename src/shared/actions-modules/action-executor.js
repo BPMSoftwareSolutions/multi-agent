@@ -7,7 +7,35 @@
 const { v4: uuidv4 } = require("uuid");
 const { toTrimmedString } = require("../validation-helpers");
 const { ensureOperationsState } = require("./operations-builder");
-const { failAttempt } = require("./action-failure-handler");
+
+// warehouse:method
+// responsibility: Executes failure handling within action execution: marks action as failed/blocked, records error state in attempt log
+// actor: shared
+// role: attempt_failure_handler
+// source_truth: implementation
+function failAttempt({ operations, action, attempt, code, message, status = "failed" }) {
+  const finishedAt = new Date().toISOString();
+  action.status = status;
+  action.updatedAt = finishedAt;
+  action.lastError = {
+    code,
+    message,
+    at: finishedAt
+  };
+  attempt.finishedAt = finishedAt;
+  attempt.errorCode = code;
+  attempt.errorMessage = message;
+  attempt.responseJson = { ok: false, code, message };
+  operations.actionAttempts.push(attempt);
+
+  return {
+    ok: false,
+    code,
+    message,
+    action,
+    attempt
+  };
+}
 
 // warehouse:method
 // responsibility: Executes pending action with file validation, applies mutations, records attempt lifecycle
@@ -253,7 +281,27 @@ async function runWorker(session, options = {}) {
   };
 }
 
-const { summarizeOperations } = require("./operations-summarizer");
+// warehouse:method
+// responsibility: Summarizes operations: aggregates action execution counts by status, returns attempt and review metrics
+// actor: shared
+// role: operations_summarizer
+// source_truth: implementation
+function summarizeOperations(session) {
+  const operations = ensureOperationsState(session);
+  const actions = operations.approvedActions;
+
+  return {
+    approvedActions: actions.length,
+    pendingActions: actions.filter((action) => action.status === "pending").length,
+    runningActions: actions.filter((action) => action.status === "running").length,
+    doneActions: actions.filter((action) => action.status === "done").length,
+    failedActions: actions.filter((action) => action.status === "failed").length,
+    blockedActions: actions.filter((action) => action.status === "blocked").length,
+    humanReviewItems: operations.humanReviewQueue.length,
+    attempts: operations.actionAttempts.length,
+    lastPolledAt: operations.driveSyncState.lastPolledAt || null
+  };
+}
 
 module.exports = {
   runWorker,

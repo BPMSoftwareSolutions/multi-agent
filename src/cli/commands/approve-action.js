@@ -7,7 +7,7 @@
 const fs = require("fs");
 
 const { getSession, getCurrentSessionId, saveSession } = require("../../core/session-store");
-const { parsePayload, queueApprovedAction } = require("./approval-processor");
+const { approveManualAction } = require("../../shared/actions");
 const { exit } = require("../print");
 
 // warehouse:method
@@ -26,17 +26,27 @@ async function approveActionCommand(options = {}) {
       exit(1, "Error: approve-action requires --payload or --payload-file.");
     }
 
-    const rawPayload = options.payloadFile
-      ? fs.readFileSync(options.payloadFile, "utf8")
-      : options.payload;
-    const payload = parsePayload(rawPayload);
+    let payload;
+    try {
+      const rawPayload = options.payloadFile
+        ? fs.readFileSync(options.payloadFile, "utf8")
+        : options.payload;
+      payload = JSON.parse(rawPayload);
+    } catch (error) {
+      exit(1, `Error: Invalid JSON payload: ${error.message}`);
+    }
 
     const session = getSession(sessionId);
     if (!session) {
       exit(1, `Error: Session not found: ${sessionId}`);
     }
 
-    const summary = queueApprovedAction(session, payload);
+    const summary = approveManualAction(session, payload, {
+      stageId: session.currentStage,
+      roundNumber: session.stages[session.currentStage].rounds.length,
+      approvedBy: "manual_cli"
+    });
+
     saveSession(session);
 
     if (options.json) {

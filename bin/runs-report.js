@@ -6,8 +6,8 @@
 
 const path = require("path");
 const fs = require("fs");
-const { parseArgs } = require("../src/reports/runs-loader");
-const { routeReportMode } = require("./runs-report-router");
+const { parseArgs, readRuns, readRunDetails } = require("../src/reports/runs-loader");
+const { renderMarkdown, renderSummary, renderRun } = require("../src/reports/runs-renderer");
 
 const root = path.resolve(__dirname, "..");
 const reportsDir = path.join(root, "reports");
@@ -31,7 +31,25 @@ function main() {
     return 0;
   }
 
-  return routeReportMode(args, reportsDir);
+  if (args.summary) {
+    const runs = readRuns(reportsDir);
+
+    if (args.output) {
+      const markdown = renderMarkdown(runs);
+      const outPath = path.resolve(args.output);
+      fs.mkdirSync(path.dirname(outPath), { recursive: true });
+      fs.writeFileSync(outPath, markdown, "utf8");
+      console.log(`Written: ${outPath}`);
+      return 0;
+    }
+
+    renderSummary(runs, args.json);
+  } else {
+    const packets = readRunDetails(reportsDir, args.runId);
+    renderRun(args.runId, packets, args.json);
+  }
+
+  return 0;
 }
 
 process.exit(main());

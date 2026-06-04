@@ -1,15 +1,14 @@
 // warehouse:file
+// responsibility: Registers files and folders in operations state
+// actor: shared
+// role: file_registrar, folder_registrar
+// source_truth: implementation
+
+// warehouse:method
 // responsibility: Registers folder in operations state with metadata and current timestamp
 // actor: shared
 // role: folder_registrar
 // source_truth: implementation
-
-// warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
-// source_truth: implementation
-
 function registerFolder(operations, folderId) {
   if (!folderId) {
     return;
@@ -24,11 +23,10 @@ function registerFolder(operations, folderId) {
 }
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Registers file in operations state from recommendation, merges with existing metadata, registers parent folders
+// actor: shared
+// role: file_registrar
 // source_truth: implementation
-
 function registerFile(operations, recommendation) {
   const existing = operations.files[recommendation.fileId] || null;
   const permissions = {

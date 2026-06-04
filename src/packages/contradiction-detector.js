@@ -1,15 +1,14 @@
 // warehouse:file
+// responsibility: Analyzes package taxonomy and detects contradictions between names/responsibilities/roles
+// actor: contradiction_analyzer
+// role: validator
+// source_truth: implementation
+
+// warehouse:method
 // responsibility: Aggregates files into package groups with role/actor distributions
 // actor: package_classifier
 // role: analyzer
 // source_truth: implementation
-
-// warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
-// source_truth: implementation
-
 function analyzePackages(taxonomyPath) {
   const fs = require("fs");
   const taxonomy = JSON.parse(fs.readFileSync(taxonomyPath, "utf8"));
@@ -43,11 +42,10 @@ function analyzePackages(taxonomyPath) {
 }
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Detects contradictions in package taxonomy by checking name-responsibility mismatches and role inconsistency
+// actor: contradiction_detector
+// role: validator
 // source_truth: implementation
-
 function detectContradictions(pkg) {
   const issues = [];
 

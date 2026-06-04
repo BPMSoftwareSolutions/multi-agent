@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // warehouse:file
 // responsibility: Delegator: orchestrates taxonomy extraction from JavaScript files and outputs report
 // actor: taxonomy_extractor

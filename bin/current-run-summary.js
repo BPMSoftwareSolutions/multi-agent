@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // warehouse:file
 // responsibility: Delegator: fetches run status and writes markdown executive summary
 // actor: run_reporter

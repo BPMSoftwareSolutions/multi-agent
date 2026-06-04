@@ -60,11 +60,10 @@ function topN(obj, n) {
 }
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Orchestrates taxonomy report generation: parses arguments, compiles coverage statistics, formats output
+// actor: report_generator
+// role: orchestrator
 // source_truth: implementation
-
 function main() {
   const args = parseArgs(process.argv.slice(2));
   const repoRoot = path.resolve(args.repoRoot);

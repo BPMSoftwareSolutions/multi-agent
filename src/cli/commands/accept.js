@@ -9,11 +9,10 @@ const { acceptArtifact } = require("../../core/run-round");
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Accept command handler: loads session, validates proposed artifact, accepts it as current state, queues action recommendations, saves updated session
+// actor: cli
+// role: accept_command
 // source_truth: implementation
-
 async function accept(sessionId = null, options = {}) {
   try {
     const id = sessionId || getCurrentSessionId();

@@ -4,8 +4,8 @@
 // role: packet_loader
 // source_truth: implementation
 
-const { readPacketJsonFile } = require("./packet-file-reader");
-const { normalizePacketFormat } = require("./packet-normalizer");
+const fs = require("fs");
+const { isObject } = require("./object-utils");
 
 // warehouse:method
 // responsibility: Loads packet configuration from JSON file and normalizes to bare packet format
@@ -13,8 +13,10 @@ const { normalizePacketFormat } = require("./packet-normalizer");
 // role: implementation
 // source_truth: implementation
 function loadPacketFile(path) {
-  const parsed = readPacketJsonFile(path);
-  return normalizePacketFormat(parsed);
+  const raw = fs.readFileSync(path, "utf8");
+  const parsed = JSON.parse(raw);
+  // Accept either a bare packet or { packet: {...} }.
+  return parsed.packet && isObject(parsed.packet) ? parsed.packet : parsed;
 }
 
 module.exports = {

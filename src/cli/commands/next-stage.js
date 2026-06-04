@@ -4,8 +4,8 @@
 // role: command_handler
 // source_truth: implementation
 
-const { validateNextStage } = require("./next-stage-validator");
-const { advanceToNextStage } = require("./stage-advancer");
+const { getSession, getCurrentSessionId, saveSession } = require("../../core/session-store");
+const { advanceStage } = require("../../core/run-round");
 const { exit } = require("../print");
 
 // warehouse:method
@@ -15,9 +15,18 @@ const { exit } = require("../print");
 // source_truth: implementation
 async function nextStage(sessionId = null, options = {}) {
   try {
-    const { id, session } = validateNextStage(sessionId);
+    const id = sessionId || getCurrentSessionId();
+    if (!id) {
+      exit(1, "Error: No active session. Use 'studio start <brief>' to begin.");
+    }
 
-    const nextStageId = await advanceToNextStage(session);
+    const session = getSession(id);
+    if (!session) {
+      exit(1, `Error: Session not found: ${id}`);
+    }
+
+    const nextStageId = await advanceStage(session);
+    saveSession(session);
 
     if (options.json) {
       console.log(

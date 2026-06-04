@@ -8,11 +8,10 @@ const fs = require("fs");
 const { stripBom } = require("../text-utils");
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Reads file and truncates content to character budget for prompt embedding with ellipsis marker
+// actor: worker_bee_infrastructure
+// role: reader
 // source_truth: implementation
-
 function readForPrompt(absPath, fileCharBudget) {
   let text;
   try {

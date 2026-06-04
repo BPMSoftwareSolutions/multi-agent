@@ -12,11 +12,10 @@ const { buildPacketPrompt } = require("./prompt-builder");
 const { chunk } = require("./work-packer");
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Applicator: applies anchors to single file item via language model API, returns status with written count
+// actor: worker_bee_infrastructure
+// role: applicator
 // source_truth: implementation
-
 function applyToItem(item, fileFields, methodsById, dryRun) {
   const methodItems = [];
   let omitted = 0;
@@ -45,11 +44,10 @@ function applyToItem(item, fileFields, methodsById, dryRun) {
 }
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Applicator: processes oversized file with adaptive packet splitting via batched language model calls with retry logic
+// actor: worker_bee_infrastructure
+// role: applicator
 // source_truth: implementation
-
 async function processOversizeFile(item, { apiKey, model, dryRun, workload }) {
   const { readForPrompt } = require("./file-reader");
   const fileText = readForPrompt(item.absPath, workload.file_char_budget);
@@ -80,11 +78,10 @@ async function processOversizeFile(item, { apiKey, model, dryRun, workload }) {
 }
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Applicator: processes packet via language model API with adaptive splitting and retry logic on failures
+// actor: worker_bee_infrastructure
+// role: applicator
 // source_truth: implementation
-
 async function processPacket(packet, opts) {
   if (packet.oversize) return processOversizeFile(packet.items[0], opts);
 

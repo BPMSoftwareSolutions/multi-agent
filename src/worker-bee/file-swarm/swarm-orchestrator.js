@@ -8,11 +8,10 @@ const { packWork } = require("./work-packer");
 const { processPacket } = require("./anchor-applicator");
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Orchestrates concurrent bee agents pulling packets from queue and writing anchors
+// actor: worker_bee_infrastructure
+// role: orchestrator
 // source_truth: implementation
-
 async function runFileSwarm(work, options = {}) {
   const { packet: spec, apiKey, dryRun = false, onProgress } = options;
   const agents = spec.swarm.agents;

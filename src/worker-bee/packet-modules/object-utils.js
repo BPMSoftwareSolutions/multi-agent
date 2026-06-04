@@ -1,25 +1,23 @@
 // warehouse:file
-// responsibility: Type-checks whether a value is a plain object (excludes arrays and nulls)
+// responsibility: Object type checking and pruning utilities
 // actor: worker_bee_infrastructure
 // role: infrastructure
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Type-checks whether a value is a plain object (excludes arrays and nulls)
+// actor: worker_bee_infrastructure
+// role: infrastructure
 // source_truth: implementation
-
 function isObject(v) {
   return v && typeof v === "object" && !Array.isArray(v);
 }
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Removes undefined/null values from object to prevent blanking defaults during merge
+// actor: worker_bee_infrastructure
+// role: infrastructure
 // source_truth: implementation
-
 function prune(obj) {
   const out = {};
   for (const [k, v] of Object.entries(obj)) {

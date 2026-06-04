@@ -9,11 +9,10 @@ const { runRound } = require("../../core/run-round");
 const { renderRound, exit } = require("../print");
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Round command: executes planning and review cycle via orchestrator, saves session with new artifacts
+// actor: cli
+// role: round_command
 // source_truth: implementation
-
 async function round(note = "", apiKey = null, options = {}) {
   try {
     const sessionId = options.sessionId || getCurrentSessionId();

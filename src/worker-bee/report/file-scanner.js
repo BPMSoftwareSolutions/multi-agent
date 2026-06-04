@@ -14,7 +14,15 @@ const {
   assessAnchor,
 } = require("../scan");
 const { findDefs, methodAnchorAbove, assessMethodAnchor } = require("../methods");
-const { increment } = require("./telemetry-counter");
+
+// warehouse:method
+// responsibility: Increments telemetry counter in map for given key, tracking cumulative evidence metrics during file scanning
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
+function increment(map, key) {
+  map[key] = (map[key] || 0) + 1;
+}
 
 // warehouse:method
 // responsibility: Scans Python files to extract file anchors and method definitions, assesses quality trustworthiness, aggregates telemetry

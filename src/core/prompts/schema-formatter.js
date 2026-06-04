@@ -1,15 +1,14 @@
 // warehouse:file
-// responsibility: Converts a schema object into human-readable field descriptions for prompt injection
+// responsibility: Converts schemas to formatted JSON for prompt embedding
 // actor: core_runtime
 // role: formatter
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Converts a schema object into human-readable field descriptions for prompt injection
+// actor: core_runtime
+// role: formatter
 // source_truth: implementation
-
 function schemaToText(schema) {
   const lines = ["Fields required in your JSON response:"];
   for (const [field, meta] of Object.entries(schema || {})) {
@@ -19,11 +18,10 @@ function schemaToText(schema) {
 }
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Serializes values to formatted JSON strings for prompt embedding
+// actor: core_runtime
+// role: formatter
 // source_truth: implementation
-
 function toJSONString(value) {
   return JSON.stringify(value, null, 2);
 }

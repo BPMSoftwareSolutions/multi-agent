@@ -9,21 +9,19 @@ const { stripBom } = require("../text-utils");
 const FILE_ANCHOR_RE = /^#\s+warehouse:file\s*$/m;
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Tests whether Python file text contains a warehouse:file anchor marker
+// actor: worker_bee_infrastructure
+// role: detector
 // source_truth: implementation
-
 function hasFileAnchor(text) {
   return FILE_ANCHOR_RE.test(stripBom(text));
 }
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Parses first warehouse:file anchor block from Python text lines array
+// actor: worker_bee_infrastructure
+// role: parser
 // source_truth: implementation
-
 function parseFileAnchorLines(lines) {
   let start = -1;
   for (let i = 0; i < lines.length; i += 1) {
@@ -47,11 +45,10 @@ function parseFileAnchorLines(lines) {
 }
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Parses and extracts warehouse:file anchor from Python file text
+// actor: worker_bee_infrastructure
+// role: parser
 // source_truth: implementation
-
 function parseFileAnchor(text) {
   return parseFileAnchorLines(stripBom(text).split(/\r?\n/));
 }

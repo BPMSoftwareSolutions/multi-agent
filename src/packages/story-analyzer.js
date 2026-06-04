@@ -7,11 +7,10 @@
 const fs = require("fs");
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Groups files by package and extracts unique responsibilities
+// actor: story_extractor
+// role: classifier
 // source_truth: implementation
-
 function analyzePackageStories(taxonomyPath) {
   const taxonomy = JSON.parse(fs.readFileSync(taxonomyPath, "utf8"));
   const packages = {};
@@ -53,11 +52,10 @@ function analyzePackageStories(taxonomyPath) {
 }
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Synthesizes a package story by selecting dominant role/actor and formatting responsibilities
+// actor: story_builder
+// role: synthesizer
 // source_truth: implementation
-
 function generateStory(pkg) {
   const topRole = Object.entries(pkg.roles).sort((a, b) => b[1] - a[1])[0];
   const topActor = Object.entries(pkg.actors).sort((a, b) => b[1] - a[1])[0];

@@ -12,11 +12,10 @@ const { isRetryable, getBackoffDelay } = require("./retry-logic");
 const DEFAULT_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Calls language model API with system instruction and user prompt, extracting text from response
+// actor: worker_bee_infrastructure
+// role: api_caller
 // source_truth: implementation
-
 async function callGemini({ system, user, apiKey, model, maxTokens, temperature = 0 }) {
   const key = getApiKey(apiKey);
   const useModel = model || DEFAULT_MODEL;
@@ -47,11 +46,10 @@ async function callGemini({ system, user, apiKey, model, maxTokens, temperature 
 }
 
 // warehouse:method
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: Calls language model with automatic retry, exponential backoff, temperature variation, and fallback strategy
+// actor: worker_bee_infrastructure
+// role: orchestrator
 // source_truth: implementation
-
 async function callGeminiJSON(params, maxAttempts = 5) {
   let lastError;
   const startTime = Date.now();

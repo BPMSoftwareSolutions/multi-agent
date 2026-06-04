@@ -8,8 +8,6 @@
 
 const fs = require("fs");
 const path = require("path");
-const { readProgress } = require("../src/worker-bee/monitor/progress-reader");
-const { formatTimeDiff } = require("../src/worker-bee/monitor/time-formatter");
 
 const logFile = path.resolve(__dirname, "..", ".worker-bee.log");
 const STALL_THRESHOLD_SECONDS = 120; // Alert if no progress for 2 minutes
@@ -19,13 +17,56 @@ if (!fs.existsSync(logFile)) {
   process.exit(1);
 }
 
+// warehouse:method
+// responsibility: Parses worker-bee log for packet completion events, extracts file success counts, tracks total work metrics and timestamps for progress monitoring
+// actor: log_parser
+// role: data_extractor
+// source_truth: implementation
+function readProgress() {
+  const content = fs.readFileSync(logFile, "utf8");
+  const lines = content.split("\n");
+
+  let totalCompleted = 0;
+  let lastProgressTime = null;
+
+  for (const line of lines) {
+    // Match packet completion: [bee N] packet X/40 (NN files): NN ok, N error
+    const match = line.match(/\[bee \d+\] packet \d+\/\d+ \((\d+) files\): (\d+) ok, (\d+) error/);
+    if (match) {
+      const filesOk = parseInt(match[2]);
+      if (filesOk > 0) {
+        totalCompleted += filesOk;
+        // Extract timestamp from line (lines have timestamps if logged with them)
+        // For now, we track file count; timestamp is in the line itself
+      }
+    }
+  }
+
+  // Get file modification time as proxy for last activity
+  const stats = fs.statSync(logFile);
+  lastProgressTime = stats.mtime;
+
+  return { totalCompleted, lastProgressTime };
+}
+
+// warehouse:method
+// responsibility: Formats elapsed milliseconds into human-readable time duration string (seconds/minutes/hours ago) for stall detection and progress alerts
+// actor: formatter
+// role: utility
+// source_truth: implementation
+function formatTimeDiff(ms) {
+  if (ms < 60000) return `${Math.floor(ms / 1000)}s ago`;
+  if (ms < 3600000) return `${Math.floor(ms / 60000)}m ago`;
+  return `${Math.floor(ms / 3600000)}h ago`;
+}
+
 // Watch for changes
 let previousCount = 0;
 let stallAlertSent = false;
 
 setInterval(() => {
   try {
-    const { totalCompleted, lastProgressTime } = readProgress(logFile);
+    const { totalCompleted, lastProgressTime } = readProgress();
     const now = Date.now();
     const timeSinceLastProgress = now - lastProgressTime.getTime();
     const isStalled = timeSinceLastProgress > STALL_THRESHOLD_SECONDS * 1000;
