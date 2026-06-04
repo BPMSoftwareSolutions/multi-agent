@@ -1,41 +1,26 @@
 // warehouse:file
-// responsibility: Invokes language model APIs with system prompts and message chains
+// responsibility: Delegates model calling to focused modules; orchestrates invocation and response extraction
 // actor: core_runtime
-// role: model_invoker
+// role: model_caller_delegator
 // source_truth: implementation
 
-const { fetchFromAnthropicRaw } = require("./http-transport");
-const { getApiKey } = require("./api-key-resolver");
-
-const model = process.env.MODEL || "claude-sonnet-4-6";
+const { invokeModel } = require("./model-invoker");
+const { extractTextFromResponse } = require("./response-extractor");
 
 // warehouse:method
-// responsibility: Invokes language model API with system prompt and message chain, extracting and returning text response from model output
+// responsibility: Calls Claude API with system prompt and messages, returns extracted text response
 // actor: core_runtime
-// role: model_invoker
+// role: model_caller_delegator
 // source_truth: implementation
 async function callClaude({ system, userMessages, maxTokens, apiKey }) {
-  const key = getApiKey(apiKey);
+  const response = await invokeModel({
+    system,
+    userMessages,
+    maxTokens,
+    apiKey
+  });
 
-  const response = await fetchFromAnthropicRaw(
-    "https://api.anthropic.com/v1/messages",
-    "POST",
-    {
-      model,
-      max_tokens: maxTokens,
-      system,
-      messages: userMessages
-    },
-    key
-  );
-
-  const text = (response.content || [])
-    .filter((item) => item.type === "text")
-    .map((item) => item.text)
-    .join("\n")
-    .trim();
-
-  return text;
+  return extractTextFromResponse(response);
 }
 
 module.exports = { callClaude };

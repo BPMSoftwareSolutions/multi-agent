@@ -1,22 +1,20 @@
 // warehouse:file
-// responsibility: Loads packet configuration from JSON files
+// responsibility: Delegates packet loading to focused modules; orchestrates file reading and normalization
 // actor: worker_bee_infrastructure
-// role: infrastructure
+// role: packet_loader_delegator
 // source_truth: implementation
 
-const fs = require("fs");
-const { isObject } = require("./object-utils");
+const { readPacketJsonFile } = require("./packet-file-reader");
+const { normalizePacketFormat } = require("./packet-normalizer");
 
 // warehouse:method
-// responsibility: Loads packet configuration from JSON file and unwraps from wrapper if present, normalizing to bare packet format
+// responsibility: Loads packet configuration from JSON file and normalizes to bare packet format
 // actor: worker_bee_infrastructure
-// role: infrastructure
+// role: packet_loader_delegator
 // source_truth: implementation
 function loadPacketFile(path) {
-  const raw = fs.readFileSync(path, "utf8");
-  const parsed = JSON.parse(raw);
-  // Accept either a bare packet or { packet: {...} }.
-  return parsed.packet && isObject(parsed.packet) ? parsed.packet : parsed;
+  const parsed = readPacketJsonFile(path);
+  return normalizePacketFormat(parsed);
 }
 
 module.exports = {

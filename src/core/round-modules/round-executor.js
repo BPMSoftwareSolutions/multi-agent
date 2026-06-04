@@ -1,21 +1,17 @@
 // warehouse:file
-// responsibility: Executes design workshop rounds with planner and reviewer agents
+// responsibility: Delegates round execution to focused modules; orchestrates agent execution and artifact handling
 // actor: orchestration
-// role: round_execution
+// role: round_executor_delegator
 // source_truth: implementation
 
-const {
-  buildBuilderPrompt,
-  buildReviewerPrompt
-} = require("../prompt-builders");
-const { callClaudeWithRetry } = require("../llm-client");
 const { STAGES } = require("../stages");
-const { normalizeReviewerOutput } = require("./intent-normalizer");
+const { executeRoundAgents } = require("./round-executor-orchestrator");
+const { createRoundRecord, storeRoundResult } = require("./round-record-builder");
 
 // warehouse:method
-// responsibility: Executes design workshop round by invoking planner and reviewer agents sequentially, orchestrating prompts and storing round results
+// responsibility: Runs design workshop round by delegating to agent executor and artifact handler
 // actor: orchestration
-// role: round_execution
+// role: round_executor_delegator
 // source_truth: implementation
 async function runRound({
   session,
@@ -30,71 +26,34 @@ async function runRound({
     throw new Error(`Invalid stage: ${stageId}`);
   }
 
-  const lastRound = stageState.rounds[stageState.rounds.length - 1] || null;
   const roundNumber = stageState.rounds.length + 1;
   const artifactBefore = JSON.parse(JSON.stringify(stageState.artifact));
 
-  // Determine max tokens based on stage (ASCII and plan need more for detailed content)
-  const maxTokensByStage = {
-    idea: 4096,
-    ascii: 8192,
-    plan: 8192
-  };
-  const maxTokens = maxTokensByStage[stageId] || 4096;
-
-  // Planner
-  const builderPrompt = buildBuilderPrompt({
-    stage: stageConfig,
-    intent: session.intent,
-    artifact: stageState.artifact,
-    lastRound,
-    humanInterjection,
-    brief: session.brief,
-    roundNumber
-  });
-
-  const builderStart = Date.now();
-  const builderOutput = await callClaudeWithRetry({
-    system: builderPrompt.system,
-    userMessages: builderPrompt.messages,
-    maxTokens,
-    apiKey
-  });
-  const builderDurationMs = Date.now() - builderStart;
-
-  // Reviewer
-  const reviewerPrompt = buildReviewerPrompt({
-    stage: stageConfig,
-    intent: session.intent,
-    artifact: stageState.artifact,
-    builderOutput,
-    humanInterjection
-  });
-
-  const reviewerStart = Date.now();
-  const reviewerRaw = await callClaudeWithRetry({
-    system: reviewerPrompt.system,
-    userMessages: reviewerPrompt.messages,
-    maxTokens,
-    apiKey
-  });
-  const reviewerDurationMs = Date.now() - reviewerStart;
-
-  const reviewerOutput = normalizeReviewerOutput(reviewerRaw, builderOutput);
-
-  // Store round
-  const round = {
+  // Execute agents and get results
+  const agentResults = await executeRoundAgents({
+    session,
+    apiKey,
+    stageId,
+    stageState,
+    stageConfig,
     roundNumber,
-    timestamp: new Date().toISOString(),
+    humanInterjection,
+    artifactBefore
+  });
+
+  // Build and store round record
+  const round = createRoundRecord({
+    roundNumber,
     humanInterjection,
     artifactBefore,
-    planner: { artifact: builderOutput, durationMs: builderDurationMs },
-    reviewer: { ...reviewerOutput, durationMs: reviewerDurationMs },
-    artifactAfter: reviewerOutput.suggested_artifact
-  };
+    builderOutput: agentResults.builderOutput,
+    builderDurationMs: agentResults.builderDurationMs,
+    reviewerOutput: agentResults.reviewerOutput,
+    reviewerDurationMs: agentResults.reviewerDurationMs,
+    artifactAfter: agentResults.artifactAfter
+  });
 
-  stageState.rounds.push(round);
-  stageState.proposedArtifact = reviewerOutput.suggested_artifact;
+  storeRoundResult(stageState, round, agentResults.reviewerOutput);
 
   return { roundNumber, round, stageState };
 }
