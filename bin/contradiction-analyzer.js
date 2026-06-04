@@ -1,11 +1,16 @@
 // warehouse:file
-// responsibility: Analyzes packages and detects contradictions within each package
+// responsibility: Coordinates analyzePackagesForContradictions behavior with documented file and method taxonomy evidence
 // actor: contradiction_analyzer
 // role: validator
 // source_truth: implementation
 
 const { analyzePackages, detectContradictions } = require("../src/packages/contradiction-detector");
 
+// warehouse:method
+// responsibility: Coordinates analyzePackagesForContradictions behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function analyzePackagesForContradictions(taxonomyPath) {
   const packages = analyzePackages(taxonomyPath);
 

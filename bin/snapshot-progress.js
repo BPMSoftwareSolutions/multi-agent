@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: CLI entrypoint for progress snapshot—reads log and writes markdown report
+// responsibility: Coordinates main behavior with documented file and method taxonomy evidence
 // actor: progress_snapshot
 // role: reporter
 // source_truth: implementation
@@ -13,6 +13,11 @@ const { formatMarkdownReport } = require("../src/reports/progress-report-formatt
 const logFile = path.resolve(__dirname, "..", ".worker-bee.log");
 const reportFile = path.resolve(__dirname, "..", "reports", "CURRENT-RUN.md");
 
+// warehouse:method
+// responsibility: Coordinates main behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function main() {
   try {
     const { totalCompleted, completions, totalErrors } = readProgress();

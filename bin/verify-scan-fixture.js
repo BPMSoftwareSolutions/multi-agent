@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides setupTestData, cleanupTestData functionality
+// responsibility: Creates test data files with complete, incomplete, and missing taxonomy headers for validation testing and Test-driven validation: removes test data directory and temporary Python test files
 // actor: test_infrastructure
 // role: test_helper
 // source_truth: implementation
@@ -10,7 +10,7 @@ const path = require("path");
 const testDir = path.resolve(__dirname, "..", ".test-data");
 
 // warehouse:method
-// responsibility: Creates test data files with complete, incomplete, and missing taxonomy headers for validation testing
+// responsibility: Creates test data files with complete, incomplete, and missing taxonomy headers for validation testing and Test-driven validation: removes test data directory and temporary Python test files
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -60,7 +60,7 @@ def authenticate():
 }
 
 // warehouse:method
-// responsibility: Test-driven validation: removes test data directory and temporary Python test files
+// responsibility: Creates test data files with complete, incomplete, and missing taxonomy headers for validation testing and Test-driven validation: removes test data directory and temporary Python test files
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

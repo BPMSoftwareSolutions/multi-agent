@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Routes worker-bee execution report requests to appropriate handler (summary or detail)
+// responsibility: Coordinates routeReportRequest behavior with documented file and method taxonomy evidence
 // actor: run_ledger
 // role: report_router
 // source_truth: implementation
@@ -9,6 +9,11 @@ const path = require("path");
 const { renderMarkdown, renderSummary, renderRun } = require("../src/reports/runs-renderer");
 const { readRuns, readRunDetails } = require("../src/reports/runs-loader");
 
+// warehouse:method
+// responsibility: Coordinates routeReportRequest behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function routeReportRequest(reportsDir, args) {
   if (!fs.existsSync(reportsDir)) {
     console.log("No reports directory yet. Run a worker-bee command first.");

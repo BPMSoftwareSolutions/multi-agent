@@ -1,11 +1,16 @@
 // warehouse:file
-// responsibility: Loads JSON analysis files from disk by path with validation
+// responsibility: Coordinates loadAnalysis behavior with documented file and method taxonomy evidence
 // actor: file_loader
 // role: data_supplier
 // source_truth: implementation
 
 const fs = require("fs");
 
+// warehouse:method
+// responsibility: Coordinates loadAnalysis behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function loadAnalysis(analysisPath) {
   if (!fs.existsSync(analysisPath)) {
     console.error(`❌ Error: ${analysisPath} not found`);

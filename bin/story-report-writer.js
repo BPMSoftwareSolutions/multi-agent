@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Generates markdown story report and writes to disk
+// responsibility: Coordinates writeStoryReport behavior with documented file and method taxonomy evidence
 // actor: story_reporter
 // role: report_writer
 // source_truth: implementation
@@ -8,6 +8,11 @@ const fs = require("fs");
 const path = require("path");
 const { generateMarkdown } = require("../src/story/markdown-generator");
 
+// warehouse:method
+// responsibility: Coordinates writeStoryReport behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function writeStoryReport(analysisData, taxonomyData, reportPath) {
   const markdown = generateMarkdown(analysisData, taxonomyData);
   fs.writeFileSync(reportPath, markdown, "utf8");

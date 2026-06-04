@@ -1,9 +1,14 @@
 // warehouse:file
-// responsibility: Formats story analysis results into JSON report with metadata
+// responsibility: Coordinates formatStoryReport behavior with documented file and method taxonomy evidence
 // actor: report_formatter
 // role: data_aggregator
 // source_truth: implementation
 
+// warehouse:method
+// responsibility: Coordinates formatStoryReport behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function formatStoryReport(stories) {
   const report = {
     generated_at: new Date().toISOString(),

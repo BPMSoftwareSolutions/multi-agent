@@ -1,9 +1,14 @@
 // warehouse:file
-// responsibility: Sorts contradictions by severity and generates summary statistics
+// responsibility: Coordinates sortAndSummarizeContradictions behavior with documented file and method taxonomy evidence
 // actor: report_formatter
 // role: data_aggregator
 // source_truth: implementation
 
+// warehouse:method
+// responsibility: Coordinates sortAndSummarizeContradictions behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function sortAndSummarizeContradictions(allContradictions, totalPackages) {
   // Sort by severity
   const severityOrder = { HIGH: 0, MEDIUM: 1, LOW: 2 };

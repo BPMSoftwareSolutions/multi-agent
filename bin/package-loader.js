@@ -1,11 +1,16 @@
 // warehouse:file
-// responsibility: Loads and validates package taxonomy from disk
+// responsibility: Coordinates loadPackageTaxonomy behavior with documented file and method taxonomy evidence
 // actor: file_loader
 // role: data_supplier
 // source_truth: implementation
 
 const fs = require("fs");
 
+// warehouse:method
+// responsibility: Coordinates loadPackageTaxonomy behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function loadPackageTaxonomy(taxonomyPath) {
   if (!fs.existsSync(taxonomyPath)) {
     console.error(`Taxonomy report not found: ${taxonomyPath}`);

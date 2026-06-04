@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: CLI entrypoint for taxonomy scan—parses args and orchestrates scanning
+// responsibility: Coordinates main behavior with documented file and method taxonomy evidence
 // actor: taxonomy_scanner
 // role: scan_authority
 // source_truth: implementation
@@ -16,6 +16,11 @@ if (!DEFAULT_REPO_ROOT) {
   process.exit(1);
 }
 
+// warehouse:method
+// responsibility: Coordinates main behavior with documented file and method taxonomy evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function main() {
   const args = parseTaxonomyScanArgs(process.argv.slice(2), DEFAULT_REPO_ROOT);
   const repoRoot = path.resolve(args.repoRoot);
