@@ -65,6 +65,7 @@ const STATUS_ICON_MAPPINGS = {
   evidence: { icon: "🧾", fallback: "[EVIDENCE]" },
   file: { icon: "📄", fallback: "[FILE]" },
   folder: { icon: "📁", fallback: "[FS]" },
+  scan: { icon: "🔎", fallback: "[SCAN]" },
   worker: { icon: "🐝", fallback: "[WORKER]" },
   mutated: { icon: "✏", fallback: "[MUTATED]" },
   projection: { icon: "🖥", fallback: "[PROJECTION]" },

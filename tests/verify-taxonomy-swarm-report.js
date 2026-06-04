@@ -167,13 +167,17 @@ function verifySwarmRunReportArtifacts() {
     const batchReport = JSON.parse(fs.readFileSync(written.batch_report_json, "utf8"));
     const batchMarkdown = fs.readFileSync(written.batch_report_markdown, "utf8");
     const currentRun = fs.readFileSync(path.join(reportsDir, "CURRENT-RUN.md"), "utf8");
+    const rootLatestMarkdown = fs.readFileSync(path.join(reportsDir, "SWARM-RUN-LATEST.md"), "utf8");
+    const rootLatestJson = JSON.parse(fs.readFileSync(path.join(reportsDir, "swarm-report-latest.json"), "utf8"));
     const beeLedger = JSON.parse(fs.readFileSync(written.bee_ledger_json, "utf8"));
     const fileLedger = JSON.parse(fs.readFileSync(written.file_ledger_json, "utf8"));
     const reviewQueue = JSON.parse(fs.readFileSync(written.review_queue_json, "utf8"));
 
     assert.deepStrictEqual(batchReport, report, "batch report JSON should preserve report object");
+    assert.deepStrictEqual(rootLatestJson, report, "root latest swarm JSON should preserve report object");
     assert.strictEqual(batchMarkdown, formatSwarmRunMarkdown(batchReport), "batch markdown should project JSON exactly");
     assert.strictEqual(currentRun, batchMarkdown, "current run should point at latest swarm projection");
+    assert.strictEqual(rootLatestMarkdown, batchMarkdown, "root latest markdown should match run markdown");
     assert.strictEqual(beeLedger.length, 3, "bee ledger artifact should be written");
     assert.strictEqual(fileLedger.length, 6, "file ledger artifact should be written");
     assert.strictEqual(reviewQueue.length, 2, "review queue artifact should be written");

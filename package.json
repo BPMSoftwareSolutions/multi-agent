@@ -27,6 +27,8 @@
     "test:taxonomy-heal-run": "node tests/verify-taxonomy-heal-run.js",
     "taxonomy-heal-swarm-report": "node bin/taxonomy-heal-swarm-report.js",
     "test:taxonomy-swarm-report": "node tests/verify-taxonomy-swarm-report.js",
+    "taxonomy-coherence-scan": "node bin/taxonomy-coherence-scan.js",
+    "test:taxonomy-scan-report": "node tests/verify-taxonomy-scan-report.js",
     "test:ascii-components": "node tests/verify-ascii-components.js",
     "fractal-scan": "node bin/fractal-taxonomy-scanner.js",
     "worker-bee": "node bin/worker-bee.js"

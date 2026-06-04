@@ -467,6 +467,8 @@ function buildArtifactIndex(runId) {
     source_mutation_diff: `${base}/source-mutation.diff`,
     evidence_manifest_json: `${base}/evidence-manifest.json`,
     case_files_root: "reports/taxonomy-case-files/**",
+    latest_report_markdown: "reports/SWARM-RUN-LATEST.md",
+    latest_report_json: "reports/swarm-report-latest.json",
   };
 }
 
@@ -732,6 +734,8 @@ function formatSwarmRunMarkdown(report) {
         ["Source mutation diff", artifacts.source_mutation_diff],
         ["Evidence manifest", artifacts.evidence_manifest_json],
         ["Case files", artifacts.case_files_root],
+        ["Latest swarm markdown", artifacts.latest_report_markdown],
+        ["Latest swarm JSON", artifacts.latest_report_json],
       ]
     ),
     "",
@@ -778,6 +782,11 @@ function writeSwarmRunReport(report, reportsDir) {
     file_ledger_json: path.join(runDir, "file-ledger.json"),
     review_queue_json: path.join(runDir, "review-queue.json"),
     evidence_manifest_json: path.join(runDir, "evidence-manifest.json"),
+    latest_report_markdown: path.join(reportsDir, "SWARM-RUN-LATEST.md"),
+    latest_report_json: path.join(reportsDir, "swarm-report-latest.json"),
+    latest_bee_ledger_json: path.join(reportsDir, "swarm-bee-ledger-latest.json"),
+    latest_file_ledger_json: path.join(reportsDir, "swarm-file-ledger-latest.json"),
+    latest_review_queue_json: path.join(reportsDir, "swarm-review-queue-latest.json"),
   };
   const markdown = formatSwarmRunMarkdown(report);
   writeJson(paths.batch_report_json, report);
@@ -786,6 +795,11 @@ function writeSwarmRunReport(report, reportsDir) {
   writeJson(paths.file_ledger_json, report.file_ledger);
   writeJson(paths.review_queue_json, report.review_queue);
   writeJson(paths.evidence_manifest_json, report.artifact_index);
+  fs.writeFileSync(paths.latest_report_markdown, markdown, "utf8");
+  writeJson(paths.latest_report_json, report);
+  writeJson(paths.latest_bee_ledger_json, report.bee_ledger);
+  writeJson(paths.latest_file_ledger_json, report.file_ledger);
+  writeJson(paths.latest_review_queue_json, report.review_queue);
   fs.writeFileSync(path.join(reportsDir, "CURRENT-RUN.md"), markdown, "utf8");
   return paths;
 }
