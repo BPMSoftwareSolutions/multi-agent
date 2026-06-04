@@ -2,8 +2,8 @@
 
 **Subtitle:** A narrative review of taxonomy coherence, responsibility boundaries, and file-count justification.
 
-**Generated:** 2026-06-04T18:45:50.339Z
-**Source scan:** `scan-2026-06-04T18-45-44-043Z`
+**Generated:** 2026-06-04T18:54:22.977Z
+**Source scan:** `scan-2026-06-04T18-54-16-169Z`
 **Source swarm:** `bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z`
 
 ```text
@@ -12,14 +12,14 @@
 +------------------------------------------------------------------------------------------------+
 | Status        ✅ STORY COHERENCE EARNED                                                         |
 | Target        📁 .                                                                             |
-| Files         324 reviewed | 324 locally trusted | 0 weak | 0 missing                          |
-| Methods       646 anchored | 646 locally tied out                                              |
+| Files         327 reviewed | 327 locally trusted | 0 weak | 0 missing                          |
+| Methods       663 anchored | 663 locally tied out                                              |
 | Local Tie-Out ✅ 100/100  ████████████████████████ 100%                                         |
 | Canonical     ✅ PASS | residue pressure: 0                                                     |
 | File Economy  ✅ PASS | 0 small-file boundary candidates                                        |
 | Legacy        ✅ CLEAR | 0 remove candidate | 0 unclear overlaps | 0 compatibility shell        |
 | Overall       ✅ 100% earned | local taxonomy, file economy, and canonical story all clear      |
-| Main Question Do all 324 files earn their boundaries and belong in the canonical story?        |
+| Main Question Do all 327 files earn their boundaries and belong in the canonical story?        |
 | Verdict       Codebase story coherence earned                                                  |
 +------------------------------------------------------------------------------------------------+
 ```
@@ -46,18 +46,18 @@ The studio has reached a trusted local taxonomy state. Every scanned file has a 
 
 For this snapshot, whole-codebase story coherence has also been earned because residue pressure is closed and small-file boundary evidence is documented.
 
-The current governance posture is 100/100 earned. This review evaluates whether 324 files represent healthy responsibility separation or unnecessary fragmentation, and whether any legacy surfaces still preserve old system ideas that should be retired, redirected, or explicitly justified.
+The current governance posture is 100/100 earned. This review evaluates whether 327 files represent healthy responsibility separation or unnecessary fragmentation, and whether any legacy surfaces still preserve old system ideas that should be retired, redirected, or explicitly justified.
 
 ## Current Story Snapshot
 
 | Signal | Value |
 | --- | --- |
-| Files reviewed | 324 |
-| Locally trusted stories | 324 |
+| Files reviewed | 327 |
+| Locally trusted stories | 327 |
 | Weak stories | 0 |
 | Missing taxonomy | 0 |
-| File anchors | 324/324 |
-| Method anchors | 646/646 |
+| File anchors | 327/327 |
+| Method anchors | 663/663 |
 | Local taxonomy tie-out | 100/100 |
 | Overall story coherence | 100/100 earned |
 | Source mutation | none in latest scan |
@@ -74,8 +74,8 @@ The local taxonomy tie-out result is accepted. The scanner found complete file-l
 
 | Evidence Layer | Result | Meaning |
 | --- | --- | --- |
-| File anchors | 324/324 | Every scanned file has a file-level taxonomy story. |
-| Method anchors | 646/646 | Detected behavior is represented in method taxonomy. |
+| File anchors | 327/327 | Every scanned file has a file-level taxonomy story. |
+| Method anchors | 663/663 | Detected behavior is represented in method taxonomy. |
 | File-method tie-out | 100/100 | File responsibilities and method responsibilities align locally. |
 | Missing taxonomy | 0 | No dark files remain in the latest scan. |
 | Weak stories | 0 | No contradictory file stories remain in the latest scan. |
@@ -87,7 +87,7 @@ The local taxonomy tie-out result is accepted. The scanner found complete file-l
 ### Main Question
 
 ```text
-Do all 324 files earn their boundaries and belong in the canonical story?
+Do all 327 files earn their boundaries and belong in the canonical story?
 ```
 
 ### Short Answer
@@ -98,36 +98,36 @@ Yes for this studio snapshot. The same pattern should not be applied mechanicall
 
 The current file count appears directionally justified when files represent durable responsibility boundaries: command routing, scanning, story analysis, evidence generation, observability reporting, worker execution, and verification. This separation is especially useful for swarm execution because small coherent files are easier for agents to inspect, route, heal, test, and govern.
 
-Zero-method and one-method files were reviewed under the file-economy lens. The current scan found 230 small boundaries reviewed and 0 unearned small boundaries. Those files are treated as justified for this studio snapshot because they carry boundary, wrapper, registry, executable, single-responsibility, test, or agent-navigation value.
+Zero-method and one-method files were reviewed under the file-economy lens. The current scan found 231 small boundaries reviewed and 0 unearned small boundaries. Those files are treated as justified for this studio snapshot because they carry boundary, wrapper, registry, executable, single-responsibility, test, or agent-navigation value.
 
 ## File Economy Review
 
 | Category | Count | Coherence | Economy Verdict | Notes |
 | --- | --- | --- | --- | --- |
 | Application and server surfaces | 80 | 99/100 | monitor local score variance | Justified when API, browser, route, and integration boundaries stay navigable. |
-| CLI and command surfaces | 49 | 100/100 | directionally justified | Justified when command behavior and operator entry points stay isolated. |
+| CLI and command surfaces | 50 | 100/100 | directionally justified | Justified when command behavior and operator entry points stay isolated. |
 | Core runtime | 40 | 100/100 | directionally justified | Justified when each module owns one runtime responsibility. |
-| Observability and reports | 2 | 100/100 | directionally justified | Justified when report rendering stays isolated from scoring and healing. |
+| Observability and reports | 3 | 100/100 | directionally justified | Justified when report rendering stays isolated from scoring and healing. |
 | Shared utilities | 42 | 99/100 | monitor local score variance | Monitor helper fragmentation and repeated one-method modules. |
 | Story analysis | 18 | 99/100 | monitor local score variance | Justified when evaluator pieces remain independently testable. |
 | Taxonomy scanning | 14 | 100/100 | directionally justified | Justified when scanning, extraction, evidence, and healing stay separable. |
-| Tests and verification | 6 | 100/100 | directionally justified | Justified when tests protect coherence governance and report contracts. |
+| Tests and verification | 7 | 100/100 | directionally justified | Justified when tests protect coherence governance and report contracts. |
 | Worker-bee swarm | 73 | 100/100 | directionally justified | Justified when decomposition keeps agent work packets small and governable. |
 | Zero-method files | 44 | 100/100 | earned by boundary evidence | Justified only for wrappers, config, registry, boundary, or executable surfaces. |
-| One-method files | 186 | 99/100 | earned by boundary evidence | Monitor whether each single method keeps durable semantic weight. |
+| One-method files | 187 | 99/100 | earned by boundary evidence | Monitor whether each single method keeps durable semantic weight. |
 
 ## File Economy Signals
 
 | Signal | Value | Interpretation |
 | --- | --- | --- |
-| Average methods per file | 1.99 | Low averages are currently justified by agent-safe boundaries and remain monitored. |
+| Average methods per file | 2.03 | Low averages are currently justified by agent-safe boundaries and remain monitored. |
 | Files with 0 methods | 44 | Boundary, config, executable, and registry files may be legitimate. |
-| Files with 1 method | 186 | One-method files need semantic weight or test/governance value. |
-| Files with 5+ methods | 19 | Larger files are monitored for cohesion rather than split mechanically. |
+| Files with 1 method | 187 | One-method files need semantic weight or test/governance value. |
+| Files with 5+ methods | 21 | Larger files are monitored for cohesion rather than split mechanically. |
 | Largest file by method count | public/app.js (48 methods) | Review large surfaces for cohesion rather than splitting mechanically. |
-| Strong files below 2 methods | 230 | Small files with boundary evidence remain monitored for file economy. |
+| Strong files below 2 methods | 231 | Small files with boundary evidence remain monitored for file economy. |
 | Consolidation candidates | 0 | Candidate count is a review queue, not an automatic merge order. |
-| Small boundaries reviewed | 230 | Small files with explicit boundary evidence. |
+| Small boundaries reviewed | 231 | Small files with explicit boundary evidence. |
 | Small boundaries unearned | 0 | Small files still lacking boundary evidence. |
 
 ## Legacy Idea Residue Review
@@ -189,7 +189,7 @@ That decomposition is aligned with the operating model: agents need small, named
 
 ## Why The Current Decomposition Is Justified For This Snapshot
 
-The 324-file shape is currently justified because coherence governance benefits from narrow boundaries. Smaller files can reduce the blast radius of automated repair, make worker assignment clearer, keep reports and scanners independently testable, and give agents stronger navigation cues.
+The 327-file shape is currently justified because coherence governance benefits from narrow boundaries. Smaller files can reduce the blast radius of automated repair, make worker assignment clearer, keep reports and scanners independently testable, and give agents stronger navigation cues.
 
 ## Where The Current Decomposition Should Continue To Be Monitored
 
@@ -250,8 +250,8 @@ The standing doctrine remains: local truth is not automatically whole truth. Fut
 
 | Field | Value |
 | --- | --- |
-| Report ID | codebase-story-review-2026-06-04T18-45-50-338Z |
-| Source scan ID | scan-2026-06-04T18-45-44-043Z |
+| Report ID | codebase-story-review-2026-06-04T18-54-22-975Z |
+| Source scan ID | scan-2026-06-04T18-54-16-169Z |
 | Source swarm ID | bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z |
 | Target path | . |
-| Generated at | 2026-06-04T18:45:50.339Z |
+| Generated at | 2026-06-04T18:54:22.977Z |

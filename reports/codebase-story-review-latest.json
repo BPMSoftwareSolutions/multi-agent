@@ -1,21 +1,21 @@
 {
   "schema": "codebase-story-review-report.v1",
-  "report_id": "codebase-story-review-2026-06-04T18-45-50-338Z",
-  "generated_at": "2026-06-04T18:45:50.339Z",
-  "source_scan_id": "scan-2026-06-04T18-45-44-043Z",
+  "report_id": "codebase-story-review-2026-06-04T18-54-22-975Z",
+  "generated_at": "2026-06-04T18:54:22.977Z",
+  "source_scan_id": "scan-2026-06-04T18-54-16-169Z",
   "source_swarm_id": "bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z",
   "target_path": ".",
   "headline_verdict": "Codebase story coherence earned",
-  "primary_review_question": "Do all 324 files earn their boundaries and belong in the canonical story?",
+  "primary_review_question": "Do all 327 files earn their boundaries and belong in the canonical story?",
   "summary": {
     "review_status": "story coherence earned",
-    "files_reviewed": 324,
-    "trusted_stories": 324,
+    "files_reviewed": 327,
+    "trusted_stories": 327,
     "weak_stories": 0,
     "missing_taxonomy": 0,
-    "file_anchors_found": 324,
-    "method_anchors_found": 646,
-    "method_anchors_expected": 646,
+    "file_anchors_found": 327,
+    "method_anchors_found": 663,
+    "method_anchors_expected": 663,
     "local_taxonomy_tie_out": 100,
     "source_mutated": "none in latest scan",
     "healing_required": "no",
@@ -35,7 +35,7 @@
       },
       {
         "category": "CLI and command surfaces",
-        "count": 49,
+        "count": 50,
         "coherence": 100,
         "economy_verdict": "directionally justified",
         "notes": "Justified when command behavior and operator entry points stay isolated."
@@ -49,7 +49,7 @@
       },
       {
         "category": "Observability and reports",
-        "count": 2,
+        "count": 3,
         "coherence": 100,
         "economy_verdict": "directionally justified",
         "notes": "Justified when report rendering stays isolated from scoring and healing."
@@ -77,7 +77,7 @@
       },
       {
         "category": "Tests and verification",
-        "count": 6,
+        "count": 7,
         "coherence": 100,
         "economy_verdict": "directionally justified",
         "notes": "Justified when tests protect coherence governance and report contracts."
@@ -98,20 +98,20 @@
       },
       {
         "category": "One-method files",
-        "count": 186,
+        "count": 187,
         "coherence": 99,
         "economy_verdict": "earned by boundary evidence",
         "notes": "Monitor whether each single method keeps durable semantic weight."
       }
     ],
     "signals": {
-      "average_methods_per_file": "1.99",
+      "average_methods_per_file": "2.03",
       "zero_method_count": 44,
-      "one_method_count": 186,
-      "large_file_count": 19,
+      "one_method_count": 187,
+      "large_file_count": 21,
       "largest_method_file": "public/app.js (48 methods)",
-      "small_strong_count": 230,
-      "small_boundary_reviewed_count": 230,
+      "small_strong_count": 231,
+      "small_boundary_reviewed_count": 231,
       "small_boundary_unearned_count": 0,
       "consolidation_candidate_count": 0
     }

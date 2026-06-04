@@ -1,0 +1,15 @@
+{
+  "schema": "taxonomy-readme-staleness-report.v1",
+  "generated_at": "2026-06-04T18:54:30.390Z",
+  "rows": [
+    {
+      "readme": "README.md",
+      "source_scan": "scan-2026-06-04T18-54-16-169Z",
+      "current_scan": "scan-2026-06-04T18-54-16-169Z",
+      "source_story_review": "codebase-story-review-2026-06-04T18-54-22-975Z",
+      "current_story_review": "codebase-story-review-2026-06-04T18-54-22-975Z",
+      "status": "current"
+    }
+  ],
+  "stale_count": 0
+}
