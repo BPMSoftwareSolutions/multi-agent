@@ -8,7 +8,7 @@ const path = require("path");
 const { auditFiles } = require("../src/audit/auditor");
 
 // warehouse:method
-// responsibility: Orchestrates taxonomy audit workflow by running audit, formatting results, and outputting human-readable summary
+// responsibility: Main workflow that loads audit state, renders file-by-file status with emoji indicators, computes coverage metrics, and outputs results
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

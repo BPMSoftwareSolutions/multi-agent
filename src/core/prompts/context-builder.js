@@ -7,6 +7,36 @@
 const { toJSONString } = require("./schema-formatter");
 
 // warehouse:method
+// responsibility: Determines initial vs continuation task line based on stage and round context
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildTaskLine({ stage, brief, roundNumber, isStageOneFirstRound }) {
+  return isStageOneFirstRound
+    ? `User brief: ${brief}. Create the initial idea artifact.`
+    : "Continue developing the artifact. Make it more concrete and specific.";
+}
+
+// warehouse:method
+// responsibility: Combines previous round feedback and human interjection into context block
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildContextLines({ lastRound, humanInterjection }) {
+  if (!lastRound) return "";
+  return `Previous round feedback: ${lastRound.reviewer.feedback}\nHuman interjection: ${humanInterjection}`;
+}
+
+// warehouse:method
+// responsibility: Assembles task line and context into complete user message content
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildUserMessage({ taskLine, context }) {
+  return [taskLine, context, "Return JSON only."].filter(Boolean).join("\n\n");
+}
+
+// warehouse:method
 // responsibility: Formats round context including interjection, change summary, artifact state
 // actor: method_implementation
 // role: implementation
@@ -39,4 +69,4 @@ function formatHumanInterjection(text) {
   return text.trim();
 }
 
-module.exports = { buildRoundContext, formatHumanInterjection };
+module.exports = { buildTaskLine, buildContextLines, buildUserMessage, buildRoundContext, formatHumanInterjection };

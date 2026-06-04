@@ -4,7 +4,8 @@
 // role: prompt_builder
 // source_truth: implementation
 
-const { schemaToText, toJSONString } = require("./schema-formatter");
+const { formatSystemMessage } = require("./prompt-formatter");
+const { buildTaskLine, buildContextLines, buildUserMessage } = require("./context-builder");
 
 // warehouse:method
 // responsibility: Composes system message and user task with artifact schema and development context
@@ -19,40 +20,17 @@ function buildBuilderPrompt({ stage, intent, artifact, lastRound, humanInterject
       return value === "";
     });
 
-  const system = [
-    "You are the Planner AI in a stage-based design workshop.",
-    "Your role: propose the most concrete, compelling version of the current artifact.",
-    "Be specific. Make decisions. Avoid hedge phrases.",
-    "Return your response as a JSON object matching the schema below.",
-    "Do not include explanation outside the JSON.",
-    "",
-    `Stage: ${stage.label}`,
-    `Stage goal: ${stage.builderFocus}`,
-    "",
-    "Task intent (do not drift from this):",
-    `- Task: ${intent.task_definition}`,
-    `- Success criteria: ${(intent.success_criteria || []).join(", ") || "(none provided)"}`,
-    `- Constraints: ${(intent.constraints || []).join(", ") || "(none provided)"}`,
-    "",
-    "Required schema:",
-    schemaToText(stage.schema),
-    "",
-    "Current artifact (your starting point - improve it):",
-    toJSONString(artifact)
-  ].join("\n");
-
-  const taskLine = isStageOneFirstRound
-    ? `User brief: ${brief}. Create the initial idea artifact.`
-    : "Continue developing the artifact. Make it more concrete and specific.";
-
-  const context = lastRound ? `Previous round feedback: ${lastRound.reviewer.feedback}\nHuman interjection: ${humanInterjection}` : "";
+  const system = formatSystemMessage({ stage, intent, artifact });
+  const taskLine = buildTaskLine({ stage, brief, roundNumber, isStageOneFirstRound });
+  const context = buildContextLines({ lastRound, humanInterjection });
+  const userContent = buildUserMessage({ taskLine, context });
 
   return {
     system,
     messages: [
       {
         role: "user",
-        content: [taskLine, context, "Return JSON only."].filter(Boolean).join("\n\n")
+        content: userContent
       }
     ]
   };

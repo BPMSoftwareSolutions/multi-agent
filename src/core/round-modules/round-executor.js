@@ -1,19 +1,15 @@
 // warehouse:file
-// responsibility: Orchestrates design workshop rounds by executing planner and reviewer agents
+// responsibility: Aggregates planner and reviewer execution with round lifecycle management
 // actor: core_runtime
-// role: executor
+// role: orchestrator
 // source_truth: implementation
 
-const {
-  buildBuilderPrompt,
-  buildReviewerPrompt
-} = require("../prompt-builders");
-const { callClaudeWithRetry } = require("../llm-client");
 const { STAGES } = require("../stages");
-const { normalizeReviewerOutput } = require("./intent-normalizer");
+const { executePlanner } = require("./planner-executor");
+const { executeReviewer } = require("./reviewer-executor");
 
 // warehouse:method
-// responsibility: Executes planner and reviewer agents sequentially, stores round results
+// responsibility: Orchestrates design workshop round: determines max tokens, executes planner and reviewer sequentially, records artifacts and metrics
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -30,7 +26,6 @@ async function runRound({
     throw new Error(`Invalid stage: ${stageId}`);
   }
 
-  const lastRound = stageState.rounds[stageState.rounds.length - 1] || null;
   const roundNumber = stageState.rounds.length + 1;
   const artifactBefore = JSON.parse(JSON.stringify(stageState.artifact));
 
@@ -43,44 +38,24 @@ async function runRound({
   const maxTokens = maxTokensByStage[stageId] || 4096;
 
   // Planner
-  const builderPrompt = buildBuilderPrompt({
-    stage: stageConfig,
-    intent: session.intent,
-    artifact: stageState.artifact,
-    lastRound,
-    humanInterjection,
-    brief: session.brief,
-    roundNumber
-  });
-
-  const builderStart = Date.now();
-  const builderOutput = await callClaudeWithRetry({
-    system: builderPrompt.system,
-    userMessages: builderPrompt.messages,
+  const { builderOutput, builderDurationMs } = await executePlanner({
+    stageConfig,
+    session,
+    stageState,
+    roundNumber,
     maxTokens,
     apiKey
   });
-  const builderDurationMs = Date.now() - builderStart;
 
   // Reviewer
-  const reviewerPrompt = buildReviewerPrompt({
-    stage: stageConfig,
-    intent: session.intent,
-    artifact: stageState.artifact,
+  const { reviewerOutput, reviewerDurationMs } = await executeReviewer({
+    stageConfig,
+    session,
+    stageState,
     builderOutput,
-    humanInterjection
-  });
-
-  const reviewerStart = Date.now();
-  const reviewerRaw = await callClaudeWithRetry({
-    system: reviewerPrompt.system,
-    userMessages: reviewerPrompt.messages,
     maxTokens,
     apiKey
   });
-  const reviewerDurationMs = Date.now() - reviewerStart;
-
-  const reviewerOutput = normalizeReviewerOutput(reviewerRaw, builderOutput);
 
   // Store round
   const round = {

@@ -1,49 +1,25 @@
 // warehouse:file
-// responsibility: Runs concurrent bee agents from packet spec, processing work packets and tracking completion status
+// responsibility: Aggregates bee agent management and packet processing for swarm execution
 // actor: worker_bee_infrastructure
-// role: swarm_runner
+// role: orchestrator
 // source_truth: implementation
 
-const { packWork } = require("./work-packer");
-const { processPacket } = require("./anchor-applicator");
+const { createBeePool } = require("./agent-manager");
+const { prepareWorkPackets } = require("./packet-processor");
 
 // warehouse:method
-// responsibility: Orchestrates concurrent bee agents pulling packets from queue and writing anchors, tracks tally and results
+// responsibility: Orchestrates complete swarm: packs work into packets, creates bee agent pool, aggregates tally and results
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 async function runFileSwarm(work, options = {}) {
   const { packet: spec, apiKey, dryRun = false, onProgress } = options;
-  const agents = spec.swarm.agents;
-  const model = spec.model;
   const workload = spec.workload;
-  const packets = packWork(work, workload);
-  const tally = { anchored: 0, updated: 0, methods_only: 0, planned: 0, error: 0 };
-  let methodsTotal = 0;
-  const results = [];
-  let cursor = 0;
 
-  async function beeLoop(beeId) {
-    while (cursor < packets.length) {
-      const index = cursor++;
-      const packet = packets[index];
-      const packetResults = await processPacket(packet, { apiKey, model, dryRun, workload });
-      for (const r of packetResults) {
-        if (tally[r.status] !== undefined) tally[r.status] += 1;
-        methodsTotal += r.methodsWritten || r.methodPlanned || 0;
-        results.push(r);
-      }
-      if (onProgress) {
-        onProgress({ beeId, index, totalPackets: packets.length, packetFiles: packet.items.length, oversize: !!packet.oversize, results: packetResults });
-      }
-    }
-  }
+  const { packets, packetCount, fileCount } = prepareWorkPackets(work, workload);
+  const { tally, methodsTotal, results } = await createBeePool(packets, spec, apiKey, dryRun, onProgress);
 
-  const pool = [];
-  for (let i = 0; i < Math.min(agents, packets.length); i += 1) pool.push(beeLoop(i + 1));
-  await Promise.all(pool);
-
-  return { tally, methodsTotal, results, fileCount: work.length, packetCount: packets.length };
+  return { tally, methodsTotal, results, fileCount, packetCount };
 }
 
 module.exports = { runFileSwarm };

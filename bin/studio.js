@@ -8,15 +8,8 @@ require("dotenv").config();
 require("dotenv").config({ path: ".env.local", override: true });
 require("dotenv").config({ path: "bin/.env.local", override: false });
 
-const path = require("path");
-const { start } = require("../src/cli/commands/start");
-const { show } = require("../src/cli/commands/show");
-const { round } = require("../src/cli/commands/round");
-const { accept } = require("../src/cli/commands/accept");
-const { nextStage } = require("../src/cli/commands/next-stage");
-const { status } = require("../src/cli/commands/status");
-const { runWorkerCommand } = require("../src/cli/commands/run-worker");
-const { approveActionCommand } = require("../src/cli/commands/approve-action");
+const { parseOptions } = require("./options-parser");
+const { routeAndExecuteCommand } = require("./command-router");
 const { exit } = require("../src/cli/print");
 
 // warehouse:method
@@ -65,102 +58,10 @@ Examples:
 
   try {
     const options = parseOptions(args.slice(1));
-
-    switch (command) {
-      case "start": {
-        const brief = options.positional[0];
-        if (!brief) {
-          exit(1, "Error: brief is required. Usage: studio start <brief>");
-        }
-        await start(brief, apiKey, options);
-        break;
-      }
-
-      case "show": {
-        const sessionId = options.positional[0];
-        await show(sessionId, options);
-        break;
-      }
-
-      case "round": {
-        const note = options.note || "";
-        await round(note, apiKey, options);
-        break;
-      }
-
-      case "accept": {
-        const sessionId = options.positional[0];
-        await accept(sessionId, options);
-        break;
-      }
-
-      case "next-stage": {
-        const sessionId = options.positional[0];
-        await nextStage(sessionId, options);
-        break;
-      }
-
-      case "status": {
-        const sessionId = options.positional[0];
-        await status(sessionId, options);
-        break;
-      }
-
-      case "approve-action": {
-        await approveActionCommand(options);
-        break;
-      }
-
-      case "run-worker": {
-        const actionId = options.positional[0] || null;
-        await runWorkerCommand(actionId, options);
-        break;
-      }
-
-      default: {
-        exit(1, `Unknown command: ${command}`);
-      }
-    }
+    await routeAndExecuteCommand(command, options, apiKey);
   } catch (error) {
     exit(2, `Fatal error: ${error.message}`);
   }
-}
-
-// warehouse:method
-// responsibility: Parses CLI command-line arguments into structured studio configuration options and flags for handler routing
-// actor: method_implementation
-// role: implementation
-// source_truth: implementation
-function parseOptions(args) {
-  const options = {
-    positional: [],
-    json: false,
-    note: null,
-    session: null,
-    payload: null,
-    payloadFile: null
-  };
-
-  for (let i = 0; i < args.length; i++) {
-    const arg = args[i];
-
-    if (arg === "--json") {
-      options.json = true;
-    } else if (arg === "--note" && i + 1 < args.length) {
-      options.note = args[++i];
-    } else if (arg === "--session" && i + 1 < args.length) {
-      options.session = args[++i];
-      options.sessionId = args[i];
-    } else if (arg === "--payload" && i + 1 < args.length) {
-      options.payload = args[++i];
-    } else if (arg === "--payload-file" && i + 1 < args.length) {
-      options.payloadFile = args[++i];
-    } else if (!arg.startsWith("--")) {
-      options.positional.push(arg);
-    }
-  }
-
-  return options;
 }
 
 main().catch((error) => {

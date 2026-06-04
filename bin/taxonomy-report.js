@@ -14,7 +14,8 @@
 
 const path = require("path");
 const fs = require("fs");
-
+const { parseReportArgs } = require("./report-builder");
+const { outputReport } = require("./results-formatter");
 const { buildReport } = require("../src/worker-bee/report");
 
 // Load config from .worker-bee.json
@@ -34,41 +35,12 @@ const DEFAULT_TARGET =
   config.defaultTarget ? path.resolve(DEFAULT_REPO_ROOT, config.defaultTarget) : DEFAULT_REPO_ROOT;
 
 // warehouse:method
-// responsibility: Orchestrates taxonomy report generation: parses CLI arguments for report configuration
-// actor: method_implementation
-// role: implementation
-// source_truth: implementation
-function parseArgs(argv) {
-  const args = { repoRoot: DEFAULT_REPO_ROOT, target: DEFAULT_TARGET, output: null, json: false };
-  for (let i = 0; i < argv.length; i += 1) {
-    const next = () => argv[++i];
-    switch (argv[i]) {
-      case "--repo-root": args.repoRoot = next(); break;
-      case "--target": args.target = next(); break;
-      case "--output": args.output = next(); break;
-      case "--json": args.json = true; break;
-      default: console.error(`Unknown argument: ${argv[i]}`); process.exit(1);
-    }
-  }
-  return args;
-}
-
-// warehouse:method
-// responsibility: Orchestrates taxonomy report generation: extracts top entries sorted by value for coverage
-// actor: method_implementation
-// role: implementation
-// source_truth: implementation
-function topN(obj, n) {
-  return Object.entries(obj).sort((a, b) => b[1] - a[1]).slice(0, n);
-}
-
-// warehouse:method
 // responsibility: Orchestrates taxonomy report generation: parses arguments, compiles coverage statistics, formats output
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 function main() {
-  const args = parseArgs(process.argv.slice(2));
+  const args = parseReportArgs(process.argv.slice(2), DEFAULT_REPO_ROOT, DEFAULT_TARGET);
   const repoRoot = path.resolve(args.repoRoot);
   const target = path.resolve(args.target || args.repoRoot);
   if (!fs.existsSync(target)) {
@@ -77,28 +49,7 @@ function main() {
   }
 
   const report = buildReport(target, repoRoot);
-
-  if (args.output) {
-    const out = path.resolve(args.output);
-    fs.mkdirSync(path.dirname(out), { recursive: true });
-    fs.writeFileSync(out, JSON.stringify(report, null, 2), "utf8");
-  }
-
-  if (args.json) {
-    console.log(JSON.stringify(report, null, 2));
-    return 0;
-  }
-
-  const s = report.summary;
-  console.log(`Taxonomy report — ${report.repo_root}`);
-  console.log(`  generated: ${report.generated_at}`);
-  console.log(`  python files:        ${s.total_python}`);
-  console.log(`  fully trustworthy:   ${s.fully_trustworthy_files}`);
-  console.log(`  file anchors:        ${s.file_anchor.trustworthy} trustworthy, ${s.file_anchor.low_quality} low-quality, ${s.file_anchor.missing} missing`);
-  console.log(`  method coverage:     ${s.methods.trustworthy}/${s.methods.total} methods trustworthy`);
-  console.log(`  roles (trustworthy file anchors):`);
-  for (const [role, count] of topN(s.by_role, 12)) console.log(`    ${String(count).padStart(5)}  ${role}`);
-  if (args.output) console.log(`\n  written: ${path.resolve(args.output)}`);
+  outputReport(report, args.output, args.json);
   return 0;
 }
 
