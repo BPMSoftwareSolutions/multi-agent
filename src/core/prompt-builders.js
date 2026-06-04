@@ -7,6 +7,11 @@
 const { STAGES } = require("./stages");
 
 // Helpers
+// warehouse:method
+// responsibility: Converts a schema object into human-readable field descriptions for prompt injection
+// actor: core_runtime
+// role: prompt_formatting
+// source_truth: implementation
 function schemaToText(schema) {
   const lines = ["Fields required in your JSON response:"];
 
@@ -17,10 +22,20 @@ function schemaToText(schema) {
   return lines.join("\n");
 }
 
+// warehouse:method
+// responsibility: Serializes values to formatted JSON strings for prompt embedding
+// actor: core_runtime
+// role: prompt_formatting
+// source_truth: implementation
 function toJSONString(value) {
   return JSON.stringify(value, null, 2);
 }
 
+// warehouse:method
+// responsibility: Formats previous round details including human interjection and artifact changes for context injection
+// actor: core_runtime
+// role: context_building
+// source_truth: implementation
 function buildRoundContext(lastRound) {
   if (!lastRound) {
     return "No previous round context available.";
@@ -39,6 +54,11 @@ function buildRoundContext(lastRound) {
   ].join("\n");
 }
 
+// warehouse:method
+// responsibility: Normalizes human interjection text, returning placeholder if empty or invalid
+// actor: core_runtime
+// role: input_normalization
+// source_truth: implementation
 function formatHumanInterjection(text) {
   if (typeof text !== "string" || text.trim() === "") {
     return "(no human instruction for this round)";
@@ -47,6 +67,11 @@ function formatHumanInterjection(text) {
 }
 
 // Intent Builder
+// warehouse:method
+// responsibility: Constructs prompt for intent clarification agent to extract task, criteria, constraints, and questions from user brief
+// actor: core_runtime
+// role: intent_elicitation
+// source_truth: implementation
 function buildIntentPrompt({ brief }) {
   return {
     system: [
@@ -75,6 +100,11 @@ function buildIntentPrompt({ brief }) {
 }
 
 // Planner Prompt
+// warehouse:method
+// responsibility: Constructs prompt for planner agent to propose artifact improvements based on stage goals and human feedback
+// actor: core_runtime
+// role: planner_guidance
+// source_truth: implementation
 function buildBuilderPrompt({
   stage,
   intent,
@@ -136,6 +166,11 @@ function buildBuilderPrompt({
 }
 
 // Reviewer Prompt
+// warehouse:method
+// responsibility: Constructs prompt for reviewer agent to identify intent, complexity, and validity issues with proposed artifact changes
+// actor: core_runtime
+// role: reviewer_guidance
+// source_truth: implementation
 function buildReviewerPrompt({
   stage,
   intent,

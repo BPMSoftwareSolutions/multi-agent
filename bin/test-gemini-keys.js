@@ -35,6 +35,11 @@ const TEST_PROMPT = {
   },
 };
 
+// warehouse:method
+// responsibility: Sends JSON POST request to HTTPS endpoint with timeout handling and error extraction
+// actor: http_client
+// role: network_requestor
+// source_truth: implementation
 function postJson(url, body, timeoutMs = 10000) {
   const bodyStr = JSON.stringify(body);
   return new Promise((resolve, reject) => {
@@ -82,6 +87,11 @@ function postJson(url, body, timeoutMs = 10000) {
   });
 }
 
+// warehouse:method
+// responsibility: Tests Gemini API key with specified model and measures latency, detecting quota exhaustion
+// actor: api_tester
+// role: diagnostic_tool
+// source_truth: implementation
 async function testKey(keyName, keyValue, model) {
   if (!keyValue) {
     return {
@@ -124,6 +134,11 @@ async function testKey(keyName, keyValue, model) {
   }
 }
 
+// warehouse:method
+// responsibility: Orchestrates Gemini API key testing across all configured keys/models and generates summary report
+// actor: test_runner
+// role: orchestrator
+// source_truth: implementation
 async function main() {
   console.log("🔑 Gemini API Key Tester\n");
   console.log("Testing API keys and models...\n");

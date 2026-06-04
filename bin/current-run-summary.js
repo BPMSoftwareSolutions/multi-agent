@@ -11,6 +11,11 @@ const fs = require("fs");
 const path = require("path");
 const { execSync } = require("child_process");
 
+// warehouse:method
+// responsibility: Fetches the latest worker-bee run status from CLI and parses JSON response
+// actor: status_fetcher
+// role: data_loader
+// source_truth: implementation
 function getCurrentStatus() {
   try {
     const output = execSync("node bin/worker-bee.js --status --json", { encoding: "utf8" });
@@ -20,6 +25,11 @@ function getCurrentStatus() {
   }
 }
 
+// warehouse:method
+// responsibility: Formats run status object into markdown executive summary with progress metrics and next steps
+// actor: summary_formatter
+// role: reporter
+// source_truth: implementation
 function formatSummary(status) {
   if (!status) {
     return `# Current Worker-Bee Run — Executive Summary

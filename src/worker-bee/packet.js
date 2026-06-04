@@ -36,12 +36,20 @@ const DEFAULT_PACKET = {
   },
 };
 
+// warehouse:method
+// responsibility: Type-checks whether a value is a plain object (excludes arrays and nulls)
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function isObject(v) {
   return v && typeof v === "object" && !Array.isArray(v);
 }
 
-// Shallow-deep merge: nested `swarm` and `workload` objects merge field-by-field;
-// everything else is replaced. Undefined/null overrides are ignored.
+// warehouse:method
+// responsibility: Merges base and override packets with shallow-deep merge for swarm/workload objects
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function mergePacket(base, override) {
   if (!isObject(override)) return base;
   const out = { ...base };
@@ -53,7 +61,11 @@ function mergePacket(base, override) {
   return out;
 }
 
-// Drop undefined/null leaves so a sparse override doesn't blank a default.
+// warehouse:method
+// responsibility: Removes undefined/null values from object to prevent blanking defaults during merge
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function prune(obj) {
   const out = {};
   for (const [k, v] of Object.entries(obj)) {
@@ -63,6 +75,11 @@ function prune(obj) {
   return out;
 }
 
+// warehouse:method
+// responsibility: Loads and unwraps packet configuration from JSON file (bare or wrapped format)
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function loadPacketFile(path) {
   const raw = fs.readFileSync(path, "utf8");
   const parsed = JSON.parse(raw);
@@ -70,7 +87,11 @@ function loadPacketFile(path) {
   return parsed.packet && isObject(parsed.packet) ? parsed.packet : parsed;
 }
 
-// Build the effective packet: defaults <- packet file <- CLI overrides.
+// warehouse:method
+// responsibility: Composes effective packet by layering defaults, file config, and CLI overrides
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function buildPacket({ file, overrides } = {}) {
   let packet = DEFAULT_PACKET;
   if (file) packet = mergePacket(packet, loadPacketFile(file));
@@ -78,6 +99,11 @@ function buildPacket({ file, overrides } = {}) {
   return packet;
 }
 
+// warehouse:method
+// responsibility: Formats packet configuration into human-readable multi-line description
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function describePacket(packet) {
   const w = packet.workload;
   return [

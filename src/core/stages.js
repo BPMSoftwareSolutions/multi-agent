@@ -52,6 +52,11 @@ const STAGES = {
   }
 };
 
+// warehouse:method
+// responsibility: Creates an empty artifact object with proper field types (strings and arrays) for a given stage
+// actor: core_runtime
+// role: artifact_initialization
+// source_truth: implementation
 function createEmptyArtifact(stageId) {
   const stage = STAGES[stageId];
   if (!stage) {

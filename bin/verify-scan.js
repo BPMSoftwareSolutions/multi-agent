@@ -22,7 +22,11 @@ const config = JSON.parse(fs.readFileSync(path.join(root, ".worker-bee.json"), "
 const DEFAULT_REPO_ROOT = process.env.WORKER_BEE_REPO_ROOT || config.repoRoot || "C:/source/repos/bpm/internal/ai-engine";
 const DEFAULT_TARGET = path.resolve(DEFAULT_REPO_ROOT, config.defaultTarget || "packages");
 
-// Walk directory and find all Python files
+// warehouse:method
+// responsibility: Recursively traverses directory tree and collects all files with specified extension
+// actor: file_scanner
+// role: traverser
+// source_truth: implementation
 function walk(dir, ext = ".py") {
   const files = [];
   try {
@@ -41,7 +45,11 @@ function walk(dir, ext = ".py") {
   return files;
 }
 
-// Read taxonomy header from file
+// warehouse:method
+// responsibility: Parses Python file header for taxonomy fields using comment marker prefix
+// actor: header_parser
+// role: extractor
+// source_truth: implementation
 function readTaxonomyHeader(filePath) {
   try {
     const content = fs.readFileSync(filePath, "utf8");
@@ -62,7 +70,11 @@ function readTaxonomyHeader(filePath) {
   }
 }
 
-// Check if taxonomy is COMPLETE (all required fields present)
+// warehouse:method
+// responsibility: Validates that taxonomy header contains all required fields with values
+// actor: header_validator
+// role: validator
+// source_truth: implementation
 function isComplete(header) {
   const required = ["responsibility", "actor", "role", "source_truth"];
   return required.every((field) => field in header && header[field]);

@@ -20,12 +20,20 @@ const {
 } = require("./scan");
 const { findDefs, methodAnchorAbove, assessMethodAnchor } = require("./methods");
 
+// warehouse:method
+// responsibility: Increments counter in map for given key
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function increment(map, key) {
   map[key] = (map[key] || 0) + 1;
 }
 
-// Build the report for a target subtree. Each file entry records its current file
-// anchor state (missing | low_quality | trustworthy) plus method coverage.
+// warehouse:method
+// responsibility: Generates taxonomy report from file and method anchors with coverage metrics and quality assessment
+// actor: worker_bee_infrastructure
+// role: telemetry_evidence
+// source_truth: implementation
 function buildReport(root, repoRoot) {
   const paths = listPythonFiles(root);
   const files = [];

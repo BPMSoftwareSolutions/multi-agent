@@ -8,6 +8,11 @@ const { getSession, getCurrentSessionId } = require("../../core/session-store");
 const { summarizeOperations } = require("../../shared/actions");
 const { exit } = require("../print");
 
+// warehouse:method
+// responsibility: Retrieves current session, summarizes operations, and outputs complete status JSON with stage and action counts
+// actor: cli
+// role: status_command
+// source_truth: implementation
 async function status(sessionId = null, options = {}) {
   try {
     const id = sessionId || getCurrentSessionId();

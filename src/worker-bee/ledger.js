@@ -17,15 +17,29 @@
 const fs = require("fs");
 const path = require("path");
 
+// warehouse:method
+// responsibility: Generates a unique run ID from current timestamp with URL-safe formatting
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function newRunId() {
   return new Date().toISOString().replace(/[:.]/g, "-");
 }
 
+// warehouse:method
+// responsibility: Constructs the runs directory path under the reports root
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function runsDir(reportsDir) {
   return path.join(reportsDir, "runs");
 }
 
-// Start a run: create its dir, write the manifest, and point latest-run at it.
+// warehouse:method
+// responsibility: Initializes a new run by creating directory, writing manifest, and updating latest-run pointer
+// actor: worker_bee_infrastructure
+// role: data_access
+// source_truth: implementation
 function initRun(reportsDir, { runId, target, layer, mode, packet, totalPython, needsWork }) {
   const dir = path.join(runsDir(reportsDir), runId);
   fs.mkdirSync(dir, { recursive: true });
@@ -53,14 +67,22 @@ function initRun(reportsDir, { runId, target, layer, mode, packet, totalPython, 
   return dir;
 }
 
-// One bee writes its own packet result file. Unique name => no shared write.
+// warehouse:method
+// responsibility: Writes a packet result file with unique name to prevent write contention
+// actor: worker_bee_infrastructure
+// role: data_access
+// source_truth: implementation
 function writePart(runDir, { pass, packetIndex, oversize, results }) {
   const name = `packet-p${pass || 1}-${String(packetIndex).padStart(4, "0")}.json`;
   const part = { pass: pass || 1, packet_index: packetIndex, oversize: !!oversize, ts: new Date().toISOString(), results };
   fs.writeFileSync(path.join(runDir, name), JSON.stringify(part), "utf8");
 }
 
-// Combine manifest + all part files into the live status object (read-only).
+// warehouse:method
+// responsibility: Merges manifest and all part files into a read-only live status view with aggregated metrics
+// actor: worker_bee_infrastructure
+// role: data_access
+// source_truth: implementation
 function combineRun(runDir) {
   const manifestPath = path.join(runDir, "manifest.json");
   if (!fs.existsSync(manifestPath)) return null;
@@ -117,7 +139,11 @@ function combineRun(runDir) {
   };
 }
 
-// Finalize: mark the manifest done, combine, and write the single status-latest.json.
+// warehouse:method
+// responsibility: Finalizes run by marking manifest done, combining status, and writing completion snapshot
+// actor: worker_bee_infrastructure
+// role: data_access
+// source_truth: implementation
 function finalizeRun(reportsDir, runDir, { completionStatus } = {}) {
   const manifestPath = path.join(runDir, "manifest.json");
   const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
@@ -134,7 +160,11 @@ function finalizeRun(reportsDir, runDir, { completionStatus } = {}) {
   return status;
 }
 
-// Read the latest run's live status by combining its parts (used by --status).
+// warehouse:method
+// responsibility: Reads latest run's live status by following pointer and combining parts
+// actor: worker_bee_infrastructure
+// role: data_access
+// source_truth: implementation
 function readLatestStatus(reportsDir) {
   const pointerPath = path.join(reportsDir, "latest-run.json");
   if (!fs.existsSync(pointerPath)) return null;

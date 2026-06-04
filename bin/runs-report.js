@@ -25,6 +25,11 @@ if (fs.existsSync(configPath)) {
   config = JSON.parse(fs.readFileSync(configPath, "utf8"));
 }
 
+// warehouse:method
+// responsibility: Parses command-line arguments for run filtering, output format, and file destination
+// actor: argument_parser
+// role: config_builder
+// source_truth: implementation
 function parseArgs(argv) {
   const args = { summary: true, runId: null, json: false, output: null };
   for (let i = 0; i < argv.length; i += 1) {
@@ -39,6 +44,11 @@ function parseArgs(argv) {
   return args;
 }
 
+// warehouse:method
+// responsibility: Loads all historical worker-bee runs from JSONL file and parses each line into run objects
+// actor: run_loader
+// role: data_reader
+// source_truth: implementation
 function readRuns() {
   const runsPath = path.join(reportsDir, "runs.jsonl");
   if (!fs.existsSync(runsPath)) return [];
@@ -52,6 +62,11 @@ function readRuns() {
   }).filter(Boolean);
 }
 
+// warehouse:method
+// responsibility: Loads all packet results for a specific run from the runs directory structure
+// actor: packet_loader
+// role: data_reader
+// source_truth: implementation
 function readRunDetails(runId) {
   const runDir = path.join(reportsDir, "runs", runId);
   if (!fs.existsSync(runDir)) return null;
@@ -69,6 +84,11 @@ function readRunDetails(runId) {
   return packets;
 }
 
+// warehouse:method
+// responsibility: Extracts and calculates key metrics from a run record including coverage percentage
+// actor: metrics_calculator
+// role: summarizer
+// source_truth: implementation
 function summarizeRun(run) {
   const touched = (run.tally?.anchored || 0) + (run.tally?.updated || 0) + (run.tally?.methods_only || 0) + (run.tally?.planned || 0);
   const total = run.totalPython || 0;
@@ -93,6 +113,11 @@ function summarizeRun(run) {
   };
 }
 
+// warehouse:method
+// responsibility: Generates markdown-formatted report with all-time aggregates, recent runs table, and per-target summary
+// actor: report_builder
+// role: formatter
+// source_truth: implementation
 function renderMarkdown(runs) {
   const lines = [];
   lines.push("# Worker-Bee Runs Report");
@@ -191,6 +216,11 @@ function renderMarkdown(runs) {
   return lines.join("\n");
 }
 
+// warehouse:method
+// responsibility: Outputs console-formatted run history with JSON option, aggregating last 10 runs
+// actor: output_formatter
+// role: display_engine
+// source_truth: implementation
 function renderSummary(runs, json) {
   if (json) {
     console.log(JSON.stringify({
@@ -249,6 +279,11 @@ function renderSummary(runs, json) {
   console.log(`  total elapsed:         ${totalElapsed}s`);
 }
 
+// warehouse:method
+// responsibility: Displays detailed output for a single run including packet breakdown and success metrics
+// actor: run_reporter
+// role: display_engine
+// source_truth: implementation
 function renderRun(runId, packets, json) {
   if (!packets) {
     console.error(`Run not found: ${runId}`);
@@ -289,6 +324,11 @@ function renderRun(runId, packets, json) {
   }
 }
 
+// warehouse:method
+// responsibility: Routes command flow between summary/detailed run reporting and handles output options
+// actor: command_dispatcher
+// role: orchestrator
+// source_truth: implementation
 function main() {
   const args = parseArgs(process.argv.slice(2));
 

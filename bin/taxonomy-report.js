@@ -31,6 +31,11 @@ const DEFAULT_REPO_ROOT =
 const DEFAULT_TARGET =
   config.defaultTarget ? path.resolve(DEFAULT_REPO_ROOT, config.defaultTarget) : DEFAULT_REPO_ROOT;
 
+// warehouse:method
+// responsibility: Parses command-line arguments for taxonomy report generation target and output options
+// actor: argument_parser
+// role: config_builder
+// source_truth: implementation
 function parseArgs(argv) {
   const args = { repoRoot: DEFAULT_REPO_ROOT, target: DEFAULT_TARGET, output: null, json: false };
   for (let i = 0; i < argv.length; i += 1) {
@@ -46,10 +51,20 @@ function parseArgs(argv) {
   return args;
 }
 
+// warehouse:method
+// responsibility: Extracts top N entries from object by value in descending order
+// actor: sorter
+// role: utility
+// source_truth: implementation
 function topN(obj, n) {
   return Object.entries(obj).sort((a, b) => b[1] - a[1]).slice(0, n);
 }
 
+// warehouse:method
+// responsibility: Orchestrates taxonomy report generation, validating target existence and writing to file or console
+// actor: report_generator
+// role: orchestrator
+// source_truth: implementation
 function main() {
   const args = parseArgs(process.argv.slice(2));
   const repoRoot = path.resolve(args.repoRoot);

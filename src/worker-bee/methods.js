@@ -21,7 +21,11 @@ const DEF_RE = /^(\s*)(?:async\s+)?def\s+([A-Za-z_]\w*)/;
 const METHOD_MARKER_RE = /^\s*#\s+warehouse:(method|function)\s*$/;
 const REQUIRED_METHOD_FIELDS = ["responsibility", "input_contract", "output_contract", "forbidden", "validation"];
 
-// Find every function/method definition. Returns [{ id, name, indent, lineIdx }].
+// warehouse:method
+// responsibility: Locates all function/method definitions in source lines and assigns sequential IDs
+// actor: worker_bee_infrastructure
+// role: projection_compiler
+// source_truth: implementation
 function findDefs(lines) {
   const defs = [];
   let id = 0;
@@ -34,9 +38,11 @@ function findDefs(lines) {
   return defs;
 }
 
-// Find an existing warehouse:method anchor in the comment/decorator region above
-// a def. Returns { start, end, fields, hasMarker } (inclusive line span of the
-// contiguous comment block holding the marker) or null.
+// warehouse:method
+// responsibility: Finds existing warehouse:method anchor comment block above a function definition
+// actor: worker_bee_infrastructure
+// role: projection_compiler
+// source_truth: implementation
 function methodAnchorAbove(lines, defIdx) {
   let markerLine = -1;
   for (let j = defIdx - 1; j >= 0; j -= 1) {
@@ -67,7 +73,11 @@ function methodAnchorAbove(lines, defIdx) {
   return { start, end, fields, hasMarker: true };
 }
 
-// Issue codes for an existing method anchor. Empty = trustworthy.
+// warehouse:method
+// responsibility: Validates method anchor fields for completeness and quality
+// actor: worker_bee_infrastructure
+// role: projection_compiler
+// source_truth: implementation
 function assessMethodAnchor(fields) {
   const issues = [];
   for (const key of REQUIRED_METHOD_FIELDS) {
@@ -77,7 +87,11 @@ function assessMethodAnchor(fields) {
   return issues;
 }
 
-// Build an indented method-anchor comment block.
+// warehouse:method
+// responsibility: Constructs properly indented method-anchor comment block from field values
+// actor: worker_bee_infrastructure
+// role: projection_compiler
+// source_truth: implementation
 function buildMethodAnchorBlock(indent, fields) {
   const out = [`${indent}# warehouse:method`];
   for (const key of METHOD_ANCHOR_FIELD_ORDER) {
@@ -88,9 +102,11 @@ function buildMethodAnchorBlock(indent, fields) {
   return out.join("\n");
 }
 
-// Apply method anchors to a file. items = [{ def, fields }] where def carries
-// { lineIdx, indent, existing }. Edits are applied bottom-up and preserve the
-// line endings of untouched lines. Returns the number of anchors written.
+// warehouse:method
+// responsibility: Applies or replaces method anchors in file with bottom-up edits preserving line endings
+// actor: worker_bee_infrastructure
+// role: projection_compiler
+// source_truth: implementation
 function applyMethodAnchors(absPath, items) {
   const valid = items.filter((it) => it.fields);
   if (valid.length === 0) return 0;

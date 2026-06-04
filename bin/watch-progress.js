@@ -30,7 +30,12 @@ let totalCompleted = 0;
 const stream = fs.createReadStream(logFile, { encoding: "utf8" });
 const rl = readline.createInterface({ input: stream, crlfDelay: Infinity });
 
-rl.on("line", (line) => {
+// warehouse:method
+// responsibility: Processes log lines to extract and display completion events, errors, and fallback triggers
+// actor: event_processor
+// role: stream_handler
+// source_truth: implementation
+const lineHandler = (line) => {
   // Match packet completion: [bee N] packet X/40 (NN files): NN ok, N error
   const packetMatch = line.match(/\[bee \d+\] packet \d+\/\d+ \((\d+) files\): (\d+) ok, (\d+) error/);
   if (packetMatch) {
@@ -57,9 +62,14 @@ rl.on("line", (line) => {
     const now = new Date();
     console.log(`↔️  [${now.toLocaleTimeString()}] Fallback triggered: Flash → Pro`);
   }
-});
+};
 
-rl.on("close", () => {
+// warehouse:method
+// responsibility: Outputs final summary with completion tally and progress status assessment
+// actor: summary_printer
+// role: display_engine
+// source_truth: implementation
+const summaryHandler = () => {
   // Final summary
   console.log("\n═════════════════════════════════════════════════════════════════════════");
   console.log("Summary:");
@@ -78,7 +88,11 @@ rl.on("close", () => {
   } else {
     console.log("❌ No progress detected");
   }
-});
+};
+
+rl.on("line", lineHandler);
+
+rl.on("close", summaryHandler);
 
 // Handle stream errors
 stream.on("error", (err) => {

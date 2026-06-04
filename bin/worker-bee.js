@@ -39,8 +39,11 @@ const { newRunId, initRun, writePart, finalizeRun, readLatestStatus } = require(
 const DEFAULT_REPO_ROOT =
   process.env.WORKER_BEE_REPO_ROOT || config.repoRoot || "C:/source/repos/bpm/internal/ai-engine";
 
-// Parse argv into runtime settings + a sparse packet-override object. Only flags
-// the user actually passes become overrides; everything else stays at packet/default.
+// warehouse:method
+// responsibility: Parses command-line arguments into runtime configuration and packet-level overrides
+// actor: argument_parser
+// role: config_builder
+// source_truth: implementation
 function parseArgs(argv) {
   const defaultTarget = config.defaultTarget ? path.resolve(DEFAULT_REPO_ROOT, config.defaultTarget) : null;
   const rt = { repoRoot: DEFAULT_REPO_ROOT, target: defaultTarget, limit: 0, dryRun: false, json: false, packetFile: null, help: false };
@@ -104,6 +107,11 @@ Packet overrides:
   --max-output-tokens <n>           Model output cap per request
 `;
 
+// warehouse:method
+// responsibility: Renders worker-bee status from ledger as human-readable or JSON output
+// actor: status_renderer
+// role: display_engine
+// source_truth: implementation
 function renderStatus(status, json) {
   if (!status) {
     console.log("No status ledger yet (reports/status-latest.json not found). Start a run first.");
@@ -126,6 +134,11 @@ function renderStatus(status, json) {
   }
 }
 
+// warehouse:method
+// responsibility: Orchestrates worker-bee swarm execution including scanning, packet distribution, progress tracking, and result reporting
+// actor: bee_orchestrator
+// role: orchestrator
+// source_truth: implementation
 async function main() {
   const { rt, ov } = parseArgs(process.argv.slice(2));
   if (rt.help) {

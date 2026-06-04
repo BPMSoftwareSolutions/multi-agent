@@ -8,6 +8,11 @@ const { createSession } = require("../../core/session-store");
 const { normalizeIntent } = require("../../core/run-round");
 const { renderSession, exit } = require("../print");
 
+// warehouse:method
+// responsibility: Validates brief argument, creates session, normalizes intent from brief, saves session, displays initialization feedback
+// actor: cli
+// role: start_command
+// source_truth: implementation
 async function start(brief, apiKey, options = {}) {
   if (!brief || typeof brief !== "string") {
     exit(1, "Error: brief is required and must be a string");

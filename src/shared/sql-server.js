@@ -11,6 +11,11 @@ const path = require("path");
 
 let schemaReady = false;
 
+// warehouse:method
+// responsibility: Reads SQL Server configuration from environment variables, returns connection config with defaults
+// actor: shared
+// role: config_provider
+// source_truth: implementation
 function getSqlConfig() {
   return {
     server: process.env.SQL_SERVER_INSTANCE || process.env.SQL_SERVER || "BPMHOMEOFFICE",
@@ -21,6 +26,11 @@ function getSqlConfig() {
   };
 }
 
+// warehouse:method
+// responsibility: Escapes and wraps value as SQL string literal with Unicode prefix and null handling
+// actor: shared
+// role: sql_literal_escaper
+// source_truth: implementation
 function sqlStringLiteral(value) {
   if (value === null || value === undefined) {
     return "NULL";
@@ -30,6 +40,11 @@ function sqlStringLiteral(value) {
   return `N'${normalized}'`;
 }
 
+// warehouse:method
+// responsibility: Builds sqlcmd command-line arguments array with server, database, auth, and output formatting options
+// actor: shared
+// role: sqlcmd_args_builder
+// source_truth: implementation
 function buildSqlcmdArgs(databaseOverride, inputFile) {
   const config = getSqlConfig();
   const args = ["-S", config.server, "-d", databaseOverride || config.database];
@@ -44,6 +59,11 @@ function buildSqlcmdArgs(databaseOverride, inputFile) {
   return args;
 }
 
+// warehouse:method
+// responsibility: Writes SQL query to temp file, executes via sqlcmd, cleans up temp file, returns raw output
+// actor: shared
+// role: sql_executor
+// source_truth: implementation
 function runSql(query, databaseOverride) {
   const tempFile = path.join(
     os.tmpdir(),
@@ -68,6 +88,11 @@ function runSql(query, databaseOverride) {
   }
 }
 
+// warehouse:method
+// responsibility: Executes SQL query and parses JSON output, finds first JSON object or array, handles empty results
+// actor: shared
+// role: sql_json_parser
+// source_truth: implementation
 function runSqlJson(query, databaseOverride) {
   const output = runSql(query, databaseOverride).trim();
   if (!output) {
@@ -90,6 +115,11 @@ function runSqlJson(query, databaseOverride) {
   return JSON.parse(output);
 }
 
+// warehouse:method
+// responsibility: Ensures schema exists and creates required tables (sessions, app_state, oauth_tokens) if missing
+// actor: shared
+// role: schema_initializer
+// source_truth: implementation
 function ensureSchema() {
   if (schemaReady) {
     return;
@@ -140,6 +170,11 @@ END;
   schemaReady = true;
 }
 
+// warehouse:method
+// responsibility: Persists session to database using MERGE statement, handles insert or update based on session id
+// actor: shared
+// role: session_persister
+// source_truth: implementation
 function saveSessionRow(session) {
   ensureSchema();
   const { schema } = getSqlConfig();
@@ -176,6 +211,11 @@ WHEN NOT MATCHED THEN INSERT (
 `);
 }
 
+// warehouse:method
+// responsibility: Retrieves single session from database by id, converts columns to JSON, returns JSON object or null
+// actor: shared
+// role: session_retriever
+// source_truth: implementation
 function getSessionRow(sessionId) {
   ensureSchema();
   const { schema } = getSqlConfig();
@@ -197,6 +237,11 @@ FOR JSON PATH, WITHOUT_ARRAY_WRAPPER;
 `);
 }
 
+// warehouse:method
+// responsibility: Retrieves all sessions from database ordered by creation date, returns JSON array with id and timestamp
+// actor: shared
+// role: session_lister
+// source_truth: implementation
 function listSessionRows() {
   ensureSchema();
   const { schema } = getSqlConfig();
@@ -213,6 +258,11 @@ FOR JSON PATH;
   );
 }
 
+// warehouse:method
+// responsibility: Persists app state value to database using MERGE, creates or updates by key
+// actor: shared
+// role: app_state_persister
+// source_truth: implementation
 function setAppState(stateKey, stateValue) {
   ensureSchema();
   const { schema } = getSqlConfig();
@@ -234,6 +284,11 @@ VALUES (source.state_key, source.state_value, source.updated_at);
 `);
 }
 
+// warehouse:method
+// responsibility: Retrieves app state value from database by key, returns value or null if not found
+// actor: shared
+// role: app_state_retriever
+// source_truth: implementation
 function getAppState(stateKey) {
   ensureSchema();
   const { schema } = getSqlConfig();
@@ -247,6 +302,11 @@ FOR JSON PATH, WITHOUT_ARRAY_WRAPPER;
   return row ? row.state_value : null;
 }
 
+// warehouse:method
+// responsibility: Persists OAuth token JSON to database by provider using MERGE, creates or updates token
+// actor: shared
+// role: oauth_token_persister
+// source_truth: implementation
 function setOAuthToken(provider, tokenJson) {
   ensureSchema();
   const { schema } = getSqlConfig();
@@ -268,6 +328,11 @@ VALUES (source.provider, source.token_json, source.updated_at);
 `);
 }
 
+// warehouse:method
+// responsibility: Retrieves OAuth token JSON from database by provider, returns token string or null if not found
+// actor: shared
+// role: oauth_token_retriever
+// source_truth: implementation
 function getOAuthToken(provider) {
   ensureSchema();
   const { schema } = getSqlConfig();

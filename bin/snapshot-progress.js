@@ -13,6 +13,11 @@ const path = require("path");
 const logFile = path.resolve(__dirname, "..", ".worker-bee.log");
 const reportFile = path.resolve(__dirname, "..", "reports", "CURRENT-RUN.md");
 
+// warehouse:method
+// responsibility: Parses worker-bee log file and extracts packet completion counts and error tallies
+// actor: log_parser
+// role: data_extractor
+// source_truth: implementation
 function readProgress() {
   if (!fs.existsSync(logFile)) return { totalCompleted: 0, completions: [], totalErrors: 0 };
 
@@ -44,6 +49,11 @@ function readProgress() {
   return { totalCompleted, completions, totalErrors };
 }
 
+// warehouse:method
+// responsibility: Extracts run metadata from log file including total scope, agent count, and start time
+// actor: metadata_extractor
+// role: data_loader
+// source_truth: implementation
 function getRunMetadata() {
   // Extract true baseline from worker-bee log output, not from old status files
   const logFile = path.resolve(__dirname, "..", ".worker-bee.log");
@@ -101,6 +111,11 @@ function getRunMetadata() {
   return { startedAt, totalNeeded, agents };
 }
 
+// warehouse:method
+// responsibility: Validates progress data consistency and sanity checks for reasonable values
+// actor: data_validator
+// role: validator
+// source_truth: implementation
 function validateData(totalCompleted, metadata) {
   const errors = [];
 
@@ -123,6 +138,11 @@ function validateData(totalCompleted, metadata) {
   return errors;
 }
 
+// warehouse:method
+// responsibility: Generates markdown snapshot with validated progress metrics, velocity calculations, and ETA forecast
+// actor: report_formatter
+// role: formatter
+// source_truth: implementation
 function formatMarkdownReport(totalCompleted, completions, metadata, totalErrors = 0) {
   // Validate data
   const validationErrors = validateData(totalCompleted, metadata);
@@ -244,6 +264,11 @@ Each snapshot shows a measurement point with completion delta and velocity.
   return md;
 }
 
+// warehouse:method
+// responsibility: Orchestrates progress report generation by reading log, validating data, and writing markdown snapshot
+// actor: report_writer
+// role: orchestrator
+// source_truth: implementation
 function main() {
   try {
     const { totalCompleted, completions, totalErrors } = readProgress();

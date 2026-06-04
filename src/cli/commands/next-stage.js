@@ -8,6 +8,11 @@ const { getSession, getCurrentSessionId, saveSession } = require("../../core/ses
 const { advanceStage } = require("../../core/run-round");
 const { exit } = require("../print");
 
+// warehouse:method
+// responsibility: Validates current stage is accepted, advances to next stage, saves session, and displays progress feedback
+// actor: cli
+// role: next_stage_command
+// source_truth: implementation
 async function nextStage(sessionId = null, options = {}) {
   try {
     const id = sessionId || getCurrentSessionId();

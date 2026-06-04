@@ -17,12 +17,22 @@ const { callGeminiJSON } = require("./gemini-client");
 
 const CHARS_PER_FILE = 6000; // truncate big files so packets stay within budget
 
+// warehouse:method
+// responsibility: Partitions array into fixed-size chunks
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function chunk(items, size) {
   const out = [];
   for (let i = 0; i < items.length; i += size) out.push(items.slice(i, i + size));
   return out;
 }
 
+// warehouse:method
+// responsibility: Reads file and truncates to CHARS_PER_FILE budget with ellipsis marker
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function readTruncated(absPath) {
   let text;
   try {
@@ -34,6 +44,11 @@ function readTruncated(absPath) {
   return text.slice(0, CHARS_PER_FILE) + "\n# ...[truncated for classification]...";
 }
 
+// warehouse:method
+// responsibility: Constructs multi-file prompt for file-level anchor classification
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function buildUserPrompt(packet) {
   const blocks = packet.map((f) => {
     return `=== FILE: ${f.path} ===\n${readTruncated(f.absPath)}`;
@@ -45,8 +60,11 @@ function buildUserPrompt(packet) {
   );
 }
 
-// Process a single packet: classify with Gemini, write anchors. Returns per-file
-// outcomes so the caller can tally results.
+// warehouse:method
+// responsibility: Processes packet via Gemini classification and writes file anchors
+// actor: worker_bee_infrastructure
+// role: orchestration
+// source_truth: implementation
 async function processPacket(packet, { apiKey, model, dryRun }) {
   const byPath = new Map(packet.map((f) => [f.path, f]));
   const results = [];
@@ -105,8 +123,11 @@ async function processPacket(packet, { apiKey, model, dryRun }) {
   return results;
 }
 
-// Run the swarm. Options: agents (concurrency), filesPerPacket, apiKey, model,
-// dryRun, onProgress(callback per finished packet).
+// warehouse:method
+// responsibility: Orchestrates concurrent agents processing file-anchor packets from shared queue
+// actor: worker_bee_infrastructure
+// role: orchestration
+// source_truth: implementation
 async function runSwarm(missing, options = {}) {
   const {
     agents = 6,

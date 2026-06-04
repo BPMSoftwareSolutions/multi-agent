@@ -18,12 +18,22 @@ const { callGeminiJSON } = require("./gemini-client");
 // No workload limits are defined here. Every number comes from the packet
 // (packet.workload), so an external instruction determines how much a bee carries.
 
+// warehouse:method
+// responsibility: Partitions array into fixed-size chunks
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function chunk(items, size) {
   const out = [];
   for (let i = 0; i < items.length; i += size) out.push(items.slice(i, i + size));
   return out;
 }
 
+// warehouse:method
+// responsibility: Reads file and truncates to budget with ellipsis marker
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function readForPrompt(absPath, fileCharBudget) {
   let text;
   try {
@@ -34,10 +44,20 @@ function readForPrompt(absPath, fileCharBudget) {
   return text.length <= fileCharBudget ? text : text.slice(0, fileCharBudget) + "\n# ...[truncated]...";
 }
 
+// warehouse:method
+// responsibility: Calculates anchor cost for work item (file + method count)
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function anchorCost(item) {
   return (item.doFile ? 1 : 0) + (item.doMethods ? item.methodsNeeding.length : 0);
 }
 
+// warehouse:method
+// responsibility: Gets file size in bytes for packing calculation
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function fileChars(item) {
   try {
     return fs.statSync(item.absPath).size;
@@ -46,9 +66,11 @@ function fileChars(item) {
   }
 }
 
-// Greedily pack work items into packets bounded by the packet's workload limits.
-// A file whose own anchor cost exceeds the budget becomes a dedicated "oversize"
-// packet that is method-batched internally.
+// warehouse:method
+// responsibility: Greedily partitions work items into packets within anchor, file, and char budgets
+// actor: worker_bee_infrastructure
+// role: orchestration
+// source_truth: implementation
 function packWork(work, workload) {
   const fileCap = workload.max_files_per_packet;
   const anchorBudget = workload.anchor_budget;
@@ -80,11 +102,21 @@ function packWork(work, workload) {
   return packets;
 }
 
+// warehouse:method
+// responsibility: Formats method list for prompt with IDs, names, and line numbers
+// actor: worker_bee_infrastructure
+// role: orchestration
+// source_truth: implementation
 function methodList(item) {
   if (!item.doMethods || !item.methodsNeeding.length) return "METHODS TO ANCHOR: none — return an empty methods array.";
   return "METHODS TO ANCHOR (ids):\n" + item.methodsNeeding.map((d) => `${d.id}: ${d.name} (line ${d.lineIdx + 1})`).join("\n");
 }
 
+// warehouse:method
+// responsibility: Constructs multi-file packet prompt with file content and method IDs
+// actor: worker_bee_infrastructure
+// role: orchestration
+// source_truth: implementation
 function buildPacketPrompt(packet, workload) {
   const blocks = packet.items.map((item) =>
     [`=== FILE: ${item.path} ===`, readForPrompt(item.absPath, workload.file_char_budget), methodList(item)].join("\n")
@@ -92,7 +124,11 @@ function buildPacketPrompt(packet, workload) {
   return `Classify the following ${packet.items.length} file(s). Return one "files" entry per file, echoing each path exactly.\n\n${blocks.join("\n\n")}`;
 }
 
-// Write anchors for one item given the model's fields. Returns a result record.
+// warehouse:method
+// responsibility: Applies anchors to single file item and returns result status
+// actor: worker_bee_infrastructure
+// role: orchestration
+// source_truth: implementation
 function applyToItem(item, fileFields, methodsById, dryRun) {
   const methodItems = [];
   let omitted = 0;
@@ -120,7 +156,11 @@ function applyToItem(item, fileFields, methodsById, dryRun) {
   return { path: item.path, status, methodsWritten, omitted };
 }
 
-// Oversize single file: classify via repeated method-batched calls (COMBINED prompt).
+// warehouse:method
+// responsibility: Processes oversize file via repeated method-batched Gemini calls
+// actor: worker_bee_infrastructure
+// role: orchestration
+// source_truth: implementation
 async function processOversizeFile(item, { apiKey, model, dryRun, workload }) {
   const fileText = readForPrompt(item.absPath, workload.file_char_budget);
   const batches = item.doMethods && item.methodsNeeding.length ? chunk(item.methodsNeeding, workload.method_batch) : [[]];
@@ -149,10 +189,11 @@ async function processOversizeFile(item, { apiKey, model, dryRun, workload }) {
   return [applyToItem(item, fileFields, byId, dryRun)];
 }
 
-// Process one packet (one bee request, unless oversize). If a multi-file request
-// fails (e.g. the JSON output was too large and truncated), the packet splits in
-// half and each half is retried — so an over-heavy packet subdivides itself down
-// to a size the model can answer, instead of failing wholesale.
+// warehouse:method
+// responsibility: Processes packet via Gemini call with adaptive splitting on partial/failed responses
+// actor: worker_bee_infrastructure
+// role: orchestration
+// source_truth: implementation
 async function processPacket(packet, opts) {
   if (packet.oversize) return processOversizeFile(packet.items[0], opts);
 
@@ -208,8 +249,11 @@ async function processPacket(packet, opts) {
   return results;
 }
 
-// Run the packet swarm: a small pool of bees pulling packets from a shared queue.
-// The packet (its swarm + workload) determines bee count and per-bee weight.
+// warehouse:method
+// responsibility: Orchestrates concurrent bee agents pulling packets from queue and writing anchors
+// actor: worker_bee_infrastructure
+// role: orchestration
+// source_truth: implementation
 async function runFileSwarm(work, options = {}) {
   const { packet: spec, apiKey, dryRun = false, onProgress } = options;
   const agents = spec.swarm.agents;

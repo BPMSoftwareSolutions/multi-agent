@@ -8,6 +8,11 @@ const https = require("https");
 
 const model = process.env.MODEL || "claude-sonnet-4-6";
 
+// warehouse:method
+// responsibility: Retrieves and validates the Anthropic API key from environment or override parameter
+// actor: core_runtime
+// role: credential_lookup
+// source_truth: implementation
 function getApiKey(overrideApiKey) {
   const apiKey = overrideApiKey || process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY;
   if (!apiKey) {
@@ -16,6 +21,11 @@ function getApiKey(overrideApiKey) {
   return apiKey;
 }
 
+// warehouse:method
+// responsibility: Extracts valid JSON from model output, attempting multiple parsing strategies (direct, code fence, brace extraction)
+// actor: core_runtime
+// role: response_parsing
+// source_truth: implementation
 function extractJSON(text) {
   if (typeof text !== "string") {
     throw new Error("Model output is not text");
@@ -52,6 +62,11 @@ function extractJSON(text) {
   throw new Error("Could not extract JSON from model output");
 }
 
+// warehouse:method
+// responsibility: Performs low-level HTTPS request to Anthropic API and returns parsed JSON response with error handling
+// actor: core_runtime
+// role: api_transport
+// source_truth: implementation
 async function fetchFromAnthropicRaw(endpoint, method, payload, apiKey) {
   const body = JSON.stringify(payload);
 
@@ -98,6 +113,11 @@ async function fetchFromAnthropicRaw(endpoint, method, payload, apiKey) {
   });
 }
 
+// warehouse:method
+// responsibility: Invokes Claude API with system prompt and messages, extracting text from response
+// actor: core_runtime
+// role: model_invocation
+// source_truth: implementation
 async function callClaude({ system, userMessages, maxTokens, apiKey }) {
   const key = getApiKey(apiKey);
 
@@ -122,6 +142,11 @@ async function callClaude({ system, userMessages, maxTokens, apiKey }) {
   return text;
 }
 
+// warehouse:method
+// responsibility: Calls Claude and retries on JSON parse errors up to maxAttempts, appending repair prompts to message chain
+// actor: core_runtime
+// role: retry_orchestration
+// source_truth: implementation
 async function callClaudeWithRetry(params, maxAttempts = 2) {
   const messages = [...(params.userMessages || [])];
   let lastError;

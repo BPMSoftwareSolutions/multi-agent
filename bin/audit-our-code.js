@@ -12,6 +12,11 @@ const path = require("path");
 
 const root = path.resolve(__dirname, "..");
 
+// warehouse:method
+// responsibility: Recursively traverses directory tree and collects all JavaScript file paths
+// actor: file_scanner
+// role: traverser
+// source_truth: implementation
 function walk(dir) {
   const files = [];
   try {
@@ -30,6 +35,11 @@ function walk(dir) {
   return files;
 }
 
+// warehouse:method
+// responsibility: Parses taxonomy header fields from JavaScript file comments into a key-value object
+// actor: header_parser
+// role: extractor
+// source_truth: implementation
 function readHeader(filePath) {
   try {
     const content = fs.readFileSync(filePath, "utf8");
@@ -55,6 +65,11 @@ function readHeader(filePath) {
   }
 }
 
+// warehouse:method
+// responsibility: Validates that a taxonomy header contains all required fields with non-empty values
+// actor: header_validator
+// role: validator
+// source_truth: implementation
 function isComplete(header) {
   const required = ["warehouse", "responsibility", "actor", "role"];
   return required.every((field) => field in header && header[field]);

@@ -16,6 +16,11 @@ const ACTION_TYPES = new Set([
 
 const APPROVAL_STATUSES = new Set(["approved", "needs_human_review", "rejected"]);
 
+// warehouse:method
+// responsibility: Initializes operations state with empty action queues, sync state, and file/folder registries
+// actor: shared
+// role: state_initializer
+// source_truth: implementation
 function buildOperationsState() {
   return {
     approvedActions: [],
@@ -34,6 +39,11 @@ function buildOperationsState() {
   };
 }
 
+// warehouse:method
+// responsibility: Ensures session has valid operations state, merges with defaults, and validates array/object types
+// actor: shared
+// role: state_validator
+// source_truth: implementation
 function ensureOperationsState(session) {
   if (!session.operations || typeof session.operations !== "object") {
     session.operations = buildOperationsState();
@@ -66,16 +76,31 @@ function ensureOperationsState(session) {
   return session.operations;
 }
 
+// warehouse:method
+// responsibility: Normalizes value to trimmed string or null, used for safe value coercion
+// actor: shared
+// role: string_normalizer
+// source_truth: implementation
 function toTrimmedString(value) {
   return typeof value === "string" && value.trim() ? value.trim() : null;
 }
 
+// warehouse:method
+// responsibility: Normalizes value to array of trimmed strings, filters empty items, used for tags and similar lists
+// actor: shared
+// role: array_normalizer
+// source_truth: implementation
 function toStringArray(value) {
   return Array.isArray(value)
     ? value.map((item) => String(item || "").trim()).filter(Boolean)
     : [];
 }
 
+// warehouse:method
+// responsibility: Validates and normalizes approval status to approved, needs_human_review, or rejected; defaults to approved
+// actor: shared
+// role: approval_status_normalizer
+// source_truth: implementation
 function normalizeApprovalStatus(value) {
   const normalized = toTrimmedString(value);
   if (normalized && APPROVAL_STATUSES.has(normalized)) {
@@ -84,6 +109,11 @@ function normalizeApprovalStatus(value) {
   return "approved";
 }
 
+// warehouse:method
+// responsibility: Validates and normalizes risk level to low, medium, or high; defaults to medium
+// actor: shared
+// role: risk_level_normalizer
+// source_truth: implementation
 function normalizeRiskLevel(value) {
   const normalized = toTrimmedString(value);
   if (["low", "medium", "high"].includes(normalized)) {
@@ -92,6 +122,11 @@ function normalizeRiskLevel(value) {
   return "medium";
 }
 
+// warehouse:method
+// responsibility: Normalizes action recommendation input, validates fields, assigns defaults for ids, creates idempotency key based on action identity
+// actor: shared
+// role: recommendation_normalizer
+// source_truth: implementation
 function normalizeActionRecommendation(input, context = {}) {
   if (!input || typeof input !== "object") {
     return null;
@@ -143,6 +178,11 @@ function normalizeActionRecommendation(input, context = {}) {
   };
 }
 
+// warehouse:method
+// responsibility: Registers folder in operations state with metadata and current timestamp
+// actor: shared
+// role: folder_registrar
+// source_truth: implementation
 function registerFolder(operations, folderId) {
   if (!folderId) {
     return;
@@ -156,6 +196,11 @@ function registerFolder(operations, folderId) {
   };
 }
 
+// warehouse:method
+// responsibility: Registers file in operations state from recommendation, merges with existing metadata, registers parent folders
+// actor: shared
+// role: file_registrar
+// source_truth: implementation
 function registerFileFromRecommendation(operations, recommendation) {
   const existing = operations.files[recommendation.fileId] || null;
   const permissions = {
@@ -185,6 +230,11 @@ function registerFileFromRecommendation(operations, recommendation) {
   registerFolder(operations, recommendation.targetParentId);
 }
 
+// warehouse:method
+// responsibility: Creates human review queue item from recommendation, checks for duplicates, adds to queue with generated review id
+// actor: shared
+// role: human_review_queuer
+// source_truth: implementation
 function queueHumanReviewItem(operations, recommendation, context = {}) {
   const existing = operations.humanReviewQueue.find(
     (item) => item.recommendationId === recommendation.recommendationId
@@ -212,6 +262,11 @@ function queueHumanReviewItem(operations, recommendation, context = {}) {
   return queueItem;
 }
 
+// warehouse:method
+// responsibility: Processes array of recommendations, normalizes each, registers files/folders, queues approved actions or human reviews, returns summary
+// actor: shared
+// role: action_queuer
+// source_truth: implementation
 function queueActionRecommendations(session, recommendations, context = {}) {
   const operations = ensureOperationsState(session);
   const summary = {
@@ -298,10 +353,20 @@ function queueActionRecommendations(session, recommendations, context = {}) {
   return summary;
 }
 
+// warehouse:method
+// responsibility: Wraps single recommendation as array and queues it, enabling manual approval workflow from CLI
+// actor: shared
+// role: manual_action_approver
+// source_truth: implementation
 function approveManualAction(session, recommendationInput, context = {}) {
   return queueActionRecommendations(session, [recommendationInput], context);
 }
 
+// warehouse:method
+// responsibility: Marks action as failed or blocked, records error details in attempt object, pushes to action attempts log
+// actor: shared
+// role: attempt_failure_handler
+// source_truth: implementation
 function failAttempt({ operations, action, attempt, code, message, status = "failed" }) {
   const finishedAt = new Date().toISOString();
   action.status = status;
@@ -326,6 +391,11 @@ function failAttempt({ operations, action, attempt, code, message, status = "fai
   };
 }
 
+// warehouse:method
+// responsibility: Executes pending action, validates file and state, applies action mutations, records attempt, manages external service callbacks
+// actor: shared
+// role: worker_executor
+// source_truth: implementation
 async function runWorker(session, options = {}) {
   const operations = ensureOperationsState(session);
   const now = new Date().toISOString();
@@ -565,6 +635,11 @@ async function runWorker(session, options = {}) {
   };
 }
 
+// warehouse:method
+// responsibility: Aggregates operation counts by status (pending, running, done, failed, blocked), returns summary with human review and attempt counts
+// actor: shared
+// role: operations_summarizer
+// source_truth: implementation
 function summarizeOperations(session) {
   const operations = ensureOperationsState(session);
   const actions = operations.approvedActions;

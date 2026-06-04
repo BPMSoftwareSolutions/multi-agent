@@ -20,6 +20,11 @@ const { runWorkerCommand } = require("../src/cli/commands/run-worker");
 const { approveActionCommand } = require("../src/cli/commands/approve-action");
 const { exit } = require("../src/cli/print");
 
+// warehouse:method
+// responsibility: Routes CLI command dispatch to appropriate handler based on command argument
+// actor: command_router
+// role: orchestrator
+// source_truth: implementation
 async function main() {
   const args = process.argv.slice(2);
   const command = args[0];
@@ -38,7 +43,7 @@ Commands:
   status                 Show machine-friendly status
   approve-action         Queue a manual approved action from JSON payload
   run-worker [actionId]  Execute the next approved action or a specific action
-  
+
 Options:
   --json                 Output as JSON
   --note TEXT            Human interjection note (for round command)
@@ -122,6 +127,11 @@ Examples:
   }
 }
 
+// warehouse:method
+// responsibility: Parses command-line arguments into options object with positional and named parameters
+// actor: argument_parser
+// role: config_builder
+// source_truth: implementation
 function parseOptions(args) {
   const options = {
     positional: [],

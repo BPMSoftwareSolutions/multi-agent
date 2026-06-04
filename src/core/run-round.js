@@ -13,6 +13,11 @@ const { callClaudeWithRetry } = require("./llm-client");
 const { STAGES } = require("./stages");
 const { queueActionRecommendations } = require("../shared/actions");
 
+// warehouse:method
+// responsibility: Normalizes reviewer agent output by ensuring required fields exist and filters valid action recommendation objects
+// actor: orchestration
+// role: output_normalization
+// source_truth: implementation
 function normalizeReviewerOutput(output, fallbackArtifact) {
   return {
     intent_issues: Array.isArray(output.intent_issues) ? output.intent_issues : [],
@@ -26,6 +31,11 @@ function normalizeReviewerOutput(output, fallbackArtifact) {
   };
 }
 
+// warehouse:method
+// responsibility: Extracts structured intent (task, criteria, constraints, questions) from user brief via LLM, with fallback to empty structure
+// actor: orchestration
+// role: intent_extraction
+// source_truth: implementation
 async function normalizeIntent(brief, apiKey) {
   const intentPrompt = buildIntentPrompt({ brief });
   try {
@@ -47,6 +57,11 @@ async function normalizeIntent(brief, apiKey) {
   }
 }
 
+// warehouse:method
+// responsibility: Executes a single round of planning and review phases, orchestrating planner and reviewer agents and storing results
+// actor: orchestration
+// role: round_execution
+// source_truth: implementation
 async function runRound({
   session,
   apiKey,
@@ -129,6 +144,11 @@ async function runRound({
   return { roundNumber, round, stageState };
 }
 
+// warehouse:method
+// responsibility: Accepts proposed artifact as current state and queues action recommendations for processing
+// actor: orchestration
+// role: artifact_acceptance
+// source_truth: implementation
 async function acceptArtifact(session) {
   const stageId = session.currentStage;
   const stageState = session.stages[stageId];
@@ -158,6 +178,11 @@ async function acceptArtifact(session) {
   };
 }
 
+// warehouse:method
+// responsibility: Advances session to next stage in sequence after validating current stage acceptance and final stage boundary
+// actor: orchestration
+// role: stage_progression
+// source_truth: implementation
 async function advanceStage(session) {
   const { STAGE_ORDER } = require("./stages");
   const currentIndex = STAGE_ORDER.indexOf(session.currentStage);

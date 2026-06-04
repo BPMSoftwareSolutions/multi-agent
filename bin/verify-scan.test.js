@@ -15,6 +15,11 @@ const path = require("path");
 // Mock a simple test setup
 const testDir = path.resolve(__dirname, "..", ".test-data");
 
+// warehouse:method
+// responsibility: Creates test data directory with sample Python files for taxonomy header validation testing
+// actor: test_setup
+// role: fixture_provider
+// source_truth: implementation
 function setupTestData() {
   // Create test data directory
   if (!fs.existsSync(testDir)) {
@@ -60,6 +65,11 @@ def authenticate():
   );
 }
 
+// warehouse:method
+// responsibility: Removes test data directory and all temporary test files created during test execution
+// actor: test_cleanup
+// role: fixture_provider
+// source_truth: implementation
 function cleanupTestData() {
   if (fs.existsSync(testDir)) {
     const files = fs.readdirSync(testDir);
@@ -68,6 +78,11 @@ function cleanupTestData() {
   }
 }
 
+// warehouse:method
+// responsibility: Extracts taxonomy header fields from Python file comments into object
+// actor: header_parser
+// role: extractor
+// source_truth: implementation
 function readTaxonomyHeader(filePath) {
   const content = fs.readFileSync(filePath, "utf8");
   const lines = content.split("\n");
@@ -84,6 +99,11 @@ function readTaxonomyHeader(filePath) {
   return header;
 }
 
+// warehouse:method
+// responsibility: Validates that all required taxonomy fields are present and populated
+// actor: header_validator
+// role: validator
+// source_truth: implementation
 function isComplete(header) {
   // SIMPLE: check if all required fields are present
   const required = ["responsibility", "actor", "role", "source_truth"];

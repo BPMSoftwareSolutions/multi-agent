@@ -14,6 +14,11 @@ const https = require("https");
 
 const DEFAULT_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
 
+// warehouse:method
+// responsibility: Resolves Gemini API key from override or environment variables
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function getApiKey(override) {
   const key =
     override ||
@@ -26,6 +31,11 @@ function getApiKey(override) {
   return key;
 }
 
+// warehouse:method
+// responsibility: Extracts JSON from model output, handling bare JSON, markdown fence blocks, and substring ranges
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function extractJSON(text) {
   if (typeof text !== "string") throw new Error("Model output is not text");
   const trimmed = text.trim();
@@ -50,6 +60,11 @@ function extractJSON(text) {
   throw new Error("Could not extract JSON from model output");
 }
 
+// warehouse:method
+// responsibility: Sends JSON POST request to URL with configurable timeout and error handling
+// actor: worker_bee_infrastructure
+// role: api_client
+// source_truth: implementation
 function postJson(url, payload, timeoutMs = 30000) {
   const body = JSON.stringify(payload);
   return new Promise((resolve, reject) => {
@@ -97,7 +112,11 @@ function postJson(url, payload, timeoutMs = 30000) {
   });
 }
 
-// Call Gemini with a system instruction + user prompt, requesting JSON output.
+// warehouse:method
+// responsibility: Calls Gemini API with system instruction and user prompt, extracting text from response
+// actor: worker_bee_infrastructure
+// role: api_client
+// source_truth: implementation
 async function callGemini({ system, user, apiKey, model, maxTokens, temperature = 0 }) {
   const key = getApiKey(apiKey);
   const useModel = model || DEFAULT_MODEL;
@@ -129,6 +148,11 @@ async function callGemini({ system, user, apiKey, model, maxTokens, temperature 
 
 const RETRYABLE_STATUS = new Set([429, 500, 502, 503, 504, 529]);
 
+// warehouse:method
+// responsibility: Determines whether an error condition should trigger a retry (excluding auth failures)
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function isRetryable(error) {
   if (error.status === 401 || error.status === 403) return false; // auth: never retry
   if (RETRYABLE_STATUS.has(error.status)) return true;
@@ -151,6 +175,11 @@ function isRetryable(error) {
   );
 }
 
+// warehouse:method
+// responsibility: Calls Gemini with automatic retry, exponential backoff, temperature variation, and Flash→Pro quota fallback
+// actor: worker_bee_infrastructure
+// role: api_client
+// source_truth: implementation
 async function callGeminiJSON(params, maxAttempts = 5) {
   let lastError;
   const startTime = Date.now();

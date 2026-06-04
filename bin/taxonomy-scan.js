@@ -24,6 +24,11 @@ const { findWork, serializeWork } = require("../src/worker-bee/scan");
 const DEFAULT_REPO_ROOT =
   process.env.WORKER_BEE_REPO_ROOT || "C:/source/repos/bpm/internal/ai-engine";
 
+// warehouse:method
+// responsibility: Parses command-line arguments for taxonomy scan scope, layer, and output configuration
+// actor: argument_parser
+// role: config_builder
+// source_truth: implementation
 function parseArgs(argv) {
   const args = { repoRoot: DEFAULT_REPO_ROOT, target: null, layer: "both", mode: "all", output: null, json: false };
   for (let i = 0; i < argv.length; i += 1) {
@@ -41,6 +46,11 @@ function parseArgs(argv) {
   return args;
 }
 
+// warehouse:method
+// responsibility: Scans target for untouched anchors, generates tracking JSON, and outputs summary statistics
+// actor: scan_runner
+// role: orchestrator
+// source_truth: implementation
 function main() {
   const args = parseArgs(process.argv.slice(2));
   const repoRoot = path.resolve(args.repoRoot);

@@ -37,14 +37,20 @@ const SKIP_DIRS = new Set([
 
 const FILE_ANCHOR_RE = /^#\s+warehouse:file\s*$/m;
 
-// Strip a leading UTF-8 BOM. A BOM before the first `#` hides an existing anchor
-// from both this tool and the python scanner, and a BOM mid-file is a Python
-// syntax error, so we normalize it away on every file we read or write.
+// warehouse:method
+// responsibility: Removes leading UTF-8 BOM from text
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
 function stripBom(text) {
   return text && text.charCodeAt(0) === 0xfeff ? text.slice(1) : text;
 }
 
-// Recursively collect *.py files under root, pruning skip dirs.
+// warehouse:method
+// responsibility: Recursively collects Python files, skipping excluded directories
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function listPythonFiles(root) {
   const out = [];
   function walk(dir) {
@@ -68,18 +74,29 @@ function listPythonFiles(root) {
   return out;
 }
 
+// warehouse:method
+// responsibility: Tests whether text contains a warehouse:file anchor marker
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function hasFileAnchor(text) {
   return FILE_ANCHOR_RE.test(stripBom(text));
 }
 
-// Repo-relative posix path, used for the expected_location field.
+// warehouse:method
+// responsibility: Converts absolute path to repo-relative POSIX path
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function repoRelative(absPath, repoRoot) {
   return path.relative(repoRoot, absPath).split(path.sep).join("/");
 }
 
-// repo_root_depth: prefer an explicit Path(...).parents[N] literal already in the
-// file (so the anchor matches the code). Otherwise use the directory depth, which
-// is the parents[N] index that would resolve to the repo root.
+// warehouse:method
+// responsibility: Computes parents[N] index for repo root (from code literal or path depth)
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function computeRepoRootDepth(text, relPosix) {
   const literal = text.match(/\.parents\[(\d+)\]/);
   if (literal) return parseInt(literal[1], 10);
@@ -87,8 +104,11 @@ function computeRepoRootDepth(text, relPosix) {
   return Math.max(parts.length - 1, 0);
 }
 
-// Find Python files under root that are missing a file anchor, with the
-// deterministic fields precomputed for each.
+// warehouse:method
+// responsibility: Finds Python files missing file anchors with precomputed deterministic fields
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function findMissing(root, repoRoot, { limit } = {}) {
   const files = listPythonFiles(root);
   const missing = [];
@@ -112,7 +132,11 @@ function findMissing(root, repoRoot, { limit } = {}) {
   return { totalPython: files.length, missing };
 }
 
-// Assemble the anchor comment block from model fields + deterministic fields.
+// warehouse:method
+// responsibility: Assembles file-anchor comment block from model and deterministic fields
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function buildAnchorBlock(modelFields, deterministic) {
   const merged = {
     actor: modelFields.actor,
@@ -135,14 +159,20 @@ function buildAnchorBlock(modelFields, deterministic) {
   return lines.join("\n");
 }
 
-// Dominant newline of a file: CRLF if any CRLF is present, else LF.
+// warehouse:method
+// responsibility: Detects dominant line-ending style (CRLF or LF)
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function dominantEol(text) {
   return /\r\n/.test(text) ? "\r\n" : "\n";
 }
 
-// Split text into segments that each preserve their original line ending, so
-// edits to a few lines don't churn the whole file's endings. Returns array of
-// { text, eol }. The segment index aligns with a plain `split(/\r?\n/)` line index.
+// warehouse:method
+// responsibility: Splits text into segments preserving individual line endings
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function splitKeepEnds(text) {
   const segments = [];
   const re = /([^\r\n]*)(\r\n|\r|\n|$)/g;
@@ -160,10 +190,11 @@ function splitKeepEnds(text) {
   return segments;
 }
 
-// Insert the anchor block at the top of the file, after a shebang and/or coding
-// cookie if present. Comments are legal before `from __future__`, so this is safe.
-// Only the inserted region changes; the rest of the file is preserved byte-for-byte
-// (aside from removing a leading BOM, which would otherwise break Python mid-file).
+// warehouse:method
+// responsibility: Inserts anchor block after shebang/coding declaration at file start
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function insertAnchor(absPath, anchorBlock) {
   const raw = fs.readFileSync(absPath, "utf8");
   if (hasFileAnchor(raw)) return false; // idempotent guard
@@ -200,6 +231,11 @@ const PLACEHOLDER_TOKENS = new Set([
   "xxx",
 ]);
 
+// warehouse:method
+// responsibility: Determines whether a value is a placeholder or missing
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function isPlaceholder(value) {
   if (value === undefined || value === null) return true;
   const v = String(value).trim().toLowerCase();
@@ -208,12 +244,11 @@ function isPlaceholder(value) {
   return false;
 }
 
-// A responsibility should be a human-readable description, not a placeholder and
-// not just the symbol/file name restated. Rejects:
-//  - placeholders ([auto], tbd, ...)
-//  - identifier-style tokens with no spaces (e.g. load_anchor_contract_from_disk)
-//    which is how the prior substrate run "filled" anchors — a name, not prose
-//  - lazy two-word stubs ("client module", "x file")
+// warehouse:method
+// responsibility: Validates responsibility field for specificity and prose quality
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function isGenericResponsibility(value) {
   if (isPlaceholder(value)) return true;
   const v = String(value).trim();
@@ -229,12 +264,20 @@ function isGenericResponsibility(value) {
   return false;
 }
 
+// warehouse:method
+// responsibility: Normalizes path to forward slashes and trims whitespace
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function normPath(p) {
   return String(p || "").replace(/\\/g, "/").trim();
 }
 
-// Parse the first `# warehouse:file` anchor block out of an array of lines.
-// Returns { start, end, fields } (inclusive line indices) or null.
+// warehouse:method
+// responsibility: Parses first warehouse:file anchor block from lines array
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function parseFileAnchorLines(lines) {
   let start = -1;
   for (let i = 0; i < lines.length; i += 1) {
@@ -257,11 +300,20 @@ function parseFileAnchorLines(lines) {
   return { start, end, fields };
 }
 
+// warehouse:method
+// responsibility: Parses warehouse:file anchor from text
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function parseFileAnchor(text) {
   return parseFileAnchorLines(stripBom(text).split(/\r?\n/));
 }
 
-// Return a list of issue codes for an existing anchor. Empty list = trustworthy.
+// warehouse:method
+// responsibility: Assesses file anchor for quality and consistency issues
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function assessAnchor(fields, deterministic) {
   const issues = [];
   for (const key of FILE_ANCHOR_FIELD_ORDER) {
@@ -292,9 +344,11 @@ function assessAnchor(fields, deterministic) {
 // consecutive comment lines. Stops at the first blank or non-comment line.
 const FILE_ANCHOR_BLOCK_RE = /[ \t]*#[ \t]+warehouse:file[ \t]*(?:\r?\n[ \t]*#[^\n]*)*/;
 
-// Replace an existing anchor block in place with a new one, touching only the
-// block region (and removing any leading BOM). Falls back to insertion if no
-// anchor is present.
+// warehouse:method
+// responsibility: Replaces existing anchor in place or inserts if missing
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function replaceAnchor(absPath, anchorBlock) {
   const raw = fs.readFileSync(absPath, "utf8");
   const text = stripBom(raw);
@@ -306,8 +360,11 @@ function replaceAnchor(absPath, anchorBlock) {
   return true;
 }
 
-// Analyze one file across the requested layer(s). Returns a descriptor with the
-// file-anchor state and the per-def method-anchor state, or null if unreadable.
+// warehouse:method
+// responsibility: Analyzes file for anchor state across file and method layers
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function analyzeFile(absPath, repoRoot, { layer = "both", mode = "all" } = {}) {
   let raw;
   try {
@@ -379,8 +436,11 @@ function analyzeFile(absPath, repoRoot, { layer = "both", mode = "all" } = {}) {
   };
 }
 
-// Trim work items to a JSON-serializable shape the bee can be driven from. The
-// scanner writes this; the bee consumes it without re-scanning.
+// warehouse:method
+// responsibility: Serializes work items to JSON-safe format for bee consumption
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function serializeWork(work) {
   return work.map((w) => ({
     absPath: w.absPath,
@@ -402,8 +462,11 @@ function serializeWork(work) {
   }));
 }
 
-// Unified work finder. layer: "file" | "method" | "both". mode: "missing" |
-// "revalidate" | "all". Returns files needing any work for the requested layers.
+// warehouse:method
+// responsibility: Finds files needing work across specified layers and modes
+// actor: worker_bee_infrastructure
+// role: script_executor
+// source_truth: implementation
 function findWork(root, repoRoot, { mode = "all", layer = "file", limit } = {}) {
   const files = listPythonFiles(root);
   const work = [];

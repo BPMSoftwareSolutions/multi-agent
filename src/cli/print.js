@@ -7,6 +7,11 @@
 const { STAGES } = require("../core/stages");
 const { summarizeOperations } = require("../shared/actions");
 
+// warehouse:method
+// responsibility: Formats stage artifact into human-readable key-value pairs with nested array handling
+// actor: cli
+// role: artifact_formatter
+// source_truth: implementation
 function renderArtifact(stageId, artifact) {
   const stage = STAGES[stageId];
   if (!stage) return "";
@@ -30,6 +35,11 @@ function renderArtifact(stageId, artifact) {
   return lines.join("\n");
 }
 
+// warehouse:method
+// responsibility: Renders complete session state including stages, intent, artifact, and operations summary for display or JSON export
+// actor: cli
+// role: session_renderer
+// source_truth: implementation
 function renderSession(session, options = {}) {
   const json = options.json || false;
   const operationsSummary = summarizeOperations(session);
@@ -137,6 +147,11 @@ function renderSession(session, options = {}) {
   return lines.join("\n");
 }
 
+// warehouse:method
+// responsibility: Renders round data including planner artifact, reviewer issues, recommendations, and execution timing
+// actor: cli
+// role: round_renderer
+// source_truth: implementation
 function renderRound(round, options = {}) {
   const json = options.json || false;
 
@@ -226,6 +241,11 @@ function renderRound(round, options = {}) {
   return lines.join("\n");
 }
 
+// warehouse:method
+// responsibility: Logs exit message to stdout or stderr and terminates process with specified code
+// actor: cli
+// role: process_terminator
+// source_truth: implementation
 function exit(code, message = null) {
   if (message) {
     if (code === 0) {

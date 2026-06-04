@@ -16,6 +16,11 @@ const {
   setAppState
 } = require("../shared/sql-server");
 
+// warehouse:method
+// responsibility: Reconstructs session object from database row, parsing JSON fields and ensuring operation state consistency
+// actor: core_runtime
+// role: session_deserialization
+// source_truth: implementation
 function deserializeSession(row) {
   if (!row) {
     return null;
@@ -37,6 +42,11 @@ function deserializeSession(row) {
   return session;
 }
 
+// warehouse:method
+// responsibility: Initializes new session with brief, intent, empty artifact for all stages, and persists to database
+// actor: core_runtime
+// role: session_creation
+// source_truth: implementation
 function createSession(brief, intent = null) {
   ensureSchema();
 
@@ -83,10 +93,20 @@ function createSession(brief, intent = null) {
   return session;
 }
 
+// warehouse:method
+// responsibility: Retrieves and deserializes session by ID from database
+// actor: core_runtime
+// role: session_retrieval
+// source_truth: implementation
 function getSession(sessionId) {
   return deserializeSession(getSessionRow(sessionId));
 }
 
+// warehouse:method
+// responsibility: Persists session to database, ensuring operation state is valid and updating timestamp
+// actor: core_runtime
+// role: session_persistence
+// source_truth: implementation
 function saveSession(session) {
   ensureOperationsState(session);
   if (!session.updatedAt) {
@@ -95,18 +115,38 @@ function saveSession(session) {
   saveSessionRow(session);
 }
 
+// warehouse:method
+// responsibility: Retrieves the current active session ID from application state
+// actor: core_runtime
+// role: session_context
+// source_truth: implementation
 function getCurrentSessionId() {
   return getAppState("current_session_id");
 }
 
+// warehouse:method
+// responsibility: Sets the current active session ID in application state
+// actor: core_runtime
+// role: session_context
+// source_truth: implementation
 function setCurrentSessionId(sessionId) {
   setAppState("current_session_id", sessionId || "");
 }
 
+// warehouse:method
+// responsibility: Lists all session IDs from database
+// actor: core_runtime
+// role: session_enumeration
+// source_truth: implementation
 function listSessions() {
   return listSessionRows().map((row) => row.session_id);
 }
 
+// warehouse:method
+// responsibility: Updates session's modified timestamp and persists, used to track recent activity
+// actor: core_runtime
+// role: activity_tracking
+// source_truth: implementation
 function touchSession(sessionId) {
   const session = getSession(sessionId);
   if (!session) {

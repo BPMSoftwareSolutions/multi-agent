@@ -8,6 +8,11 @@ const { getSession, getCurrentSessionId, saveSession } = require("../../core/ses
 const { runRound } = require("../../core/run-round");
 const { renderRound, exit } = require("../print");
 
+// warehouse:method
+// responsibility: Executes planning and review cycle for current stage, updates artifact and operation queue, saves session, renders output
+// actor: cli
+// role: round_command
+// source_truth: implementation
 async function round(note = "", apiKey = null, options = {}) {
   try {
     const sessionId = options.sessionId || getCurrentSessionId();

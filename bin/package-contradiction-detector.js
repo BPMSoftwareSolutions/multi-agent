@@ -11,6 +11,11 @@
 const fs = require("fs");
 const path = require("path");
 
+// warehouse:method
+// responsibility: Parses taxonomy report and aggregates files into package groups with role/actor distributions
+// actor: package_classifier
+// role: analyzer
+// source_truth: implementation
 function analyzePackages(taxonomyPath) {
   const taxonomy = JSON.parse(fs.readFileSync(taxonomyPath, "utf8"));
 
@@ -42,6 +47,11 @@ function analyzePackages(taxonomyPath) {
   return packages;
 }
 
+// warehouse:method
+// responsibility: Detects contradictions in package taxonomy by checking name-responsibility mismatches, role inconsistency, and domain fragmentation
+// actor: contradiction_detector
+// role: validator
+// source_truth: implementation
 function detectContradictions(pkg) {
   const issues = [];
 
