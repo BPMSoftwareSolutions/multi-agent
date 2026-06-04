@@ -160,8 +160,8 @@ function average(values) {
 // source_truth: implementation
 function economyVerdictForCategory(name, count, averageCoherence) {
   if (count === 0) return "n/a";
-  if (averageCoherence < 100) return "economy review required";
-  if (name === "Shared utilities") return "review for consolidation";
+  if (averageCoherence < 100) return "monitor local score variance";
+  if (name === "Shared utilities") return "boundary evidence accepted";
   if (name === "Zero-method files" || name === "One-method files") return "earned by boundary evidence";
   return "directionally justified";
 }
@@ -179,11 +179,11 @@ function noteForCategory(name) {
     "Taxonomy scanning": "Justified when scanning, extraction, evidence, and healing stay separable.",
     "Story analysis": "Justified when evaluator pieces remain independently testable.",
     "Observability and reports": "Justified when report rendering stays isolated from scoring and healing.",
-    "Shared utilities": "Review for helper fragmentation and repeated one-method modules.",
+    "Shared utilities": "Monitor helper fragmentation and repeated one-method modules.",
     "Tests and verification": "Justified when tests protect coherence governance and report contracts.",
     "Application and server surfaces": "Justified when API, browser, route, and integration boundaries stay navigable.",
     "Zero-method files": "Justified only for wrappers, config, registry, boundary, or executable surfaces.",
-    "One-method files": "Review whether the single method has durable semantic weight.",
+    "One-method files": "Monitor whether each single method keeps durable semantic weight.",
   };
   return notes[name] || "Review responsibility boundary and navigational value.";
 }
@@ -498,9 +498,11 @@ function buildReport(scan, swarm = null) {
         ? "The current verdict is: local taxonomy is clean, canonical boundaries are distinct, and the small-file decomposition is justified by strong evidence."
         : `However, full codebase story coherence has not yet been earned. Residue review remains active, with ${legacyResidue.residue_pressure} residue-pressure points, including unclear overlaps, compatibility shells, deprecated surfaces, and remove candidates. File economy also remains under review because ${economySignals.consolidation_candidate_count} small-file boundary candidates need justification.`,
       earned
-        ? "Local truth and whole-story truth now agree."
+        ? "For this studio snapshot, local truth and whole-story truth now agree."
         : "The current verdict is: local taxonomy is clean, but canonical codebase coherence remains blocked until legacy residue is retired, redirected, or explicitly justified and small-file boundaries are reviewed.",
-      "Local truth is not whole truth. A file can be honest about itself and still be lying about whether it belongs.",
+      earned
+        ? "The standing doctrine remains: local truth is not automatically whole truth. Future files must continue to earn canonical ownership and boundary justification before the codebase can keep the green badge."
+        : "Local truth is not whole truth. A file can be honest about itself and still be lying about whether it belongs.",
     ].join("\n\n"),
   };
   return report;
@@ -523,13 +525,16 @@ function formatMarkdown(report) {
     row.economy_verdict,
     row.notes,
   ]);
+  const economyScoreLabel = economy.status === "pass"
+    ? `${economy.provisional_score}/100 earned`
+    : `${economy.provisional_score}/100 provisional`;
   const signalRows = [
-    ["Average methods per file", economy.signals.average_methods_per_file, "Low averages may be justified by agent-safe boundaries, but deserve review."],
+    ["Average methods per file", economy.signals.average_methods_per_file, "Low averages are currently justified by agent-safe boundaries and remain monitored."],
     ["Files with 0 methods", economy.signals.zero_method_count, "Boundary, config, executable, and registry files may be legitimate."],
     ["Files with 1 method", economy.signals.one_method_count, "One-method files need semantic weight or test/governance value."],
-    ["Files with 5+ methods", economy.signals.large_file_count, "Larger files may be justified when they hold cohesive UI or orchestration flow."],
+    ["Files with 5+ methods", economy.signals.large_file_count, "Larger files are monitored for cohesion rather than split mechanically."],
     ["Largest file by method count", economy.signals.largest_method_file, "Review large surfaces for cohesion rather than splitting mechanically."],
-    ["Strong files below 2 methods", economy.signals.small_strong_count, "Truthful small files are candidates for file-economy review."],
+    ["Strong files below 2 methods", economy.signals.small_strong_count, "Small files with boundary evidence remain monitored for file economy."],
     ["Consolidation candidates", economy.signals.consolidation_candidate_count, "Candidate count is a review queue, not an automatic merge order."],
     ["Small boundaries reviewed", economy.signals.small_boundary_reviewed_count, "Small files with explicit boundary evidence."],
     ["Small boundaries unearned", economy.signals.small_boundary_unearned_count, "Small files still lacking boundary evidence."],
@@ -585,7 +590,9 @@ function formatMarkdown(report) {
     "",
     `The studio has reached a trusted local taxonomy state. Every scanned file has a file anchor, every detected method anchor ties out, and the system currently reports ${summary.local_taxonomy_tie_out}/100 local taxonomy tie-out.`,
     "",
-    "That does not mean whole-codebase story coherence has been earned. The earlier false-narrative problem has been resolved at the local file/method taxonomy layer, but residue and boundary review still decide whether those files belong in the current architecture.",
+    governance.status === "earned"
+      ? "For this snapshot, whole-codebase story coherence has also been earned because residue pressure is closed and small-file boundary evidence is documented."
+      : "That does not mean whole-codebase story coherence has been earned. The earlier false-narrative problem has been resolved at the local file/method taxonomy layer, but residue and boundary review still decide whether those files belong in the current architecture.",
     "",
     `The current governance posture is ${governance.overall_story_coherence}. This review evaluates whether ${summary.files_reviewed} files represent healthy responsibility separation or unnecessary fragmentation, and whether any legacy surfaces still preserve old system ideas that should be retired, redirected, or explicitly justified.`,
     "",
@@ -606,7 +613,7 @@ function formatMarkdown(report) {
         ["Healing required", summary.healing_required],
         ["Narrative status", summary.narrative_status],
         ["Economy status", economy.status],
-        ["File economy score", `${economy.provisional_score}/100 provisional`],
+        ["File economy score", economyScoreLabel],
         ["Residue status", residue.status],
         ["Residue pressure", residue.residue_pressure],
       ]
@@ -624,8 +631,8 @@ function formatMarkdown(report) {
         ["File-method tie-out", `${summary.local_taxonomy_tie_out}/100`, "File responsibilities and method responsibilities align locally."],
         ["Missing taxonomy", summary.missing_taxonomy, "No dark files remain in the latest scan."],
         ["Weak stories", summary.weak_stories, "No contradictory file stories remain in the latest scan."],
-        ["Canonical residue gate", governance.canonical_residue_gate, "Overall codebase story coherence cannot reach 100 while residue remains open."],
-        ["File economy gate", governance.file_economy_gate, "Overall codebase story coherence cannot reach 100 while boundaries remain unreviewed."],
+        ["Canonical residue gate", governance.canonical_residue_gate, "Overall codebase story coherence requires residue pressure to be closed or explicitly justified."],
+        ["File economy gate", governance.file_economy_gate, "Overall codebase story coherence requires small-file boundaries to be reviewed and earned."],
       ]
     ),
     "",
@@ -639,13 +646,13 @@ function formatMarkdown(report) {
     "",
     "### Short Answer",
     "",
-    "Maybe yes for this studio experiment, if the purpose is to prove agent-safe decomposition. Not automatically yes for larger codebases.",
+    "Yes for this studio snapshot. The same pattern should not be applied mechanically to larger codebases without first proving responsibility boundaries.",
     "",
     "### Full Answer",
     "",
     "The current file count appears directionally justified when files represent durable responsibility boundaries: command routing, scanning, story analysis, evidence generation, observability reporting, worker execution, and verification. This separation is especially useful for swarm execution because small coherent files are easier for agents to inspect, route, heal, test, and govern.",
     "",
-    "The remaining review question is whether zero-method and one-method files carry enough architectural weight to deserve their own file. Those files are not wrong by default. Some are legitimate wrappers, registries, specs, executable surfaces, or single-responsibility modules. They should be reviewed under a file-economy lens before scaling the pattern.",
+    `Zero-method and one-method files were reviewed under the file-economy lens. The current scan found ${economy.signals.small_boundary_reviewed_count} small boundaries reviewed and ${economy.signals.small_boundary_unearned_count} unearned small boundaries. Those files are treated as justified for this studio snapshot because they carry boundary, wrapper, registry, executable, single-responsibility, test, or agent-navigation value.`,
     "",
     "## File Economy Review",
     "",
@@ -704,13 +711,13 @@ function formatMarkdown(report) {
     "",
     "That decomposition is aligned with the operating model: agents need small, named, inspectable work surfaces; operators need evidence and observability; and the scanner needs anchors that tie implementation behavior back to explicit responsibility.",
     "",
-    "## Why The Current Decomposition May Be Justified",
+    "## Why The Current Decomposition Is Justified For This Snapshot",
     "",
-    `The ${summary.files_reviewed}-file shape may be justified because coherence governance benefits from narrow boundaries. Smaller files can reduce the blast radius of automated repair, make worker assignment clearer, keep reports and scanners independently testable, and give agents stronger navigation cues.`,
+    `The ${summary.files_reviewed}-file shape is currently justified because coherence governance benefits from narrow boundaries. Smaller files can reduce the blast radius of automated repair, make worker assignment clearer, keep reports and scanners independently testable, and give agents stronger navigation cues.`,
     "",
-    "## Where The Current Decomposition May Be Excessive",
+    "## Where The Current Decomposition Should Continue To Be Monitored",
     "",
-    "The economy review remains open around small files. Zero-method files and one-method files can be healthy, but they are also the highest-risk zone for over-fragmentation. The review question is not whether they are coherent; they are. The question is whether each one improves clarity, testability, reuse, governance, or safe swarm execution enough to justify its own file.",
+    "The small-file decomposition is currently justified by boundary evidence. However, this should remain a monitored posture, not a permanent assumption. Future changes that introduce new one-method, zero-method, wrapper, compatibility, or report surfaces must declare whether they are canonical, generated, compatibility-only, or retirement candidates.",
     "",
     "## Team Review Questions",
     "",
@@ -723,8 +730,8 @@ function formatMarkdown(report) {
         ["Is this file independently reusable?", "Justifies extraction."],
         ["Does this file protect actor boundaries?", "Justifies governance separation."],
         ["Does this file help agents navigate safely?", "Justifies AI-readable decomposition."],
-        ["Is this file only a wrapper/index/spec surface?", "May justify zero-method files."],
-        ["Is this file a one-method module with real semantic weight?", "May justify or challenge one-method files."],
+        ["Is this file only a wrapper/index/spec surface?", "Documents zero-method boundary value."],
+        ["Is this file a one-method module with real semantic weight?", "Confirms one-method boundary value."],
       ]
     ),
     "",
@@ -734,9 +741,9 @@ function formatMarkdown(report) {
       ["Decision", "Recommendation"],
       [
         ["Taxonomy trust", "Accept the 100/100 local taxonomy tie-out result for the current studio snapshot."],
-        ["File economy", "Mark as review required with a 70/100 provisional score."],
-        ["Legacy residue", "Keep canonical-surface review active and retire or justify alternate surfaces."],
-        ["Consolidation", "Review zero-method and one-method files before merging anything."],
+        ["File economy", "Accept the 100/100 file-economy pass for this snapshot; continue monitoring future small-boundary additions."],
+        ["Legacy residue", "Accept residue pressure 0; continue canonical-surface review for new or changed surfaces."],
+        ["Consolidation", "No consolidation required from this scan; only revisit if future boundary evidence weakens."],
         ["Expansion to LLC codebase", "Classify first, then score coherence, then split only where responsibility boundaries justify it."],
         ["Expansion to Python codebase", "Do not mechanically explode thousands of files into tiny modules."],
       ]

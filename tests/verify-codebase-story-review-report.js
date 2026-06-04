@@ -177,9 +177,15 @@ function verifyMarkdown(report) {
   assert.match(markdown, /Residue Pressure Breakdown/);
   assert.match(markdown, /Residue pressure counts canonical-surface relationship risks/);
   assert.match(markdown, /Canonical Surface Map/);
-  assert.match(markdown, /Local truth is not whole truth/);
+  assert.match(markdown, /standing doctrine remains: local truth is not automatically whole truth/);
   assert.match(markdown, /Residue review proves the file still belongs/);
   assert.match(markdown, /local taxonomy, file economy, and canonical story all clear/);
+  assert.match(markdown, /File economy score \| 100\/100 earned/);
+  assert.match(markdown, /Accept the 100\/100 file-economy pass/);
+  assert.match(markdown, /No consolidation required from this scan/);
+  assert.doesNotMatch(markdown, /Mark as review required with a 70\/100 provisional score/);
+  assert.doesNotMatch(markdown, /The economy review remains open around small files/);
+  assert.doesNotMatch(markdown, /The remaining review question is whether zero-method and one-method files/);
   assert.doesNotMatch(markdown, /Taxonomy Story Report/);
   assert.doesNotMatch(markdown, /Status\\s+✅ STORY COHERENT/);
   return markdown;

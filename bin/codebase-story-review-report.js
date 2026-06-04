@@ -39,9 +39,10 @@ function runCodebaseStoryReviewReport() {
   const swarm = loadJson(path.join(reportsDir, "swarm-report-latest.json"), false);
   const report = buildReport(scan, swarm);
   const artifacts = writeCodebaseStoryReviewReport(report, reportsDir);
+  const economyScoreLabel = report.file_economy.status === "pass" ? "earned" : "provisional";
   console.log(`Codebase story review written: ${artifacts.latest_markdown}`);
   console.log(`Snapshot: ${artifacts.snapshot_markdown}`);
-  console.log(`File economy: ${report.file_economy.provisional_score}/100 provisional (${report.file_economy.status})`);
+  console.log(`File economy: ${report.file_economy.provisional_score}/100 ${economyScoreLabel} (${report.file_economy.status})`);
   return 0;
 }
 

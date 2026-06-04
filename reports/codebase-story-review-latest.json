@@ -1,8 +1,8 @@
 {
   "schema": "codebase-story-review-report.v1",
-  "report_id": "codebase-story-review-2026-06-04T18-32-47-729Z",
-  "generated_at": "2026-06-04T18:32:47.730Z",
-  "source_scan_id": "scan-2026-06-04T18-32-41-882Z",
+  "report_id": "codebase-story-review-2026-06-04T18-45-50-338Z",
+  "generated_at": "2026-06-04T18:45:50.339Z",
+  "source_scan_id": "scan-2026-06-04T18-45-44-043Z",
   "source_swarm_id": "bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z",
   "target_path": ".",
   "headline_verdict": "Codebase story coherence earned",
@@ -30,7 +30,7 @@
         "category": "Application and server surfaces",
         "count": 80,
         "coherence": 99,
-        "economy_verdict": "economy review required",
+        "economy_verdict": "monitor local score variance",
         "notes": "Justified when API, browser, route, and integration boundaries stay navigable."
       },
       {
@@ -58,14 +58,14 @@
         "category": "Shared utilities",
         "count": 42,
         "coherence": 99,
-        "economy_verdict": "economy review required",
-        "notes": "Review for helper fragmentation and repeated one-method modules."
+        "economy_verdict": "monitor local score variance",
+        "notes": "Monitor helper fragmentation and repeated one-method modules."
       },
       {
         "category": "Story analysis",
         "count": 18,
         "coherence": 99,
-        "economy_verdict": "economy review required",
+        "economy_verdict": "monitor local score variance",
         "notes": "Justified when evaluator pieces remain independently testable."
       },
       {
@@ -101,7 +101,7 @@
         "count": 186,
         "coherence": 99,
         "economy_verdict": "earned by boundary evidence",
-        "notes": "Review whether the single method has durable semantic weight."
+        "notes": "Monitor whether each single method keeps durable semantic weight."
       }
     ],
     "signals": {
@@ -178,5 +178,5 @@
     "overall_story_coherence": "100/100 earned",
     "overall_label": "✅ 100% earned | local taxonomy, file economy, and canonical story all clear"
   },
-  "final_verdict": "The studio has achieved 100/100 local taxonomy tie-out: all scanned files have file anchors, all detected method anchors are represented, and no weak or missing taxonomy stories remain.\n\nThe current verdict is: local taxonomy is clean, canonical boundaries are distinct, and the small-file decomposition is justified by strong evidence.\n\nLocal truth and whole-story truth now agree.\n\nLocal truth is not whole truth. A file can be honest about itself and still be lying about whether it belongs."
+  "final_verdict": "The studio has achieved 100/100 local taxonomy tie-out: all scanned files have file anchors, all detected method anchors are represented, and no weak or missing taxonomy stories remain.\n\nThe current verdict is: local taxonomy is clean, canonical boundaries are distinct, and the small-file decomposition is justified by strong evidence.\n\nFor this studio snapshot, local truth and whole-story truth now agree.\n\nThe standing doctrine remains: local truth is not automatically whole truth. Future files must continue to earn canonical ownership and boundary justification before the codebase can keep the green badge."
 }

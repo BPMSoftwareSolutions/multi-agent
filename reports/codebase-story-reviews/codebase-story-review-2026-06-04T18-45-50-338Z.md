@@ -2,8 +2,8 @@
 
 **Subtitle:** A narrative review of taxonomy coherence, responsibility boundaries, and file-count justification.
 
-**Generated:** 2026-06-04T18:32:47.730Z
-**Source scan:** `scan-2026-06-04T18-32-41-882Z`
+**Generated:** 2026-06-04T18:45:50.339Z
+**Source scan:** `scan-2026-06-04T18-45-44-043Z`
 **Source swarm:** `bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z`
 
 ```text
@@ -44,7 +44,7 @@ A codebase can have clean local taxonomy and still fail codebase story coherence
 
 The studio has reached a trusted local taxonomy state. Every scanned file has a file anchor, every detected method anchor ties out, and the system currently reports 100/100 local taxonomy tie-out.
 
-That does not mean whole-codebase story coherence has been earned. The earlier false-narrative problem has been resolved at the local file/method taxonomy layer, but residue and boundary review still decide whether those files belong in the current architecture.
+For this snapshot, whole-codebase story coherence has also been earned because residue pressure is closed and small-file boundary evidence is documented.
 
 The current governance posture is 100/100 earned. This review evaluates whether 324 files represent healthy responsibility separation or unnecessary fragmentation, and whether any legacy surfaces still preserve old system ideas that should be retired, redirected, or explicitly justified.
 
@@ -64,7 +64,7 @@ The current governance posture is 100/100 earned. This review evaluates whether 
 | Healing required | no |
 | Narrative status | 100/100 earned |
 | Economy status | pass |
-| File economy score | 100/100 provisional |
+| File economy score | 100/100 earned |
 | Residue status | pass |
 | Residue pressure | 0 |
 
@@ -79,8 +79,8 @@ The local taxonomy tie-out result is accepted. The scanner found complete file-l
 | File-method tie-out | 100/100 | File responsibilities and method responsibilities align locally. |
 | Missing taxonomy | 0 | No dark files remain in the latest scan. |
 | Weak stories | 0 | No contradictory file stories remain in the latest scan. |
-| Canonical residue gate | pass | Overall codebase story coherence cannot reach 100 while residue remains open. |
-| File economy gate | pass | Overall codebase story coherence cannot reach 100 while boundaries remain unreviewed. |
+| Canonical residue gate | pass | Overall codebase story coherence requires residue pressure to be closed or explicitly justified. |
+| File economy gate | pass | Overall codebase story coherence requires small-file boundaries to be reviewed and earned. |
 
 ## File Count Question
 
@@ -92,40 +92,40 @@ Do all 324 files earn their boundaries and belong in the canonical story?
 
 ### Short Answer
 
-Maybe yes for this studio experiment, if the purpose is to prove agent-safe decomposition. Not automatically yes for larger codebases.
+Yes for this studio snapshot. The same pattern should not be applied mechanically to larger codebases without first proving responsibility boundaries.
 
 ### Full Answer
 
 The current file count appears directionally justified when files represent durable responsibility boundaries: command routing, scanning, story analysis, evidence generation, observability reporting, worker execution, and verification. This separation is especially useful for swarm execution because small coherent files are easier for agents to inspect, route, heal, test, and govern.
 
-The remaining review question is whether zero-method and one-method files carry enough architectural weight to deserve their own file. Those files are not wrong by default. Some are legitimate wrappers, registries, specs, executable surfaces, or single-responsibility modules. They should be reviewed under a file-economy lens before scaling the pattern.
+Zero-method and one-method files were reviewed under the file-economy lens. The current scan found 230 small boundaries reviewed and 0 unearned small boundaries. Those files are treated as justified for this studio snapshot because they carry boundary, wrapper, registry, executable, single-responsibility, test, or agent-navigation value.
 
 ## File Economy Review
 
 | Category | Count | Coherence | Economy Verdict | Notes |
 | --- | --- | --- | --- | --- |
-| Application and server surfaces | 80 | 99/100 | economy review required | Justified when API, browser, route, and integration boundaries stay navigable. |
+| Application and server surfaces | 80 | 99/100 | monitor local score variance | Justified when API, browser, route, and integration boundaries stay navigable. |
 | CLI and command surfaces | 49 | 100/100 | directionally justified | Justified when command behavior and operator entry points stay isolated. |
 | Core runtime | 40 | 100/100 | directionally justified | Justified when each module owns one runtime responsibility. |
 | Observability and reports | 2 | 100/100 | directionally justified | Justified when report rendering stays isolated from scoring and healing. |
-| Shared utilities | 42 | 99/100 | economy review required | Review for helper fragmentation and repeated one-method modules. |
-| Story analysis | 18 | 99/100 | economy review required | Justified when evaluator pieces remain independently testable. |
+| Shared utilities | 42 | 99/100 | monitor local score variance | Monitor helper fragmentation and repeated one-method modules. |
+| Story analysis | 18 | 99/100 | monitor local score variance | Justified when evaluator pieces remain independently testable. |
 | Taxonomy scanning | 14 | 100/100 | directionally justified | Justified when scanning, extraction, evidence, and healing stay separable. |
 | Tests and verification | 6 | 100/100 | directionally justified | Justified when tests protect coherence governance and report contracts. |
 | Worker-bee swarm | 73 | 100/100 | directionally justified | Justified when decomposition keeps agent work packets small and governable. |
 | Zero-method files | 44 | 100/100 | earned by boundary evidence | Justified only for wrappers, config, registry, boundary, or executable surfaces. |
-| One-method files | 186 | 99/100 | earned by boundary evidence | Review whether the single method has durable semantic weight. |
+| One-method files | 186 | 99/100 | earned by boundary evidence | Monitor whether each single method keeps durable semantic weight. |
 
 ## File Economy Signals
 
 | Signal | Value | Interpretation |
 | --- | --- | --- |
-| Average methods per file | 1.99 | Low averages may be justified by agent-safe boundaries, but deserve review. |
+| Average methods per file | 1.99 | Low averages are currently justified by agent-safe boundaries and remain monitored. |
 | Files with 0 methods | 44 | Boundary, config, executable, and registry files may be legitimate. |
 | Files with 1 method | 186 | One-method files need semantic weight or test/governance value. |
-| Files with 5+ methods | 19 | Larger files may be justified when they hold cohesive UI or orchestration flow. |
+| Files with 5+ methods | 19 | Larger files are monitored for cohesion rather than split mechanically. |
 | Largest file by method count | public/app.js (48 methods) | Review large surfaces for cohesion rather than splitting mechanically. |
-| Strong files below 2 methods | 230 | Truthful small files are candidates for file-economy review. |
+| Strong files below 2 methods | 230 | Small files with boundary evidence remain monitored for file economy. |
 | Consolidation candidates | 0 | Candidate count is a review queue, not an automatic merge order. |
 | Small boundaries reviewed | 230 | Small files with explicit boundary evidence. |
 | Small boundaries unearned | 0 | Small files still lacking boundary evidence. |
@@ -187,13 +187,13 @@ The codebase currently reads as a governance-oriented studio rather than a compa
 
 That decomposition is aligned with the operating model: agents need small, named, inspectable work surfaces; operators need evidence and observability; and the scanner needs anchors that tie implementation behavior back to explicit responsibility.
 
-## Why The Current Decomposition May Be Justified
+## Why The Current Decomposition Is Justified For This Snapshot
 
-The 324-file shape may be justified because coherence governance benefits from narrow boundaries. Smaller files can reduce the blast radius of automated repair, make worker assignment clearer, keep reports and scanners independently testable, and give agents stronger navigation cues.
+The 324-file shape is currently justified because coherence governance benefits from narrow boundaries. Smaller files can reduce the blast radius of automated repair, make worker assignment clearer, keep reports and scanners independently testable, and give agents stronger navigation cues.
 
-## Where The Current Decomposition May Be Excessive
+## Where The Current Decomposition Should Continue To Be Monitored
 
-The economy review remains open around small files. Zero-method files and one-method files can be healthy, but they are also the highest-risk zone for over-fragmentation. The review question is not whether they are coherent; they are. The question is whether each one improves clarity, testability, reuse, governance, or safe swarm execution enough to justify its own file.
+The small-file decomposition is currently justified by boundary evidence. However, this should remain a monitored posture, not a permanent assumption. Future changes that introduce new one-method, zero-method, wrapper, compatibility, or report surfaces must declare whether they are canonical, generated, compatibility-only, or retirement candidates.
 
 ## Team Review Questions
 
@@ -205,17 +205,17 @@ The economy review remains open around small files. Zero-method files and one-me
 | Is this file independently reusable? | Justifies extraction. |
 | Does this file protect actor boundaries? | Justifies governance separation. |
 | Does this file help agents navigate safely? | Justifies AI-readable decomposition. |
-| Is this file only a wrapper/index/spec surface? | May justify zero-method files. |
-| Is this file a one-method module with real semantic weight? | May justify or challenge one-method files. |
+| Is this file only a wrapper/index/spec surface? | Documents zero-method boundary value. |
+| Is this file a one-method module with real semantic weight? | Confirms one-method boundary value. |
 
 ## Recommended Decisions
 
 | Decision | Recommendation |
 | --- | --- |
 | Taxonomy trust | Accept the 100/100 local taxonomy tie-out result for the current studio snapshot. |
-| File economy | Mark as review required with a 70/100 provisional score. |
-| Legacy residue | Keep canonical-surface review active and retire or justify alternate surfaces. |
-| Consolidation | Review zero-method and one-method files before merging anything. |
+| File economy | Accept the 100/100 file-economy pass for this snapshot; continue monitoring future small-boundary additions. |
+| Legacy residue | Accept residue pressure 0; continue canonical-surface review for new or changed surfaces. |
+| Consolidation | No consolidation required from this scan; only revisit if future boundary evidence weakens. |
 | Expansion to LLC codebase | Classify first, then score coherence, then split only where responsibility boundaries justify it. |
 | Expansion to Python codebase | Do not mechanically explode thousands of files into tiny modules. |
 
@@ -242,16 +242,16 @@ The studio has achieved 100/100 local taxonomy tie-out: all scanned files have f
 
 The current verdict is: local taxonomy is clean, canonical boundaries are distinct, and the small-file decomposition is justified by strong evidence.
 
-Local truth and whole-story truth now agree.
+For this studio snapshot, local truth and whole-story truth now agree.
 
-Local truth is not whole truth. A file can be honest about itself and still be lying about whether it belongs.
+The standing doctrine remains: local truth is not automatically whole truth. Future files must continue to earn canonical ownership and boundary justification before the codebase can keep the green badge.
 
 ## Run Metadata
 
 | Field | Value |
 | --- | --- |
-| Report ID | codebase-story-review-2026-06-04T18-32-47-729Z |
-| Source scan ID | scan-2026-06-04T18-32-41-882Z |
+| Report ID | codebase-story-review-2026-06-04T18-45-50-338Z |
+| Source scan ID | scan-2026-06-04T18-45-44-043Z |
 | Source swarm ID | bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z |
 | Target path | . |
-| Generated at | 2026-06-04T18:32:47.730Z |
+| Generated at | 2026-06-04T18:45:50.339Z |
