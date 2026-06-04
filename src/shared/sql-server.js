@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides SQL Server integration for persisting and retrieving sessions, app state, and OAuth tokens
+// responsibility: Provides SQL Server integration for session persistence, app state storage, and OAuth token management via SQL queries
 // actor: shared
 // role: persistence_provider
 // source_truth: implementation
@@ -8,6 +8,13 @@ const { execFileSync } = require("child_process");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
+const {
+  getSqlConfig,
+  sqlStringLiteral,
+  buildSqlcmdArgs,
+  runSql,
+  runSqlJson,
+} = require("./sql-helpers");
 
 let schemaReady = false;
 

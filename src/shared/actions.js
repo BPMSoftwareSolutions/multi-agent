@@ -1,10 +1,17 @@
 // warehouse:file
-// responsibility: Provides action queuing, approval workflow, and worker execution for file operations across the system
+// responsibility: Provides action queuing, approval workflow, and worker execution for file operations, including recommendation validation and status management
 // actor: shared
 // role: action_handler
 // source_truth: implementation
 
 const { v4: uuidv4 } = require("uuid");
+const {
+  toTrimmedString,
+  toStringArray,
+  normalizeApprovalStatus,
+  normalizeRiskLevel,
+  normalizeActionRecommendation,
+} = require("./validation-helpers");
 
 const ACTION_TYPES = new Set([
   "rename",
