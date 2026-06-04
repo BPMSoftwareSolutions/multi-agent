@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Initializes new runs and manages run directory structure for tracking
+// responsibility: Provides newRunId, runsDir, initRun functionality
 // actor: worker_bee_infrastructure
 // role: ledger_manager
 // source_truth: implementation

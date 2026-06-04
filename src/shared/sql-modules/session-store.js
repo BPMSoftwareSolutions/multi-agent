@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Persists and retrieves session objects from SQL Server database
+// responsibility: Provides saveSessionRow, getSessionRow, listSessionRows functionality
 // actor: shared
 // role: session_persistence
 // source_truth: implementation

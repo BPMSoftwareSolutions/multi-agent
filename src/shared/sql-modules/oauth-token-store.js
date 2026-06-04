@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Persists and retrieves OAuth tokens from SQL Server database by provider
+// responsibility: Provides setOAuthToken, getOAuthToken functionality
 // actor: persistence_layer
 // role: token_store
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Combines manifest and packet parts into read-only live status views with aggregated metrics
+// responsibility: Provides combineRun, finalizeRun, readLatestStatus functionality
 // actor: worker_bee_infrastructure
 // role: data_access
 // source_truth: implementation

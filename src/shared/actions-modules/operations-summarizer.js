@@ -7,7 +7,7 @@
 const { ensureOperationsState } = require("./operations-builder");
 
 // warehouse:method
-// responsibility: Summarizes operations: aggregates action execution counts by status, returns attempt and review metrics
+// responsibility: Aggregates action execution counts by status, returns metrics
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

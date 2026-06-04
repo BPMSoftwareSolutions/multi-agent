@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Orchestrates taxonomy report generation: parses arguments, extracts distributions, compiles coverage statistics, formats and outputs
+// responsibility: Orchestrates parseArgs, topN and related operations
 // actor: reporter
 // role: report_generator
 // source_truth: implementation

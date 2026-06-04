@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Constructs formatted file anchor comment blocks from model fields with spec formatting
+// responsibility: Assembles file-anchor comment block from model fields with proper formatting
 // actor: worker_bee_infrastructure
 // role: anchor_builder
 // source_truth: implementation

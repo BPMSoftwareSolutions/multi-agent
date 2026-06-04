@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: undefined — isBoilerplate
+// responsibility: Provides isBoilerplate, getAlignmentThreshold, detectRedFlags functionality
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

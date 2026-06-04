@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Reads packet configuration from JSON files on disk and parses to JavaScript objects
+// responsibility: Reads and parses JSON file content from disk, returns parsed JSON object
 // actor: worker_bee_infrastructure
 // role: packet_file_reader
 // source_truth: implementation

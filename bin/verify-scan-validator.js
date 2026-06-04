@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Validates taxonomy header fields presence and placeholder detection for test verification
+// responsibility: Provides readTaxonomyHeader, isComplete functionality
 // actor: test_infrastructure
 // role: validator
 // source_truth: implementation

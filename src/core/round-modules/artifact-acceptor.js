@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Handles artifact acceptance and routes action recommendations for queueing
+// responsibility: Manages artifact acceptance and routes action recommendations for execution
 // actor: core_runtime
 // role: acceptor
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const { queueActionRecommendations } = require("../../shared/actions");
 
 // warehouse:method
-// responsibility: Manages artifact acceptance and stage progression: accepts proposed artifact and queues action recommendations
+// responsibility: Accepts proposed artifact as current state and queues action recommendations
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

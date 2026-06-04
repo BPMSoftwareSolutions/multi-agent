@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Parses worker-bee log for packet completion events and progress metrics
+// responsibility: Parses worker-bee log for packet completion events, extracts file success counts, tracks total work metrics and timestamps
 // actor: worker_bee_infrastructure
 // role: progress_monitor
 // source_truth: implementation

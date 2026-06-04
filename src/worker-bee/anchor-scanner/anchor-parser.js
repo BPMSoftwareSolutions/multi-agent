@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Parses and extracts warehouse:file anchors from Python file text
+// responsibility: Provides hasFileAnchor, parseFileAnchorLines, parseFileAnchor functionality
 // actor: worker_bee_infrastructure
 // role: parser
 // source_truth: implementation

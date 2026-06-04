@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Continuous progress monitor: watches for stalls and alerts on log changes
+// responsibility: Provides readProgress, formatTimeDiff functionality
 // actor: progress_monitor
 // role: watcher
 // source_truth: implementation

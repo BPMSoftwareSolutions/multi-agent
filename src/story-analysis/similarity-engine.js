@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Orchestrates semantic similarity computation and vocabulary alignment analysis
+// responsibility: Provides computeSimilarity, isBoilerplate, getAlignmentThreshold functionality
 // actor: coherence_analyzer
 // role: engine
 // source_truth: implementation

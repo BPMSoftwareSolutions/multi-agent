@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Studio CLI entry point: loads environment config and routes commands to handlers
+// responsibility: Orchestrates main, parseOptions and related operations
 // actor: cli
 // role: entry_point
 // source_truth: implementation

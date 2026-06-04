@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Gets health indicator emoji and label based on coherence score
+// responsibility: Provides getHealthIndicator, buildNarrative functionality
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

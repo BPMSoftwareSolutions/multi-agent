@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Validates whether a value is a placeholder or missing (null, undefined, or empty)
+// responsibility: Provides isPlaceholder, isGenericResponsibility functionality
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

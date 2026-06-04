@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Converts paths to repo-relative POSIX format and computes directory depth
+// responsibility: Provides repoRelative, computeRepoRootDepth, normPath functionality
 // actor: worker_bee_infrastructure
 // role: path_normalizer
 // source_truth: implementation

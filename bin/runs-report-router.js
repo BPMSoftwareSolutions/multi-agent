@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Routes command flow between summary and detailed report modes for worker-bee run reporting
+// responsibility: Routes command flow: orchestrates report generation based on summary/detailed mode selection
 // actor: command_dispatcher
 // role: orchestrator
 // source_truth: implementation

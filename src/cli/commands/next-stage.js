@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Next-stage command handler: coordinates validation, stage advancement, and session state management
+// responsibility: Handles next-stage command: validates readiness and advances session workflow
 // actor: cli
 // role: command_handler
 // source_truth: implementation
@@ -9,7 +9,7 @@ const { advanceStage } = require("../../core/run-round");
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: Orchestrates next-stage command: validates, advances to next stage, and returns session
+// responsibility: Validates current stage state and advances session to next workflow stage
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Parses command-line arguments for worker-bee into swarm runtime configuration and execution parameters
+// responsibility: Parses command-line arguments and packet overrides into swarm runtime configuration and execution parameters with defaults
 // actor: argument_parser
 // role: config_builder
 // source_truth: implementation

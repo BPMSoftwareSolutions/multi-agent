@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Validates and assesses method anchor fields for completeness and quality with block construction
+// responsibility: Provides methodAnchorAbove, assessMethodAnchor, buildMethodAnchorBlock functionality
 // actor: worker_bee_infrastructure
 // role: assessor
 // source_truth: implementation
@@ -10,6 +10,10 @@ const { METHOD_ANCHOR_FIELD_ORDER } = require("../anchor-spec");
 const METHOD_MARKER_RE = /^\s*#\s+warehouse:(method|function)\s*$/;
 const REQUIRED_METHOD_FIELDS = ["responsibility", "input_contract", "output_contract", "forbidden", "validation"];
 
+// warehouse:method
+// warehouse:method
+// warehouse:method
+// warehouse:method
 // warehouse:method
 // warehouse:method
 // warehouse:method

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Partitions work items into packets with budget constraints using chunking strategy
+// responsibility: Provides chunk, anchorCost, fileChars functionality
 // actor: worker_bee_infrastructure
 // role: packer
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Orchestrates Claude API invocation and response text extraction by delegating to specialized modules
+// responsibility: Invokes Claude API with system context and messages, extracts response text
 // actor: core_runtime
 // role: model_orchestrator
 // source_truth: implementation
@@ -10,7 +10,7 @@ const { getApiKey } = require("./api-key-resolver");
 const model = process.env.MODEL || "claude-sonnet-4-6";
 
 // warehouse:method
-// responsibility: Invokes Claude API with system context and user messages, extracts and returns response text
+// responsibility: Calls Claude API with prompts, extracts response text from result
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

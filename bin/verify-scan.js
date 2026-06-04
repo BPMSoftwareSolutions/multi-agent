@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Python taxonomy verifier: scans configured folder, collects all Python files, validates taxonomy header completeness, reports TOUCHED/UNTOUCHED counts and status
+// responsibility: Provides walk, readTaxonomyHeader, isComplete functionality
 // actor: taxonomy_verifier
 // role: audit_tool
 // source_truth: implementation

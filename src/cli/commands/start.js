@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Orchestrates start command: validates arguments, initializes session, persists and outputs state
+// responsibility: Start command handler: validates brief, creates session with normalized intent from user input
 // actor: cli
 // role: command_handler
 // source_truth: implementation

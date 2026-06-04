@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: Initializes operations state with empty action queues, sync state, and file/folder registries
+// responsibility: Initializes and ensures valid operations state with queues, sync metadata, and registries
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Initializes operations state with empty action queues, sync state, and file/folder registries
+// responsibility: Creates empty operations object: action queues, sync state, file/folder dicts
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -28,7 +28,7 @@ function buildOperationsState() {
 }
 
 // warehouse:method
-// responsibility: Ensures session has valid operations state, merges with defaults, and validates array/object types
+// responsibility: Validates session operations structure, merges with defaults, ensures correct types
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

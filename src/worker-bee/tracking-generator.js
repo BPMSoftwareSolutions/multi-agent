@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Generates and persists taxonomy tracking JSON from scan results with reporting
+// responsibility: Provides generateTracking, writeTracking, reportTracking functionality
 // actor: worker_bee_infrastructure
 // role: tracking_generator
 // source_truth: implementation

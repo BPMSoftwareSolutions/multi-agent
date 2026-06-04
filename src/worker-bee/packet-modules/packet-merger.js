@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Merges packet configurations with shallow-deep strategy for nested objects
+// responsibility: Builds packet configurations: merges base and override with shallow-deep strategy for swarm and workload
 // actor: worker_bee_infrastructure
 // role: packet_merger
 // source_truth: implementation

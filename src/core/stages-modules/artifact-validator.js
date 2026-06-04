@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Validates artifact structure against stage schema and enforces type compliance
+// responsibility: Validates artifact structure against stage schema and checks completeness
 // actor: core_runtime
 // role: validator
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const { STAGES } = require("./stage-schemas");
 
 // warehouse:method
-// responsibility: Validates artifact structure against stage schema and enforces type compliance — validateArtifact
+// responsibility: Checks field types match schema (arrays vs strings), returns errors if mismatch
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -40,7 +40,7 @@ function validateArtifact(stageId, artifact) {
 }
 
 // warehouse:method
-// responsibility: Checks if artifact has required populated fields for stage completion
+// responsibility: Checks if all required stage fields have non-empty values
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Persists application state values to SQL Server database using MERGE operations
+// responsibility: Persists application state value to SQL database by key with MERGE create-or-update semantics
 // actor: persistence_layer
 // role: data_persister
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Persists and retrieves application state values from SQL Server database
+// responsibility: Provides setAppState, getAppState functionality
 // actor: shared
 // role: app_state_persistence
 // source_truth: implementation

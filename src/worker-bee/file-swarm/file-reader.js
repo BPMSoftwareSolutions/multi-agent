@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Reads files and truncates content to character budget for prompt embedding
+// responsibility: Reads file and truncates content to character budget for prompt embedding with ellipsis marker
 // actor: worker_bee_infrastructure
 // role: file_reader
 // source_truth: implementation

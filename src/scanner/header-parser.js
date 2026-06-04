@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Parses taxonomy headers from file comment blocks and validates completeness of required metadata fields
+// responsibility: Parses and validates taxonomy headers from file comment blocks
 // actor: header_parser
 // role: validator
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const fs = require("fs");
 
 // warehouse:method
-// responsibility: Parses taxonomy metadata fields from file header comment block and extracts key-value pairs
+// responsibility: Extracts key:value pairs from # comment lines at file start into object
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -32,7 +32,7 @@ function readTaxonomyHeader(filePath) {
 }
 
 // warehouse:method
-// responsibility: Validates taxonomy header completeness by checking presence of all required metadata fields
+// responsibility: Checks if all required metadata fields (responsibility, actor, role, source_truth) are present
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

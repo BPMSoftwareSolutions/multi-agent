@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Orchestrates coherence analysis workflow: loads taxonomy, analyzes files, persists and renders report
+// responsibility: Orchestrates evaluateFileCoherence, generateReport and related operations
 // actor: coherence_analyzer
 // role: orchestrator
 // source_truth: implementation

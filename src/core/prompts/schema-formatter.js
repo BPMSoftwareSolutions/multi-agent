@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: Converts a schema object into human-readable field descriptions for prompt injection
+// responsibility: Converts schema objects to human-readable field descriptions for prompts
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Converts a schema object into human-readable field descriptions for prompt injection
+// responsibility: Converts schema definition to readable field descriptions
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -18,7 +18,7 @@ function schemaToText(schema) {
 }
 
 // warehouse:method
-// responsibility: Serializes values to formatted JSON strings for prompt embedding
+// responsibility: Serializes values to formatted JSON for prompt embedding
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

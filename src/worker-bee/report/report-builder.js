@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Assembles taxonomy report from scanned files and summary metrics
+// responsibility: Assembles taxonomy report: compiles file/method anchors with coverage metrics and quality assessment
 // actor: worker_bee_infrastructure
 // role: telemetry_evidence
 // source_truth: implementation

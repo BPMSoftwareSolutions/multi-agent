@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Constructs planner agent prompts for artifact development based on stage goals
+// responsibility: Constructs planner prompt for artifact development aligned with stage goals
 // actor: core_runtime
 // role: prompt_builder
 // source_truth: implementation
@@ -8,7 +8,7 @@ const { schemaToText, toJSONString } = require("./schema-formatter");
 const { buildRoundContext, formatHumanInterjection } = require("./context-builder");
 
 // warehouse:method
-// responsibility: CLI aggregator: constructs agent prompt for planner to propose artifact improvements aligned with stage goals
+// responsibility: Combines stage config, intent, artifact, round context, and human interjection into planner prompt
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Worker-bee CLI orchestrator: orchestrates complete swarm execution from scanning to packet distribution to result reporting
+// responsibility: Orchestrates renderStatus, main and related operations
 // actor: worker_bee_swarm
 // role: orchestrator
 // source_truth: implementation
@@ -34,6 +34,7 @@ const { findWork } = require("../src/worker-bee/scan");
 const { runFileSwarm } = require("../src/worker-bee/run-file-swarm");
 const { buildPacket, describePacket } = require("../src/worker-bee/packet");
 const { newRunId, initRun, writePart, finalizeRun, readLatestStatus } = require("../src/worker-bee/ledger");
+const { cleanupLedgers } = require("../scripts/cleanup-ledgers");
 
 const DEFAULT_REPO_ROOT =
   process.env.WORKER_BEE_REPO_ROOT || config.repoRoot || "C:/source/repos/bpm/internal/ai-engine";
@@ -138,6 +139,9 @@ function renderStatus(status, json) {
 // role: implementation
 // source_truth: implementation
 async function main() {
+  // Clean up old ledgers before starting any new work
+  cleanupLedgers();
+
   const { rt, ov } = parseArgs(process.argv.slice(2));
   if (rt.help) {
     process.stdout.write(HELP);

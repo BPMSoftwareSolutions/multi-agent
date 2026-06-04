@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Orchestrates concurrent bee agents processing packets from shared work queue
+// responsibility: Orchestrates concurrent bee agents pulling packets from queue and writing anchors
 // actor: worker_bee_infrastructure
 // role: orchestrator
 // source_truth: implementation

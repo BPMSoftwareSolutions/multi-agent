@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Invokes language model API with authentication and request handling
+// responsibility: Sends messages to language model API and returns raw response
 // actor: core_runtime
 // role: model_invoker
 // source_truth: implementation
@@ -10,7 +10,7 @@ const { getApiKey } = require("./api-key-resolver");
 const model = process.env.MODEL || "claude-sonnet-4-6";
 
 // warehouse:method
-// responsibility: Invokes language model API with system prompt and messages, returns raw model response
+// responsibility: Calls language model API with system prompt and user messages, returns response
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

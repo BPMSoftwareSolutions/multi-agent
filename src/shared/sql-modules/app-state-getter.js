@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Retrieves application state values from SQL Server database by key
+// responsibility: Retrieves application state value from SQL database by key, returns value or null if not found
 // actor: persistence_layer
 // role: data_retriever
 // source_truth: implementation

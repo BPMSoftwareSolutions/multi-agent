@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Delegates action queueing to focused modules: orchestrates queue deduplication and action routing
+// responsibility: Routes and deduplicates actions and review items in operation queues
 // actor: action_orchestrator
 // role: queue_manager
 // source_truth: implementation
@@ -10,7 +10,7 @@ const { registerFile } = require("./item-registrar");
 const { ensureOperationsState } = require("./operations-builder");
 
 // warehouse:method
-// responsibility: Routes queued human review item to operations queue with deduplication check
+// responsibility: Routes review item to queue with deduplication
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -42,7 +42,7 @@ function queueHumanReviewItem(operations, recommendation, context = {}) {
 }
 
 // warehouse:method
-// responsibility: Routes action recommendations through normalization, routing logic, and approval workflow with deduplication
+// responsibility: Routes recommendations through normalization and deduplication
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -133,7 +133,7 @@ function queueActionRecommendations(session, recommendations, context = {}) {
 }
 
 // warehouse:method
-// responsibility: Wraps manual recommendation for queueing to enable CLI-driven action approval workflow
+// responsibility: Wraps manual recommendation for CLI-driven approval workflow
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

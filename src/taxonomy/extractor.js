@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Extracts warehouse:file and warehouse:method headers from JavaScript files into taxonomy structures
+// responsibility: Provides extractFileHeader, extractMethodHeaders, isValidTaxonomy functionality
 // actor: taxonomy_analyzer
 // role: extractor
 // source_truth: implementation
@@ -38,6 +38,8 @@ function extractFileHeader(content) {
   return foundFileHeader ? header : {};
 }
 
+// warehouse:method
+// warehouse:method
 // warehouse:method
 // warehouse:method
 // responsibility: Extracts all warehouse:method headers from JavaScript file into taxonomy array of documented methods
@@ -91,6 +93,9 @@ function extractMethodHeaders(content) {
 }
 
 // warehouse:method
+// warehouse:method
+// warehouse:method
+// warehouse:method
 // responsibility: Validates that taxonomy object contains required warehouse:file and warehouse:method header fields
 // actor: method_implementation
 // role: implementation
@@ -100,6 +105,9 @@ function isValidTaxonomy(taxonomy) {
   return required.every((field) => field in taxonomy && taxonomy[field]);
 }
 
+// warehouse:method
+// warehouse:method
+// warehouse:method
 // warehouse:method
 // responsibility: Processes a JavaScript file and extracts both warehouse:file and warehouse:method level taxonomy structures with validation
 // actor: method_implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Formats and outputs coherence analysis findings to console and JSON file
+// responsibility: Provides renderReport, writeReportFile, printReport functionality
 // actor: coherence_analyzer
 // role: reporter
 // source_truth: implementation

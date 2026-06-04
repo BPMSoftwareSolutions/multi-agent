@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Sends HTTPS JSON requests with timeout handling and error extraction
+// responsibility: Sends JSON POST request to URL with configurable timeout and error handling
 // actor: worker_bee_infrastructure
 // role: http_transport
 // source_truth: implementation

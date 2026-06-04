@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Log watcher: tails worker-bee log file, displays real-time completion events with timestamps, shows errors and fallback triggers
+// responsibility: Provides lineHandler, summaryHandler functionality
 // actor: log_watcher
 // role: monitor
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Extracts unique package responsibilities and synthesizes package story narratives
+// responsibility: Extracts package-level narratives from file responsibilities and role distributions
 // actor: story_generator
 // role: analyzer
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const fs = require("fs");
 
 // warehouse:method
-// responsibility: Groups files by package and extracts unique responsibilities
+// responsibility: Groups files by package, collects unique responsibilities
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -52,7 +52,7 @@ function analyzePackageStories(taxonomyPath) {
 }
 
 // warehouse:method
-// responsibility: Synthesizes a package story by selecting dominant role/actor and formatting responsibilities
+// responsibility: Selects dominant role/actor and formats package narrative
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

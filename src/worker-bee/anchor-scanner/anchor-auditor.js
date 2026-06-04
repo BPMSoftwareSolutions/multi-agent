@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Audits Python files for anchor completeness and quality, finds missing work items
+// responsibility: Provides assessAnchor, analyzeFile, findMissing functionality
 // actor: worker_bee_infrastructure
 // role: auditor
 // source_truth: implementation

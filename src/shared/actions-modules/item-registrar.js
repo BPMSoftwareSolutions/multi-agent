@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: Registers folder in operations state with metadata and current timestamp
+// responsibility: Registers files and folders in operations state with metadata and timestamps
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Registers folder in operations state with metadata and current timestamp
+// responsibility: Records folder in state with exists flag and timestamp
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -23,7 +23,7 @@ function registerFolder(operations, folderId) {
 }
 
 // warehouse:method
-// responsibility: Registers file in operations state from recommendation, merges with existing metadata, registers parent folders
+// responsibility: Records file with merged metadata, permissions, and parent folder registration
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

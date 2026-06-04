@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Scans Python files to extract anchors and methods with quality assessment and telemetry
+// responsibility: Provides increment, scanFiles functionality
 // actor: worker_bee_infrastructure
 // role: scanner
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Evaluates file coherence by computing semantic similarity and detecting alignment issues
+// responsibility: Provides evaluateFileCoherence, aggregateAnalysis functionality
 // actor: coherence_analyzer
 // role: analyzer
 // source_truth: implementation

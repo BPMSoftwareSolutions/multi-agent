@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Computes semantic alignment scores from concept vocabularies using word overlap ratio
+// responsibility: Computes semantic alignment score by extracting concepts and calculating word overlap ratio
 // actor: coherence_analyzer
 // role: scorer
 // source_truth: implementation

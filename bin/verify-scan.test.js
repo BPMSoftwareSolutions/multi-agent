@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Test-driven validation suite: creates test data environments, extracts and verifies taxonomy headers from Python files, ensures required fields present and non-placeholder
+// responsibility: Provides setupTestData, cleanupTestData, readTaxonomyHeader functionality
 // actor: test_suite
 // role: test
 // source_truth: implementation

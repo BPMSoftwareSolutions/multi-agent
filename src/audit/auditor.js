@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Audits JavaScript files for taxonomy header completeness
+// responsibility: Evaluates JavaScript files for taxonomy header completeness and classification status
 // actor: taxonomy_auditor
 // role: audit_tool
 // source_truth: implementation
@@ -9,7 +9,7 @@ const { walk } = require("./file-scanner");
 const { readHeader, isComplete } = require("./header-parser");
 
 // warehouse:method
-// responsibility: Scans JavaScript files and classifies by taxonomy completeness
+// responsibility: Scans and classifies JavaScript files by taxonomy header completeness (complete, partial, missing)
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

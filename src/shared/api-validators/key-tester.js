@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Validates API keys and models with quota/latency diagnostics and error reporting
+// responsibility: Tests single API key and model, returns diagnostic result with status, latency, and error details
 // actor: api_validator
 // role: tester
 // source_truth: implementation

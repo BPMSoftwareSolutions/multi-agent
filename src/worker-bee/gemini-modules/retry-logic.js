@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Determines retry eligibility for API failures and implements exponential backoff strategy
+// responsibility: Provides isRetryable, getBackoffDelay functionality
 // actor: worker_bee_infrastructure
 // role: retry_manager
 // source_truth: implementation

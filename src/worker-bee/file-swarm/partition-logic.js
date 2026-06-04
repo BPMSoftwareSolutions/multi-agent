@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Partitions work items into packets respecting anchor cost, file count, and character budget constraints using greedy packing
+// responsibility: Provides anchorCost, fileChars, packWork functionality
 // actor: worker_bee_infrastructure
 // role: packer
 // source_truth: implementation

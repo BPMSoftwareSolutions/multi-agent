@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Delegates run-worker command to modules: orchestrates session loading, worker execution, result printing
+// responsibility: Executes pending worker actions by loading session, executing handlers, and persisting results
 // actor: cli
 // role: command_handler
 // source_truth: implementation
@@ -10,7 +10,7 @@ const { executeDriveWorker } = require("../../../server/drive/service");
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: Run-worker command: loads session, finds pending action, executes via worker handler, saves updated session state
+// responsibility: Loads session, executes pending action, records result in attempt log, saves session
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

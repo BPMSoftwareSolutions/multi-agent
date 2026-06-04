@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Normalizes absolute paths to repo-relative POSIX format for cross-platform consistency
+// responsibility: Provides repoRelative, normPath functionality
 // actor: worker_bee_infrastructure
 // role: text_processor
 // source_truth: implementation

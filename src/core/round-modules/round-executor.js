@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Delegates round execution to focused modules: orchestrates agent execution and artifact handling
+// responsibility: Orchestrates design workshop rounds by executing planner and reviewer agents
 // actor: core_runtime
 // role: executor
 // source_truth: implementation
@@ -13,7 +13,7 @@ const { STAGES } = require("../stages");
 const { normalizeReviewerOutput } = require("./intent-normalizer");
 
 // warehouse:method
-// responsibility: Executes design workshop round by invoking planner and reviewer agents sequentially, orchestrating prompts and storing round results
+// responsibility: Executes planner and reviewer agents sequentially, stores round results
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: undefined — isComplete
+// responsibility: Provides isComplete, hasWarehouseField, getMissingFields functionality
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

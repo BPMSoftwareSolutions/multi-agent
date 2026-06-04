@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Constructs planner agent prompt for artifact development combining goals, intent, artifact, feedback
+// responsibility: Builds planner prompt: combines stage goal, intent, artifact, and human feedback for proposal
 // actor: core_runtime
 // role: prompt_builder
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const { schemaToText, toJSONString } = require("./schema-formatter");
 
 // warehouse:method
-// responsibility: Constructs planner agent prompt for artifact development by combining stage goals, task intent, current artifact, and human interjection feedback
+// responsibility: Composes system message and user task with artifact schema and development context
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

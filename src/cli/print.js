@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Composes and exports CLI output functions for rendering sessions, rounds, artifacts and coordinating process exit messaging
+// responsibility: Exports CLI output functions for rendering sessions, rounds, artifacts, and process exit
 // actor: cli
 // role: output_compositor
 // source_truth: implementation
@@ -8,7 +8,7 @@ const { STAGES } = require("../core/stages");
 const { summarizeOperations } = require("../shared/actions");
 
 // warehouse:method
-// responsibility: Renders artifact into human-readable CLI output with nested key-value pairs and structured formatting
+// responsibility: Formats artifact object for human-readable CLI display
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -36,7 +36,7 @@ function renderArtifact(stageId, artifact) {
 }
 
 // warehouse:method
-// responsibility: Renders complete session state to human-readable CLI output showing stages, rounds, operations, and artifact progression
+// responsibility: Renders complete session state with stages and artifact progression
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -148,7 +148,7 @@ function renderSession(session, options = {}) {
 }
 
 // warehouse:method
-// responsibility: Formats and renders round data to human-readable CLI output with planner, reviewer results, and change summaries
+// responsibility: Formats round results with planner and reviewer outputs for display
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -242,7 +242,7 @@ function renderRound(round, options = {}) {
 }
 
 // warehouse:method
-// responsibility: Outputs exit message to console and terminates process with given exit code
+// responsibility: Outputs exit message and terminates process with specified exit code
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

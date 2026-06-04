@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Status command handler: retrieves current session, summarizes pending/running/completed operations, renders state in JSON or text format
+// responsibility: Summarizes pending, running, and completed operations in current session
 // actor: cli
 // role: command_handler
 // source_truth: implementation
@@ -9,7 +9,7 @@ const { summarizeOperations } = require("../../shared/actions");
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: Status command: retrieves current session, renders state with operation summaries in JSON format
+// responsibility: Retrieves session and outputs operation status summary in JSON or text format
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

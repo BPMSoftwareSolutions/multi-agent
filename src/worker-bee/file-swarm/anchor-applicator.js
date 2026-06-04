@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Applies anchors via language model APIs with adaptive packet splitting and retry logic
+// responsibility: Provides applyToItem, processOversizeFile, processPacket functionality
 // actor: worker_bee_infrastructure
 // role: applicator
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Formats progress metrics into human-readable markdown reports with velocity calculations and forecasts
+// responsibility: Generates progress snapshot: formats markdown report with velocity metrics, completion calculations, forecast
 // actor: report_formatter
 // role: formatter
 // source_truth: implementation

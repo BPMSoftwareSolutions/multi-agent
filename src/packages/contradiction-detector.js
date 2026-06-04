@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: Aggregates files into package groups with role/actor distributions
+// responsibility: Detects package-level taxonomy contradictions and role/actor inconsistencies
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Aggregates files into package groups with role/actor distributions
+// responsibility: Groups files by package and detects contradictions
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -42,7 +42,7 @@ function analyzePackages(taxonomyPath) {
 }
 
 // warehouse:method
-// responsibility: Detects contradictions in package taxonomy by checking name-responsibility mismatches and role inconsistency
+// responsibility: Identifies naming-responsibility mismatches and role inconsistencies
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

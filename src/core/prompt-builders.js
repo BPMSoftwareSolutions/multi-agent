@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: CLI aggregator for agent prompt generation - delegates to focused prompt modules
+// responsibility: Aggregates prompt construction by delegating to specialized prompt builder modules
 // actor: core_runtime
 // role: entry_point
 // source_truth: implementation
@@ -11,7 +11,7 @@ const { buildIntentPrompt } = require("./prompts/intent-prompter");
 
 // Planner Prompt
 // warehouse:method
-// responsibility: CLI aggregator: constructs agent prompt for planner to propose artifact improvements aligned with stage goals
+// responsibility: Constructs planner agent prompt combining stage goals and task intent
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -77,7 +77,7 @@ function buildBuilderPrompt({
 
 // Reviewer Prompt
 // warehouse:method
-// responsibility: CLI aggregator: constructs agent prompt for reviewer to identify issues in artifact proposals
+// responsibility: Constructs reviewer agent prompt for artifact evaluation
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

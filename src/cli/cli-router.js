@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Routes CLI commands to appropriate handler functions based on command type and options
+// responsibility: Dispatches CLI commands to their corresponding handler modules
 // actor: command_router
 // role: orchestrator
 // source_truth: implementation
@@ -15,7 +15,7 @@ const { approveActionCommand } = require("./commands/approve-action");
 const { exit } = require("./print");
 
 // warehouse:method
-// responsibility: Routes parsed CLI command to appropriate handler function with options
+// responsibility: Routes parsed CLI command to appropriate handler function based on command name
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

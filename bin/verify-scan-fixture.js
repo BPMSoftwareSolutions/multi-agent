@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Manages test data fixture creation and cleanup for taxonomy validation tests
+// responsibility: Provides setupTestData, cleanupTestData functionality
 // actor: test_infrastructure
 // role: test_helper
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Replaces existing file anchors or inserts new ones with formatting and line-ending preservation
+// responsibility: Replaces existing anchor block or inserts if not present, preserving line endings
 // actor: worker_bee_infrastructure
 // role: anchor_writer
 // source_truth: implementation

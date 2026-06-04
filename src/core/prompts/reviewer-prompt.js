@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Constructs reviewer agent prompt for artifact evaluation with alignment issue detection
+// responsibility: Constructs reviewer agent prompt for artifact evaluation against task intent
 // actor: core_runtime
 // role: prompt_builder
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const { toJSONString } = require("./schema-formatter");
 
 // warehouse:method
-// responsibility: Constructs reviewer agent prompt to evaluate proposed artifact changes against task intent
+// responsibility: Builds prompt for reviewer to assess artifact alignment with task goals
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

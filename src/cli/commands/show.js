@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Show command handler: retrieves session, renders complete state including stages and operations
+// responsibility: Renders current session state with all stages and operation history
 // actor: cli
 // role: command_handler
 // source_truth: implementation
@@ -8,7 +8,7 @@ const { getSession, getCurrentSessionId } = require("../../core/session-store");
 const { renderSession, exit } = require("../print");
 
 // warehouse:method
-// responsibility: Retrieves current session state and renders formatted output of stages and operations
+// responsibility: Retrieves current session and renders complete state for CLI display
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

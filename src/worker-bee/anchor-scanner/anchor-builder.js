@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Builds anchor data structures from parsed metadata with validation and serialization
+// responsibility: Provides buildAnchorBlock, insertAnchor, replaceAnchor functionality
 // actor: worker_bee_infrastructure
 // role: anchor_builder
 // source_truth: implementation

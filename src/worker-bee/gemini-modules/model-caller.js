@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Orchestrates language model API calls with retry, backoff, temperature variation, and fallback strategies
+// responsibility: Provides callGemini, callGeminiJSON functionality
 // actor: worker_bee_infrastructure
 // role: orchestrator
 // source_truth: implementation

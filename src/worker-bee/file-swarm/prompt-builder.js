@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Constructs language model prompts from work items and method metadata
+// responsibility: Provides methodList, buildPacketPrompt functionality
 // actor: worker_bee_infrastructure
 // role: builder
 // source_truth: implementation

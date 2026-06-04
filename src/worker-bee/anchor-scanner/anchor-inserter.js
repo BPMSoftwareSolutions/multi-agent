@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Inserts file anchors at proper location with line-ending and BOM preservation
+// responsibility: Inserts anchor block into file after shebang/coding declarations with EOL preservation
 // actor: worker_bee_infrastructure
 // role: anchor_writer
 // source_truth: implementation

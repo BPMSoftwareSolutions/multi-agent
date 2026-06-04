@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Orchestrates progress snapshot generation by reading logs, validating metrics, and writing formatted markdown reports
+// responsibility: Provides formatMarkdownReport, main functionality
 // actor: progress_snapshot
 // role: reporter
 // source_truth: implementation

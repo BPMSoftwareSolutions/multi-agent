@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Sends JSON POST requests with timeout handling and error extraction/parsing
+// responsibility: Sends JSON POST request to HTTPS endpoint with configurable timeout, parses response
 // actor: api_client
 // role: http_transport
 // source_truth: implementation

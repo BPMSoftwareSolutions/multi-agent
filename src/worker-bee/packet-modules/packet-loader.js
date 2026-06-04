@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Delegates packet loading to focused modules: orchestrates file reading and normalization
+// responsibility: Loads packet configuration from JSON file and normalizes to bare packet format
 // actor: worker_bee_infrastructure
 // role: packet_loader
 // source_truth: implementation

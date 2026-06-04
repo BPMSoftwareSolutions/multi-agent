@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Initializes empty artifacts for stages with schema-defined typed fields
+// responsibility: Creates empty artifacts with schema-defined field types for stage initialization
 // actor: core_runtime
 // role: initializer
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const { STAGES } = require("./stage-schemas");
 
 // warehouse:method
-// responsibility: Initializes empty artifacts: creates typed fields for specified stage schema
+// responsibility: Maps stage schema fields to empty typed values (empty strings or arrays)
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

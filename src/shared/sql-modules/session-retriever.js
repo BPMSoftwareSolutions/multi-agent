@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Retrieves session objects from SQL Server database by ID or lists all sessions
+// responsibility: Provides getSessionRow, listSessionRows functionality
 // actor: persistence_layer
 // role: data_retriever
 // source_truth: implementation

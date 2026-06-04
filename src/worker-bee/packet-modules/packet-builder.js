@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Builds effective packet configurations by layering defaults and overrides with descriptions
+// responsibility: Provides mergePacket, buildPacket, describePacket functionality
 // actor: worker_bee_infrastructure
 // role: packet_builder
 // source_truth: implementation

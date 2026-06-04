@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Orchestrates approve-action command: parses payload, validates session, queues action, saves
+// responsibility: Orchestrates action approval workflow: validates session, parses payload, queues and saves
 // actor: cli
 // role: command_handler
 // source_truth: implementation
