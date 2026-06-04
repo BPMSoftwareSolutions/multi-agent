@@ -16,12 +16,32 @@ const { buildFileEvidence } = require("./taxonomy-evidence-bundle");
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
+function collapseRepeatedResponsibility(responsibility) {
+  const marker = " and ";
+  let index = responsibility.indexOf(marker);
+  while (index >= 0) {
+    const left = responsibility.slice(0, index);
+    const right = responsibility.slice(index + marker.length);
+    if (left === right) {
+      return left;
+    }
+    index = responsibility.indexOf(marker, index + marker.length);
+  }
+  return responsibility;
+}
+
+// warehouse:method
+// responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function synthesizeExpectedResponsibility(taxonomy, evidence) {
   const methodResponsibilities = taxonomy.methods
     .filter((method) => method.taxonomy && method.taxonomy.responsibility)
-    .map((method) => method.taxonomy.responsibility.replace(/\s+/g, " ").trim());
-  if (methodResponsibilities.length > 0) {
-    return methodResponsibilities.join(" and ");
+    .map((method) => collapseRepeatedResponsibility(method.taxonomy.responsibility.replace(/\s+/g, " ").trim()));
+  const uniqueResponsibilities = [...new Set(methodResponsibilities)];
+  if (uniqueResponsibilities.length > 0) {
+    return uniqueResponsibilities.join(" and ");
   }
   const functionNames = evidence.detected_functions.map((fn) => fn.name).join(" and ");
   return `Coordinates ${functionNames} behavior with documented file and method taxonomy evidence`;
@@ -202,6 +222,7 @@ if (require.main === module) {
 }
 
 module.exports = {
+  collapseRepeatedResponsibility,
   synthesizeExpectedResponsibility,
   buildExpectedCoherence,
   formatIncoherenceReport,

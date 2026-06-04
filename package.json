@@ -23,6 +23,8 @@
     "test:taxonomy-case": "node tests/verify-taxonomy-case-file.js",
     "taxonomy-heal": "node bin/taxonomy-heal.js",
     "test:taxonomy-heal": "node tests/verify-taxonomy-heal.js",
+    "taxonomy-heal-run": "node bin/taxonomy-heal-run.js",
+    "test:taxonomy-heal-run": "node tests/verify-taxonomy-heal-run.js",
     "fractal-scan": "node bin/fractal-taxonomy-scanner.js",
     "worker-bee": "node bin/worker-bee.js"
   },
