@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Detects package-level taxonomy contradictions and role/actor inconsistencies
+// responsibility: Groups files by package and detects contradictions
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

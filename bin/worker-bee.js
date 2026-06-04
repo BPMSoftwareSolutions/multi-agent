@@ -36,8 +36,11 @@ const { buildPacket, describePacket } = require("../src/worker-bee/packet");
 const { newRunId, initRun, writePart, finalizeRun, readLatestStatus } = require("../src/worker-bee/ledger");
 const { cleanupLedgers } = require("../scripts/cleanup-ledgers");
 
-const DEFAULT_REPO_ROOT =
-  process.env.WORKER_BEE_REPO_ROOT || config.repoRoot || "C:/source/repos/bpm/internal/ai-engine";
+const DEFAULT_REPO_ROOT = process.env.WORKER_BEE_REPO_ROOT || config.repoRoot;
+if (!DEFAULT_REPO_ROOT) {
+  console.error('❌ Missing repo root configuration. Set WORKER_BEE_REPO_ROOT env var or .worker-bee.json repoRoot');
+  process.exit(1);
+}
 
 // responsibility: Parses command-line arguments and packet overrides into swarm runtime configuration and execution parameters with defaults
 // actor: argument_parser

@@ -20,8 +20,11 @@ const fs = require("fs");
 
 const { findWork, serializeWork } = require("../src/worker-bee/scan");
 
-const DEFAULT_REPO_ROOT =
-  process.env.WORKER_BEE_REPO_ROOT || "C:/source/repos/bpm/internal/ai-engine";
+const DEFAULT_REPO_ROOT = process.env.WORKER_BEE_REPO_ROOT;
+if (!DEFAULT_REPO_ROOT) {
+  console.error('❌ Missing repo root configuration. Set WORKER_BEE_REPO_ROOT env var');
+  process.exit(1);
+}
 
 // warehouse:method
 // responsibility: Python taxonomy scanner: parses and validates command arguments for taxonomy scanning

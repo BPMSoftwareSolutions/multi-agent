@@ -42,6 +42,9 @@ function extractFileHeader(content) {
 // warehouse:method
 // warehouse:method
 // warehouse:method
+// warehouse:method
+// warehouse:method
+// warehouse:method
 // responsibility: Extracts all warehouse:method headers from JavaScript file into taxonomy array of documented methods
 // actor: method_implementation
 // role: implementation
@@ -96,6 +99,9 @@ function extractMethodHeaders(content) {
 // warehouse:method
 // warehouse:method
 // warehouse:method
+// warehouse:method
+// warehouse:method
+// warehouse:method
 // responsibility: Validates that taxonomy object contains required warehouse:file and warehouse:method header fields
 // actor: method_implementation
 // role: implementation
@@ -105,6 +111,9 @@ function isValidTaxonomy(taxonomy) {
   return required.every((field) => field in taxonomy && taxonomy[field]);
 }
 
+// warehouse:method
+// warehouse:method
+// warehouse:method
 // warehouse:method
 // warehouse:method
 // warehouse:method

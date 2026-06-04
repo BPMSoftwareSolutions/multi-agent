@@ -17,8 +17,16 @@ for (const name of [".env.local", ".env"]) {
   if (fs.existsSync(p)) require("dotenv").config({ path: p });
 }
 
-const config = JSON.parse(fs.readFileSync(path.join(root, ".worker-bee.json"), "utf8"));
-const DEFAULT_REPO_ROOT = process.env.WORKER_BEE_REPO_ROOT || config.repoRoot || "C:/source/repos/bpm/internal/ai-engine";
+let config = {};
+const configPath = path.join(root, ".worker-bee.json");
+if (fs.existsSync(configPath)) {
+  config = JSON.parse(fs.readFileSync(configPath, "utf8"));
+}
+const DEFAULT_REPO_ROOT = process.env.WORKER_BEE_REPO_ROOT || config.repoRoot;
+if (!DEFAULT_REPO_ROOT) {
+  console.error('❌ Missing repo root configuration. Set WORKER_BEE_REPO_ROOT env var or .worker-bee.json repoRoot');
+  process.exit(1);
+}
 const DEFAULT_TARGET = path.resolve(DEFAULT_REPO_ROOT, config.defaultTarget || "packages");
 
 // warehouse:method

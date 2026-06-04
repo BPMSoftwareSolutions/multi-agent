@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Initializes and ensures valid operations state with queues, sync metadata, and registries
+// responsibility: Creates empty operations object: action queues, sync state, file/folder dicts
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

@@ -1,14 +1,14 @@
 // warehouse:file
-// responsibility: Orchestrates concurrent bee agents pulling packets from queue and writing anchors
+// responsibility: Runs concurrent bee agents from packet spec, processing work packets and tracking completion status
 // actor: worker_bee_infrastructure
-// role: orchestrator
+// role: swarm_runner
 // source_truth: implementation
 
 const { packWork } = require("./work-packer");
 const { processPacket } = require("./anchor-applicator");
 
 // warehouse:method
-// responsibility: Orchestrates concurrent bee agents pulling packets from queue and writing anchors
+// responsibility: Orchestrates concurrent bee agents pulling packets from queue and writing anchors, tracks tally and results
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

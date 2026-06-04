@@ -4,8 +4,10 @@
 // role: argument_parser
 // source_truth: implementation
 
-const DEFAULT_REPO_ROOT =
-  process.env.WORKER_BEE_REPO_ROOT || "C:/source/repos/bpm/internal/ai-engine";
+const DEFAULT_REPO_ROOT = process.env.WORKER_BEE_REPO_ROOT;
+if (!DEFAULT_REPO_ROOT) {
+  throw new Error('Missing repo root configuration. Set WORKER_BEE_REPO_ROOT env var');
+}
 
 // warehouse:method
 // responsibility: Parses and validates command arguments for taxonomy scanning operations — parseArgs

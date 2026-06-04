@@ -98,14 +98,33 @@ function buildTaxonomyIndex(taxonomy) {
 
   for (const fileEntry of taxonomy.files) {
     const normalizedPath = path.normalize(fileEntry.path);
+    // Handle nested file object structure (from extracted taxonomy format)
+    const fileData = fileEntry.file || fileEntry;
+
+    // Convert methods from array format to object format
+    let methodsIndex = {};
+    if (Array.isArray(fileEntry.methods)) {
+      for (const method of fileEntry.methods) {
+        const methodTaxonomy = method.taxonomy || method;
+        methodsIndex[method.name] = {
+          responsibility: methodTaxonomy.responsibility,
+          actor: methodTaxonomy.actor,
+          role: methodTaxonomy.role,
+          source_truth: methodTaxonomy.source_truth || "implementation",
+        };
+      }
+    } else if (typeof fileEntry.methods === 'object') {
+      methodsIndex = fileEntry.methods;
+    }
+
     index[normalizedPath] = {
       file: {
-        responsibility: fileEntry.responsibility,
-        actor: fileEntry.actor,
-        role: fileEntry.role,
-        source_truth: fileEntry.source_truth || "implementation",
+        responsibility: fileData.responsibility,
+        actor: fileData.actor,
+        role: fileData.role,
+        source_truth: fileData.source_truth || "implementation",
       },
-      methods: fileEntry.methods || {}, // methods is a key-value object: methodName -> responsibility string
+      methods: methodsIndex,
     };
   }
 
@@ -298,14 +317,19 @@ function updateFileAnchors(filePath, fileContent, fileData, methodsData) {
       continue;
     }
 
-    const responsibility = methodsData[methodName];
+    const methodTaxonomy = methodsData[methodName];
 
-    // Create method data with updated responsibility, keeping actor/role as default
-    const methodData = {
-      responsibility: responsibility,
+    // Create method data with updated taxonomy (or default if it's just a string)
+    const methodData = typeof methodTaxonomy === 'string' ? {
+      responsibility: methodTaxonomy,
       actor: "method_implementation",
       role: "implementation",
       source_truth: "implementation",
+    } : {
+      responsibility: methodTaxonomy.responsibility,
+      actor: methodTaxonomy.actor || "method_implementation",
+      role: methodTaxonomy.role || "implementation",
+      source_truth: methodTaxonomy.source_truth || "implementation",
     };
 
     const newMethodLines = generateMethodHeader(methodData);

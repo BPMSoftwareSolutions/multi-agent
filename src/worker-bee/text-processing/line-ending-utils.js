@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides dominantEol, splitKeepEnds functionality
+// responsibility: Detects whether text uses CRLF or LF as dominant line-ending style
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

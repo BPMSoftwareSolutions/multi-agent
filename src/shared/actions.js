@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Delegator for action workflows and operations management
+// responsibility: Delegator exporting all action system operations: state management, registration, queuing, and execution
 // actor: shared
 // role: delegator
 // source_truth: implementation

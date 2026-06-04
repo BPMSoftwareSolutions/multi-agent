@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Converts schema objects to human-readable field descriptions for prompts
+// responsibility: Converts schema definition to readable field descriptions
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

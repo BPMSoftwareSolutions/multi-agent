@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Delegator for packet schema and configuration management
+// responsibility: Delegator exporting packet builder, loader, and merger for workload configuration and specification
 // actor: worker_bee_infrastructure
 // role: delegator
 // source_truth: implementation

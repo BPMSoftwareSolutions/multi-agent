@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides isObject, prune functionality
+// responsibility: Type-checks whether a value is a plain object (excludes arrays and nulls)
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

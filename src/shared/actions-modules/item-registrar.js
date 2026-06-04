@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Registers files and folders in operations state with metadata and timestamps
+// responsibility: Records folder in state with exists flag and timestamp
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

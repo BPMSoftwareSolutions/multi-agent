@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides formatReport, formatSummary, getExitCode functionality
+// responsibility: undefined — formatReport
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
