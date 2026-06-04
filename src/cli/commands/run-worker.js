@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Delegates run-worker command to focused modules; orchestrates session loading, worker execution, and result printing
+// responsibility: Delegates run-worker command to modules: orchestrates session loading, worker execution, result printing
 // actor: cli
-// role: run_worker_command_delegator
+// role: command_handler
 // source_truth: implementation
 
 const { saveSession } = require("../../core/session-store");
@@ -11,10 +11,11 @@ const { loadWorkerSession } = require("./worker-session-loader");
 const { printWorkerResult } = require("./worker-result-printer");
 
 // warehouse:method
-// responsibility: Run-worker command delegator: loads session, executes worker, saves session, delegates result printing
-// actor: cli
-// role: run_worker_command_delegator
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 async function runWorkerCommand(actionId = null, options = {}) {
   try {
     const session = loadWorkerSession(options);

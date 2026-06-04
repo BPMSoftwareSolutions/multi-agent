@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Audits Python files for anchor completeness and quality
+// responsibility: Audits Python files for anchor completeness across file and method layers with quality assessment
 // actor: worker_bee_infrastructure
 // role: auditor
 // source_truth: implementation
@@ -11,9 +11,9 @@ const { listPythonFiles } = require("./file-discoverer");
 const { parseFileAnchorLines } = require("./anchor-parser");
 
 // warehouse:method
-// responsibility: Assesses anchor completeness by validating all fields, checking vocabulary constraints, and detecting consistency issues across role, actor, and responsibility fields
-// actor: worker_bee_infrastructure
-// role: auditor
+// responsibility: Assesses anchor completeness by validating all fields, checking vocabulary constraints, and detecting consistency issues
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function assessAnchor(fields, deterministic) {
   const issues = [];
@@ -32,9 +32,9 @@ function assessAnchor(fields, deterministic) {
 }
 
 // warehouse:method
-// responsibility: Analyzes Python file for anchor completeness across file and method layers, identifies missing and low-quality work items for auditing
-// actor: worker_bee_infrastructure
-// role: auditor
+// responsibility: Analyzes Python file for anchor completeness across file and method layers, identifies missing and low-quality work items
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function analyzeFile(absPath, repoRoot, { layer = "both", mode = "all" } = {}) {
   let raw;
@@ -90,9 +90,9 @@ function analyzeFile(absPath, repoRoot, { layer = "both", mode = "all" } = {}) {
 }
 
 // warehouse:method
-// responsibility: Finds Python files missing file anchors and precomputes deterministic audit fields (location, depth) for work planning
-// actor: worker_bee_infrastructure
-// role: auditor
+// responsibility: Finds Python files missing file anchors and precomputes deterministic audit fields for work planning
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function findMissing(root, repoRoot, { limit } = {}) {
   const files = listPythonFiles(root);
@@ -119,9 +119,9 @@ function findMissing(root, repoRoot, { limit } = {}) {
 }
 
 // warehouse:method
-// responsibility: Finds Python files needing anchor work across layers (file/method), audits completeness issues, and categorizes work items for bee task planning
-// actor: worker_bee_infrastructure
-// role: auditor
+// responsibility: Finds Python files needing anchor work across layers, audits completeness issues, and categorizes work items for bee task planning
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function findWork(root, repoRoot, { mode = "all", layer = "file", limit } = {}) {
   const files = listPythonFiles(root);

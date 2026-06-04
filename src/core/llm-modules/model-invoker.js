@@ -11,8 +11,8 @@ const model = process.env.MODEL || "claude-sonnet-4-6";
 
 // warehouse:method
 // responsibility: Invokes language model API with system prompt and messages, returns raw model response
-// actor: core_runtime
-// role: model_invoker
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function invokeModel({ system, userMessages, maxTokens, apiKey }) {
   const key = getApiKey(apiKey);

@@ -9,8 +9,8 @@ const { extractTextFromResponse } = require("./response-extractor");
 
 // warehouse:method
 // responsibility: Invokes Claude API with system context and user messages, extracts and returns response text
-// actor: core_runtime
-// role: model_orchestrator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function callClaude({ system, userMessages, maxTokens, apiKey }) {
   const response = await invokeModel({

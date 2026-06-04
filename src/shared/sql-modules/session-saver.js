@@ -8,10 +8,11 @@ const { getSqlConfig, sqlStringLiteral, runSql } = require("../sql-helpers");
 const { ensureSchema } = require("./schema-manager");
 
 // warehouse:method
-// responsibility: Writes session to database using MERGE statement for create/update
-// actor: shared
-// role: session_writer
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function saveSessionRow(session) {
   ensureSchema();
   const { schema } = getSqlConfig();

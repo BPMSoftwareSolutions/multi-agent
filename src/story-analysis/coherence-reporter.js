@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Formats and outputs coherence analysis findings to console and JSON file
-// actor: report_generator
-// role: formatter
+// actor: coherence_analyzer
+// role: reporter
 // source_truth: implementation
 
 const fs = require("fs");
@@ -9,8 +9,8 @@ const path = require("path");
 
 // warehouse:method
 // responsibility: Renders human-readable coherence report to console with detailed metrics
-// actor: report_generator
-// role: formatter
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function renderReport(report) {
   const output = [];
@@ -54,8 +54,8 @@ function renderReport(report) {
 
 // warehouse:method
 // responsibility: Writes coherence report to JSON file
-// actor: report_generator
-// role: file_writer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function writeReportFile(report, taxonomyPath) {
   const reportRoot = path.dirname(taxonomyPath);
@@ -65,10 +65,11 @@ function writeReportFile(report, taxonomyPath) {
 }
 
 // warehouse:method
-// responsibility: Outputs report text and file path information
-// actor: report_generator
-// role: output_renderer
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function printReport(report, reportFile) {
   console.log(renderReport(report));
   console.log(`\n📊 Full analysis written to: ${reportFile}`);

@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Validates and assesses method anchor fields for completeness and quality
+// responsibility: Validates and assesses method anchor fields for completeness and quality with block construction
 // actor: worker_bee_infrastructure
-// role: projection_compiler
+// role: assessor
 // source_truth: implementation
 
 const { isPlaceholder, isGenericResponsibility } = require("../scan");
@@ -11,9 +11,17 @@ const METHOD_MARKER_RE = /^\s*#\s+warehouse:(method|function)\s*$/;
 const REQUIRED_METHOD_FIELDS = ["responsibility", "input_contract", "output_contract", "forbidden", "validation"];
 
 // warehouse:method
-// responsibility: Finds existing warehouse:method anchor comment block above function definition by scanning upward for marker and parsing fields
-// actor: worker_bee_infrastructure
-// role: projection_compiler
+// responsibility: undefined
+// actor: undefined
+// role: undefined
+// source_truth: implementation
+
+// warehouse:method
+// warehouse:method
+// warehouse:method
+// responsibility: Finds existing warehouse:method anchor comment block above function definition by scanning upward
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function methodAnchorAbove(lines, defIdx) {
   let markerLine = -1;
@@ -46,10 +54,11 @@ function methodAnchorAbove(lines, defIdx) {
 }
 
 // warehouse:method
-// responsibility: Assesses method anchor fields by validating completeness of required fields and detecting generic or problematic responsibility text
-// actor: worker_bee_infrastructure
-// role: projection_compiler
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function assessMethodAnchor(fields) {
   const issues = [];
   for (const key of REQUIRED_METHOD_FIELDS) {
@@ -60,9 +69,9 @@ function assessMethodAnchor(fields) {
 }
 
 // warehouse:method
-// responsibility: Constructs properly indented method anchor comment block by formatting fields in spec order with fallback defaults
-// actor: worker_bee_infrastructure
-// role: projection_compiler
+// responsibility: Constructs properly indented method anchor comment block by formatting fields in spec order
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function buildMethodAnchorBlock(indent, fields) {
   const out = [`${indent}# warehouse:method`];

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Validates session state and stage readiness
+// responsibility: Validates session state and stage readiness for next-stage command execution
 // actor: cli
 // role: validator
 // source_truth: implementation
@@ -8,10 +8,11 @@ const { getSession, getCurrentSessionId } = require("../../core/session-store");
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: Validates current stage is accepted and session exists before advancement
-// actor: cli
-// role: validator
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function validateNextStage(sessionId = null) {
   const id = sessionId || getCurrentSessionId();
   if (!id) {

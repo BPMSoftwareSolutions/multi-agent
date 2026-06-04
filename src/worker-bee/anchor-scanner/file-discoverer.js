@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Discovers Python files by recursively walking directory tree with skip list filtering and returns sorted list
+// responsibility: Recursively discovers Python files in directory tree with skip list filtering
 // actor: worker_bee_infrastructure
 // role: scanner
 // source_truth: implementation
@@ -13,10 +13,11 @@ const SKIP_DIRS = new Set([
 ]);
 
 // warehouse:method
-// responsibility: Discovers Python files by recursively walking directory tree with skip list filtering and returns sorted paths
-// actor: worker_bee_infrastructure
-// role: scanner
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function listPythonFiles(root) {
   const out = [];
   function walk(dir) {

@@ -7,10 +7,11 @@
 const https = require("https");
 
 // warehouse:method
-// responsibility: Sends JSON POST request to URL with configurable timeout and error handling
-// actor: worker_bee_infrastructure
-// role: http_transport
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function postJson(url, payload, timeoutMs = 30000) {
   const body = JSON.stringify(payload);
   return new Promise((resolve, reject) => {

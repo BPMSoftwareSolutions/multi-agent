@@ -7,10 +7,11 @@
 const { STAGES } = require("./stage-schemas");
 
 // warehouse:method
-// responsibility: Validates artifact against stage schema, returns validation result with field details
-// actor: core_runtime
-// role: validator
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function validateArtifact(stageId, artifact) {
   const stage = STAGES[stageId];
   if (!stage) {
@@ -41,8 +42,8 @@ function validateArtifact(stageId, artifact) {
 
 // warehouse:method
 // responsibility: Checks if artifact has required populated fields for stage completion
-// actor: core_runtime
-// role: validator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function isArtifactComplete(stageId, artifact) {
   const stage = STAGES[stageId];

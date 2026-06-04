@@ -7,10 +7,11 @@
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: Outputs worker execution result with error handling and JSON or human-readable formatting based on options
-// actor: cli
-// role: worker_result_printer
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function printWorkerResult(result, options = {}) {
   if (options.json) {
     console.log(JSON.stringify(result, null, 2));

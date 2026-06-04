@@ -1,15 +1,15 @@
 // warehouse:file
 // responsibility: Parses worker-bee log for packet completion events and progress metrics
-// actor: log_parser
-// role: data_extractor
+// actor: worker_bee_infrastructure
+// role: progress_monitor
 // source_truth: implementation
 
 const fs = require("fs");
 
 // warehouse:method
-// responsibility: Parses worker-bee log for packet completion events, extracts file success counts, tracks total work metrics and timestamps for progress monitoring
-// actor: log_parser
-// role: data_extractor
+// responsibility: Parses worker-bee log for packet completion events, extracts file success counts, tracks total work metrics and timestamps
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function readProgress(logFile) {
   const content = fs.readFileSync(logFile, "utf8");

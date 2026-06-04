@@ -8,10 +8,11 @@ const { saveSession } = require("../../core/session-store");
 const { advanceStage } = require("../../core/run-round");
 
 // warehouse:method
-// responsibility: Advances session to next stage in workflow sequence and saves updated state
-// actor: cli
-// role: command_executor
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 async function advanceToNextStage(session) {
   const nextStageId = await advanceStage(session);
   saveSession(session);

@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Persists and retrieves OAuth tokens from SQL Server database
-// actor: shared
-// role: oauth_token_persistence
+// responsibility: Persists and retrieves OAuth tokens from SQL Server database by provider
+// actor: persistence_layer
+// role: token_store
 // source_truth: implementation
 
 const { getSqlConfig, sqlStringLiteral, runSql, runSqlJson } = require("../sql-helpers");
@@ -9,8 +9,8 @@ const { ensureSchema } = require("./schema-manager");
 
 // warehouse:method
 // responsibility: Persists and retrieves OAuth tokens: writes token JSON to database by provider using MERGE
-// actor: shared
-// role: oauth_token_persistence
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function setOAuthToken(provider, tokenJson) {
   ensureSchema();
@@ -34,10 +34,11 @@ VALUES (source.provider, source.token_json, source.updated_at);
 }
 
 // warehouse:method
-// responsibility: Persists and retrieves OAuth tokens: retrieves token JSON from database by provider
-// actor: shared
-// role: oauth_token_persistence
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function getOAuthToken(provider) {
   ensureSchema();
   const { schema } = getSqlConfig();

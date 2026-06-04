@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Parses command-line arguments for worker-bee
+// responsibility: Parses command-line arguments for worker-bee into swarm runtime configuration and execution parameters
 // actor: argument_parser
 // role: config_builder
 // source_truth: implementation
@@ -8,8 +8,8 @@ const path = require("path");
 
 // warehouse:method
 // responsibility: Parses command-line arguments and packet overrides into swarm runtime configuration and execution parameters with defaults
-// actor: argument_parser
-// role: config_builder
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function parseArgs(argv, DEFAULT_REPO_ROOT, config) {
   const defaultTarget = config.defaultTarget ? path.resolve(DEFAULT_REPO_ROOT, config.defaultTarget) : null;

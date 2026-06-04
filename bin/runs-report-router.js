@@ -11,8 +11,8 @@ const { renderMarkdown, renderSummary, renderRun } = require("../src/reports/run
 
 // warehouse:method
 // responsibility: Routes command flow: orchestrates report generation based on summary/detailed mode selection
-// actor: command_dispatcher
-// role: orchestrator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function routeReportMode(args, reportsDir) {
   if (args.summary) {

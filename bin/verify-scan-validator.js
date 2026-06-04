@@ -1,6 +1,6 @@
 // warehouse:file
-// responsibility: Validates taxonomy header fields presence and placeholder detection
-// actor: header_validator
+// responsibility: Validates taxonomy header fields presence and placeholder detection for test verification
+// actor: test_infrastructure
 // role: validator
 // source_truth: implementation
 
@@ -8,8 +8,8 @@ const fs = require("fs");
 
 // warehouse:method
 // responsibility: Test-driven validation: extracts taxonomy header fields from Python file comments
-// actor: header_parser
-// role: extractor
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function readTaxonomyHeader(filePath) {
   const content = fs.readFileSync(filePath, "utf8");
@@ -29,8 +29,8 @@ function readTaxonomyHeader(filePath) {
 
 // warehouse:method
 // responsibility: Test-driven validation: validates required taxonomy header fields are present and non-placeholder
-// actor: header_validator
-// role: validator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function isComplete(header) {
   // SIMPLE: check if all required fields are present

@@ -1,6 +1,5 @@
-#!/usr/bin/env node
 // warehouse:file
-// responsibility: Orchestrates API key validation across configured keys and models, delegates to focused modules
+// responsibility: Orchestrates API key validation across configured keys and models with diagnostic reporting
 // actor: cli
 // role: orchestrator
 // source_truth: implementation
@@ -25,8 +24,8 @@ const TEST_MODELS = ["gemini-2.5-flash", "gemini-2.5-pro"];
 
 // warehouse:method
 // responsibility: Orchestrates validation workflow: tests all key-model combinations and renders report
-// actor: cli
-// role: orchestrator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function main() {
   console.log("🔑 Language Model API Key Tester\n");

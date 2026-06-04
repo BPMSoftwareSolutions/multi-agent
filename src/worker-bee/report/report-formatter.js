@@ -1,14 +1,15 @@
 // warehouse:file
-// responsibility: Formats taxonomy report into human-readable or machine-readable output representations
+// responsibility: Formats taxonomy report structure into human-readable or machine-readable output
 // actor: worker_bee_infrastructure
-// role: report_formatter
+// role: telemetry_formatter
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Formats taxonomy report to JSON or plain text output representation
-// actor: worker_bee_infrastructure
-// role: report_formatter
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function formatReport(report, format = "json") {
   if (format === "json") {
     return JSON.stringify(report, null, 2);

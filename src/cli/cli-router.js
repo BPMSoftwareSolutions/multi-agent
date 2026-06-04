@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Routes CLI commands to handlers
+// responsibility: Routes CLI commands to appropriate handler functions based on command type and options
 // actor: command_router
 // role: orchestrator
 // source_truth: implementation
@@ -16,8 +16,8 @@ const { exit } = require("./print");
 
 // warehouse:method
 // responsibility: Routes parsed CLI command to appropriate handler function with options
-// actor: command_router
-// role: orchestrator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function routeCommand(command, args, options, apiKey) {
   switch (command) {

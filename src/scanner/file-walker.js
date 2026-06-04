@@ -1,16 +1,16 @@
 // warehouse:file
-// responsibility: Recursively scans directory tree to collect Python files
-// actor: file_scanner
-// role: traverser
+// responsibility: Recursively scans directory tree to collect Python files for taxonomy audit coverage
+// actor: scanner
+// role: file_discoverer
 // source_truth: implementation
 
 const fs = require("fs");
 const path = require("path");
 
 // warehouse:method
-// responsibility: Scans and traverses directory tree to collect all Python files for taxonomy audit coverage verification and completeness reporting
-// actor: file_scanner
-// role: traverser
+// responsibility: Scans and traverses directory tree to collect all Python files for taxonomy audit coverage verification
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function walk(dir, ext = ".py") {
   const files = [];

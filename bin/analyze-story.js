@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: CLI entry point for story coherence analysis - orchestrates taxonomy loading and report generation
 // actor: cli

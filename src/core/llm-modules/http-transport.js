@@ -7,10 +7,11 @@
 const https = require("https");
 
 // warehouse:method
-// responsibility: Performs low-level HTTPS request to language model APIs and returns parsed JSON response with error handling
-// actor: core_runtime
-// role: http_transport
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 async function fetchFromAnthropicRaw(endpoint, method, payload, apiKey) {
   const body = JSON.stringify(payload);
 

@@ -1,14 +1,15 @@
 // warehouse:file
-// responsibility: Serializes audit work items into JSON format
+// responsibility: Serializes work items into JSON-safe format for worker-bee packet consumption, preserving all deterministic and issue metadata
 // actor: worker_bee_infrastructure
 // role: serializer
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Serializes work items into JSON-safe format for worker-bee packet consumption, preserving all deterministic and issue metadata
-// actor: worker_bee_infrastructure
-// role: serializer
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function serializeWork(work) {
   return work.map((w) => ({
     absPath: w.absPath,

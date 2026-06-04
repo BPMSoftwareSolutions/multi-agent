@@ -1,15 +1,15 @@
 // warehouse:file
 // responsibility: Summarizes action operations with aggregate metrics and attempt tracking
-// actor: shared
-// role: operations_summarizer
+// actor: action_orchestrator
+// role: summarizer
 // source_truth: implementation
 
 const { ensureOperationsState } = require("./operations-builder");
 
 // warehouse:method
 // responsibility: Summarizes operations: aggregates action execution counts by status, returns attempt and review metrics
-// actor: shared
-// role: operations_summarizer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function summarizeOperations(session) {
   const operations = ensureOperationsState(session);

@@ -1,14 +1,15 @@
 // warehouse:file
-// responsibility: Renders round state to human-readable output
+// responsibility: Formats and renders round data to human-readable CLI output with planner, reviewer results, and change summaries
 // actor: cli
 // role: round_renderer
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Formats and renders round data to human-readable CLI output with planner, reviewer results, and change summaries
-// actor: cli
-// role: round_renderer
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function renderRound(round, options = {}) {
   const json = options.json || false;
 

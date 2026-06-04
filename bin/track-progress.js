@@ -1,8 +1,7 @@
-#!/usr/bin/env node
 // warehouse:file
-// responsibility: Monitors worker-bee progress by polling log file, detecting completion changes and alerting on stalls
-// actor: progress_tracker
-// role: monitor
+// responsibility: Continuous progress monitor: watches for stalls and alerts on log changes
+// actor: progress_monitor
+// role: watcher
 // source_truth: implementation
 
 // Continuous progress tracker: watch for new completion events and alert on stalls

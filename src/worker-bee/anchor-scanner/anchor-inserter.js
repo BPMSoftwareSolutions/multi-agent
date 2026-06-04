@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Inserts file anchors at proper location with line-ending and BOM preservation
 // actor: worker_bee_infrastructure
-// role: writer
+// role: anchor_writer
 // source_truth: implementation
 
 const fs = require("fs");
@@ -10,8 +10,8 @@ const { hasFileAnchor } = require("./anchor-parser");
 
 // warehouse:method
 // responsibility: Inserts anchor block into file after shebang/coding declarations with EOL preservation
-// actor: worker_bee_infrastructure
-// role: writer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function insertAnchor(absPath, anchorBlock) {
   const raw = fs.readFileSync(absPath, "utf8");

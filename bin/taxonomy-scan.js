@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Orchestrates taxonomy scan workflow: parses args, scans target, generates and persists tracking JSON
 // actor: taxonomy_scanner
@@ -13,10 +12,11 @@ const { parseArgs, DEFAULT_REPO_ROOT } = require("../src/worker-bee/scan-argumen
 const { generateTracking, writeTracking, reportTracking } = require("../src/worker-bee/tracking-generator");
 
 // warehouse:method
-// responsibility: Orchestrates taxonomy scan workflow: validates target, generates tracking, persists and reports
-// actor: taxonomy_scanner
-// role: orchestrator
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function main() {
   const args = parseArgs(process.argv.slice(2));
   const repoRoot = path.resolve(args.repoRoot);

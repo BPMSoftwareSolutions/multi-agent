@@ -1,17 +1,18 @@
 // warehouse:file
-// responsibility: Reads and processes file content by truncating to character budget for prompt embedding with ellipsis marker
+// responsibility: Reads files and truncates content to character budget for prompt embedding
 // actor: worker_bee_infrastructure
-// role: content_reader
+// role: file_reader
 // source_truth: implementation
 
 const fs = require("fs");
 const { stripBom } = require("../text-utils");
 
 // warehouse:method
-// responsibility: Reads file content and truncates to character budget with ellipsis marker for prompt embedding
-// actor: worker_bee_infrastructure
-// role: content_reader
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function readForPrompt(absPath, fileCharBudget) {
   let text;
   try {

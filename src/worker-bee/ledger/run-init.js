@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Initializes new runs and manages run directory structure
+// responsibility: Initializes new runs and manages run directory structure for tracking
 // actor: worker_bee_infrastructure
-// role: data_access
+// role: ledger_manager
 // source_truth: implementation
 
 const fs = require("fs");
@@ -9,27 +9,29 @@ const path = require("path");
 
 // warehouse:method
 // responsibility: Initializes new runs: generates unique run ID from timestamp with URL-safe formatting
-// actor: worker_bee_infrastructure
-// role: infrastructure
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function newRunId() {
   return new Date().toISOString().replace(/[:.]/g, "-");
 }
 
 // warehouse:method
-// responsibility: Initializes new runs: constructs runs directory path within run structure
-// actor: worker_bee_infrastructure
-// role: infrastructure
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function runsDir(reportsDir) {
   return path.join(reportsDir, "runs");
 }
 
 // warehouse:method
-// responsibility: Initializes new runs: creates run directory, writes manifest, tracks run ID and metadata
-// actor: worker_bee_infrastructure
-// role: data_access
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function initRun(reportsDir, { runId, target, layer, mode, packet, totalPython, needsWork }) {
   const dir = path.join(runsDir(reportsDir), runId);
   fs.mkdirSync(dir, { recursive: true });

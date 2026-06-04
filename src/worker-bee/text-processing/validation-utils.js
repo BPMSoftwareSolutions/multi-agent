@@ -1,23 +1,25 @@
 // warehouse:file
-// responsibility: Validates field completeness and responsibility specificity
+// responsibility: Validates whether a value is a placeholder or missing (null, undefined, or empty)
 // actor: worker_bee_infrastructure
 // role: validator
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Validates whether a value is a placeholder or missing (null, undefined, or empty)
-// actor: worker_bee_infrastructure
-// role: validator
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function isPlaceholder(value) {
   return value === null || value === undefined || value === "";
 }
 
 // warehouse:method
-// responsibility: Validates responsibility field for specificity, rejecting generic or placeholder text
-// actor: worker_bee_infrastructure
-// role: validator
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function isGenericResponsibility(value) {
   if (!value || value.length < 10) return true;
 

@@ -8,8 +8,8 @@ const fs = require("fs");
 
 // warehouse:method
 // responsibility: Calculates anchor cost metric for work item: sums file anchor cost and method anchor cost for budget constraint
-// actor: worker_bee_infrastructure
-// role: packer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function anchorCost(item) {
   return (item.doFile ? 1 : 0) + (item.doMethods ? item.methodsNeeding.length : 0);
@@ -17,8 +17,8 @@ function anchorCost(item) {
 
 // warehouse:method
 // responsibility: Measures file character size for character budget constraint during packing partition
-// actor: worker_bee_infrastructure
-// role: packer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function fileChars(item) {
   try {
@@ -30,8 +30,8 @@ function fileChars(item) {
 
 // warehouse:method
 // responsibility: Partitions work items into packets using greedy packing respecting anchor cost, file count, and character budgets
-// actor: worker_bee_infrastructure
-// role: packer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function packWork(work, workload) {
   const fileCap = workload.max_files_per_packet;

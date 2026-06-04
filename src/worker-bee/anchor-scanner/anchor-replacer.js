@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Replaces existing file anchors or inserts new ones with formatting preservation
+// responsibility: Replaces existing file anchors or inserts new ones with formatting and line-ending preservation
 // actor: worker_bee_infrastructure
-// role: writer
+// role: anchor_writer
 // source_truth: implementation
 
 const fs = require("fs");
@@ -12,8 +12,8 @@ const FILE_ANCHOR_BLOCK_RE = /[ \t]*#[ \t]+warehouse:file[ \t]*(?:\r?\n[ \t]*#[^
 
 // warehouse:method
 // responsibility: Replaces existing anchor block or inserts if not present, preserving line endings
-// actor: worker_bee_infrastructure
-// role: writer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function replaceAnchor(absPath, anchorBlock) {
   const raw = fs.readFileSync(absPath, "utf8");

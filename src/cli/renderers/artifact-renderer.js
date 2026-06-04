@@ -1,16 +1,17 @@
 // warehouse:file
-// responsibility: Renders artifact state to human-readable output
+// responsibility: Renders artifact state to human-readable CLI output for display
 // actor: cli
-// role: artifact_formatter
+// role: renderer
 // source_truth: implementation
 
 const { STAGES } = require("../../core/stages");
 
 // warehouse:method
-// responsibility: Renders artifact into human-readable CLI output with nested key-value pairs and structured formatting
-// actor: cli
-// role: artifact_formatter
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function renderArtifact(stageId, artifact) {
   const stage = STAGES[stageId];
   if (!stage) return "";

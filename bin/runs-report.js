@@ -1,6 +1,5 @@
-#!/usr/bin/env node
 // warehouse:file
-// responsibility: Orchestrates worker-bee execution report generation from historical runs by routing to appropriate report formatter
+// responsibility: Orchestrates worker-bee execution report generation by validating reports directory and routing to appropriate formatter
 // actor: run_ledger
 // role: report_router
 // source_truth: implementation
@@ -21,8 +20,8 @@ if (fs.existsSync(configPath)) {
 
 // warehouse:method
 // responsibility: Orchestrates worker-bee execution report by validating reports directory and routing to renderer
-// actor: run_ledger
-// role: report_router
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function main() {
   const args = parseArgs(process.argv.slice(2));

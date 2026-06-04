@@ -7,10 +7,11 @@
 const { buildNarrative } = require("./narrative-builder");
 
 // warehouse:method
-// responsibility: Generates markdown document with front matter, summary, and individual file narratives
-// actor: story_reporter
-// role: generator
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function generateMarkdown(analysisData, taxonomyData) {
   const lines = [];
 

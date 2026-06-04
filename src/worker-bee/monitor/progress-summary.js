@@ -1,14 +1,15 @@
 // warehouse:file
-// responsibility: Generates progress summary reports
+// responsibility: Outputs final progress summary with completion tallies from log watcher, reports recency status and stall indicators
 // actor: summary_printer
 // role: display_engine
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Outputs final progress summary with completion tallies from log watcher, reports recency status and stall indicators
-// actor: summary_printer
-// role: display_engine
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function generateSummary(totalCompleted, lastProgressTime) {
   const lines = [
     "",

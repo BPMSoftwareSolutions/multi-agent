@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Python taxonomy verifier: validates taxonomy header completeness and reports status
 // actor: taxonomy_verifier

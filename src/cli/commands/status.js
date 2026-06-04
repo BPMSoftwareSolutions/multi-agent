@@ -9,10 +9,11 @@ const { summarizeOperations } = require("../../shared/actions");
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: Status command: retrieves current session, renders state with operation summaries in JSON format
-// actor: cli
-// role: status_command
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 async function status(sessionId = null, options = {}) {
   try {
     const id = sessionId || getCurrentSessionId();

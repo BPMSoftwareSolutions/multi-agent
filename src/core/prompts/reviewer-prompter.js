@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Constructs reviewer agent prompts for artifact validation
+// responsibility: Constructs reviewer agent prompts for artifact validation and issue identification
 // actor: core_runtime
-// role: entry_point
+// role: prompt_builder
 // source_truth: implementation
 
 const { schemaToText, toJSONString } = require("./schema-formatter");
@@ -9,8 +9,8 @@ const { formatHumanInterjection } = require("./context-builder");
 
 // warehouse:method
 // responsibility: CLI aggregator: constructs agent prompt for reviewer to identify issues in artifact proposals
-// actor: core_runtime
-// role: entry_point
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function buildReviewerPrompt({
   stage,

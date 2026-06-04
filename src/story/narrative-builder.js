@@ -1,14 +1,15 @@
 // warehouse:file
-// responsibility: Builds narrative interpretation of file's story based on responsibility and methods
-// actor: story_narrator
-// role: interpreter
-// source_truth: implementation
-
-// warehouse:method
 // responsibility: Gets health indicator emoji and label based on coherence score
 // actor: story_reporter
 // role: formatter
 // source_truth: implementation
+
+// warehouse:method
+// responsibility: undefined
+// actor: undefined
+// role: undefined
+// source_truth: implementation
+
 function getHealthIndicator(score) {
   if (score >= 70) return "✅ STRONG";
   if (score >= 50) return "⚠️  MODERATE";
@@ -17,10 +18,11 @@ function getHealthIndicator(score) {
 }
 
 // warehouse:method
-// responsibility: Builds narrative interpretation of file's story based on responsibility and methods
-// actor: story_narrator
-// role: interpreter
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function buildNarrative(file, analysis) {
   const narratives = [];
 

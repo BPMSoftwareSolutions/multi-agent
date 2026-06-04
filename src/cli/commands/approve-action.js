@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Orchestrates approve-action command: parses payload, queues action, saves session
+// responsibility: Orchestrates approve-action command: parses payload, validates session, queues action, saves
 // actor: cli
 // role: command_handler
 // source_truth: implementation
@@ -12,8 +12,8 @@ const { exit } = require("../print");
 
 // warehouse:method
 // responsibility: Orchestrates action approval workflow: validates session, parses payload, queues and saves
-// actor: cli
-// role: command_handler
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function approveActionCommand(options = {}) {
   try {

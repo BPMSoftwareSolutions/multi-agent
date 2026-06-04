@@ -1,6 +1,6 @@
 // warehouse:file
 // responsibility: Evaluates file coherence by computing semantic similarity and detecting alignment issues
-// actor: report_generator
+// actor: coherence_analyzer
 // role: analyzer
 // source_truth: implementation
 
@@ -9,8 +9,8 @@ const { isBoilerplate, getAlignmentThreshold, detectRedFlags } = require("./boil
 
 // warehouse:method
 // responsibility: Evaluates single file coherence by analyzing method-to-file responsibility alignment
-// actor: report_generator
-// role: analyzer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function evaluateFileCoherence(file) {
   if (file.methods.length === 0) {
@@ -63,8 +63,8 @@ function evaluateFileCoherence(file) {
 
 // warehouse:method
 // responsibility: Aggregates coherence analysis across all files and categorizes findings
-// actor: report_generator
-// role: aggregator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function aggregateAnalysis(taxonomyData) {
   const analyses = [];

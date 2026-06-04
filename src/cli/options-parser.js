@@ -1,14 +1,15 @@
 // warehouse:file
-// responsibility: Parses CLI options and arguments
+// responsibility: Parses CLI command-line arguments into structured studio configuration options and flags for handler routing
 // actor: argument_parser
 // role: config_builder
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Parses CLI command-line arguments into structured studio configuration options and flags for handler routing
-// actor: argument_parser
-// role: config_builder
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function parseOptions(args) {
   const options = {
     positional: [],

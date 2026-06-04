@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: CLI delegator: start command orchestrates session creation workflow from validation through persistence and status output
+// responsibility: Orchestrates start command: validates arguments, initializes session, persists and outputs state
 // actor: cli
 // role: command_handler
 // source_truth: implementation
@@ -10,10 +10,11 @@ const { validateBrief } = require("./start-validator");
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: Command dispatcher: validates task brief, initializes session with normalized intent, persists to store, outputs session ID and task definition
-// actor: cli
-// role: command_handler
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 async function start(brief, apiKey, options = {}) {
   try {
     validateBrief(brief);

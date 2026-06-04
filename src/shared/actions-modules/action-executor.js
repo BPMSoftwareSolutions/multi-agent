@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Executes approved actions by validating file state, applying mutations (move, rename, tag, archive), and recording attempt results
-// actor: shared
-// role: action_executor
+// responsibility: Executes pending actions with file validation, applies mutations, and records attempt lifecycle
+// actor: action_orchestrator
+// role: executor
 // source_truth: implementation
 
 const { v4: uuidv4 } = require("uuid");
@@ -10,9 +10,9 @@ const { ensureOperationsState } = require("./operations-builder");
 const { failAttempt } = require("./action-failure-handler");
 
 // warehouse:method
-// responsibility: Executes approved action by validating file state, applying mutations, and recording attempt result
-// actor: shared
-// role: action_executor
+// responsibility: Executes pending action with file validation, applies mutations, records attempt lifecycle
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function runWorker(session, options = {}) {
   const operations = ensureOperationsState(session);

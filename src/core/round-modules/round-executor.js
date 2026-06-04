@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Delegates round execution to focused modules; orchestrates agent execution and artifact handling
-// actor: orchestration
-// role: round_executor_delegator
+// responsibility: Delegates round execution to focused modules: orchestrates agent execution and artifact handling
+// actor: core_runtime
+// role: executor
 // source_truth: implementation
 
 const { STAGES } = require("../stages");
@@ -9,10 +9,11 @@ const { executeRoundAgents } = require("./round-executor-orchestrator");
 const { createRoundRecord, storeRoundResult } = require("./round-record-builder");
 
 // warehouse:method
-// responsibility: Runs design workshop round by delegating to agent executor and artifact handler
-// actor: orchestration
-// role: round_executor_delegator
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 async function runRound({
   session,
   apiKey,

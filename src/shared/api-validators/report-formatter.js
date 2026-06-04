@@ -1,14 +1,15 @@
 // warehouse:file
-// responsibility: Formats diagnostic results and renders human-readable API validation report with summary
+// responsibility: Generates formatted report from diagnostic results with detailed status, latency, and recommendations
 // actor: report_formatter
 // role: output_renderer
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Generates formatted report from diagnostic results with detailed status, latency, and recommendations
-// actor: report_formatter
-// role: output_renderer
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function formatReport(results) {
   const output = [];
 
@@ -29,10 +30,11 @@ function formatReport(results) {
 }
 
 // warehouse:method
-// responsibility: Generates summary section with counts and configuration recommendations based on test results
-// actor: report_formatter
-// role: analyzer
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function formatSummary(results) {
   const output = [];
   const ok = results.filter((r) => r.status === "OK");
@@ -63,10 +65,11 @@ function formatSummary(results) {
 }
 
 // warehouse:method
-// responsibility: Determines exit code from results (0 if any OK, 1 if only errors)
-// actor: report_formatter
-// role: status_calculator
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function getExitCode(results) {
   const ok = results.filter((r) => r.status === "OK");
   const errors = results.filter((r) => r.status === "ERROR");

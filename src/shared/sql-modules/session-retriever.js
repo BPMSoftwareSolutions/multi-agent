@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Retrieves session objects from SQL Server database by ID or lists all
-// actor: shared
-// role: session_reader
+// responsibility: Retrieves session objects from SQL Server database by ID or lists all sessions
+// actor: persistence_layer
+// role: data_retriever
 // source_truth: implementation
 
 const { getSqlConfig, sqlStringLiteral, runSqlJson } = require("../sql-helpers");
@@ -9,8 +9,8 @@ const { ensureSchema } = require("./schema-manager");
 
 // warehouse:method
 // responsibility: Retrieves session from database by ID and converts to JSON object
-// actor: shared
-// role: session_reader
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function getSessionRow(sessionId) {
   ensureSchema();
@@ -35,8 +35,8 @@ FOR JSON PATH, WITHOUT_ARRAY_WRAPPER;
 
 // warehouse:method
 // responsibility: Lists all sessions from database ordered by creation date descending
-// actor: shared
-// role: session_reader
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function listSessionRows() {
   ensureSchema();

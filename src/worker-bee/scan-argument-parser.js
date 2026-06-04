@@ -1,17 +1,18 @@
 // warehouse:file
 // responsibility: Parses and validates command arguments for taxonomy scanning operations
-// actor: argument_parser
-// role: config_builder
+// actor: worker_bee_infrastructure
+// role: argument_parser
 // source_truth: implementation
 
 const DEFAULT_REPO_ROOT =
   process.env.WORKER_BEE_REPO_ROOT || "C:/source/repos/bpm/internal/ai-engine";
 
 // warehouse:method
-// responsibility: Parses CLI arguments into configuration object with defaults and validation
-// actor: argument_parser
-// role: config_builder
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function parseArgs(argv) {
   const args = { repoRoot: DEFAULT_REPO_ROOT, target: null, layer: "both", mode: "all", output: null, json: false };
   for (let i = 0; i < argv.length; i += 1) {

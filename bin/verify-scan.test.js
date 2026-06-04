@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Delegator: test-driven validation suite for taxonomy header extraction and field validation
 // actor: test_suite

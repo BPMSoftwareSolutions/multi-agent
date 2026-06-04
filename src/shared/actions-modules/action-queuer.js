@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Delegates action queueing to focused modules; orchestrates queue deduplication and action routing
-// actor: shared
-// role: action_queuer_delegator
+// responsibility: Delegates action queueing to focused modules: orchestrates queue deduplication and action routing
+// actor: action_orchestrator
+// role: queue_manager
 // source_truth: implementation
 
 const { normalizeActionRecommendation } = require("../validation-helpers");
@@ -12,8 +12,8 @@ const { buildApprovedAction, buildReviewItem } = require("./action-builder");
 
 // warehouse:method
 // responsibility: Routes queued human review item to operations queue with deduplication check
-// actor: shared
-// role: action_queuer_delegator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function queueHumanReviewItem(operations, recommendation, context = {}) {
   const existing = findDuplicateReviewItem(operations.humanReviewQueue, recommendation.recommendationId);
@@ -28,8 +28,8 @@ function queueHumanReviewItem(operations, recommendation, context = {}) {
 
 // warehouse:method
 // responsibility: Routes action recommendations through normalization, routing logic, and approval workflow with deduplication
-// actor: shared
-// role: action_queuer_delegator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function queueActionRecommendations(session, recommendations, context = {}) {
   const operations = ensureOperationsState(session);
@@ -85,8 +85,8 @@ function queueActionRecommendations(session, recommendations, context = {}) {
 
 // warehouse:method
 // responsibility: Wraps manual recommendation for queueing to enable CLI-driven action approval workflow
-// actor: shared
-// role: action_queuer_delegator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function approveManualAction(session, recommendationInput, context = {}) {
   return queueActionRecommendations(session, [recommendationInput], context);

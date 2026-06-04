@@ -1,14 +1,15 @@
 // warehouse:file
-// responsibility: Handles failure states during action execution with error tracking
+// responsibility: Executes failure handling within action execution: marks action as failed/blocked, records error state in attempt log
 // actor: shared
 // role: attempt_failure_handler
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Executes failure handling within action execution: marks action as failed/blocked, records error state in attempt log
-// actor: shared
-// role: attempt_failure_handler
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function failAttempt({ operations, action, attempt, code, message, status = "failed" }) {
   const finishedAt = new Date().toISOString();
   action.status = status;

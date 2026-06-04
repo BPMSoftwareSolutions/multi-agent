@@ -1,14 +1,15 @@
 // warehouse:file
-// responsibility: Resolves API keys for language model providers from environment or override parameters
+// responsibility: Retrieves and validates API key for language model providers from environment or override
 // actor: core_runtime
 // role: credential_manager
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Retrieves and validates API key for language model providers from environment or override
-// actor: core_runtime
-// role: credential_manager
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function getApiKey(overrideApiKey) {
   const apiKey = overrideApiKey || process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY;
   if (!apiKey) {

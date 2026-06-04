@@ -11,10 +11,11 @@ const { chunk } = require("./work-chunker");
 const { readTruncated } = require("./file-reader");
 
 // warehouse:method
-// responsibility: Prompt builder: constructs multi-file prompt for language model anchor classification of concurrent agents
-// actor: worker_bee_infrastructure
-// role: prompt_builder
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function buildUserPrompt(packet) {
   const blocks = packet.map((f) => {
     return `=== FILE: ${f.path} ===\n${readTruncated(f.absPath)}`;
@@ -27,10 +28,11 @@ function buildUserPrompt(packet) {
 }
 
 // warehouse:method
-// responsibility: Processor: processes file packet via language model APIs to classify and write anchors to concurrent files
-// actor: worker_bee_infrastructure
-// role: processor
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 async function processPacket(packet, { apiKey, model, dryRun }) {
   const byPath = new Map(packet.map((f) => [f.path, f]));
   const results = [];
@@ -89,10 +91,11 @@ async function processPacket(packet, { apiKey, model, dryRun }) {
 }
 
 // warehouse:method
-// responsibility: Orchestrator: orchestrates concurrent agents processing file packets with language model APIs from shared queue
-// actor: worker_bee_infrastructure
-// role: orchestrator
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 async function runSwarm(missing, options = {}) {
   const {
     agents = 6,

@@ -1,15 +1,15 @@
 // warehouse:file
-// responsibility: Constructs planner agent prompt for artifact development
+// responsibility: Constructs planner agent prompt for artifact development combining goals, intent, artifact, feedback
 // actor: core_runtime
-// role: agent_guidance
+// role: prompt_builder
 // source_truth: implementation
 
 const { schemaToText, toJSONString } = require("./schema-formatter");
 
 // warehouse:method
 // responsibility: Constructs planner agent prompt for artifact development by combining stage goals, task intent, current artifact, and human interjection feedback
-// actor: core_runtime
-// role: agent_guidance
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function buildBuilderPrompt({ stage, intent, artifact, lastRound, humanInterjection, brief, roundNumber }) {
   const isStageOneFirstRound =

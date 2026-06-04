@@ -1,14 +1,15 @@
 // warehouse:file
-// responsibility: Extracts JSON from model output with multiple parsing strategies
+// responsibility: Extracts JSON from model output, handling bare JSON, markdown fence blocks, and substring ranges
 // actor: worker_bee_infrastructure
 // role: parser
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Extracts JSON from model output, handling bare JSON, markdown fence blocks, and substring ranges
-// actor: worker_bee_infrastructure
-// role: parser
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function extractJSON(text) {
   if (typeof text !== "string") throw new Error("Model output is not text");
   const trimmed = text.trim();

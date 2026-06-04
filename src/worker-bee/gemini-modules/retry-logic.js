@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Retry policy enforcer: classifies API errors as retryable vs terminal and calculates exponential backoff delays for resilience
+// responsibility: Determines retry eligibility for API failures and implements exponential backoff strategy
 // actor: worker_bee_infrastructure
 // role: retry_manager
 // source_truth: implementation
@@ -7,9 +7,9 @@
 const RETRYABLE_STATUS = new Set([429, 500, 502, 503, 504, 529]);
 
 // warehouse:method
-// responsibility: Error classifier: determines whether error is retryable by status code and message pattern, excluding auth failures
-// actor: worker_bee_infrastructure
-// role: retry_manager
+// responsibility: Determines retry eligibility for error conditions excluding authentication failures
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function isRetryable(error) {
   if (error.status === 401 || error.status === 403) return false; // auth: never retry
@@ -34,10 +34,11 @@ function isRetryable(error) {
 }
 
 // warehouse:method
-// responsibility: Calculates exponential backoff delay strategy for API retry attempts
-// actor: worker_bee_infrastructure
-// role: retry_manager
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function getBackoffDelay(attempt) {
   return Math.min(1000 * Math.pow(2, attempt - 1), 8000);
 }

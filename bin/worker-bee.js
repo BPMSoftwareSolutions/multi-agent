@@ -1,6 +1,5 @@
-#!/usr/bin/env node
 // warehouse:file
-// responsibility: Worker-bee CLI orchestrator: orchestrates swarm execution from scanning to packet distribution to result reporting
+// responsibility: Worker-bee CLI orchestrator: orchestrates complete swarm execution from scanning to packet distribution to result reporting
 // actor: worker_bee_swarm
 // role: orchestrator
 // source_truth: implementation
@@ -70,8 +69,8 @@ Packet overrides:
 
 // warehouse:method
 // responsibility: Orchestrates complete swarm execution workflow: scanning for work, distributing packets to bees, tracking progress via ledger, managing retries until convergence, and reporting results
-// actor: bee_orchestrator
-// role: orchestrator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function main() {
   const { rt, ov } = parseArgs(process.argv.slice(2), DEFAULT_REPO_ROOT, config);

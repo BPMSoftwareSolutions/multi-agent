@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Generates and persists taxonomy tracking JSON from scan results
-// actor: taxonomy_scanner
-// role: report_writer
+// responsibility: Generates and persists taxonomy tracking JSON from scan results with reporting
+// actor: worker_bee_infrastructure
+// role: tracking_generator
 // source_truth: implementation
 
 const path = require("path");
@@ -9,10 +9,11 @@ const fs = require("fs");
 const { serializeWork } = require("./scan");
 
 // warehouse:method
-// responsibility: Generates tracking JSON structure from scan results marking TOUCHED vs UNTOUCHED
-// actor: taxonomy_scanner
-// role: report_writer
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function generateTracking(args, scanResults, repoRoot, target) {
   const { totalPython, trustworthy, work } = scanResults;
 
@@ -39,8 +40,8 @@ function generateTracking(args, scanResults, repoRoot, target) {
 
 // warehouse:method
 // responsibility: Writes tracking JSON to output file with directory creation
-// actor: taxonomy_scanner
-// role: file_writer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function writeTracking(tracking, outputPath) {
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
@@ -49,8 +50,8 @@ function writeTracking(tracking, outputPath) {
 
 // warehouse:method
 // responsibility: Formats and outputs tracking summary in human or JSON format
-// actor: taxonomy_scanner
-// role: reporter
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function reportTracking(tracking, outputPath, asJson) {
   if (asJson) {

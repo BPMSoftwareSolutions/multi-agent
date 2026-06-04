@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Orchestrates planner and reviewer agent execution for design workshop rounds
-// actor: orchestration
-// role: round_executor_orchestrator
+// actor: core_runtime
+// role: orchestrator
 // source_truth: implementation
 
 const {
@@ -13,10 +13,11 @@ const { normalizeReviewerOutput } = require("./intent-normalizer");
 const { createRoundRecord } = require("./round-record-builder");
 
 // warehouse:method
-// responsibility: Executes planner and reviewer agents sequentially for round, returns round results with artifacts
-// actor: orchestration
-// role: round_executor_orchestrator
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 async function executeRoundAgents({
   session,
   apiKey,

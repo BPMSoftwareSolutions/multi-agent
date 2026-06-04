@@ -1,16 +1,16 @@
 // warehouse:file
 // responsibility: Persists application state values to SQL Server database using MERGE operations
-// actor: shared
-// role: app_state_setter
+// actor: persistence_layer
+// role: data_persister
 // source_truth: implementation
 
 const { getSqlConfig, sqlStringLiteral, runSql } = require("../sql-helpers");
 const { ensureSchema } = require("./schema-manager");
 
 // warehouse:method
-// responsibility: Persists application state value to SQL database by key with MERGE create-or-update semantics and timestamp
-// actor: shared
-// role: app_state_setter
+// responsibility: Persists application state value to SQL database by key with MERGE create-or-update semantics
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function setAppState(stateKey, stateValue) {
   ensureSchema();

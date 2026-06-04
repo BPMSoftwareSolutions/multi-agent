@@ -8,10 +8,11 @@ const fs = require("fs");
 const { stripBom, dominantEol, splitKeepEnds } = require("../scan");
 
 // warehouse:method
-// responsibility: Applies or replaces method anchors in file with bottom-up edits preserving line endings
-// actor: worker_bee_infrastructure
-// role: projection_compiler
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function applyMethodAnchors(absPath, items, buildMethodAnchorBlock) {
   const valid = items.filter((it) => it.fields);
   if (valid.length === 0) return 0;

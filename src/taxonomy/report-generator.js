@@ -5,10 +5,11 @@
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Generates comprehensive JSON report of all extracted taxonomies with summary statistics
-// actor: report_generator
-// role: reporter
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function generateReport(fileData) {
   const report = {
     generated: new Date().toISOString(),

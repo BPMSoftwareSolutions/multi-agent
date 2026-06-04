@@ -1,6 +1,6 @@
 // warehouse:file
-// responsibility: Schema initializer: creates SQL Server database schema and tables for session, state, and OAuth token persistence
-// actor: shared
+// responsibility: Initializes and manages SQL Server database schema for persistence tables
+// actor: persistence_layer
 // role: schema_manager
 // source_truth: implementation
 
@@ -9,10 +9,11 @@ const { getSqlConfig, runSql } = require("../sql-helpers");
 let schemaReady = false;
 
 // warehouse:method
-// responsibility: Idempotent schema initialization: creates schema and tables (sessions, app_state, oauth_tokens) if not exists, sets ready flag
-// actor: shared
-// role: schema_manager
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function ensureSchema() {
   if (schemaReady) {
     return;

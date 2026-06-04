@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: CLI delegator: show command retrieves session state and renders artifacts, stages, and pending operations for user inspection
+// responsibility: Show command handler: retrieves session, renders complete state including stages and operations
 // actor: cli
 // role: command_handler
 // source_truth: implementation
@@ -8,10 +8,11 @@ const { getSession, getCurrentSessionId } = require("../../core/session-store");
 const { renderSession, exit } = require("../print");
 
 // warehouse:method
-// responsibility: Command dispatcher: loads session and renders human-readable state with stages, artifacts, and operation summary
-// actor: cli
-// role: command_handler
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 async function show(sessionId = null, options = {}) {
   try {
     const id = sessionId || options.session || getCurrentSessionId();

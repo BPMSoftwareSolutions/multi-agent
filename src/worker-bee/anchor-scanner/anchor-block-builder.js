@@ -1,15 +1,15 @@
 // warehouse:file
-// responsibility: Constructs formatted file anchor comment blocks from model fields
+// responsibility: Constructs formatted file anchor comment blocks from model fields with spec formatting
 // actor: worker_bee_infrastructure
-// role: builder
+// role: anchor_builder
 // source_truth: implementation
 
 const { FILE_ANCHOR_FIELD_ORDER } = require("../anchor-spec");
 
 // warehouse:method
 // responsibility: Assembles file-anchor comment block from model fields with proper formatting
-// actor: worker_bee_infrastructure
-// role: builder
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function buildAnchorBlock(modelFields, deterministic) {
   const merged = {

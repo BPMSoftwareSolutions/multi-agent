@@ -1,14 +1,15 @@
 // warehouse:file
-// responsibility: Constructs intent clarification prompts for extracting task definition and success criteria
+// responsibility: Constructs prompt for intent clarification agent to extract task, criteria, constraints, and questions from user brief
 // actor: core_runtime
 // role: intent_elicitation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Constructs prompt for intent clarification agent to extract task, criteria, constraints, and questions from user brief
-// actor: core_runtime
-// role: intent_elicitation
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function buildIntentPrompt({ brief }) {
   return {
     system: [

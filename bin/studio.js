@@ -1,8 +1,7 @@
-#!/usr/bin/env node
 // warehouse:file
-// responsibility: Studio CLI entry point: loads environment configuration, parses command arguments, and routes to command handlers
-// actor: studio_cli
-// role: command_dispatcher
+// responsibility: Studio CLI entry point: loads environment config and routes commands to handlers
+// actor: cli
+// role: entry_point
 // source_truth: implementation
 
 require("dotenv").config();
@@ -15,10 +14,11 @@ const { routeCommand } = require("../src/cli/cli-router");
 const { exit } = require("../src/cli/print");
 
 // warehouse:method
-// responsibility: Orchestrates CLI execution by parsing command arguments and routing to appropriate handler
-// actor: studio_cli
-// role: command_dispatcher
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 async function main() {
   const args = process.argv.slice(2);
   const command = args[0];

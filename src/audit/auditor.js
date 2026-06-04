@@ -9,10 +9,11 @@ const { walk } = require("./file-scanner");
 const { readHeader, isComplete } = require("./header-parser");
 
 // warehouse:method
-// responsibility: Scans JavaScript files and classifies by taxonomy completeness
-// actor: auditor
-// role: classifier
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function auditFiles(root) {
   const binFiles = walk(path.join(root, "bin"));
   const srcFiles = walk(path.join(root, "src"));

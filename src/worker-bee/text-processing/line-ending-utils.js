@@ -1,14 +1,15 @@
 // warehouse:file
-// responsibility: Detects and preserves platform-specific line endings in text
+// responsibility: Detects whether text uses CRLF or LF as dominant line-ending style
 // actor: worker_bee_infrastructure
 // role: text_analyzer
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Detects whether text uses CRLF or LF as dominant line-ending style
-// actor: worker_bee_infrastructure
-// role: text_analyzer
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function dominantEol(text) {
   const crlfCount = (text.match(/\r\n/g) || []).length;
   const lfCount = (text.match(/\n/g) || []).length - crlfCount;
@@ -16,10 +17,11 @@ function dominantEol(text) {
 }
 
 // warehouse:method
-// responsibility: Splits text into segments while preserving individual line endings for each line
-// actor: worker_bee_infrastructure
-// role: text_splitter
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function splitKeepEnds(text) {
   const lines = [];
   let i = 0;

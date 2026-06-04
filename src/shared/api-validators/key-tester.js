@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Validates API key and model with quota/latency diagnostics
+// responsibility: Validates API keys and models with quota/latency diagnostics and error reporting
 // actor: api_validator
-// role: diagnostic_tool
+// role: tester
 // source_truth: implementation
 
 const { postJson } = require("./http-client");
@@ -19,8 +19,8 @@ const TEST_PROMPT = {
 
 // warehouse:method
 // responsibility: Tests single API key and model, returns diagnostic result with status, latency, and error details
-// actor: api_validator
-// role: diagnostic_tool
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function testKey(keyName, keyValue, model) {
   if (!keyValue) {

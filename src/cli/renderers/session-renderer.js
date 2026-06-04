@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Renders session state to human-readable output
+// responsibility: Renders session state to human-readable CLI output for display
 // actor: cli
-// role: session_renderer
+// role: renderer
 // source_truth: implementation
 
 const { STAGES } = require("../../core/stages");
@@ -9,10 +9,11 @@ const { summarizeOperations } = require("../../shared/actions");
 const { renderArtifact } = require("./artifact-renderer");
 
 // warehouse:method
-// responsibility: Renders complete session state to human-readable CLI output showing stages, rounds, operations, and artifact progression
-// actor: cli
-// role: session_renderer
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function renderSession(session, options = {}) {
   const json = options.json || false;
   const operationsSummary = summarizeOperations(session);

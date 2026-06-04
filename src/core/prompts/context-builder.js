@@ -1,15 +1,15 @@
 // warehouse:file
-// responsibility: Builds previous round context for agent prompts with interjection handling
+// responsibility: Builds previous round context for agent prompts with interjection handling and artifact state
 // actor: core_runtime
-// role: context_builder
+// role: prompt_builder
 // source_truth: implementation
 
 const { toJSONString } = require("./schema-formatter");
 
 // warehouse:method
-// responsibility: Builds previous round context by formatting round number, human interjection, change summary, and artifact state for agent prompt context
-// actor: core_runtime
-// role: context_builder
+// responsibility: Builds previous round context by formatting round number, human interjection, change summary, and artifact state
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function buildRoundContext(lastRound) {
   if (!lastRound) {
@@ -28,9 +28,9 @@ function buildRoundContext(lastRound) {
 }
 
 // warehouse:method
-// responsibility: Validates and normalizes human interjection text, returning formatted string or default placeholder for agent prompt context
-// actor: core_runtime
-// role: normalizer
+// responsibility: Validates and normalizes human interjection text, returning formatted string or default placeholder
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function formatHumanInterjection(text) {
   if (typeof text !== "string" || text.trim() === "") {

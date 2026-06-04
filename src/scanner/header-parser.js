@@ -8,8 +8,8 @@ const fs = require("fs");
 
 // warehouse:method
 // responsibility: Parses taxonomy metadata fields from file header comment block and extracts key-value pairs
-// actor: header_parser
-// role: validator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function readTaxonomyHeader(filePath) {
   try {
@@ -33,8 +33,8 @@ function readTaxonomyHeader(filePath) {
 
 // warehouse:method
 // responsibility: Validates taxonomy header completeness by checking presence of all required metadata fields
-// actor: header_parser
-// role: validator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function isComplete(header) {
   const required = ["responsibility", "actor", "role", "source_truth"];

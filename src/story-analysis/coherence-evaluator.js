@@ -1,6 +1,6 @@
 // warehouse:file
 // responsibility: Orchestrates coherence analysis workflow: loads taxonomy, analyzes files, persists and renders report
-// actor: report_generator
+// actor: coherence_analyzer
 // role: orchestrator
 // source_truth: implementation
 
@@ -10,10 +10,11 @@ const { aggregateAnalysis } = require("./coherence-analyzer");
 const { writeReportFile, printReport } = require("./coherence-reporter");
 
 // warehouse:method
-// responsibility: Orchestrates coherence analysis workflow by loading taxonomy, aggregating analysis, persisting and rendering
-// actor: report_generator
-// role: orchestrator
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function main() {
   const taxonomyPath = path.resolve(__dirname, "..", "..", "reports", "taxonomy-extracted.json");
 

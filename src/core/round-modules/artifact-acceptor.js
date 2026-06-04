@@ -1,15 +1,15 @@
 // warehouse:file
-// responsibility: Handles artifact acceptance and action recommendation queueing
-// actor: orchestration
-// role: artifact_acceptance
+// responsibility: Handles artifact acceptance and routes action recommendations for queueing
+// actor: core_runtime
+// role: acceptor
 // source_truth: implementation
 
 const { queueActionRecommendations } = require("../../shared/actions");
 
 // warehouse:method
 // responsibility: Manages artifact acceptance and stage progression: accepts proposed artifact and queues action recommendations
-// actor: orchestration
-// role: artifact_acceptance
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function acceptArtifact(session) {
   const stageId = session.currentStage;

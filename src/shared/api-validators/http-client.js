@@ -1,15 +1,15 @@
 // warehouse:file
-// responsibility: Sends JSON POST requests with timeout handling and error parsing
-// actor: http_client
-// role: network_requestor
+// responsibility: Sends JSON POST requests with timeout handling and error extraction/parsing
+// actor: api_client
+// role: http_transport
 // source_truth: implementation
 
 const https = require("https");
 
 // warehouse:method
 // responsibility: Sends JSON POST request to HTTPS endpoint with configurable timeout, parses response
-// actor: http_client
-// role: network_requestor
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function postJson(url, body, timeoutMs = 10000) {
   const bodyStr = JSON.stringify(body);

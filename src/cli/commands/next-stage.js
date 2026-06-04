@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Next-stage command handler: coordinates validation and advancement
+// responsibility: Next-stage command handler: coordinates validation, stage advancement, and session state management
 // actor: cli
 // role: command_handler
 // source_truth: implementation
@@ -10,8 +10,8 @@ const { exit } = require("../print");
 
 // warehouse:method
 // responsibility: Orchestrates next-stage command: validates, advances to next stage, and returns session
-// actor: cli
-// role: command_handler
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function nextStage(sessionId = null, options = {}) {
   try {

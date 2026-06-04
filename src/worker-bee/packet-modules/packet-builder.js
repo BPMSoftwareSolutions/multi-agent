@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Delegator: builds effective packet configurations by layering defaults and overrides
+// responsibility: Builds effective packet configurations by layering defaults and overrides with descriptions
 // actor: worker_bee_infrastructure
-// role: infrastructure
+// role: packet_builder
 // source_truth: implementation
 
 const { loadPacketFile } = require("./packet-loader");
@@ -27,10 +27,11 @@ const DEFAULT_PACKET = {
 };
 
 // warehouse:method
-// responsibility: Builds effective packet configuration by layering defaults, file configuration, and CLI overrides
-// actor: worker_bee_infrastructure
-// role: infrastructure
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function buildPacket({ file, overrides } = {}) {
   let packet = DEFAULT_PACKET;
   if (file) packet = mergePacket(packet, loadPacketFile(file));
@@ -40,8 +41,8 @@ function buildPacket({ file, overrides } = {}) {
 
 // warehouse:method
 // responsibility: Builds packet configurations: describes packet in human-readable format for introspection
-// actor: worker_bee_infrastructure
-// role: infrastructure
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function describePacket(packet) {
   const w = packet.workload;

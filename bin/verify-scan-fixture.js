@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Manages test data fixture creation and cleanup for taxonomy validation
-// actor: test_setup
-// role: fixture_provider
+// responsibility: Manages test data fixture creation and cleanup for taxonomy validation tests
+// actor: test_infrastructure
+// role: test_helper
 // source_truth: implementation
 
 const fs = require("fs");
@@ -10,10 +10,11 @@ const path = require("path");
 const testDir = path.resolve(__dirname, "..", ".test-data");
 
 // warehouse:method
-// responsibility: Test-driven validation: creates test data directory with sample Python files for header validation
-// actor: test_setup
-// role: fixture_provider
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function setupTestData() {
   // Create test data directory
   if (!fs.existsSync(testDir)) {
@@ -61,8 +62,8 @@ def authenticate():
 
 // warehouse:method
 // responsibility: Test-driven validation: removes test data directory and temporary Python test files
-// actor: test_cleanup
-// role: fixture_provider
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function cleanupTestData() {
   if (fs.existsSync(testDir)) {

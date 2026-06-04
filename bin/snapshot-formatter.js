@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Formats progress metrics into human-readable markdown reports
+// responsibility: Formats progress metrics into human-readable markdown reports with velocity calculations and forecasts
 // actor: report_formatter
 // role: formatter
 // source_truth: implementation
@@ -8,8 +8,8 @@ const { validateData } = require("../src/progress/data-validator");
 
 // warehouse:method
 // responsibility: Generates progress snapshot: formats markdown report with velocity metrics, completion calculations, forecast
-// actor: report_formatter
-// role: formatter
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function formatMarkdownReport(totalCompleted, completions, metadata, totalErrors = 0) {
   // Validate data

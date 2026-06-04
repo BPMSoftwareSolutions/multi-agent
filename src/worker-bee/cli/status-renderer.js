@@ -1,14 +1,15 @@
 // warehouse:file
-// responsibility: Renders worker-bee status output
+// responsibility: Renders swarm status from ledger showing progress metrics, packet completion counts, error tallies, and live state for CLI monitoring
 // actor: status_renderer
 // role: display_engine
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Renders swarm status from ledger showing progress metrics, packet completion counts, error tallies, and live state for CLI monitoring
-// actor: status_renderer
-// role: display_engine
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function renderStatus(status, json) {
   if (!status) {
     console.log("No status ledger yet (reports/status-latest.json not found). Start a run first.");

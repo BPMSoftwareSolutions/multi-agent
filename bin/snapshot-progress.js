@@ -1,6 +1,5 @@
-#!/usr/bin/env node
 // warehouse:file
-// responsibility: Delegator: orchestrates progress snapshot generation with velocity calculations
+// responsibility: Orchestrates progress snapshot generation by reading logs, validating metrics, and writing formatted markdown reports
 // actor: progress_snapshot
 // role: reporter
 // source_truth: implementation
@@ -15,8 +14,8 @@ const reportFile = path.resolve(__dirname, "..", "reports", "CURRENT-RUN.md");
 
 // warehouse:method
 // responsibility: Generates progress snapshot: reads completion log, validates metrics, writes formatted markdown report
-// actor: report_writer
-// role: orchestrator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function main() {
   try {

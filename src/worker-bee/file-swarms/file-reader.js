@@ -9,10 +9,11 @@ const fs = require("fs");
 const CHARS_PER_FILE = 6000;
 
 // warehouse:method
-// responsibility: Reads file and truncates content to character budget for classification with truncation marker
-// actor: worker_bee_infrastructure
-// role: reader
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function readTruncated(absPath) {
   let text;
   try {

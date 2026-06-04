@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Delegator: partitions work items into packets with budget constraints
+// responsibility: Partitions work items into packets with budget constraints using chunking strategy
 // actor: worker_bee_infrastructure
 // role: packer
 // source_truth: implementation
@@ -8,8 +8,8 @@ const { anchorCost, fileChars, packWork } = require("./partition-logic");
 
 // warehouse:method
 // responsibility: Partitions work items into packets: chunks array into fixed-size groups for packing
-// actor: worker_bee_infrastructure
-// role: packer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function chunk(items, size) {
   const out = [];

@@ -1,14 +1,15 @@
 // warehouse:file
-// responsibility: Extracts key concepts, verbs, and nouns from responsibility text for semantic analysis
+// responsibility: Extracts key concepts and verbs from responsibility text for semantic comparison
 // actor: text_analyzer
 // role: tokenizer
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Extracts key concepts and verbs from responsibility text for semantic comparison
-// actor: text_analyzer
-// role: tokenizer
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function extractConcepts(text) {
   if (!text) return { words: [], verbs: [], nouns: [] };
 

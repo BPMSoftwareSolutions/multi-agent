@@ -7,10 +7,11 @@
 const fs = require("fs");
 
 // warehouse:method
-// responsibility: Reads JavaScript file and extracts taxonomy header fields into key-value object from initial comment block
-// actor: audit
-// role: header_reader
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function readHeader(filePath) {
   try {
     const content = fs.readFileSync(filePath, "utf8");

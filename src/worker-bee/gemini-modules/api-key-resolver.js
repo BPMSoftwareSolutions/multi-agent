@@ -1,14 +1,15 @@
 // warehouse:file
-// responsibility: Resolves API keys for language model providers from environment or override parameters
+// responsibility: Resolves API keys for language model providers from override or environment variables
 // actor: worker_bee_infrastructure
 // role: credential_manager
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Resolves API keys for language model providers from override or environment variables
-// actor: worker_bee_infrastructure
-// role: credential_manager
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function getApiKey(override) {
   const key =
     override ||

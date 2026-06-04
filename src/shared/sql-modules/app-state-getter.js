@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Retrieves application state values from SQL Server database by key
-// actor: shared
-// role: app_state_getter
+// actor: persistence_layer
+// role: data_retriever
 // source_truth: implementation
 
 const { getSqlConfig, sqlStringLiteral, runSqlJson } = require("../sql-helpers");
@@ -9,8 +9,8 @@ const { ensureSchema } = require("./schema-manager");
 
 // warehouse:method
 // responsibility: Retrieves application state value from SQL database by key, returns value or null if not found
-// actor: shared
-// role: app_state_getter
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function getAppState(stateKey) {
   ensureSchema();

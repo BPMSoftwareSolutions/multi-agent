@@ -1,8 +1,7 @@
-#!/usr/bin/env node
 // warehouse:file
-// responsibility: Generates taxonomy report snapshot by parsing arguments, scanning target, compiling coverage statistics, and formatting output
-// actor: taxonomy_reporter
-// role: reporter
+// responsibility: Orchestrates taxonomy report generation: parses arguments, extracts distributions, compiles coverage statistics, formats and outputs
+// actor: reporter
+// role: report_generator
 // source_truth: implementation
 
 // Generate a taxonomy report (read-only projection) from the anchors currently in
@@ -32,9 +31,9 @@ const DEFAULT_TARGET =
   config.defaultTarget ? path.resolve(DEFAULT_REPO_ROOT, config.defaultTarget) : DEFAULT_REPO_ROOT;
 
 // warehouse:method
-// responsibility: Parses CLI arguments and builds report configuration with default values
-// actor: taxonomy_reporter
-// role: reporter
+// responsibility: Orchestrates taxonomy report generation: parses CLI arguments for report configuration
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function parseArgs(argv) {
   const args = { repoRoot: DEFAULT_REPO_ROOT, target: DEFAULT_TARGET, output: null, json: false };
@@ -52,19 +51,20 @@ function parseArgs(argv) {
 }
 
 // warehouse:method
-// responsibility: Extracts and sorts top N entries by value from object for coverage display
-// actor: taxonomy_reporter
-// role: reporter
+// responsibility: Orchestrates taxonomy report generation: extracts top entries sorted by value for coverage
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function topN(obj, n) {
   return Object.entries(obj).sort((a, b) => b[1] - a[1]).slice(0, n);
 }
 
 // warehouse:method
-// responsibility: Generates taxonomy report by parsing arguments, building report, and formatting output
-// actor: taxonomy_reporter
-// role: reporter
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
+
 function main() {
   const args = parseArgs(process.argv.slice(2));
   const repoRoot = path.resolve(args.repoRoot);

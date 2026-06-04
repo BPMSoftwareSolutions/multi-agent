@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Log watcher: tails worker-bee log file and displays real-time events
 // actor: log_watcher

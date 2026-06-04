@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Delegator: scans Python files to extract anchors and methods with quality assessment
+// responsibility: Scans Python files to extract anchors and methods with quality assessment and telemetry
 // actor: worker_bee_infrastructure
-// role: telemetry_evidence
+// role: scanner
 // source_truth: implementation
 
 const fs = require("fs");
@@ -17,9 +17,9 @@ const { findDefs, methodAnchorAbove, assessMethodAnchor } = require("../methods"
 const { increment } = require("./telemetry-counter");
 
 // warehouse:method
-// responsibility: Scans Python files to extract file anchors and method definitions, assesses quality trustworthiness, aggregates telemetry evidence across roles, actors, and coverage metrics
-// actor: worker_bee_infrastructure
-// role: telemetry_evidence
+// responsibility: Scans Python files to extract file anchors and method definitions, assesses quality trustworthiness, aggregates telemetry
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function scanFiles(root, repoRoot) {
   const paths = listPythonFiles(root);
