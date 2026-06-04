@@ -1,0 +1,31 @@
+// warehouse:file
+// responsibility: Constructs Gemini prompts from work items and method metadata
+// actor: worker_bee_infrastructure
+// role: builder
+// source_truth: implementation
+
+const { readForPrompt } = require("./file-reader");
+
+// warehouse:method
+// responsibility: Formats method list for prompt with IDs, names, and line numbers
+// actor: worker_bee_infrastructure
+// role: formatter
+// source_truth: implementation
+function methodList(item) {
+  if (!item.doMethods || !item.methodsNeeding.length) return "METHODS TO ANCHOR: none — return an empty methods array.";
+  return "METHODS TO ANCHOR (ids):\n" + item.methodsNeeding.map((d) => `${d.id}: ${d.name} (line ${d.lineIdx + 1})`).join("\n");
+}
+
+// warehouse:method
+// responsibility: Constructs multi-file packet prompt with file content and method IDs
+// actor: worker_bee_infrastructure
+// role: builder
+// source_truth: implementation
+function buildPacketPrompt(packet, workload) {
+  const blocks = packet.items.map((item) =>
+    [`=== FILE: ${item.path} ===`, readForPrompt(item.absPath, workload.file_char_budget), methodList(item)].join("\n")
+  );
+  return `Classify the following ${packet.items.length} file(s). Return one "files" entry per file, echoing each path exactly.\n\n${blocks.join("\n\n")}`;
+}
+
+module.exports = { methodList, buildPacketPrompt };

@@ -1,0 +1,78 @@
+// warehouse:file
+// responsibility: Partitions work items into packets within anchor budget constraints
+// actor: worker_bee_infrastructure
+// role: packer
+// source_truth: implementation
+
+const fs = require("fs");
+
+// warehouse:method
+// responsibility: Partitions array into fixed-size chunks
+// actor: worker_bee_infrastructure
+// role: infrastructure
+// source_truth: implementation
+function chunk(items, size) {
+  const out = [];
+  for (let i = 0; i < items.length; i += size) out.push(items.slice(i, i + size));
+  return out;
+}
+
+// warehouse:method
+// responsibility: Calculates anchor cost for work item (file + method count)
+// actor: worker_bee_infrastructure
+// role: calculator
+// source_truth: implementation
+function anchorCost(item) {
+  return (item.doFile ? 1 : 0) + (item.doMethods ? item.methodsNeeding.length : 0);
+}
+
+// warehouse:method
+// responsibility: Gets file size in bytes for packing calculation
+// actor: worker_bee_infrastructure
+// role: calculator
+// source_truth: implementation
+function fileChars(item) {
+  try {
+    return fs.statSync(item.absPath).size;
+  } catch (_e) {
+    return 0;
+  }
+}
+
+// warehouse:method
+// responsibility: Greedily partitions work items into packets within anchor, file, and char budgets
+// actor: worker_bee_infrastructure
+// role: packer
+// source_truth: implementation
+function packWork(work, workload) {
+  const fileCap = workload.max_files_per_packet;
+  const anchorBudget = workload.anchor_budget;
+  const charBudget = workload.input_char_budget;
+  const packets = [];
+  let cur = null;
+  const flush = () => {
+    if (cur && cur.items.length) packets.push(cur);
+    cur = null;
+  };
+  for (const item of work) {
+    const cost = anchorCost(item);
+    if (cost > anchorBudget) {
+      flush();
+      packets.push({ items: [item], oversize: true });
+      continue;
+    }
+    const chars = fileChars(item);
+    if (!cur) cur = { items: [], cost: 0, chars: 0, oversize: false };
+    if (cur.items.length >= fileCap || cur.cost + cost > anchorBudget || cur.chars + chars > charBudget) {
+      flush();
+      cur = { items: [], cost: 0, chars: 0, oversize: false };
+    }
+    cur.items.push(item);
+    cur.cost += cost;
+    cur.chars += chars;
+  }
+  flush();
+  return packets;
+}
+
+module.exports = { chunk, anchorCost, fileChars, packWork };
