@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Analyzes package-level narratives and role distributions from taxonomy data
+// responsibility: Groups files by package, collects unique responsibilities and role distributions
 // actor: story_generator
 // role: analyzer
 // source_truth: implementation

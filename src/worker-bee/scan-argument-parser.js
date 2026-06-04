@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Parses and validates command arguments for taxonomy scanning operations
+// responsibility: Parses and validates command arguments for taxonomy scanning operations — parseArgs
 // actor: worker_bee_infrastructure
 // role: argument_parser
 // source_truth: implementation
@@ -17,6 +17,11 @@ if (!DEFAULT_REPO_ROOT) {
 function parseArgs(argv) {
   const args = { repoRoot: DEFAULT_REPO_ROOT, target: null, layer: "both", mode: "all", output: null, json: false };
   for (let i = 0; i < argv.length; i += 1) {
+// warehouse:method
+// responsibility: Parses and validates command arguments for taxonomy scanning operations — parseArgs
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
     const next = () => argv[++i];
     switch (argv[i]) {
       case "--repo-root": args.repoRoot = next(); break;

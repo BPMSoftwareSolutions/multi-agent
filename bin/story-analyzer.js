@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Loads taxonomy data and analyzes coherence for each file
+// responsibility: Loads taxonomy data and evaluates coherence for all files and Computes overall health metrics from coherence analysis
 // actor: story_analyzer
 // role: analyzer
 // source_truth: implementation
@@ -9,7 +9,7 @@ const fs = require("fs");
 const { evaluateFileCoherence } = require("../src/story-analysis/coherence-evaluator");
 
 // warehouse:method
-// responsibility: Loads taxonomy data and evaluates coherence for all files
+// responsibility: Loads taxonomy data and evaluates coherence for all files and Computes overall health metrics from coherence analysis
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -35,7 +35,7 @@ function analyzeAllFiles(taxonomyPath) {
 }
 
 // warehouse:method
-// responsibility: Computes overall health metrics from coherence analysis
+// responsibility: Loads taxonomy data and evaluates coherence for all files and Computes overall health metrics from coherence analysis
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

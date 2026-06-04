@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Formats and persists taxonomy report output with statistics and coverage display
+// responsibility: Extracts top N entries sorted by value for coverage analysis and Writes report to file and renders human-readable summary or JSON output
 // actor: results_formatter
 // role: output_writer
 // source_truth: implementation
@@ -8,7 +8,7 @@ const path = require("path");
 const fs = require("fs");
 
 // warehouse:method
-// responsibility: Extracts top N entries sorted by value for coverage analysis
+// responsibility: Extracts top N entries sorted by value for coverage analysis and Writes report to file and renders human-readable summary or JSON output
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -17,7 +17,7 @@ function topN(obj, n) {
 }
 
 // warehouse:method
-// responsibility: Writes report to file and renders human-readable summary or JSON output
+// responsibility: Extracts top N entries sorted by value for coverage analysis and Writes report to file and renders human-readable summary or JSON output
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

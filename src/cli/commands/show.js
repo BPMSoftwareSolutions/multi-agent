@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Show command handler: retrieves session and renders complete state
+// responsibility: Orchestrates session lookup and renders full session state
 // actor: cli
 // role: orchestrator
 // source_truth: implementation

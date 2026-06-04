@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Aggregates bee agent management and packet processing for swarm execution
+// responsibility: Orchestrates complete swarm: packs work into packets, creates bee agent pool, aggregates tally and results
 // actor: worker_bee_infrastructure
 // role: orchestrator
 // source_truth: implementation

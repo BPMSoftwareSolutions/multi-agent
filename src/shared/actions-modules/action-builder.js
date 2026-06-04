@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Constructs action and review queue items from normalized recommendations
+// responsibility: Creates action object from recommendation with tracking metadata and Creates human review queue item from recommendation
 // actor: action_orchestrator
 // role: action_builder
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const { v4: uuidv4 } = require("uuid");
 
 // warehouse:method
-// responsibility: Creates action object from recommendation with tracking metadata
+// responsibility: Creates action object from recommendation with tracking metadata and Creates human review queue item from recommendation
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -46,7 +46,7 @@ function buildApprovedAction(recommendation, sessionId, operations, context = {}
 }
 
 // warehouse:method
-// responsibility: Creates human review queue item from recommendation
+// responsibility: Creates action object from recommendation with tracking metadata and Creates human review queue item from recommendation
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

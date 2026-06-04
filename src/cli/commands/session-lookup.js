@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Retrieves session by ID or current active session ID
+// responsibility: Resolves session ID (from parameter or current) and retrieves session object
 // actor: cli
 // role: accessor
 // source_truth: implementation

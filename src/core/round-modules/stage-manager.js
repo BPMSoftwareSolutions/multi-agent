@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Manages artifact acceptance and stage progression
+// responsibility: Commits proposed artifact to accepted state and queues action recommendations and Validates current stage acceptance and moves session to next stage
 // actor: orchestration
 // role: artifact_acceptance, stage_progression
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const { queueActionRecommendations } = require("../../shared/actions");
 
 // warehouse:method
-// responsibility: Commits proposed artifact to accepted state and queues action recommendations
+// responsibility: Commits proposed artifact to accepted state and queues action recommendations and Validates current stage acceptance and moves session to next stage
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -41,7 +41,7 @@ async function acceptArtifact(session) {
 }
 
 // warehouse:method
-// responsibility: Validates current stage acceptance and moves session to next stage
+// responsibility: Commits proposed artifact to accepted state and queues action recommendations and Validates current stage acceptance and moves session to next stage
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

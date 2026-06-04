@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Manages artifact acceptance and routes action recommendations for execution
+// responsibility: Accepts proposed artifact as current state and queues action recommendations
 // actor: core_runtime
 // role: acceptor
 // source_truth: implementation

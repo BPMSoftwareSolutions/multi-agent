@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Validates artifact field types match stage schema
+// responsibility: Checks field types match schema (arrays vs strings), returns errors if mismatch
 // actor: core_runtime
 // role: validator
 // source_truth: implementation

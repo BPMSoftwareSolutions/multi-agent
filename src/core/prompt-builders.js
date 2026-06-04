@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Aggregates prompt construction by delegating to specialized prompt builder modules
+// responsibility: Constructs planner agent prompt combining stage goals and task intent and Constructs reviewer agent prompt for artifact evaluation
 // actor: core_runtime
 // role: entry_point
 // source_truth: implementation
@@ -9,9 +9,8 @@ const { schemaToText, toJSONString } = require("./prompts/schema-formatter");
 const { buildRoundContext, formatHumanInterjection } = require("./prompts/context-builder");
 const { buildIntentPrompt } = require("./prompts/intent-prompter");
 
-// Planner Prompt
 // warehouse:method
-// responsibility: Constructs planner agent prompt combining stage goals and task intent
+// responsibility: Constructs planner agent prompt combining stage goals and task intent and Constructs reviewer agent prompt for artifact evaluation
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -75,9 +74,8 @@ function buildBuilderPrompt({
   };
 }
 
-// Reviewer Prompt
 // warehouse:method
-// responsibility: Constructs reviewer agent prompt for artifact evaluation
+// responsibility: Constructs planner agent prompt combining stage goals and task intent and Constructs reviewer agent prompt for artifact evaluation
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

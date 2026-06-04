@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Constructs approved action objects from normalized recommendations
+// responsibility: Creates action object from recommendation with tracking metadata
 // actor: action_orchestrator
 // role: action_builder
 // source_truth: implementation

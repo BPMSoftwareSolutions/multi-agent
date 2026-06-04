@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Processes work packets and aggregates results with file count tracking
+// responsibility: Packs work into packets and computes file/packet counts for metrics
 // actor: worker_bee_infrastructure
 // role: result_aggregator
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Advances session to next stage and persists state
+// responsibility: Calls advanceStage logic and saves updated session to store
 // actor: cli
 // role: executor
 // source_truth: implementation

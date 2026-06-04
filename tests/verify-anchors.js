@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Test suite that verifies file anchors match expected taxonomy - compares extracted anchors against expected state
+// responsibility: Loads the expected taxonomy JSON and parses it into a usable structure and Extracts all JavaScript files from bin and src directories that should have taxonomy and Compares extracted file-level anchor against expected taxonomy entry and returns detailed match result and Compares method-level anchors between extracted and expected taxonomy and returns detailed differences and Formats and prints a detailed verification report showing file-by-file anchor comparison results and Main entry point that orchestrates taxonomy verification - loads expected state, extracts actual state, compares, and reports
 // actor: test_runner
 // role: validator
 // source_truth: implementation
@@ -12,9 +12,9 @@ const { extractFromFile } = require("../src/taxonomy/extractor");
 const root = path.resolve(__dirname, "..");
 
 // warehouse:method
-// responsibility: Loads the expected taxonomy JSON and parses it into a usable structure
-// actor: file_reader
-// role: loader
+// responsibility: Loads the expected taxonomy JSON and parses it into a usable structure and Extracts all JavaScript files from bin and src directories that should have taxonomy and Compares extracted file-level anchor against expected taxonomy entry and returns detailed match result and Compares method-level anchors between extracted and expected taxonomy and returns detailed differences and Formats and prints a detailed verification report showing file-by-file anchor comparison results and Main entry point that orchestrates taxonomy verification - loads expected state, extracts actual state, compares, and reports
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function loadExpectedTaxonomy(expectedPath) {
   try {
@@ -31,15 +31,20 @@ function loadExpectedTaxonomy(expectedPath) {
 }
 
 // warehouse:method
-// responsibility: Extracts all JavaScript files from bin and src directories that should have taxonomy
-// actor: file_scanner
-// role: scanner
+// responsibility: Loads the expected taxonomy JSON and parses it into a usable structure and Extracts all JavaScript files from bin and src directories that should have taxonomy and Compares extracted file-level anchor against expected taxonomy entry and returns detailed match result and Compares method-level anchors between extracted and expected taxonomy and returns detailed differences and Formats and prints a detailed verification report showing file-by-file anchor comparison results and Main entry point that orchestrates taxonomy verification - loads expected state, extracts actual state, compares, and reports
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function getAllJavaScriptFiles() {
   const files = [];
   const binDir = path.join(root, "bin");
   const srcDir = path.join(root, "src");
 
+// warehouse:method
+// responsibility: Loads the expected taxonomy JSON and parses it into a usable structure and Extracts all JavaScript files from bin and src directories that should have taxonomy and Compares extracted file-level anchor against expected taxonomy entry and returns detailed match result and Compares method-level anchors between extracted and expected taxonomy and returns detailed differences and Formats and prints a detailed verification report showing file-by-file anchor comparison results and Main entry point that orchestrates taxonomy verification - loads expected state, extracts actual state, compares, and reports
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
   function scanDir(dir) {
     try {
       const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -62,9 +67,9 @@ function getAllJavaScriptFiles() {
 }
 
 // warehouse:method
-// responsibility: Compares extracted file-level anchor against expected taxonomy entry and returns detailed match result
-// actor: comparator
-// role: validator
+// responsibility: Loads the expected taxonomy JSON and parses it into a usable structure and Extracts all JavaScript files from bin and src directories that should have taxonomy and Compares extracted file-level anchor against expected taxonomy entry and returns detailed match result and Compares method-level anchors between extracted and expected taxonomy and returns detailed differences and Formats and prints a detailed verification report showing file-by-file anchor comparison results and Main entry point that orchestrates taxonomy verification - loads expected state, extracts actual state, compares, and reports
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function compareFileAnchor(filePath, extracted, expected) {
   const result = {
@@ -123,9 +128,9 @@ function compareFileAnchor(filePath, extracted, expected) {
 }
 
 // warehouse:method
-// responsibility: Compares method-level anchors between extracted and expected taxonomy and returns detailed differences
-// actor: comparator
-// role: validator
+// responsibility: Loads the expected taxonomy JSON and parses it into a usable structure and Extracts all JavaScript files from bin and src directories that should have taxonomy and Compares extracted file-level anchor against expected taxonomy entry and returns detailed match result and Compares method-level anchors between extracted and expected taxonomy and returns detailed differences and Formats and prints a detailed verification report showing file-by-file anchor comparison results and Main entry point that orchestrates taxonomy verification - loads expected state, extracts actual state, compares, and reports
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function compareMethodAnchors(filePath, extracted, expected) {
   const result = {
@@ -210,9 +215,9 @@ function compareMethodAnchors(filePath, extracted, expected) {
 }
 
 // warehouse:method
-// responsibility: Formats and prints a detailed verification report showing file-by-file anchor comparison results
-// actor: formatter
-// role: reporter
+// responsibility: Loads the expected taxonomy JSON and parses it into a usable structure and Extracts all JavaScript files from bin and src directories that should have taxonomy and Compares extracted file-level anchor against expected taxonomy entry and returns detailed match result and Compares method-level anchors between extracted and expected taxonomy and returns detailed differences and Formats and prints a detailed verification report showing file-by-file anchor comparison results and Main entry point that orchestrates taxonomy verification - loads expected state, extracts actual state, compares, and reports
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function printReport(
   results,
@@ -308,9 +313,9 @@ function printReport(
 }
 
 // warehouse:method
-// responsibility: Main entry point that orchestrates taxonomy verification - loads expected state, extracts actual state, compares, and reports
-// actor: test_orchestrator
-// role: coordinator
+// responsibility: Loads the expected taxonomy JSON and parses it into a usable structure and Extracts all JavaScript files from bin and src directories that should have taxonomy and Compares extracted file-level anchor against expected taxonomy entry and returns detailed match result and Compares method-level anchors between extracted and expected taxonomy and returns detailed differences and Formats and prints a detailed verification report showing file-by-file anchor comparison results and Main entry point that orchestrates taxonomy verification - loads expected state, extracts actual state, compares, and reports
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function main() {
   const expectedPath = path.join(root, "reports", "taxonomy-extracted.json");

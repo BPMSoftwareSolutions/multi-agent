@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Formats round execution results for CLI display in JSON or text
+// responsibility: Formats round output as JSON or human-readable text with stage context
 // actor: cli
 // role: renderer
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Summarizes action operations with aggregate metrics and attempt tracking
+// responsibility: Aggregates action execution counts by status, returns metrics
 // actor: action_orchestrator
 // role: summarizer
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Executes pending actions and applies state mutations
+// responsibility: Records action execution failure in attempt log with error code and message and Executes pending action, validates state preconditions, applies mutations, and records attempt
 // actor: action_executor
 // role: executor
 // source_truth: implementation
@@ -9,7 +9,7 @@ const { toTrimmedString } = require("../validation-helpers");
 const { ensureOperationsState } = require("./operations-builder");
 
 // warehouse:method
-// responsibility: Records action execution failure in attempt log with error code and message
+// responsibility: Records action execution failure in attempt log with error code and message and Executes pending action, validates state preconditions, applies mutations, and records attempt
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -38,7 +38,7 @@ function failAttempt({ operations, action, attempt, code, message, status = "fai
 }
 
 // warehouse:method
-// responsibility: Executes pending action, validates state preconditions, applies mutations, and records attempt
+// responsibility: Records action execution failure in attempt log with error code and message and Executes pending action, validates state preconditions, applies mutations, and records attempt
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

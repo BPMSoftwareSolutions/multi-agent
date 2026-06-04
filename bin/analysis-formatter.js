@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Formats and persists coherence analysis results with detailed narrative output
+// responsibility: Persists analysis report to JSON file and Renders weak stories section with detailed issue analysis and alignment metrics and Renders strong stories section showing coherent narratives with alignment metrics and Renders comprehensive coherence analysis with header, metrics, weak/strong stories
 // actor: analysis_formatter
 // role: output_writer
 // source_truth: implementation
@@ -8,7 +8,7 @@ const path = require("path");
 const fs = require("fs");
 
 // warehouse:method
-// responsibility: Persists analysis report to JSON file
+// responsibility: Persists analysis report to JSON file and Renders weak stories section with detailed issue analysis and alignment metrics and Renders strong stories section showing coherent narratives with alignment metrics and Renders comprehensive coherence analysis with header, metrics, weak/strong stories
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -20,7 +20,7 @@ function writeAnalysisReport(report, taxonomyPath) {
 }
 
 // warehouse:method
-// responsibility: Renders weak stories section with detailed issue analysis and alignment metrics
+// responsibility: Persists analysis report to JSON file and Renders weak stories section with detailed issue analysis and alignment metrics and Renders strong stories section showing coherent narratives with alignment metrics and Renders comprehensive coherence analysis with header, metrics, weak/strong stories
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -42,7 +42,7 @@ function displayWeakStories(analyses) {
 }
 
 // warehouse:method
-// responsibility: Renders strong stories section showing coherent narratives with alignment metrics
+// responsibility: Persists analysis report to JSON file and Renders weak stories section with detailed issue analysis and alignment metrics and Renders strong stories section showing coherent narratives with alignment metrics and Renders comprehensive coherence analysis with header, metrics, weak/strong stories
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -60,7 +60,7 @@ function displayStrongStories(analyses) {
 }
 
 // warehouse:method
-// responsibility: Renders comprehensive coherence analysis with header, metrics, weak/strong stories
+// responsibility: Persists analysis report to JSON file and Renders weak stories section with detailed issue analysis and alignment metrics and Renders strong stories section showing coherent narratives with alignment metrics and Renders comprehensive coherence analysis with header, metrics, weak/strong stories
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

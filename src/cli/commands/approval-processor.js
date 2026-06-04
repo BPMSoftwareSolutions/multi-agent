@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Processes and queues action approval payloads to session operations
+// responsibility: Parses approval payload from JSON string or file source and Routes approved action to session operations queue with metadata
 // actor: cli
 // role: command_handler
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const { approveManualAction } = require("../../shared/actions");
 
 // warehouse:method
-// responsibility: Parses approval payload from JSON string or file source
+// responsibility: Parses approval payload from JSON string or file source and Routes approved action to session operations queue with metadata
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -20,7 +20,7 @@ function parsePayload(rawPayload) {
 }
 
 // warehouse:method
-// responsibility: Routes approved action to session operations queue with metadata
+// responsibility: Parses approval payload from JSON string or file source and Routes approved action to session operations queue with metadata
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

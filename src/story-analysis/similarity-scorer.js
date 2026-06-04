@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Computes semantic alignment score between file and method responsibilities
+// responsibility: Computes semantic alignment score by extracting concept vocabularies and calculating word overlap ratio
 // actor: coherence_analyzer
 // role: similarity_scorer
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Routes approved recommendations into action queue with deduplication
+// responsibility: Routes approved recommendations through normalization and adds to action queue and Wraps manual recommendation for CLI-driven approval workflow
 // actor: action_orchestrator
 // role: queue_manager
 // source_truth: implementation
@@ -11,7 +11,7 @@ const { ensureOperationsState } = require("./operations-state-validator");
 const { buildApprovedAction } = require("./approved-action-builder");
 
 // warehouse:method
-// responsibility: Routes approved recommendations through normalization and adds to action queue
+// responsibility: Routes approved recommendations through normalization and adds to action queue and Wraps manual recommendation for CLI-driven approval workflow
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -70,7 +70,7 @@ function queueActionRecommendations(session, recommendations, context = {}) {
 }
 
 // warehouse:method
-// responsibility: Wraps manual recommendation for CLI-driven approval workflow
+// responsibility: Routes approved recommendations through normalization and adds to action queue and Wraps manual recommendation for CLI-driven approval workflow
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

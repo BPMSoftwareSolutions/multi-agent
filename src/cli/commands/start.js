@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Start command handler: validates brief, creates session with intent, and renders output
+// responsibility: Orchestrates brief validation, intent normalization, session creation, and output rendering
 // actor: cli
 // role: orchestrator
 // source_truth: implementation

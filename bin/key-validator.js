@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Validates API keys and models with quota/latency diagnostics
+// responsibility: Sends JSON POST request with timeout handling and error parsing and Validates API key and model with quota/latency diagnostics
 // actor: api_validator
 // role: validator
 // source_truth: implementation
@@ -18,7 +18,7 @@ const TEST_PROMPT = {
 };
 
 // warehouse:method
-// responsibility: Sends JSON POST request with timeout handling and error parsing
+// responsibility: Sends JSON POST request with timeout handling and error parsing and Validates API key and model with quota/latency diagnostics
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -70,7 +70,7 @@ function postJson(url, body, timeoutMs = 10000) {
 }
 
 // warehouse:method
-// responsibility: Validates API key and model with quota/latency diagnostics
+// responsibility: Sends JSON POST request with timeout handling and error parsing and Validates API key and model with quota/latency diagnostics
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

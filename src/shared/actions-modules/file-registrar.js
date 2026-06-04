@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Records file metadata with merged state from recommendations
+// responsibility: Records file with merged metadata, permissions, and parent folder registration
 // actor: action_orchestrator
 // role: file_registrar
 // source_truth: implementation

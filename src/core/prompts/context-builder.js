@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Formats previous round context for agent prompts with interjection handling
+// responsibility: Determines initial vs continuation task line based on stage and round context and Combines previous round feedback and human interjection into context block and Assembles task line and context into complete user message content and Formats round context including interjection, change summary, artifact state and Normalizes and formats human interjection text for prompt injection
 // actor: core_runtime
 // role: prompt_builder
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const { toJSONString } = require("./schema-formatter");
 
 // warehouse:method
-// responsibility: Determines initial vs continuation task line based on stage and round context
+// responsibility: Determines initial vs continuation task line based on stage and round context and Combines previous round feedback and human interjection into context block and Assembles task line and context into complete user message content and Formats round context including interjection, change summary, artifact state and Normalizes and formats human interjection text for prompt injection
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -18,7 +18,7 @@ function buildTaskLine({ stage, brief, roundNumber, isStageOneFirstRound }) {
 }
 
 // warehouse:method
-// responsibility: Combines previous round feedback and human interjection into context block
+// responsibility: Determines initial vs continuation task line based on stage and round context and Combines previous round feedback and human interjection into context block and Assembles task line and context into complete user message content and Formats round context including interjection, change summary, artifact state and Normalizes and formats human interjection text for prompt injection
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -28,7 +28,7 @@ function buildContextLines({ lastRound, humanInterjection }) {
 }
 
 // warehouse:method
-// responsibility: Assembles task line and context into complete user message content
+// responsibility: Determines initial vs continuation task line based on stage and round context and Combines previous round feedback and human interjection into context block and Assembles task line and context into complete user message content and Formats round context including interjection, change summary, artifact state and Normalizes and formats human interjection text for prompt injection
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -37,7 +37,7 @@ function buildUserMessage({ taskLine, context }) {
 }
 
 // warehouse:method
-// responsibility: Formats round context including interjection, change summary, artifact state
+// responsibility: Determines initial vs continuation task line based on stage and round context and Combines previous round feedback and human interjection into context block and Assembles task line and context into complete user message content and Formats round context including interjection, change summary, artifact state and Normalizes and formats human interjection text for prompt injection
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -58,7 +58,7 @@ function buildRoundContext(lastRound) {
 }
 
 // warehouse:method
-// responsibility: Normalizes and formats human interjection text for prompt injection
+// responsibility: Determines initial vs continuation task line based on stage and round context and Combines previous round feedback and human interjection into context block and Assembles task line and context into complete user message content and Formats round context including interjection, change summary, artifact state and Normalizes and formats human interjection text for prompt injection
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

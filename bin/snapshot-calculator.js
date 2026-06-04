@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: Calculates progress metrics including velocity, time remaining, and percentage complete
-// actor: snapshot_calculator
-// role: metric_computer
+// responsibility: Calculates files-per-minute velocity based on elapsed time and completion count and Estimates minutes remaining until completion at current velocity and Calculates percentage of total work completed and Calculates files-per-second and seconds-per-file metrics
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Calculates files-per-minute velocity based on elapsed time and completion count
+// responsibility: Calculates files-per-minute velocity based on elapsed time and completion count and Estimates minutes remaining until completion at current velocity and Calculates percentage of total work completed and Calculates files-per-second and seconds-per-file metrics
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -17,7 +17,7 @@ function calculateVelocity(totalCompleted, elapsedMinutes) {
 }
 
 // warehouse:method
-// responsibility: Estimates minutes remaining until completion at current velocity
+// responsibility: Calculates files-per-minute velocity based on elapsed time and completion count and Estimates minutes remaining until completion at current velocity and Calculates percentage of total work completed and Calculates files-per-second and seconds-per-file metrics
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -29,7 +29,7 @@ function calculateTimeRemaining(velocityFilesPerMin, remaining) {
 }
 
 // warehouse:method
-// responsibility: Calculates percentage of total work completed
+// responsibility: Calculates files-per-minute velocity based on elapsed time and completion count and Estimates minutes remaining until completion at current velocity and Calculates percentage of total work completed and Calculates files-per-second and seconds-per-file metrics
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -38,7 +38,7 @@ function calculatePercentComplete(totalCompleted, totalNeeded) {
 }
 
 // warehouse:method
-// responsibility: Calculates files-per-second and seconds-per-file metrics
+// responsibility: Calculates files-per-minute velocity based on elapsed time and completion count and Estimates minutes remaining until completion at current velocity and Calculates percentage of total work completed and Calculates files-per-second and seconds-per-file metrics
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

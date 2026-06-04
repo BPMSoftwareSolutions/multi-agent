@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Executes planning and review cycle for current session round
+// responsibility: Runs orchestrator round (planner + reviewer) and persists session
 // actor: cli
 // role: executor
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Round command handler: validates session, executes round, and renders output
+// responsibility: Orchestrates session lookup, round execution, and output rendering
 // actor: cli
 // role: orchestrator
 // source_truth: implementation

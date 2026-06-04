@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Constructs planner prompt for artifact development aligned with stage goals
+// responsibility: Combines stage config, intent, artifact, round context, and human interjection into planner prompt
 // actor: core_runtime
 // role: prompt_builder
 // source_truth: implementation

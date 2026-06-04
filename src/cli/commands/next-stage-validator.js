@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Validates session state and stage readiness for next-stage command execution
+// responsibility: Validates session exists and is retrievable; returns resolved ID
 // actor: cli
 // role: validator
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const { getSession, getCurrentSessionId } = require("../../core/session-store");
 
 // warehouse:method
-// responsibility: Validates session exists and is retrievable; returns resolved ID and session
+// responsibility: Validates session exists and is retrievable; returns resolved ID
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

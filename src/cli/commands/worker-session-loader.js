@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Resolves and loads session context for worker command execution
+// responsibility: Resolves session ID from options or context, loads and validates session
 // actor: cli
 // role: session_loader
 // source_truth: implementation

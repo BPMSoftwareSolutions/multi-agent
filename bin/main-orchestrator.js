@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Orchestrates complete swarm execution workflow with retries, progress tracking, and result reporting
+// responsibility: Orchestrates complete swarm execution workflow: scanning for work, distributing packets to bees, tracking progress via ledger, managing retries until convergence, and reporting results
 // actor: worker_bee_swarm
 // role: orchestrator
 // source_truth: implementation

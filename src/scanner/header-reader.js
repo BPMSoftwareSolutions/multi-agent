@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Reads taxonomy header metadata from file comment blocks
+// responsibility: Extracts key:value pairs from # comment lines at file start into object
 // actor: header_parser
 // role: reader
 // source_truth: implementation
