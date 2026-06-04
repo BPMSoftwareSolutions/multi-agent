@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Handles the status command which reports current session state in JSON format for programmatic access
+// responsibility: Status command handler: retrieves current session, summarizes pending/running/completed operations, renders state in JSON or text format
 // actor: cli
 // role: command_handler
 // source_truth: implementation

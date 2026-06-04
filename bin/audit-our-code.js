@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Audits JavaScript files in bin/ and src/ folders to verify all required taxonomy headers are present
+// responsibility: JavaScript taxonomy auditor: recursively traverses bin/ and src/ directories, parses taxonomy headers from comments, validates all required fields are present and non-empty
 // actor: taxonomy_auditor
 // role: audit_tool
 // source_truth: implementation

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Validates Gemini API keys and models for quota availability, latency, and fallback capability
+// responsibility: Gemini API validator: tests API keys and models, checks quota availability, measures latency, verifies fallback capability, generates diagnostic report
 // actor: gemini_validator
 // role: diagnostic_tool
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Generates read-only taxonomy reports from file and method anchors, computing coverage metrics and quality assessment
+// responsibility: Taxonomy report generator: scans anchors, parses file and method metadata, computes coverage and quality metrics, aggregates statistics, generates markdown snapshot
 // actor: worker_bee_infrastructure
 // role: telemetry_evidence
 // source_truth: implementation

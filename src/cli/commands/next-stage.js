@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Handles the next-stage command which advances the session to the next workflow stage
+// responsibility: Next-stage command handler: validates current stage is accepted, advances to next stage in sequence, saves updated session state
 // actor: cli
 // role: command_handler
 // source_truth: implementation

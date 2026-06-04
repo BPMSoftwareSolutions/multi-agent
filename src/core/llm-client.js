@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Manages LLM API communication, request building, and response parsing with retry logic
+// responsibility: Anthropic API client: retrieves and validates API key, builds HTTPS requests, extracts JSON from model output, implements retry logic with exponential backoff
 // actor: core_runtime
 // role: llm_interface
 // source_truth: implementation

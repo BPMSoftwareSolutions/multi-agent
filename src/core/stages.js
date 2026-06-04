@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Defines the three-stage artifact lifecycle (idea, ASCII sketch, plan) with schemas and stage progression rules
+// responsibility: Stage definitions: defines STAGES object with idea/ascii/plan schemas, creates empty artifacts, provides stage order and progression helpers
 // actor: core_runtime
 // role: stage_definitions
 // source_truth: implementation

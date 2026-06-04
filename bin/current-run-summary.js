@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Generates live executive summary of active worker-bee runs with progress percentage and ETA
+// responsibility: Executive run summary: fetches latest worker-bee run status, parses JSON response, formats markdown summary with progress percentage and completion forecast
 // actor: run_reporter
 // role: reporter
 // source_truth: implementation

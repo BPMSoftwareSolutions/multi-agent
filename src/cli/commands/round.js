@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Handles the round command which executes a planning and review cycle on the current stage
+// responsibility: Round command handler: loads session, executes planning and review cycle via orchestrator, renders round results, saves updated session with new artifacts
 // actor: cli
 // role: command_handler
 // source_truth: implementation

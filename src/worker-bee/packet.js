@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Defines packet schema, workload defaults, and merges configuration from files and CLI overrides
+// responsibility: Packet schema and configuration: type-checks objects, merges swarm/workload packets with shallow-deep logic, removes undefined values, loads packet defaults from files, applies CLI overrides
 // actor: worker_bee_infrastructure
 // role: infrastructure
 // source_truth: implementation

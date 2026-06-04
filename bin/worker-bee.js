@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Main CLI entry point and orchestrator. Parses runtime arguments, orchestrates Gemini swarm to distribute taxonomy anchor work via packets, and renders live status from job ledger
+// responsibility: Worker-bee CLI orchestrator: parses runtime arguments and packet options, renders status from ledger, orchestrates swarm execution from scanning to packet distribution to result reporting
 // actor: worker_bee_swarm
 // role: orchestrator
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides low-level text and path normalization utilities for file scanning and anchor processing
+// responsibility: Provides text and path normalization utilities: removes BOM, normalizes paths, detects line endings, splits text, computes repo depth, validates placeholders and generic responsibilities
 // actor: worker_bee_infrastructure
 // role: text_utilities
 // source_truth: implementation

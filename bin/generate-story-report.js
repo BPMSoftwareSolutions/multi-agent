@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Generates a human-readable markdown narrative of taxonomy stories with coherence analysis and reasoning
+// responsibility: Story report generator: filters taxonomy files, evaluates individual story coherence, aggregates statistics, formats markdown narrative with weak/strong stories, writes JSON output
 // actor: story_reporter
 // role: narrator
 // source_truth: implementation

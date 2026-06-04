@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Orchestrates a single round of agent-driven planning and review with artifact state transitions
+// responsibility: Executes design workshop rounds: normalizes reviewer output, extracts intent, runs planner and reviewer agents, accepts artifacts as state, queues action recommendations, advances session to next stage
 // actor: orchestration
 // role: round_execution
 // source_truth: implementation

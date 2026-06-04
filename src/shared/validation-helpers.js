@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides validation and normalization utilities for action approval workflows, risk assessment, and status handling
+// responsibility: Validation utilities: normalizes strings to trimmed or null, converts to string arrays, normalizes approval/risk/recommendation status values
 // actor: shared_infrastructure
 // role: validation_utilities
 // source_truth: implementation

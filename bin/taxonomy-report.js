@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Generates read-only taxonomy report snapshot showing anchor distribution by role, layer, and method coverage
+// responsibility: Orchestrates taxonomy report generation: parses CLI arguments, extracts top entries from distributions, compiles anchor coverage statistics by role and layer, formats and outputs snapshot
 // actor: taxonomy_reporter
 // role: reporter
 // source_truth: implementation

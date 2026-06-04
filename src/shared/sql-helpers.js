@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides SQL Server connection, escaping, and command-line utilities for database operations
+// responsibility: Provides SQL utilities: reads configuration, escapes and wraps string literals, builds sqlcmd arguments, executes queries via sqlcmd, parses and returns JSON query results
 // actor: shared_infrastructure
 // role: sql_utilities
 // source_truth: implementation

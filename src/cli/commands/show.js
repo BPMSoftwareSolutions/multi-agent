@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Handles the show command which displays the current session state including stages and operations
+// responsibility: Show command handler: retrieves current session, renders complete state including stages and operations, outputs formatted state
 // actor: cli
 // role: command_handler
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Manages run lifecycle and status ledger without write contention, combining manifest and immutable part files into live status
+// responsibility: Run ledger: generates unique run IDs, manages run directories, initializes runs, logs packet completions, parses and aggregates live status from manifest and immutable part files
 // actor: worker_bee_infrastructure
 // role: data_access
 // source_truth: implementation

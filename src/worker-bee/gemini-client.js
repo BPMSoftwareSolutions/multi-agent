@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Handles API communication with Gemini, including timeout management and model fallback (Flash → Pro on quota exhaustion)
+// responsibility: Manages Gemini API communication: resolves keys, sends JSON POST requests with timeout handling, extracts JSON from responses, determines retry eligibility, implements exponential backoff retry loop
 // actor: worker_bee_infrastructure
 // role: api_client
 // source_truth: implementation

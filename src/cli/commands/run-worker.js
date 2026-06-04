@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Handles the run-worker command which executes a pending approved action and updates file state
+// responsibility: Run-worker command handler: loads session, finds and executes pending action via worker handler, manages external Drive service callbacks, saves updated session state
 // actor: cli
 // role: command_handler
 // source_truth: implementation

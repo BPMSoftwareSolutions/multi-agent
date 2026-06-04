@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Handles the approve-action command which manually approves file system actions from a JSON payload
+// responsibility: Approve-action command handler: parses action payload from CLI args or file, approves manual action, queues it to session operations, saves session state
 // actor: cli
 // role: command_handler
 // source_truth: implementation

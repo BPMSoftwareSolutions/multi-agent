@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Main CLI entry point. Parses command-line arguments and routes to handlers (start, show, round, accept, etc.) for managing sessions, rounds, and actions
+// responsibility: Studio CLI entry point: loads environment config, parses command-line arguments, routes to command handlers for session and round management
 // actor: studio_cli
 // role: command_router
 // source_truth: implementation

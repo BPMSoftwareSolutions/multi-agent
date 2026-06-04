@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Continuously monitors worker-bee log for completion events and triggers alerts when processing stalls
+// responsibility: Continuous progress monitor: parses worker-bee log for packet completions, tracks total work items, formats human-readable time elapsed, watches for stalls and alerts
 // actor: progress_tracker
 // role: monitor
 // source_truth: implementation

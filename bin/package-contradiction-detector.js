@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Analyzes taxonomy reports to detect contradictions between package names, responsibilities, roles, and domain signals
+// responsibility: Contradiction detector: analyzes package taxonomy, detects mismatches between names/responsibilities/roles/domains, flags contradictions, generates summary report
 // actor: contradiction_analyzer
 // role: validator
 // source_truth: implementation

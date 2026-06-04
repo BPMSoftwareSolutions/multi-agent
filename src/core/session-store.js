@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Persists and retrieves session state including stages, artifacts, and operations from database storage
+// responsibility: Session store: creates and manages session lifecycle, reads/writes/lists sessions from database, gets and sets current session ID, ensures schema, handles state transitions
 // actor: core_runtime
 // role: session_persistence
 // source_truth: implementation

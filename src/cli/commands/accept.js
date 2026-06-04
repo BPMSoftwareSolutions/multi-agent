@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Handles the accept command which validates and commits a proposed artifact for the current stage
+// responsibility: Accept command handler: loads session, validates proposed artifact, accepts it as current state, queues action recommendations, saves updated session
 // actor: cli
 // role: command_handler
 // source_truth: implementation

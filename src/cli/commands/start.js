@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Handles the start command which creates a new session with a brief and initializes the workflow intent
+// responsibility: Start command handler: validates brief argument, creates new session, normalizes intent from user brief, renders and outputs session state
 // actor: cli
 // role: command_handler
 // source_truth: implementation

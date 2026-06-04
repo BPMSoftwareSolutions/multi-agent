@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Generates time-bound progress snapshots with velocity metrics and completion forecasts for worker-bee runs
+// responsibility: Progress snapshot reporter: parses worker-bee log for packet counts and metadata, validates data consistency, calculates velocity and completion forecasts, generates markdown output
 // actor: progress_snapshot
 // role: reporter
 // source_truth: implementation

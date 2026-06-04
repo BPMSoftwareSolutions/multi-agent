@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Scans target repository to classify files as TOUCHED or UNTOUCHED and writes authoritative tracking JSON for worker-bee
+// responsibility: Python taxonomy scanner: recursively scans target folder, classifies files as TOUCHED/UNTOUCHED, validates anchors, writes deterministic tracking JSON for worker-bee
 // actor: taxonomy_scanner
 // role: scan_authority
 // source_truth: implementation

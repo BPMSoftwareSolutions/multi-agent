@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Tails worker-bee log file to display real-time completion events, errors, and fallback triggers
+// responsibility: Log watcher: tails worker-bee log file, displays real-time completion events with timestamps, shows errors and fallback triggers
 // actor: log_watcher
 // role: monitor
 // source_truth: implementation

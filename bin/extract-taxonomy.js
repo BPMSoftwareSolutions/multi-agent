@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Extracts all file-level and method-level taxonomy from JavaScript source code into a queryable JSON structure
+// responsibility: Taxonomy extractor: walks JavaScript files, parses file and method taxonomy headers, validates field presence, aggregates into JSON structure, writes reports and summary
 // actor: taxonomy_extractor
 // role: data_exporter
 // source_truth: implementation

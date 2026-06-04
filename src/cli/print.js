@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides formatting and rendering utilities for sessions, rounds, and artifacts to display in CLI output
+// responsibility: Formats and renders sessions, rounds, and operations state to human-readable CLI output with nested key-value pairs and exit message handling
 // actor: cli
 // role: output_formatter
 // source_truth: implementation

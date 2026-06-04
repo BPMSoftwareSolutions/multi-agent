@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Constructs prompts for intent clarification, planner, and reviewer agents in the design workshop
+// responsibility: Builds agent prompts: converts schema to field descriptions, serializes values to JSON, formats previous round context, normalizes interjections, generates specialized prompts for intent/planner/reviewer agents
 // actor: core_runtime
 // role: prompt_generation
 // source_truth: implementation

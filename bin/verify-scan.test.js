@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Unit tests for taxonomy header verification scanner using test-driven development approach
+// responsibility: Test-driven validation suite: creates test data environments, extracts and verifies taxonomy headers from Python files, ensures required fields present and non-placeholder
 // actor: test_suite
 // role: test
 // source_truth: implementation

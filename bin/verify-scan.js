@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Scans Python files and verifies taxonomy header completeness by checking for all required fields
+// responsibility: Python taxonomy verifier: scans configured folder, collects all Python files, validates taxonomy header completeness, reports TOUCHED/UNTOUCHED counts and status
 // actor: taxonomy_verifier
 // role: audit_tool
 // source_truth: implementation
