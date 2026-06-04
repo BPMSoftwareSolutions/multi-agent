@@ -16,6 +16,7 @@
     "start": "node server/index.js",
     "dev": "node --watch server/index.js",
     "cli": "node bin/studio.js",
+    "coherence-check": "node bin/coherence-check.js",
     "fractal-scan": "node bin/fractal-taxonomy-scanner.js",
     "worker-bee": "node bin/worker-bee.js"
   },
