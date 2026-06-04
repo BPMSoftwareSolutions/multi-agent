@@ -2,8 +2,8 @@
 
 **Subtitle:** A narrative review of taxonomy coherence, responsibility boundaries, and file-count justification.
 
-**Generated:** 2026-06-04T18:54:22.977Z
-**Source scan:** `scan-2026-06-04T18-54-16-169Z`
+**Generated:** 2026-06-04T19:01:37.869Z
+**Source scan:** `scan-2026-06-04T19-01-31-255Z`
 **Source swarm:** `bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z`
 
 ```text
@@ -13,7 +13,7 @@
 | Status        ✅ STORY COHERENCE EARNED                                                         |
 | Target        📁 .                                                                             |
 | Files         327 reviewed | 327 locally trusted | 0 weak | 0 missing                          |
-| Methods       663 anchored | 663 locally tied out                                              |
+| Methods       664 anchored | 664 locally tied out                                              |
 | Local Tie-Out ✅ 100/100  ████████████████████████ 100%                                         |
 | Canonical     ✅ PASS | residue pressure: 0                                                     |
 | File Economy  ✅ PASS | 0 small-file boundary candidates                                        |
@@ -57,7 +57,7 @@ The current governance posture is 100/100 earned. This review evaluates whether 
 | Weak stories | 0 |
 | Missing taxonomy | 0 |
 | File anchors | 327/327 |
-| Method anchors | 663/663 |
+| Method anchors | 664/664 |
 | Local taxonomy tie-out | 100/100 |
 | Overall story coherence | 100/100 earned |
 | Source mutation | none in latest scan |
@@ -75,7 +75,7 @@ The local taxonomy tie-out result is accepted. The scanner found complete file-l
 | Evidence Layer | Result | Meaning |
 | --- | --- | --- |
 | File anchors | 327/327 | Every scanned file has a file-level taxonomy story. |
-| Method anchors | 663/663 | Detected behavior is represented in method taxonomy. |
+| Method anchors | 664/664 | Detected behavior is represented in method taxonomy. |
 | File-method tie-out | 100/100 | File responsibilities and method responsibilities align locally. |
 | Missing taxonomy | 0 | No dark files remain in the latest scan. |
 | Weak stories | 0 | No contradictory file stories remain in the latest scan. |
@@ -250,8 +250,8 @@ The standing doctrine remains: local truth is not automatically whole truth. Fut
 
 | Field | Value |
 | --- | --- |
-| Report ID | codebase-story-review-2026-06-04T18-54-22-975Z |
-| Source scan ID | scan-2026-06-04T18-54-16-169Z |
+| Report ID | codebase-story-review-2026-06-04T19-01-37-868Z |
+| Source scan ID | scan-2026-06-04T19-01-31-255Z |
 | Source swarm ID | bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z |
 | Target path | . |
-| Generated at | 2026-06-04T18:54:22.977Z |
+| Generated at | 2026-06-04T19:01:37.869Z |

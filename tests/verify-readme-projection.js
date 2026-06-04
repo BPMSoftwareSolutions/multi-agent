@@ -100,12 +100,15 @@ function verifyProjectionModel() {
 function verifyMarkdownProjection(projection) {
   const markdown = formatReadmeProjection(projection);
   assert.match(markdown, /GENERATED:README_PROJECTION:BEGIN/);
+  assert.match(markdown, /> Generated from verified taxonomy and story-review evidence\./);
+  assert.match(markdown, /> Status: ✅ current \| Story coherence: ✅ 100\/100 earned \| Local tie-out: ✅ 100\/100/);
   assert.match(markdown, /source_scan: scan-readme-test/);
   assert.match(markdown, /source_story_review: codebase-story-review-test/);
   assert.match(markdown, /do_not_hand_edit: true/);
   assert.match(markdown, /README Integrity Rule/);
   assert.match(markdown, /Taxonomy scan report/);
   assert.match(markdown, /No residue queue items/);
+  assert.doesNotMatch(markdown, /```yaml/);
   assert.doesNotMatch(markdown, /Everything is clean/);
   return markdown;
 }

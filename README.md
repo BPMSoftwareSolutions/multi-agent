@@ -3,10 +3,13 @@
 
 This README is a generated architecture projection over verified taxonomy scan and codebase story-review evidence. It is not independent source truth.
 
-```yaml
+> Generated from verified taxonomy and story-review evidence.
+> Status: ✅ current | Story coherence: ✅ 100/100 earned | Local tie-out: ✅ 100/100
+
+<!--
 generated_from:
-  source_scan: scan-2026-06-04T18-54-16-169Z
-  source_story_review: codebase-story-review-2026-06-04T18-54-22-975Z
+  source_scan: scan-2026-06-04T19-01-31-255Z
+  source_story_review: codebase-story-review-2026-06-04T19-01-37-868Z
   source_truth: taxonomy_scan_plus_codebase_story_review
   do_not_hand_edit: true
   regeneration_command: npm run taxonomy:readme
@@ -14,7 +17,7 @@ generated_from:
   canonical_posture: pass
   file_economy_posture: pass
   story_posture: earned
-```
+-->
 
 ## Governance Snapshot
 
@@ -27,7 +30,7 @@ generated_from:
 | Locally trusted files | 327 |
 | Weak files | 0 |
 | Missing taxonomy | 0 |
-| Method anchors | 663/663 |
+| Method anchors | 664/664 |
 | Canonical residue pressure | 0 |
 | File economy posture | pass |
 | Small boundaries reviewed | 231 |

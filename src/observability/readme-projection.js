@@ -91,7 +91,7 @@ function buildReadmeProjection(scan, storyReview) {
 // source_truth: implementation
 function formatMetadata(projection) {
   return [
-    "```yaml",
+    "<!--",
     "generated_from:",
     `  source_scan: ${projection.source_scan}`,
     `  source_story_review: ${projection.source_story_review}`,
@@ -102,7 +102,20 @@ function formatMetadata(projection) {
     `  canonical_posture: ${projection.canonical_posture}`,
     `  file_economy_posture: ${projection.file_economy_posture}`,
     `  story_posture: ${projection.story_posture}`,
-    "```",
+    "-->",
+  ].join("\n");
+}
+
+// warehouse:method
+// responsibility: Generates governed README projections from verified taxonomy scan and codebase story review state to prevent documentation drift
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function formatStatusSummary(projection) {
+  const summary = projection.summary;
+  return [
+    "> Generated from verified taxonomy and story-review evidence.",
+    `> Status: ✅ current | Story coherence: ✅ ${summary.overall_story_coherence} | Local tie-out: ✅ ${summary.local_tie_out}`,
   ].join("\n");
 }
 
@@ -128,6 +141,8 @@ function formatReadmeProjection(projection) {
     "# Multi-Agent Studio",
     "",
     "This README is a generated architecture projection over verified taxonomy scan and codebase story-review evidence. It is not independent source truth.",
+    "",
+    formatStatusSummary(projection),
     "",
     formatMetadata(projection),
     "",
@@ -281,6 +296,7 @@ module.exports = {
   buildReadmeProjection,
   buildReadmeStalenessReport,
   extractReadmeMetadata,
+  formatStatusSummary,
   formatReadmeProjection,
   formatReadmeStalenessMarkdown,
   writeReadmeProjection,
