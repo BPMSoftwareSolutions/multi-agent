@@ -88,23 +88,31 @@ function progressBar(score) {
 function formatConsole(report) {
   const border = "+------------------------------------------------------------------------------------------------+";
   const summary = report.summary;
+  const governance = report.story_governance;
+  const residue = report.legacy_residue;
+  const economy = report.file_economy;
   return [
     "```text",
     border,
     "| CODEBASE STORY REVIEW                                                                          |",
     border,
-    consoleLine("Status", renderStatusSignal("pass", "story coherent")),
+    consoleLine("Status", renderStatusSignal(governance.status_signal, governance.status_label)),
     consoleLine("Target", renderStatusSignal("folder", report.target_path, {
       contract: { rendering: { uppercase_label: false } },
     })),
     consoleLine(
       "Files",
-      `${summary.files_reviewed} reviewed | ${summary.trusted_stories} trusted | ${summary.weak_stories} weak | ${summary.missing_taxonomy} missing`
+      `${summary.files_reviewed} reviewed | ${summary.trusted_stories} locally trusted | ${summary.weak_stories} weak | ${summary.missing_taxonomy} missing`
     ),
-    consoleLine("Methods", `${summary.method_anchors_found} anchored | ${summary.method_anchors_expected} tied out`),
-    consoleLine("Coherence", `${summary.codebase_coherence}/100  ${progressBar(summary.codebase_coherence)}`),
-    consoleLine("File Economy", renderStatusSignal("warning", report.file_economy.status)),
-    consoleLine("Residue", renderStatusSignal("warning", report.legacy_residue.status)),
+    consoleLine("Methods", `${summary.method_anchors_found} anchored | ${summary.method_anchors_expected} locally tied out`),
+    consoleLine("Local Tie-Out", `${renderStatusSignal("pass", `${summary.local_taxonomy_tie_out}/100`)}  ${progressBar(summary.local_taxonomy_tie_out)}`),
+    consoleLine("Canonical", `${renderStatusSignal("warning", residue.status)} | residue pressure: ${residue.residue_pressure}`),
+    consoleLine("File Economy", `${renderStatusSignal("warning", economy.status)} | ${economy.signals.consolidation_candidate_count} small-file boundary candidates`),
+    consoleLine(
+      "Legacy",
+      `${renderStatusSignal(residue.residue_pressure > 0 ? "warning" : "pass", residue.residue_pressure > 0 ? "active" : "clear")} | ${residue.remove_candidates} remove candidate | ${residue.unclear_overlap} unclear overlaps | ${residue.compatibility_shells} compatibility shell`
+    ),
+    consoleLine("Overall", governance.overall_label),
     consoleLine("Main Question", report.primary_review_question),
     consoleLine("Verdict", report.headline_verdict),
     border,
@@ -373,11 +381,39 @@ function buildLegacyResidueReview(fileLedger) {
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
+function buildStoryGovernance(summary, economySignals, legacyResidue) {
+  const localTaxonomyClean = summary.folder_coherence === 100 &&
+    summary.weak_count === 0 &&
+    summary.missing_count === 0 &&
+    summary.healing_recommended_count === 0;
+  const fileEconomyOpen = economySignals.consolidation_candidate_count > 0;
+  const residueOpen = legacyResidue.residue_pressure > 0;
+  const earned = localTaxonomyClean && !fileEconomyOpen && !residueOpen;
+  return {
+    status: earned ? "earned" : "not_yet_earned",
+    status_signal: earned ? "pass" : "warning",
+    status_label: earned ? "story coherence earned" : "story coherence not yet earned",
+    local_taxonomy_clean: localTaxonomyClean,
+    file_economy_gate: fileEconomyOpen ? "review required" : "pass",
+    canonical_residue_gate: residueOpen ? "review required" : "pass",
+    overall_story_coherence: earned ? "100/100 earned" : "not yet earned",
+    overall_label: earned
+      ? "✅ 100% earned | local taxonomy, file economy, and canonical story all clear"
+      : "⚠ NOT 100% | local taxonomy is clean, system story still under review",
+  };
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function buildReport(scan, swarm = null) {
   const summary = scan.summary;
   const fileLedger = scan.file_ledger || [];
   const economySignals = buildEconomySignals(fileLedger);
   const legacyResidue = buildLegacyResidueReview(fileLedger);
+  const storyGovernance = buildStoryGovernance(summary, economySignals, legacyResidue);
   const report = {
     schema: "codebase-story-review-report.v1",
     report_id: `codebase-story-review-${new Date().toISOString().replace(/[:.]/g, "-")}`,
@@ -385,10 +421,12 @@ function buildReport(scan, swarm = null) {
     source_scan_id: scan.run_id,
     source_swarm_id: swarm ? swarm.run_id : null,
     target_path: scan.target_path || ".",
-    headline_verdict: "Coherent architecture, but file-count justification requires boundary review",
-    primary_review_question: `Do we need ${summary.files_scanned} files to pull off this taxonomy scanning and swarming solution?`,
+    headline_verdict: storyGovernance.status === "earned"
+      ? "Codebase story coherence earned"
+      : "Local taxonomy clean; story coherence blocked by residue",
+    primary_review_question: `Do all ${summary.files_scanned} files earn their boundaries and belong in the canonical story?`,
     summary: {
-      review_status: "story coherent",
+      review_status: storyGovernance.status_label,
       files_reviewed: summary.files_scanned,
       trusted_stories: summary.strong_count,
       weak_stories: summary.weak_count,
@@ -396,10 +434,10 @@ function buildReport(scan, swarm = null) {
       file_anchors_found: summary.file_anchors_found,
       method_anchors_found: summary.method_anchors_found,
       method_anchors_expected: summary.detected_methods,
-      codebase_coherence: summary.folder_coherence,
+      local_taxonomy_tie_out: summary.folder_coherence,
       source_mutated: "none in latest scan",
       healing_required: summary.healing_recommended_count > 0 ? "yes" : "no",
-      narrative_status: "trusted",
+      narrative_status: storyGovernance.overall_story_coherence,
     },
     file_economy: {
       status: "review required",
@@ -409,11 +447,12 @@ function buildReport(scan, swarm = null) {
       signals: economySignals,
     },
     legacy_residue: legacyResidue,
+    story_governance: storyGovernance,
     final_verdict: [
-      `The studio codebase now tells a coherent taxonomy story. The scan reviewed ${summary.files_scanned} files, found file anchors on all ${summary.file_anchors_found}, found all ${summary.method_anchors_found} expected method anchors, and reported ${summary.folder_coherence}/100 coherence.`,
-      "That means the codebase is semantically trustworthy at the taxonomy level. However, the file count should not be treated as automatically justified simply because coherence is 100/100.",
-      "The next review layer must also detect legacy idea residue: older scripts, reports, commands, wrappers, and documents that may remain after newer canonical solutions replaced their purpose. A file can be coherent and still be obsolete.",
-      "The recommendation is to accept the taxonomy coherence result, preserve the responsibility-first architecture, run a file-economy review pass, and keep the canonical-surface/residue review active before scaling the pattern to larger Python or LLC codebases.",
+      `The studio has achieved ${summary.folder_coherence}/100 local taxonomy tie-out: all scanned files have file anchors, all detected method anchors are represented, and no weak or missing taxonomy stories remain.`,
+      `However, full codebase story coherence has not yet been earned. Residue review remains active, with ${legacyResidue.residue_pressure} residue-pressure points, including unclear overlaps, compatibility shells, deprecated surfaces, and remove candidates. File economy also remains under review because ${economySignals.consolidation_candidate_count} small-file boundary candidates need justification.`,
+      "The current verdict is: local taxonomy is clean, but canonical codebase coherence remains blocked until legacy residue is retired, redirected, or explicitly justified and small-file boundaries are reviewed.",
+      "Local truth is not whole truth. A file can be honest about itself and still be lying about whether it belongs.",
     ].join("\n\n"),
   };
   return report;
@@ -428,6 +467,7 @@ function formatMarkdown(report) {
   const summary = report.summary;
   const economy = report.file_economy;
   const residue = report.legacy_residue;
+  const governance = report.story_governance;
   const categoryRows = economy.category_rows.map((row) => [
     row.category,
     row.count,
@@ -471,23 +511,23 @@ function formatMarkdown(report) {
     "",
     "This report reviews whether the codebase tells a coherent architectural story and whether the current file structure is justified by responsibility boundaries, navigability, testability, and swarm execution needs.",
     "",
-    "The review answers two different questions:",
+    "The review answers three different questions:",
     "",
     "```text",
-    "1. Is the taxonomy coherent?",
+    "1. Is the local taxonomy coherent?",
     "2. Is the file count justified?",
     "3. Does the file still belong in the current canonical system story?",
     "```",
     "",
-    "A codebase can be coherent and still be over-decomposed. A codebase can also have many files because the architecture intentionally separates actors, commands, scanners, validators, reporters, evidence builders, and swarm workers into clear operational boundaries.",
+    "A codebase can have clean local taxonomy and still fail codebase story coherence. A file does not earn codebase coherence merely because it describes itself correctly. It earns codebase coherence when it describes itself correctly, deserves its boundary, and still belongs in the canonical system story.",
     "",
     "## Executive Narrative",
     "",
-    `The studio has reached a trusted taxonomy state. Every scanned file has a file anchor, every detected method anchor ties out, and the system currently reports ${summary.codebase_coherence}/100 codebase coherence.`,
+    `The studio has reached a trusted local taxonomy state. Every scanned file has a file anchor, every detected method anchor ties out, and the system currently reports ${summary.local_taxonomy_tie_out}/100 local taxonomy tie-out.`,
     "",
-    "The story the codebase tells is no longer contradictory. The earlier false-narrative problem has been resolved at the taxonomy level. Files now declare focused responsibilities, and method anchors support those declarations.",
+    "That does not mean whole-codebase story coherence has been earned. The earlier false-narrative problem has been resolved at the local file/method taxonomy layer, but residue and boundary review still decide whether those files belong in the current architecture.",
     "",
-    `However, the next governance question is not whether the codebase is coherent. The next question is whether the coherent file structure is economically justified. A system can be truthful and still be over-decomposed. This review evaluates whether ${summary.files_reviewed} files represent healthy responsibility separation or unnecessary fragmentation.`,
+    `The current governance posture is ${governance.overall_story_coherence}. This review evaluates whether ${summary.files_reviewed} files represent healthy responsibility separation or unnecessary fragmentation, and whether any legacy surfaces still preserve old system ideas that should be retired, redirected, or explicitly justified.`,
     "",
     "## Current Story Snapshot",
     "",
@@ -495,12 +535,13 @@ function formatMarkdown(report) {
       ["Signal", "Value"],
       [
         ["Files reviewed", summary.files_reviewed],
-        ["Trusted stories", summary.trusted_stories],
+        ["Locally trusted stories", summary.trusted_stories],
         ["Weak stories", summary.weak_stories],
         ["Missing taxonomy", summary.missing_taxonomy],
         ["File anchors", `${summary.file_anchors_found}/${summary.files_reviewed}`],
         ["Method anchors", `${summary.method_anchors_found}/${summary.method_anchors_expected}`],
-        ["Coherence", `${summary.codebase_coherence}/100`],
+        ["Local taxonomy tie-out", `${summary.local_taxonomy_tie_out}/100`],
+        ["Overall story coherence", governance.overall_story_coherence],
         ["Source mutation", summary.source_mutated],
         ["Healing required", summary.healing_required],
         ["Narrative status", summary.narrative_status],
@@ -511,18 +552,20 @@ function formatMarkdown(report) {
       ]
     ),
     "",
-    "## Coherence Verdict",
+    "## Local Taxonomy Verdict",
     "",
-    "The taxonomy coherence result is accepted. The scanner found complete file-level and method-level coverage, and no files are currently weak, missing, or routed to scorer review.",
+    "The local taxonomy tie-out result is accepted. The scanner found complete file-level and method-level coverage, and no files are currently weak, missing, or routed to scorer review.",
     "",
     markdownTable(
       ["Evidence Layer", "Result", "Meaning"],
       [
         ["File anchors", `${summary.file_anchors_found}/${summary.files_reviewed}`, "Every scanned file has a file-level taxonomy story."],
         ["Method anchors", `${summary.method_anchors_found}/${summary.method_anchors_expected}`, "Detected behavior is represented in method taxonomy."],
-        ["File-method tie-out", `${summary.codebase_coherence}/100`, "File responsibilities and method responsibilities align."],
+        ["File-method tie-out", `${summary.local_taxonomy_tie_out}/100`, "File responsibilities and method responsibilities align locally."],
         ["Missing taxonomy", summary.missing_taxonomy, "No dark files remain in the latest scan."],
         ["Weak stories", summary.weak_stories, "No contradictory file stories remain in the latest scan."],
+        ["Canonical residue gate", governance.canonical_residue_gate, "Overall codebase story coherence cannot reach 100 while residue remains open."],
+        ["File economy gate", governance.file_economy_gate, "Overall codebase story coherence cannot reach 100 while boundaries remain unreviewed."],
       ]
     ),
     "",
@@ -624,7 +667,7 @@ function formatMarkdown(report) {
     markdownTable(
       ["Decision", "Recommendation"],
       [
-        ["Taxonomy trust", "Accept the 100/100 coherence result for the current studio snapshot."],
+        ["Taxonomy trust", "Accept the 100/100 local taxonomy tie-out result for the current studio snapshot."],
         ["File economy", "Mark as review required with a 70/100 provisional score."],
         ["Legacy residue", "Keep canonical-surface review active and retire or justify alternate surfaces."],
         ["Consolidation", "Review zero-method and one-method files before merging anything."],
@@ -646,7 +689,7 @@ function formatMarkdown(report) {
     "or safe swarm execution.",
     "```",
     "",
-    "Coherence tells us whether the story is true. File economy tells us whether the story needed its own file.",
+    "Local taxonomy tells us whether the file story is internally true. File economy tells us whether the story needed its own file.",
     "",
     "Residue review tells us whether the story still belongs in the current canonical architecture.",
     "",

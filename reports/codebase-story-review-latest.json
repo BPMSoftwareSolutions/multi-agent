@@ -1,25 +1,25 @@
 {
   "schema": "codebase-story-review-report.v1",
-  "report_id": "codebase-story-review-2026-06-04T16-49-07-161Z",
-  "generated_at": "2026-06-04T16:49:07.162Z",
-  "source_scan_id": "scan-2026-06-04T16-49-03-466Z",
+  "report_id": "codebase-story-review-2026-06-04T16-57-14-332Z",
+  "generated_at": "2026-06-04T16:57:14.333Z",
+  "source_scan_id": "scan-2026-06-04T16-56-42-122Z",
   "source_swarm_id": "bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z",
   "target_path": ".",
-  "headline_verdict": "Coherent architecture, but file-count justification requires boundary review",
-  "primary_review_question": "Do we need 326 files to pull off this taxonomy scanning and swarming solution?",
+  "headline_verdict": "Local taxonomy clean; story coherence blocked by residue",
+  "primary_review_question": "Do all 326 files earn their boundaries and belong in the canonical story?",
   "summary": {
-    "review_status": "story coherent",
+    "review_status": "story coherence not yet earned",
     "files_reviewed": 326,
     "trusted_stories": 326,
     "weak_stories": 0,
     "missing_taxonomy": 0,
     "file_anchors_found": 326,
-    "method_anchors_found": 643,
-    "method_anchors_expected": 643,
-    "codebase_coherence": 100,
+    "method_anchors_found": 644,
+    "method_anchors_expected": 644,
+    "local_taxonomy_tie_out": 100,
     "source_mutated": "none in latest scan",
     "healing_required": "no",
-    "narrative_status": "trusted"
+    "narrative_status": "not yet earned"
   },
   "file_economy": {
     "status": "review required",
@@ -105,7 +105,7 @@
       }
     ],
     "signals": {
-      "average_methods_per_file": "1.97",
+      "average_methods_per_file": "1.98",
       "zero_method_count": 45,
       "one_method_count": 188,
       "large_file_count": 18,
@@ -172,5 +172,15 @@
       }
     ]
   },
-  "final_verdict": "The studio codebase now tells a coherent taxonomy story. The scan reviewed 326 files, found file anchors on all 326, found all 643 expected method anchors, and reported 100/100 coherence.\n\nThat means the codebase is semantically trustworthy at the taxonomy level. However, the file count should not be treated as automatically justified simply because coherence is 100/100.\n\nThe next review layer must also detect legacy idea residue: older scripts, reports, commands, wrappers, and documents that may remain after newer canonical solutions replaced their purpose. A file can be coherent and still be obsolete.\n\nThe recommendation is to accept the taxonomy coherence result, preserve the responsibility-first architecture, run a file-economy review pass, and keep the canonical-surface/residue review active before scaling the pattern to larger Python or LLC codebases."
+  "story_governance": {
+    "status": "not_yet_earned",
+    "status_signal": "warning",
+    "status_label": "story coherence not yet earned",
+    "local_taxonomy_clean": true,
+    "file_economy_gate": "review required",
+    "canonical_residue_gate": "review required",
+    "overall_story_coherence": "not yet earned",
+    "overall_label": "⚠ NOT 100% | local taxonomy is clean, system story still under review"
+  },
+  "final_verdict": "The studio has achieved 100/100 local taxonomy tie-out: all scanned files have file anchors, all detected method anchors are represented, and no weak or missing taxonomy stories remain.\n\nHowever, full codebase story coherence has not yet been earned. Residue review remains active, with 6 residue-pressure points, including unclear overlaps, compatibility shells, deprecated surfaces, and remove candidates. File economy also remains under review because 233 small-file boundary candidates need justification.\n\nThe current verdict is: local taxonomy is clean, but canonical codebase coherence remains blocked until legacy residue is retired, redirected, or explicitly justified and small-file boundaries are reviewed.\n\nLocal truth is not whole truth. A file can be honest about itself and still be lying about whether it belongs."
 }

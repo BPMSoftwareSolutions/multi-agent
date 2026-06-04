@@ -2,23 +2,25 @@
 
 **Subtitle:** A narrative review of taxonomy coherence, responsibility boundaries, and file-count justification.
 
-**Generated:** 2026-06-04T16:49:07.162Z
-**Source scan:** `scan-2026-06-04T16-49-03-466Z`
+**Generated:** 2026-06-04T16:57:14.333Z
+**Source scan:** `scan-2026-06-04T16-56-42-122Z`
 **Source swarm:** `bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z`
 
 ```text
 +------------------------------------------------------------------------------------------------+
 | CODEBASE STORY REVIEW                                                                          |
 +------------------------------------------------------------------------------------------------+
-| Status        ✅ STORY COHERENT                                                                 |
+| Status        ⚠ STORY COHERENCE NOT YET EARNED                                                 |
 | Target        📁 .                                                                             |
-| Files         326 reviewed | 326 trusted | 0 weak | 0 missing                                  |
-| Methods       643 anchored | 643 tied out                                                      |
-| Coherence     100/100  ████████████████████████ 100%                                           |
-| File Economy  ⚠ REVIEW REQUIRED                                                                |
-| Residue       ⚠ REVIEW REQUIRED                                                                |
-| Main Question Do we need 326 files to pull off this taxonomy scanning and swarming solution?   |
-| Verdict       Coherent architecture, but file-count justification requires boundary review     |
+| Files         326 reviewed | 326 locally trusted | 0 weak | 0 missing                          |
+| Methods       644 anchored | 644 locally tied out                                              |
+| Local Tie-Out ✅ 100/100  ████████████████████████ 100%                                         |
+| Canonical     ⚠ REVIEW REQUIRED | residue pressure: 6                                          |
+| File Economy  ⚠ REVIEW REQUIRED | 233 small-file boundary candidates                           |
+| Legacy        ⚠ ACTIVE | 1 remove candidate | 4 unclear overlaps | 1 compatibility shell       |
+| Overall       ⚠ NOT 100% | local taxonomy is clean, system story still under review            |
+| Main Question Do all 326 files earn their boundaries and belong in the canonical story?        |
+| Verdict       Local taxonomy clean; story coherence blocked by residue                         |
 +------------------------------------------------------------------------------------------------+
 ```
 
@@ -26,61 +28,64 @@
 
 This report reviews whether the codebase tells a coherent architectural story and whether the current file structure is justified by responsibility boundaries, navigability, testability, and swarm execution needs.
 
-The review answers two different questions:
+The review answers three different questions:
 
 ```text
-1. Is the taxonomy coherent?
+1. Is the local taxonomy coherent?
 2. Is the file count justified?
 3. Does the file still belong in the current canonical system story?
 ```
 
-A codebase can be coherent and still be over-decomposed. A codebase can also have many files because the architecture intentionally separates actors, commands, scanners, validators, reporters, evidence builders, and swarm workers into clear operational boundaries.
+A codebase can have clean local taxonomy and still fail codebase story coherence. A file does not earn codebase coherence merely because it describes itself correctly. It earns codebase coherence when it describes itself correctly, deserves its boundary, and still belongs in the canonical system story.
 
 ## Executive Narrative
 
-The studio has reached a trusted taxonomy state. Every scanned file has a file anchor, every detected method anchor ties out, and the system currently reports 100/100 codebase coherence.
+The studio has reached a trusted local taxonomy state. Every scanned file has a file anchor, every detected method anchor ties out, and the system currently reports 100/100 local taxonomy tie-out.
 
-The story the codebase tells is no longer contradictory. The earlier false-narrative problem has been resolved at the taxonomy level. Files now declare focused responsibilities, and method anchors support those declarations.
+That does not mean whole-codebase story coherence has been earned. The earlier false-narrative problem has been resolved at the local file/method taxonomy layer, but residue and boundary review still decide whether those files belong in the current architecture.
 
-However, the next governance question is not whether the codebase is coherent. The next question is whether the coherent file structure is economically justified. A system can be truthful and still be over-decomposed. This review evaluates whether 326 files represent healthy responsibility separation or unnecessary fragmentation.
+The current governance posture is not yet earned. This review evaluates whether 326 files represent healthy responsibility separation or unnecessary fragmentation, and whether any legacy surfaces still preserve old system ideas that should be retired, redirected, or explicitly justified.
 
 ## Current Story Snapshot
 
 | Signal | Value |
 | --- | --- |
 | Files reviewed | 326 |
-| Trusted stories | 326 |
+| Locally trusted stories | 326 |
 | Weak stories | 0 |
 | Missing taxonomy | 0 |
 | File anchors | 326/326 |
-| Method anchors | 643/643 |
-| Coherence | 100/100 |
+| Method anchors | 644/644 |
+| Local taxonomy tie-out | 100/100 |
+| Overall story coherence | not yet earned |
 | Source mutation | none in latest scan |
 | Healing required | no |
-| Narrative status | trusted |
+| Narrative status | not yet earned |
 | Economy status | review required |
 | File economy score | 70/100 provisional |
 | Residue status | review required |
 | Residue pressure | 6 |
 
-## Coherence Verdict
+## Local Taxonomy Verdict
 
-The taxonomy coherence result is accepted. The scanner found complete file-level and method-level coverage, and no files are currently weak, missing, or routed to scorer review.
+The local taxonomy tie-out result is accepted. The scanner found complete file-level and method-level coverage, and no files are currently weak, missing, or routed to scorer review.
 
 | Evidence Layer | Result | Meaning |
 | --- | --- | --- |
 | File anchors | 326/326 | Every scanned file has a file-level taxonomy story. |
-| Method anchors | 643/643 | Detected behavior is represented in method taxonomy. |
-| File-method tie-out | 100/100 | File responsibilities and method responsibilities align. |
+| Method anchors | 644/644 | Detected behavior is represented in method taxonomy. |
+| File-method tie-out | 100/100 | File responsibilities and method responsibilities align locally. |
 | Missing taxonomy | 0 | No dark files remain in the latest scan. |
 | Weak stories | 0 | No contradictory file stories remain in the latest scan. |
+| Canonical residue gate | review required | Overall codebase story coherence cannot reach 100 while residue remains open. |
+| File economy gate | review required | Overall codebase story coherence cannot reach 100 while boundaries remain unreviewed. |
 
 ## File Count Question
 
 ### Main Question
 
 ```text
-Do we need 326 files to pull off this taxonomy scanning and swarming solution?
+Do all 326 files earn their boundaries and belong in the canonical story?
 ```
 
 ### Short Answer
@@ -113,7 +118,7 @@ The remaining review question is whether zero-method and one-method files carry 
 
 | Signal | Value | Interpretation |
 | --- | --- | --- |
-| Average methods per file | 1.97 | Low averages may be justified by agent-safe boundaries, but deserve review. |
+| Average methods per file | 1.98 | Low averages may be justified by agent-safe boundaries, but deserve review. |
 | Files with 0 methods | 45 | Boundary, config, executable, and registry files may be legitimate. |
 | Files with 1 method | 188 | One-method files need semantic weight or test/governance value. |
 | Files with 5+ methods | 18 | Larger files may be justified when they hold cohesive UI or orchestration flow. |
@@ -192,7 +197,7 @@ The economy review remains open around small files. Zero-method files and one-me
 
 | Decision | Recommendation |
 | --- | --- |
-| Taxonomy trust | Accept the 100/100 coherence result for the current studio snapshot. |
+| Taxonomy trust | Accept the 100/100 local taxonomy tie-out result for the current studio snapshot. |
 | File economy | Mark as review required with a 70/100 provisional score. |
 | Legacy residue | Keep canonical-surface review active and retire or justify alternate surfaces. |
 | Consolidation | Review zero-method and one-method files before merging anything. |
@@ -212,26 +217,26 @@ evidence generation,
 or safe swarm execution.
 ```
 
-Coherence tells us whether the story is true. File economy tells us whether the story needed its own file.
+Local taxonomy tells us whether the file story is internally true. File economy tells us whether the story needed its own file.
 
 Residue review tells us whether the story still belongs in the current canonical architecture.
 
 ## Final Verdict
 
-The studio codebase now tells a coherent taxonomy story. The scan reviewed 326 files, found file anchors on all 326, found all 643 expected method anchors, and reported 100/100 coherence.
+The studio has achieved 100/100 local taxonomy tie-out: all scanned files have file anchors, all detected method anchors are represented, and no weak or missing taxonomy stories remain.
 
-That means the codebase is semantically trustworthy at the taxonomy level. However, the file count should not be treated as automatically justified simply because coherence is 100/100.
+However, full codebase story coherence has not yet been earned. Residue review remains active, with 6 residue-pressure points, including unclear overlaps, compatibility shells, deprecated surfaces, and remove candidates. File economy also remains under review because 233 small-file boundary candidates need justification.
 
-The next review layer must also detect legacy idea residue: older scripts, reports, commands, wrappers, and documents that may remain after newer canonical solutions replaced their purpose. A file can be coherent and still be obsolete.
+The current verdict is: local taxonomy is clean, but canonical codebase coherence remains blocked until legacy residue is retired, redirected, or explicitly justified and small-file boundaries are reviewed.
 
-The recommendation is to accept the taxonomy coherence result, preserve the responsibility-first architecture, run a file-economy review pass, and keep the canonical-surface/residue review active before scaling the pattern to larger Python or LLC codebases.
+Local truth is not whole truth. A file can be honest about itself and still be lying about whether it belongs.
 
 ## Run Metadata
 
 | Field | Value |
 | --- | --- |
-| Report ID | codebase-story-review-2026-06-04T16-49-07-161Z |
-| Source scan ID | scan-2026-06-04T16-49-03-466Z |
+| Report ID | codebase-story-review-2026-06-04T16-57-14-332Z |
+| Source scan ID | scan-2026-06-04T16-56-42-122Z |
 | Source swarm ID | bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z |
 | Target path | . |
-| Generated at | 2026-06-04T16:49:07.162Z |
+| Generated at | 2026-06-04T16:57:14.333Z |
