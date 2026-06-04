@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Processes JavaScript file and extracts warehouse:file and warehouse:method level taxonomy structures
+// responsibility: Processes JavaScript file and extracts warehouse file method taxonomy including undocumented methods for coherence validation
 // actor: taxonomy_analyzer
 // role: extractor
 // source_truth: implementation
@@ -11,7 +11,7 @@ const { extractMethodHeaders } = require("./method-header-extractor");
 const { isValidTaxonomy } = require("./taxonomy-validator");
 
 // warehouse:method
-// responsibility: Processes a JavaScript file and extracts both warehouse:file and warehouse:method level taxonomy structures with validation
+// responsibility: Processes JavaScript file and extracts warehouse file method taxonomy including undocumented methods for coherence validation
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -30,7 +30,7 @@ function extractFromFile(filePath, root) {
     return {
       path: relPath,
       file: fileHeader,
-      methods: methods.filter((m) => isValidTaxonomy(m.taxonomy)),
+      methods,
       totalMethods: methods.length,
       documentedMethods: methods.filter((m) => isValidTaxonomy(m.taxonomy)).length,
     };

@@ -12,10 +12,20 @@ const { extractFromFile } = require("../src/taxonomy/extractor");
 const { generateReport } = require("../src/taxonomy/report-generator");
 const { evaluateFileCoherence } = require("../src/story-analysis/coherence-evaluator");
 
+// warehouse:method
+// responsibility: Orchestrates self first taxonomy coherence scan by extracting warehouse anchors evaluating claim evidence alignment writing live run status markdown observability and reporting scale readiness
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function rel(root, filePath) {
   return path.relative(root, filePath).replace(/\\/g, "/") || ".";
 }
 
+// warehouse:method
+// responsibility: Orchestrates self first taxonomy coherence scan by extracting warehouse anchors evaluating claim evidence alignment writing live run status markdown observability and reporting scale readiness
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function formatCurrentRunMarkdown(status) {
   const totals = status.totals || {};
   const lines = [
@@ -46,6 +56,11 @@ function formatCurrentRunMarkdown(status) {
   return lines.join("\n");
 }
 
+// warehouse:method
+// responsibility: Orchestrates self first taxonomy coherence scan by extracting warehouse anchors evaluating claim evidence alignment writing live run status markdown observability and reporting scale readiness
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function writeRunObservability({ root, reportsDir, runDir, outputPath, status, manifest, part }) {
   const updatedAt = new Date().toISOString();
   const nextStatus = { ...status, updated_at: updatedAt };
@@ -67,6 +82,11 @@ function writeRunObservability({ root, reportsDir, runDir, outputPath, status, m
   };
 }
 
+// warehouse:method
+// responsibility: Orchestrates self first taxonomy coherence scan by extracting warehouse anchors evaluating claim evidence alignment writing live run status markdown observability and reporting scale readiness
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function readLatestStatus(root, json) {
   const statusPath = path.join(root, "reports", "fractal-status-latest.json");
   const markdownPath = path.join(root, "reports", "CURRENT-RUN.md");

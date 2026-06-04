@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: Extracts warehouse:method headers from JavaScript file into taxonomy array
+// responsibility: Extracts warehouse method taxonomy for every JavaScript function and marks undocumented functions as missing taxonomy
 // actor: taxonomy_analyzer
 // role: method_header_extractor
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Extracts all warehouse:method headers from JavaScript file into taxonomy array of documented methods
+// responsibility: Extracts warehouse method taxonomy for every JavaScript function and marks undocumented functions as missing taxonomy
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -32,23 +32,16 @@ function extractMethodHeaders(content) {
       }
     }
 
-    // Check for function definition after method header
-    if (
-      currentMethod &&
-      (trimmed.startsWith("function ") ||
-        trimmed.startsWith("const ") ||
-        trimmed.startsWith("async "))
-    ) {
-      // Extract function name from various patterns
-      let nameMatch = trimmed.match(/function\s+(\w+)/);
-      if (!nameMatch) nameMatch = trimmed.match(/const\s+(\w+)/);
-      if (!nameMatch) nameMatch = trimmed.match(/async\s+(\w+)/);
+    let nameMatch = trimmed.match(/^(?:async\s+)?function\s+(\w+)\s*\(/);
+    if (!nameMatch) {
+      nameMatch = trimmed.match(/^const\s+(\w+)\s*=\s*(?:async\s*)?(?:function\b|\([^)]*\)\s*=>|\w+\s*=>)/);
+    }
 
-      if (nameMatch) {
-        currentMethod.name = nameMatch[1];
-        methods.push(currentMethod);
-        currentMethod = null;
-      }
+    if (nameMatch) {
+      const method = currentMethod || { name: null, taxonomy: { warehouse: "method", responsibility: "" } };
+      method.name = nameMatch[1];
+      methods.push(method);
+      currentMethod = null;
     }
   }
 
