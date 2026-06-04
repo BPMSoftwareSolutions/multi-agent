@@ -185,7 +185,7 @@ function formatReadmeProjection(projection) {
       [
         [
           "`@loc/taxonomy-coherence`",
-          "Read-only taxonomy scanning, story review, governance verdicts, and README projections.",
+          "Read-only JavaScript and Python taxonomy scanning, story review, governance verdicts, and README projections.",
           "Forbidden in core package; healing requires a separate authority surface.",
           "`scanTaxonomy`, `buildCodebaseStoryReview`, `generateReadmeProjection`",
         ],

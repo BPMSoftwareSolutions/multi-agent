@@ -1,6 +1,6 @@
 # @loc/taxonomy-coherence
 
-Read-only taxonomy coherence SDK for scanning, story review, governance verdicts, and README projections.
+Read-only taxonomy coherence SDK for JavaScript and Python scanning, story review, governance verdicts, and README projections.
 
 This package reads, evaluates, and projects verified codebase story state. It does not perform healing mutation.
 
@@ -22,6 +22,15 @@ loc-taxonomy story-review --write
 loc-taxonomy readme . --out README.md
 loc-taxonomy residue
 ```
+
+## Supported Source Files
+
+The scanner currently supports:
+
+| Language | Extension | Anchor comment |
+| --- | --- | --- |
+| JavaScript | `.js` | `// warehouse:file` and `// warehouse:method` |
+| Python | `.py` | `# warehouse:file` and `# warehouse:method` |
 
 ## Governance Rules
 

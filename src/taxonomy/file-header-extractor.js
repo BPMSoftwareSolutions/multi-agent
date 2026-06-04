@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: Extracts warehouse:file header from JavaScript file into taxonomy structure
+// responsibility: Extracts warehouse:file header from supported source files into taxonomy structure
 // actor: taxonomy_analyzer
 // role: file_header_extractor
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Extracts warehouse:file header from JavaScript file into taxonomy structure and key-value object
+// responsibility: Extracts warehouse:file header from supported source files into taxonomy structure and key-value object
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -17,10 +17,9 @@ function extractFileHeader(content) {
   for (const line of lines) {
     const trimmed = line.trim();
     if (trimmed.startsWith("#!") || !trimmed) continue;
-    if (!trimmed.startsWith("//")) break;
+    if (!trimmed.startsWith("//") && !trimmed.startsWith("#")) break;
 
-    // Parse warehouse:X field
-    const match = trimmed.match(/^\/\/\s*(\w+):(.*)$/);
+    const match = trimmed.match(/^(?:\/\/|#)\s*(\w+):(.*)$/);
     if (match) {
       const key = match[1];
       const value = match[2].trim();

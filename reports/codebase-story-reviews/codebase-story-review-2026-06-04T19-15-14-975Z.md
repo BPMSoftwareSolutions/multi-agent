@@ -2,8 +2,8 @@
 
 **Subtitle:** A narrative review of taxonomy coherence, responsibility boundaries, and file-count justification.
 
-**Generated:** 2026-06-04T19:09:03.240Z
-**Source scan:** `scan-2026-06-04T19-08-56-873Z`
+**Generated:** 2026-06-04T19:15:14.977Z
+**Source scan:** `scan-2026-06-04T19-15-06-170Z`
 **Source swarm:** `bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z`
 
 ```text
@@ -13,7 +13,7 @@
 | Status        ✅ STORY COHERENCE EARNED                                                         |
 | Target        📁 .                                                                             |
 | Files         330 reviewed | 330 locally trusted | 0 weak | 0 missing                          |
-| Methods       677 anchored | 677 locally tied out                                              |
+| Methods       680 anchored | 680 locally tied out                                              |
 | Local Tie-Out ✅ 100/100  ████████████████████████ 100%                                         |
 | Canonical     ✅ PASS | residue pressure: 0                                                     |
 | File Economy  ✅ PASS | 0 small-file boundary candidates                                        |
@@ -57,7 +57,7 @@ The current governance posture is 100/100 earned. This review evaluates whether 
 | Weak stories | 0 |
 | Missing taxonomy | 0 |
 | File anchors | 330/330 |
-| Method anchors | 677/677 |
+| Method anchors | 680/680 |
 | Local taxonomy tie-out | 100/100 |
 | Overall story coherence | 100/100 earned |
 | Source mutation | none in latest scan |
@@ -75,7 +75,7 @@ The local taxonomy tie-out result is accepted. The scanner found complete file-l
 | Evidence Layer | Result | Meaning |
 | --- | --- | --- |
 | File anchors | 330/330 | Every scanned file has a file-level taxonomy story. |
-| Method anchors | 677/677 | Detected behavior is represented in method taxonomy. |
+| Method anchors | 680/680 | Detected behavior is represented in method taxonomy. |
 | File-method tie-out | 100/100 | File responsibilities and method responsibilities align locally. |
 | Missing taxonomy | 0 | No dark files remain in the latest scan. |
 | Weak stories | 0 | No contradictory file stories remain in the latest scan. |
@@ -120,10 +120,10 @@ Zero-method and one-method files were reviewed under the file-economy lens. The 
 
 | Signal | Value | Interpretation |
 | --- | --- | --- |
-| Average methods per file | 2.05 | Low averages are currently justified by agent-safe boundaries and remain monitored. |
+| Average methods per file | 2.06 | Low averages are currently justified by agent-safe boundaries and remain monitored. |
 | Files with 0 methods | 44 | Boundary, config, executable, and registry files may be legitimate. |
 | Files with 1 method | 187 | One-method files need semantic weight or test/governance value. |
-| Files with 5+ methods | 22 | Larger files are monitored for cohesion rather than split mechanically. |
+| Files with 5+ methods | 23 | Larger files are monitored for cohesion rather than split mechanically. |
 | Largest file by method count | public/app.js (48 methods) | Review large surfaces for cohesion rather than splitting mechanically. |
 | Strong files below 2 methods | 231 | Small files with boundary evidence remain monitored for file economy. |
 | Consolidation candidates | 0 | Candidate count is a review queue, not an automatic merge order. |
@@ -250,8 +250,8 @@ The standing doctrine remains: local truth is not automatically whole truth. Fut
 
 | Field | Value |
 | --- | --- |
-| Report ID | codebase-story-review-2026-06-04T19-09-03-239Z |
-| Source scan ID | scan-2026-06-04T19-08-56-873Z |
+| Report ID | codebase-story-review-2026-06-04T19-15-14-975Z |
+| Source scan ID | scan-2026-06-04T19-15-06-170Z |
 | Source swarm ID | bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z |
 | Target path | . |
-| Generated at | 2026-06-04T19:09:03.240Z |
+| Generated at | 2026-06-04T19:15:14.977Z |

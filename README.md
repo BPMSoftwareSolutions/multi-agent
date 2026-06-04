@@ -8,8 +8,8 @@ This README is a generated architecture projection over verified taxonomy scan a
 
 <!--
 generated_from:
-  source_scan: scan-2026-06-04T19-08-56-873Z
-  source_story_review: codebase-story-review-2026-06-04T19-09-03-239Z
+  source_scan: scan-2026-06-04T19-15-06-170Z
+  source_story_review: codebase-story-review-2026-06-04T19-15-14-975Z
   source_truth: taxonomy_scan_plus_codebase_story_review
   do_not_hand_edit: true
   regeneration_command: npm run taxonomy:readme
@@ -30,7 +30,7 @@ generated_from:
 | Locally trusted files | 330 |
 | Weak files | 0 |
 | Missing taxonomy | 0 |
-| Method anchors | 677/677 |
+| Method anchors | 680/680 |
 | Canonical residue pressure | 0 |
 | File economy posture | pass |
 | Small boundaries reviewed | 231 |
@@ -55,7 +55,7 @@ The studio is organized around governed multi-agent work: command entry points, 
 
 | Package | Boundary | Mutation Authority | Primary API |
 | --- | --- | --- | --- |
-| `@loc/taxonomy-coherence` | Read-only taxonomy scanning, story review, governance verdicts, and README projections. | Forbidden in core package; healing requires a separate authority surface. | `scanTaxonomy`, `buildCodebaseStoryReview`, `generateReadmeProjection` |
+| `@loc/taxonomy-coherence` | Read-only JavaScript and Python taxonomy scanning, story review, governance verdicts, and README projections. | Forbidden in core package; healing requires a separate authority surface. | `scanTaxonomy`, `buildCodebaseStoryReview`, `generateReadmeProjection` |
 
 ## Residue Queue
 

@@ -81,9 +81,55 @@ function verifyMissingMethodAnchorFailsEvidence() {
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
+function verifyPythonEvidence() {
+  const root = path.resolve(__dirname, "..");
+  const fixtureDir = path.join(root, ".tmp");
+  const fixturePath = path.join(fixtureDir, "python-taxonomy.fixture.py");
+  fs.mkdirSync(fixtureDir, { recursive: true });
+  fs.writeFileSync(
+    fixturePath,
+    [
+      "# warehouse:file",
+      "# responsibility: Provides Python taxonomy evidence fixture scanning behavior",
+      "# actor: evidence_fixture",
+      "# role: validator",
+      "# source_truth: test_fixture",
+      "",
+      "# warehouse:method",
+      "# responsibility: Provides Python taxonomy evidence fixture scanning behavior",
+      "# actor: method_implementation",
+      "# role: implementation",
+      "# source_truth: implementation",
+      "def scan_python_fixture():",
+      "    return True",
+      "",
+    ].join("\n"),
+    "utf8"
+  );
+
+  try {
+    const evidence = buildFileEvidence(fixturePath, root);
+    assert.strictEqual(evidence.coverage.detected_function_count, 1, "python fixture should expose one function");
+    assert.strictEqual(evidence.coverage.taxonomy_method_count, 1, "python taxonomy should include detected function");
+    assert.strictEqual(evidence.coverage.documented_method_count, 1, "python function should have method taxonomy");
+    assert.strictEqual(evidence.coverage.function_coverage, 100, "python function coverage should be 100%");
+    assert.strictEqual(evidence.coverage.documented_coverage, 100, "python documented coverage should be 100%");
+    assert.strictEqual(evidence.coherence.score, 100, "python fixture coherence should be 100/100");
+    assert.strictEqual(evidence.trustworthy, true, "python fixture evidence should be trustworthy");
+  } finally {
+    fs.rmSync(fixturePath, { force: true });
+  }
+}
+
+// warehouse:method
+// responsibility: Verifies taxonomy evidence bundle ties detected functions to extracted anchors coverage coherence and red signal failure cases for trusted scanner files
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function runEvidenceBundleVerification() {
   verifyFractalScannerEvidence();
   verifyMissingMethodAnchorFailsEvidence();
+  verifyPythonEvidence();
   console.log("Evidence bundle verification passed.");
   return 0;
 }
@@ -92,4 +138,4 @@ if (require.main === module) {
   process.exit(runEvidenceBundleVerification());
 }
 
-module.exports = { verifyFractalScannerEvidence, runEvidenceBundleVerification };
+module.exports = { verifyFractalScannerEvidence, verifyPythonEvidence, runEvidenceBundleVerification };

@@ -2,6 +2,6 @@
 
 | README | Source scan | Current scan | Source story review | Current story review | Status |
 | --- | --- | --- | --- | --- | --- |
-| `README.md` | scan-2026-06-04T19-08-56-873Z | scan-2026-06-04T19-08-56-873Z | codebase-story-review-2026-06-04T19-09-03-239Z | codebase-story-review-2026-06-04T19-09-03-239Z | ✅ current |
+| `README.md` | scan-2026-06-04T19-15-06-170Z | scan-2026-06-04T19-15-06-170Z | codebase-story-review-2026-06-04T19-15-14-975Z | codebase-story-review-2026-06-04T19-15-14-975Z | ✅ current |
 
 Stale README count: 0

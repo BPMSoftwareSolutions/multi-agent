@@ -44,6 +44,22 @@ function makeFixtureRepo() {
     "module.exports = { exampleThing };",
     "",
   ].join("\n"));
+  fs.writeFileSync(path.join(root, "bin", "example.py"), [
+    "# warehouse:file",
+    "# responsibility: Provides Python package fixture behavior",
+    "# actor: package_fixture",
+    "# role: fixture",
+    "# source_truth: implementation",
+    "",
+    "# warehouse:method",
+    "# responsibility: Provides Python package fixture behavior",
+    "# actor: method_implementation",
+    "# role: implementation",
+    "# source_truth: implementation",
+    "def example_python_thing():",
+    "    return True",
+    "",
+  ].join("\n"));
   return root;
 }
 
@@ -55,7 +71,8 @@ function makeFixtureRepo() {
 function verifySdkFlow() {
   const root = makeFixtureRepo();
   const scan = scanTaxonomy({ rootDir: root, targetPath: ".", writeReports: true });
-  assert.strictEqual(scan.report.summary.files_scanned, 1);
+  assert.strictEqual(scan.report.summary.files_scanned, 2);
+  assert(scan.report.file_ledger.some((row) => row.file === "bin/example.py"));
   assert.strictEqual(scan.report.summary.folder_coherence, 100);
   assert.match(scan.markdown, /TAXONOMY COHERENCE SCAN/);
   const story = buildCodebaseStoryReview({ rootDir: root, writeReports: true });

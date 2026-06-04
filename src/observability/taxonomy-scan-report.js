@@ -32,6 +32,8 @@ const IGNORED_DIRECTORIES = new Set([
   "reports",
 ]);
 
+const SUPPORTED_SOURCE_EXTENSIONS = new Set([".js", ".py"]);
+
 // warehouse:method
 // responsibility: Builds read only taxonomy coherence scan reports with folder posture consoles file ledgers findings assurance latest root copies and artifact projections
 // actor: method_implementation
@@ -246,7 +248,7 @@ function buildSummary(files) {
 function buildFolderStory(targetPath, summary) {
   const coherentCount = summary.strong_count + summary.moderate_count;
   if (summary.files_scanned === 0) {
-    return `The scan found no JavaScript files under ${targetPath}. No taxonomy posture can be established.`;
+    return `The scan found no supported source files under ${targetPath}. No taxonomy posture can be established.`;
   }
   if (summary.missing_count === 0 && summary.weak_count === 0) {
     return `The scanned folder appears coherent. ${coherentCount}/${summary.files_scanned} files are moderate or strong, method anchors tie out to file anchors, and no healing is required for this folder snapshot.`;
@@ -578,7 +580,7 @@ function discoverJavaScriptFiles(targetPath) {
   const discovered = [];
   const stat = fs.statSync(targetPath);
   if (stat.isFile()) {
-    return targetPath.endsWith(".js") ? [targetPath] : [];
+    return SUPPORTED_SOURCE_EXTENSIONS.has(path.extname(targetPath)) ? [targetPath] : [];
   }
   const entries = fs.readdirSync(targetPath, { withFileTypes: true });
   for (const entry of entries) {
@@ -588,7 +590,7 @@ function discoverJavaScriptFiles(targetPath) {
     const childPath = path.join(targetPath, entry.name);
     if (entry.isDirectory()) {
       discovered.push(...discoverJavaScriptFiles(childPath));
-    } else if (entry.isFile() && entry.name.endsWith(".js")) {
+    } else if (entry.isFile() && SUPPORTED_SOURCE_EXTENSIONS.has(path.extname(entry.name))) {
       discovered.push(childPath);
     }
   }

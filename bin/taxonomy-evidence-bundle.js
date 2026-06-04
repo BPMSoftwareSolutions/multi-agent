@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Produces taxonomy scan evidence bundle by detecting JavaScript functions extracting anchors comparing coverage evaluating coherence and writing audit JSON
+// responsibility: Produces taxonomy scan evidence bundle by detecting supported source functions extracting anchors comparing coverage evaluating coherence and writing audit JSON
 // actor: taxonomy_evidence
 // role: evidence_builder
 // source_truth: implementation
@@ -12,7 +12,7 @@ const { isValidTaxonomy } = require("../src/taxonomy/taxonomy-validator");
 const { evaluateFileCoherence } = require("../src/story-analysis/coherence-evaluator");
 
 // warehouse:method
-// responsibility: Produces taxonomy scan evidence bundle by detecting JavaScript functions extracting anchors comparing coverage evaluating coherence and writing audit JSON
+// responsibility: Produces taxonomy scan evidence bundle by detecting supported source functions extracting anchors comparing coverage evaluating coherence and writing audit JSON
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -33,7 +33,37 @@ function detectJavaScriptFunctions(content) {
 }
 
 // warehouse:method
-// responsibility: Produces taxonomy scan evidence bundle by detecting JavaScript functions extracting anchors comparing coverage evaluating coherence and writing audit JSON
+// responsibility: Produces taxonomy scan evidence bundle by detecting supported source functions extracting anchors comparing coverage evaluating coherence and writing audit JSON
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function detectPythonFunctions(content) {
+  const functions = [];
+  const lines = content.split(/\r?\n/);
+  for (let index = 0; index < lines.length; index += 1) {
+    const trimmed = lines[index].trim();
+    const match = trimmed.match(/^(?:async\s+)?def\s+(\w+)\s*\(/);
+    if (match) {
+      functions.push({ name: match[1], line: index + 1 });
+    }
+  }
+  return functions;
+}
+
+// warehouse:method
+// responsibility: Produces taxonomy scan evidence bundle by detecting supported source functions extracting anchors comparing coverage evaluating coherence and writing audit JSON
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function detectSupportedFunctions(filePath, content) {
+  if (filePath.endsWith(".py")) {
+    return detectPythonFunctions(content);
+  }
+  return detectJavaScriptFunctions(content);
+}
+
+// warehouse:method
+// responsibility: Produces taxonomy scan evidence bundle by detecting supported source functions extracting anchors comparing coverage evaluating coherence and writing audit JSON
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -41,7 +71,7 @@ function buildFileEvidence(filePath, root) {
   const absPath = path.resolve(root, filePath);
   const relPath = path.relative(root, absPath).replace(/\\/g, "/");
   const content = fs.readFileSync(absPath, "utf8");
-  const detectedFunctions = detectJavaScriptFunctions(content);
+  const detectedFunctions = detectSupportedFunctions(relPath, content);
   const taxonomy = extractFromFile(absPath, root);
   const taxonomyMethods = taxonomy ? taxonomy.methods : [];
   const documentedMethods = taxonomyMethods.filter((method) => isValidTaxonomy(method.taxonomy));
@@ -96,7 +126,7 @@ function buildFileEvidence(filePath, root) {
 }
 
 // warehouse:method
-// responsibility: Produces taxonomy scan evidence bundle by detecting JavaScript functions extracting anchors comparing coverage evaluating coherence and writing audit JSON
+// responsibility: Produces taxonomy scan evidence bundle by detecting supported source functions extracting anchors comparing coverage evaluating coherence and writing audit JSON
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -116,7 +146,7 @@ function buildEvidenceBundle(files, root) {
 }
 
 // warehouse:method
-// responsibility: Produces taxonomy scan evidence bundle by detecting JavaScript functions extracting anchors comparing coverage evaluating coherence and writing audit JSON
+// responsibility: Produces taxonomy scan evidence bundle by detecting supported source functions extracting anchors comparing coverage evaluating coherence and writing audit JSON
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -130,7 +160,7 @@ function runEvidenceBundle() {
   const files = args.filter((arg, index) => arg !== "--output" && index !== outputIndex + 1);
 
   if (files.length === 0) {
-    console.error("Usage: node bin/taxonomy-evidence-bundle.js <file.js> [...] [--output reports/evidence.json]");
+    console.error("Usage: node bin/taxonomy-evidence-bundle.js <file.js|file.py> [...] [--output reports/evidence.json]");
     return 1;
   }
 
@@ -148,6 +178,8 @@ if (require.main === module) {
 
 module.exports = {
   detectJavaScriptFunctions,
+  detectPythonFunctions,
+  detectSupportedFunctions,
   buildFileEvidence,
   buildEvidenceBundle,
   runEvidenceBundle,
