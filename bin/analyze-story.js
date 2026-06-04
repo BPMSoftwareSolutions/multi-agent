@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: CLI entry point that delegates story coherence analysis to reporter module
+// responsibility: Orchestrates coherence analysis workflow by loading taxonomy data, generating report, and writing narrative findings
 // actor: cli
 // role: delegator
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Manages concurrent bee agent pool and work packet distribution
+// responsibility: Creates and orchestrates concurrent bee workers that pull packets from shared queue and process them
 // actor: worker_bee_infrastructure
 // role: agent_pool_manager
 // source_truth: implementation
@@ -21,6 +21,11 @@ async function createBeePool(packets, spec, apiKey, dryRun, onProgress) {
   const results = [];
   let cursor = 0;
 
+// warehouse:method
+// responsibility: Creates and orchestrates concurrent bee workers that pull packets from shared queue and process them
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
   async function beeLoop(beeId) {
     while (cursor < packets.length) {
       const index = cursor++;

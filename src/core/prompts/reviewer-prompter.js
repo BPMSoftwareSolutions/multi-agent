@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Creates reviewer agent prompts for artifact validation and issue detection
+// responsibility: Constructs prompt for reviewer to identify alignment issues in artifacts
 // actor: core_runtime
 // role: prompt_builder
 // source_truth: implementation

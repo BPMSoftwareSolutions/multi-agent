@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Run-worker command handler: validates session, executes worker, and renders output
+// responsibility: Orchestrates session lookup, worker execution, and output rendering
 // actor: cli
 // role: orchestrator
 // source_truth: implementation

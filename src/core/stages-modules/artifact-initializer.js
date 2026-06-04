@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Creates empty artifacts with schema-defined field types for stage initialization
+// responsibility: Maps stage schema fields to empty typed values (empty strings or arrays)
 // actor: core_runtime
 // role: initializer
 // source_truth: implementation

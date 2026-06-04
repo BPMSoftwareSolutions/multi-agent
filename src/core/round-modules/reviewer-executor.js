@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Executes reviewer agent with prompt and LLM call
+// responsibility: Builds reviewer prompt, invokes Claude to evaluate artifact, and normalizes output
 // actor: core_runtime
 // role: executor
 // source_truth: implementation

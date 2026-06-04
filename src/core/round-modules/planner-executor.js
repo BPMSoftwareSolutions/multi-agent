@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Executes planner/builder agent with prompt and LLM call
+// responsibility: Builds planner prompt and invokes Claude to generate artifact proposal
 // actor: core_runtime
 // role: executor
 // source_truth: implementation

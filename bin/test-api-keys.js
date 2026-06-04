@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Orchestrates postJson, testKey and related operations
+// responsibility: Orchestrates validation workflow: tests all key-model combinations and renders report
 // actor: cli
 // role: orchestrator
 // source_truth: implementation

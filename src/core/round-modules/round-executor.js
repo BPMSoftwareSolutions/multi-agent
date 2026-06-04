@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Aggregates planner and reviewer execution with round lifecycle management
+// responsibility: Orchestrates design workshop round: determines max tokens, executes planner and reviewer sequentially, records artifacts and metrics
 // actor: core_runtime
 // role: orchestrator
 // source_truth: implementation

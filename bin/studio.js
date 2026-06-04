@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Orchestrates main, parseOptions and related operations
+// responsibility: Orchestrates studio CLI by parsing command-line arguments and routing to appropriate command handlers for session, round, and workflow management
 // actor: cli
 // role: entry_point
 // source_truth: implementation

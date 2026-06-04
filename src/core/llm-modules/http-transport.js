@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Handles HTTPS requests to language model API endpoints with error handling
+// responsibility: Executes HTTPS request to LLM API, handles errors, returns parsed JSON response
 // actor: core_runtime
 // role: http_transport
 // source_truth: implementation

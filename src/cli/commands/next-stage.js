@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Next-stage command handler: validates, advances stage, and renders output
+// responsibility: Orchestrates session validation, stage advancement, and output rendering
 // actor: cli
 // role: orchestrator
 // source_truth: implementation

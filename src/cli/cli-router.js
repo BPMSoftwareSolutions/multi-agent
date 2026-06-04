@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Dispatches CLI commands to their corresponding handler modules
+// responsibility: Routes parsed CLI command to appropriate handler function based on command name
 // actor: command_router
 // role: orchestrator
 // source_truth: implementation

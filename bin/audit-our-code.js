@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: CLI entry point that orchestrates taxonomy audit, displays results, and formats summary report
+// responsibility: Main workflow that loads audit state, renders file-by-file status with emoji indicators, computes coverage metrics, and outputs results
 // actor: cli
 // role: orchestrator
 // source_truth: implementation

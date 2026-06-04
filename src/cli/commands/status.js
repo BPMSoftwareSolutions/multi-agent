@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Status command handler: retrieves session, summarizes operations, and renders output
+// responsibility: Orchestrates session lookup, operation summary, and output rendering
 // actor: cli
 // role: orchestrator
 // source_truth: implementation
