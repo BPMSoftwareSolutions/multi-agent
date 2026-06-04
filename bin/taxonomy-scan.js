@@ -1,24 +1,14 @@
 // warehouse:file
-// responsibility: Provides parseArgs, main functionality
+// responsibility: CLI entrypoint for taxonomy scan—parses args and orchestrates scanning
 // actor: taxonomy_scanner
 // role: scan_authority
 // source_truth: implementation
-
-// Taxonomy scanner. Scans a target, decides what is TOUCHED vs UNTOUCHED, and
-// writes a tracking JSON. Untouched = missing anchor, placeholder, or a
-// snake_case/identifier responsibility (a name, not a description).
-//
-// The JSON is the authority: it tracks state AND drives the bee. The bee does not
-// re-reason about what needs work — it just processes what this scan marked
-// untouched (run: worker-bee --from <tracking.json>).
-//
-// Usage:
-//   node bin/taxonomy-scan.js --target <pkg> [--layer both] [--output reports/taxonomy-tracking.json]
 
 const path = require("path");
 const fs = require("fs");
 
 const { findWork, serializeWork } = require("../src/worker-bee/scan");
+const { parseTaxonomyScanArgs } = require("../src/cli/taxonomy-scan-args");
 
 const DEFAULT_REPO_ROOT = process.env.WORKER_BEE_REPO_ROOT;
 if (!DEFAULT_REPO_ROOT) {
@@ -26,35 +16,8 @@ if (!DEFAULT_REPO_ROOT) {
   process.exit(1);
 }
 
-// warehouse:method
-// responsibility: Python taxonomy scanner: parses and validates command arguments for taxonomy scanning
-// actor: method_implementation
-// role: implementation
-// source_truth: implementation
-function parseArgs(argv) {
-  const args = { repoRoot: DEFAULT_REPO_ROOT, target: null, layer: "both", mode: "all", output: null, json: false };
-  for (let i = 0; i < argv.length; i += 1) {
-    const next = () => argv[++i];
-    switch (argv[i]) {
-      case "--repo-root": args.repoRoot = next(); break;
-      case "--target": args.target = next(); break;
-      case "--layer": args.layer = next(); break;
-      case "--mode": args.mode = next(); break;
-      case "--output": args.output = next(); break;
-      case "--json": args.json = true; break;
-      default: console.error(`Unknown argument: ${argv[i]}`); process.exit(1);
-    }
-  }
-  return args;
-}
-
-// warehouse:method
-// responsibility: Python taxonomy scanner: scans target and writes tracking JSON marking TOUCHED vs UNTOUCHED
-// actor: method_implementation
-// role: implementation
-// source_truth: implementation
 function main() {
-  const args = parseArgs(process.argv.slice(2));
+  const args = parseTaxonomyScanArgs(process.argv.slice(2), DEFAULT_REPO_ROOT);
   const repoRoot = path.resolve(args.repoRoot);
   const target = path.resolve(args.target || args.repoRoot);
   if (!fs.existsSync(target)) {

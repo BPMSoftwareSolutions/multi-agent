@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Stage definitions aggregator - delegates to modules for schemas and artifact initialization
+// responsibility: Delegates to stage schema and artifact initialization modules
 // actor: core_runtime
 // role: entry_point
 // source_truth: implementation

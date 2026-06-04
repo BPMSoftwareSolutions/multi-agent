@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Validates taxonomy header completeness and required fields
-// actor: header_parser
-// role: validator
+// responsibility: Checks if all required metadata fields (responsibility, actor, role, source_truth) are present
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

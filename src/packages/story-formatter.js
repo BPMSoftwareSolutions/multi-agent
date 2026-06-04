@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Formats package narratives with dominant roles and responsibility summaries
-// actor: story_generator
-// role: formatter
+// responsibility: Selects dominant role/actor and formats package narrative summary
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

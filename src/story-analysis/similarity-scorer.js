@@ -1,13 +1,13 @@
 // warehouse:file
-// responsibility: Computes semantic alignment score by extracting concepts and calculating word overlap ratio
+// responsibility: Computes semantic alignment score between file and method responsibilities
 // actor: coherence_analyzer
-// role: scorer
+// role: similarity_scorer
 // source_truth: implementation
 
 const { extractConcepts } = require("./concepts-extractor");
 
 // warehouse:method
-// responsibility: Computes semantic alignment score by extracting concepts and calculating word overlap ratio
+// responsibility: Computes semantic alignment score by extracting concept vocabularies and calculating word overlap ratio
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

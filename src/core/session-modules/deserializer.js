@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Deserializes session objects from database rows
+// responsibility: Deserializes session objects from database rows into normalized session objects
 // actor: core_runtime
 // role: session_deserializer
 // source_truth: implementation

@@ -1,54 +1,32 @@
 // warehouse:file
-// responsibility: Summarizes pending, running, and completed operations in current session
+// responsibility: Status command handler: retrieves session, summarizes operations, and renders output
 // actor: cli
-// role: command_handler
+// role: orchestrator
 // source_truth: implementation
 
-const { getSession, getCurrentSessionId } = require("../../core/session-store");
+const { lookupSession } = require("./session-lookup");
 const { summarizeOperations } = require("../../shared/actions");
+const { renderStatusOutput } = require("./status-renderer");
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: Retrieves session and outputs operation status summary in JSON or text format
+// responsibility: Orchestrates session lookup, operation summary, and output rendering
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 async function status(sessionId = null, options = {}) {
   try {
-    const id = sessionId || getCurrentSessionId();
-    if (!id) {
-      exit(0, JSON.stringify({ ok: false, message: "No active session" }, null, 2));
-      return;
-    }
-
-    const session = getSession(id);
-    if (!session) {
-      exit(0, JSON.stringify({ ok: false, message: `Session not found: ${id}` }, null, 2));
-      return;
-    }
-
-    const stageState = session.stages[session.currentStage];
+    const session = lookupSession(sessionId);
     const operations = summarizeOperations(session);
-    console.log(
-      JSON.stringify(
-        {
-          ok: true,
-          sessionId: session.id,
-          brief: session.brief,
-          currentStage: session.currentStage,
-          stageAccepted: stageState.accepted || false,
-          roundsInStage: (stageState.rounds || []).length,
-          hasProposedArtifact: !!stageState.proposedArtifact,
-          operations,
-          completed: session.completed,
-          createdAt: session.createdAt
-        },
-        null,
-        2
-      )
-    );
+    const output = renderStatusOutput(session, operations);
+    console.log(output);
   } catch (error) {
-    exit(2, `Error: ${error.message}`);
+    const errorOutput = JSON.stringify(
+      { ok: false, message: error.message },
+      null,
+      2
+    );
+    exit(0, errorOutput);
   }
 }
 

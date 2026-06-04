@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: undefined — findDuplicateApprovedAction
-// actor: method_implementation
-// role: implementation
+// responsibility: Finds duplicate entries in action and review queues by idempotency keys
+// actor: action_orchestrator
+// role: deduplicator
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: undefined — findDuplicateApprovedAction
+// responsibility: Finds approved action by idempotencyKey, returns null if not found
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -16,7 +16,7 @@ function findDuplicateApprovedAction(approvedActions, idempotencyKey) {
 }
 
 // warehouse:method
-// responsibility: undefined — findDuplicateReviewItem
+// responsibility: Finds review item by recommendationId, returns null if not found
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

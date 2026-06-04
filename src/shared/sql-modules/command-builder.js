@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Builds sqlcmd command-line arguments
+// responsibility: Builds sqlcmd command-line arguments from configuration
 // actor: shared_infrastructure
 // role: command_builder
 // source_truth: implementation
@@ -7,6 +7,11 @@
 const path = require("path");
 const { getSqlConfig } = require("./config-reader");
 
+// warehouse:method
+// responsibility: Builds sqlcmd command-line arguments array from database configuration
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function buildSqlcmdArgs(databaseOverride, inputFile) {
   const config = getSqlConfig();
   const database = databaseOverride || config.database;

@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Extracts key concepts and verbs from responsibility text for semantic comparison
-// actor: method_implementation
-// role: implementation
+// actor: coherence_analyzer
+// role: concepts_extractor
 // source_truth: implementation
 
 // warehouse:method

@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Renders swarm status from ledger showing progress metrics and live state
-// actor: status_renderer
-// role: formatter
+// responsibility: Renders swarm status from ledger showing progress metrics, packet completion counts, error tallies, and live state for CLI monitoring
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

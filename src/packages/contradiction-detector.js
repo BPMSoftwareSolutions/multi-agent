@@ -1,48 +1,11 @@
 // warehouse:file
-// responsibility: Groups files by package and detects contradictions
-// actor: method_implementation
-// role: implementation
+// responsibility: Identifies naming-responsibility mismatches and role inconsistencies in packages
+// actor: analyzer
+// role: issue_detector
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Groups files by package and detects contradictions
-// actor: method_implementation
-// role: implementation
-// source_truth: implementation
-function analyzePackages(taxonomyPath) {
-  const fs = require("fs");
-  const taxonomy = JSON.parse(fs.readFileSync(taxonomyPath, "utf8"));
-
-  const packages = {};
-  for (const file of taxonomy.files) {
-    const match = file.path.match(/^packages\/([^/]+)\//);
-    if (!match) continue;
-
-    const pkgName = match[1];
-    if (!packages[pkgName]) {
-      packages[pkgName] = {
-        name: pkgName,
-        files: [],
-        responsibilities: [],
-        roles: {},
-        actors: {}
-      };
-    }
-
-    packages[pkgName].files.push(file);
-    packages[pkgName].roles[file.role] = (packages[pkgName].roles[file.role] || 0) + 1;
-    packages[pkgName].actors[file.actor] = (packages[pkgName].actors[file.actor] || 0) + 1;
-
-    if (file.responsibility && file.responsibility.length > 5) {
-      packages[pkgName].responsibilities.push(file.responsibility);
-    }
-  }
-
-  return packages;
-}
-
-// warehouse:method
-// responsibility: Identifies naming-responsibility mismatches and role inconsistencies
+// responsibility: Identifies naming-responsibility mismatches and role inconsistencies in packages
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -113,4 +76,4 @@ function detectContradictions(pkg) {
   return issues;
 }
 
-module.exports = { analyzePackages, detectContradictions };
+module.exports = { detectContradictions };

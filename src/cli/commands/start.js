@@ -1,38 +1,27 @@
 // warehouse:file
-// responsibility: Start command handler: validates brief, creates session with normalized intent from user input
+// responsibility: Start command handler: validates brief, creates session with intent, and renders output
 // actor: cli
-// role: command_handler
+// role: orchestrator
 // source_truth: implementation
 
-const { createSession } = require("../../core/session-store");
-const { normalizeIntent } = require("../../core/run-round");
-const { renderSession, exit } = require("../print");
+const { validateBrief } = require("./brief-validator");
+const { normalizeSessionIntent } = require("./intent-normalizer");
+const { createAndSaveSession } = require("./session-creator");
+const { renderStartOutput } = require("./start-renderer");
+const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: Start command handler: validates brief, creates session with normalized intent from user input
+// responsibility: Orchestrates brief validation, intent normalization, session creation, and output rendering
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 async function start(brief, apiKey, options = {}) {
-  if (!brief || typeof brief !== "string") {
-    exit(1, "Error: brief is required and must be a string");
-  }
-
   try {
-    const session = createSession(brief);
-    const intent = await normalizeIntent(brief, apiKey);
-    session.intent = intent;
-
-    const store = require("../../core/session-store");
-    store.saveSession(session);
-
-    if (options.json) {
-      console.log(JSON.stringify({ sessionId: session.id, ok: true }, null, 2));
-    } else {
-      console.log(`Session started: ${session.id}`);
-      console.log(`\nTask: ${intent.task_definition}\n`);
-    }
-
+    validateBrief(brief);
+    const intent = await normalizeSessionIntent(brief, apiKey);
+    const session = await createAndSaveSession(brief, intent);
+    const output = renderStartOutput(session, options);
+    console.log(output);
     return session;
   } catch (error) {
     exit(2, `Error: ${error.message}`);

@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Parses CLI options into structured command configuration
-// actor: options_parser
-// role: config_builder
+// responsibility: Parses CLI command-line arguments into structured studio configuration options and flags for handler routing
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Formats and displays API key test results with status summaries
-// actor: result_formatter
-// role: output_writer
+// responsibility: Renders test results with status indicators and detailed diagnostics
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Persists sessions to database
+// responsibility: Persists sessions to database storage
 // actor: core_runtime
 // role: session_persister
 // source_truth: implementation

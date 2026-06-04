@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Ensures SQL Server schema exists and creates persistence tables (sessions, app_state, oauth_tokens)
+// responsibility: Ensures SQL Server schema and persistence tables exist
 // actor: persistence_layer
 // role: schema_manager
 // source_truth: implementation
@@ -9,7 +9,7 @@ const { getSqlConfig, runSql } = require("../sql-helpers");
 let schemaReady = false;
 
 // warehouse:method
-// responsibility: Ensures SQL Server schema exists and creates persistence tables (sessions, app_state, oauth_tokens)
+// responsibility: Ensures SQL Server schema and persistence tables (sessions, app_state, oauth_tokens) exist before application runtime
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

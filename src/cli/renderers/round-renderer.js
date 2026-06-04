@@ -1,101 +1,20 @@
 // warehouse:file
-// responsibility: undefined — renderRound
-// actor: method_implementation
-// role: implementation
+// responsibility: Dispatches round rendering to JSON or text format based on options
+// actor: cli
+// role: renderer
 // source_truth: implementation
 
+const { renderRoundJson } = require("./round-json-renderer");
+const { renderRoundText } = require("./round-text-renderer");
+
 // warehouse:method
-// responsibility: undefined — renderRound
+// responsibility: Dispatches round rendering to JSON or text format based on options
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 function renderRound(round, options = {}) {
   const json = options.json || false;
-
-  if (json) {
-    return JSON.stringify(
-      {
-        roundNumber: round.roundNumber,
-        stage: options.stageId,
-        timestamp: round.timestamp,
-        planner: {
-          artifact: round.planner.artifact,
-          durationMs: round.planner.durationMs
-        },
-        reviewer: {
-          intent_issues: round.reviewer.intent_issues || [],
-          complexity_issues: round.reviewer.complexity_issues || [],
-          validity_issues: round.reviewer.validity_issues || [],
-          change_summary: round.reviewer.change_summary || [],
-          suggested_artifact: round.reviewer.suggested_artifact,
-          action_recommendations: round.reviewer.action_recommendations || [],
-          durationMs: round.reviewer.durationMs
-        },
-        proposedArtifact: round.artifactAfter,
-        humanInterjection: round.humanInterjection || ""
-      },
-      null,
-      2
-    );
-  }
-
-  const lines = [
-    `=== Round ${round.roundNumber} ===`,
-    `Timestamp: ${round.timestamp}`,
-    ""
-  ];
-
-  if (
-    round.reviewer &&
-    (round.reviewer.intent_issues ||
-      round.reviewer.complexity_issues ||
-      round.reviewer.validity_issues)
-  ) {
-    lines.push("--- Reviewer Issues ---");
-    if (round.reviewer.intent_issues && round.reviewer.intent_issues.length) {
-      lines.push("Intent Issues:");
-      round.reviewer.intent_issues.forEach((issue) => {
-        lines.push(`  - ${typeof issue === "string" ? issue : issue.issue}`);
-      });
-    }
-    if (round.reviewer.complexity_issues && round.reviewer.complexity_issues.length) {
-      lines.push("Complexity Issues:");
-      round.reviewer.complexity_issues.forEach((issue) => {
-        lines.push(`  - ${typeof issue === "string" ? issue : issue.issue}`);
-      });
-    }
-    if (round.reviewer.validity_issues && round.reviewer.validity_issues.length) {
-      lines.push("Validity Issues:");
-      round.reviewer.validity_issues.forEach((issue) => {
-        lines.push(`  - ${typeof issue === "string" ? issue : issue.issue}`);
-      });
-    }
-    if (round.reviewer.action_recommendations && round.reviewer.action_recommendations.length) {
-      lines.push("Action Recommendations:");
-      round.reviewer.action_recommendations.forEach((action) => {
-        lines.push(
-          `  - ${action.action_type || action.actionType} | ${action.file_id || action.fileId || action.item_id || action.itemId} | ${action.approval_status || action.approvalStatus || "approved"}`
-        );
-      });
-    }
-    lines.push("");
-  }
-
-  if (round.reviewer && round.reviewer.change_summary) {
-    lines.push("--- Proposed Changes ---");
-    if (round.reviewer.change_summary.length) {
-      round.reviewer.change_summary.forEach((change) => {
-        lines.push(`  - ${change}`);
-      });
-    }
-    lines.push("");
-  }
-
-  lines.push(
-    `Duration: ${(round.planner.durationMs / 1000).toFixed(1)}s (planner) + ${(round.reviewer.durationMs / 1000).toFixed(1)}s (reviewer)`
-  );
-
-  return lines.join("\n");
+  return json ? renderRoundJson(round, options) : renderRoundText(round);
 }
 
 module.exports = { renderRound };

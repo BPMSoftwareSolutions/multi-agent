@@ -1,131 +1,15 @@
 // warehouse:file
-// responsibility: Provides extractFileHeader, extractMethodHeaders, isValidTaxonomy functionality
+// responsibility: Processes JavaScript file and extracts warehouse:file and warehouse:method level taxonomy structures
 // actor: taxonomy_analyzer
 // role: extractor
 // source_truth: implementation
 
 const fs = require("fs");
 const path = require("path");
+const { extractFileHeader } = require("./file-header-extractor");
+const { extractMethodHeaders } = require("./method-header-extractor");
+const { isValidTaxonomy } = require("./taxonomy-validator");
 
-// warehouse:method
-// responsibility: Extracts warehouse:file header from JavaScript file into taxonomy structure and key-value object
-// actor: method_implementation
-// role: implementation
-// source_truth: implementation
-function extractFileHeader(content) {
-  const lines = content.split("\n");
-  const header = {};
-  let foundFileHeader = false;
-
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (trimmed.startsWith("#!") || !trimmed) continue;
-    if (!trimmed.startsWith("//")) break;
-
-    // Parse warehouse:X field
-    const match = trimmed.match(/^\/\/\s*(\w+):(.*)$/);
-    if (match) {
-      const key = match[1];
-      const value = match[2].trim();
-      header[key] = value;
-
-      if (key === "warehouse" && value === "file") {
-        foundFileHeader = true;
-      }
-    }
-  }
-
-  return foundFileHeader ? header : {};
-}
-
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// responsibility: Extracts all warehouse:method headers from JavaScript file into taxonomy array of documented methods
-// actor: method_implementation
-// role: implementation
-// source_truth: implementation
-function extractMethodHeaders(content) {
-  const lines = content.split("\n");
-  const methods = [];
-  let currentMethod = null;
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    const trimmed = line.trim();
-
-    // Check if this is a method header start
-    if (trimmed.match(/^\/\/\s*warehouse:\s*method/)) {
-      currentMethod = { name: null, taxonomy: { warehouse: "method" } };
-      continue;
-    }
-
-    // Collect taxonomy lines for current method
-    if (currentMethod && trimmed.startsWith("//")) {
-      const match = trimmed.match(/^\/\/\s*(\w+):\s*(.*)$/);
-      if (match && match[1] !== "warehouse") {
-        currentMethod.taxonomy[match[1]] = match[2].trim();
-      }
-    }
-
-    // Check for function definition after method header
-    if (
-      currentMethod &&
-      (trimmed.startsWith("function ") ||
-        trimmed.startsWith("const ") ||
-        trimmed.startsWith("async "))
-    ) {
-      // Extract function name from various patterns
-      let nameMatch = trimmed.match(/function\s+(\w+)/);
-      if (!nameMatch) nameMatch = trimmed.match(/const\s+(\w+)/);
-      if (!nameMatch) nameMatch = trimmed.match(/async\s+(\w+)/);
-
-      if (nameMatch) {
-        currentMethod.name = nameMatch[1];
-        methods.push(currentMethod);
-        currentMethod = null;
-      }
-    }
-  }
-
-  return methods;
-}
-
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// responsibility: Validates that taxonomy object contains required warehouse:file and warehouse:method header fields
-// actor: method_implementation
-// role: implementation
-// source_truth: implementation
-function isValidTaxonomy(taxonomy) {
-  const required = ["warehouse", "responsibility", "actor", "role"];
-  return required.every((field) => field in taxonomy && taxonomy[field]);
-}
-
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
-// warehouse:method
 // warehouse:method
 // responsibility: Processes a JavaScript file and extracts both warehouse:file and warehouse:method level taxonomy structures with validation
 // actor: method_implementation

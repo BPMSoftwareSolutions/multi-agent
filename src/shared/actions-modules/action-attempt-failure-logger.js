@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: undefined — failAttempt
-// actor: method_implementation
-// role: implementation
+// responsibility: Logs action attempt failures with error details and status transitions
+// actor: action_orchestrator
+// role: failure_logger
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: undefined — failAttempt
+// responsibility: Records action attempt failure with error code, message, and final status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

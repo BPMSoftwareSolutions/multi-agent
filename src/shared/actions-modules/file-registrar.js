@@ -1,26 +1,10 @@
 // warehouse:file
-// responsibility: Records folder in state with exists flag and timestamp
-// actor: method_implementation
-// role: implementation
+// responsibility: Records file metadata with merged state from recommendations
+// actor: action_orchestrator
+// role: file_registrar
 // source_truth: implementation
 
-// warehouse:method
-// responsibility: Records folder in state with exists flag and timestamp
-// actor: method_implementation
-// role: implementation
-// source_truth: implementation
-function registerFolder(operations, folderId) {
-  if (!folderId) {
-    return;
-  }
-
-  operations.folders[folderId] = {
-    ...(operations.folders[folderId] || {}),
-    folderId,
-    exists: true,
-    updatedAt: new Date().toISOString()
-  };
-}
+const { registerFolder } = require("./folder-registrar");
 
 // warehouse:method
 // responsibility: Records file with merged metadata, permissions, and parent folder registration
@@ -56,7 +40,4 @@ function registerFile(operations, recommendation) {
   registerFolder(operations, recommendation.targetParentId);
 }
 
-module.exports = {
-  registerFolder,
-  registerFile
-};
+module.exports = { registerFile };

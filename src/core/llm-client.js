@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Language model API client aggregator - delegates to focused modules for key resolution, HTTP transport, JSON extraction, model invocation, and retry logic
+// responsibility: Delegates to specialized LLM modules for model calls, retries, and JSON extraction
 // actor: core_runtime
 // role: entry_point
 // source_truth: implementation

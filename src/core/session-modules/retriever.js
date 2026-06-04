@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Retrieves and lists sessions from database
+// responsibility: Retrieves individual sessions and lists all session IDs from database
 // actor: core_runtime
 // role: session_retriever
 // source_truth: implementation
@@ -15,13 +15,4 @@ function listSessions() {
   return listSessionRows().map((row) => row.session_id);
 }
 
-function touchSession(sessionId) {
-  const session = getSession(sessionId);
-  if (!session) return null;
-  session.updatedAt = new Date().toISOString();
-  const { saveSession } = require("./persister");
-  saveSession(session);
-  return session;
-}
-
-module.exports = { getSession, listSessions, touchSession };
+module.exports = { getSession, listSessions };

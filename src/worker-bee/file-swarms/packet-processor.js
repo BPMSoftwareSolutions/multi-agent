@@ -1,0 +1,74 @@
+// warehouse:file
+// responsibility: Processes file packet via language model APIs to classify and write anchors to concurrent files
+// actor: worker_bee_infrastructure
+// role: packet_processor
+// source_truth: implementation
+
+const { SYSTEM_INSTRUCTION } = require("../anchor-spec");
+const { buildAnchorBlock, insertAnchor, replaceAnchor } = require("../scan");
+const { callGeminiJSON } = require("../gemini-client");
+const { buildUserPrompt } = require("./prompt-builder");
+
+// warehouse:method
+// responsibility: Processes file packet via language model APIs to classify and write anchors to concurrent files
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+async function processPacket(packet, { apiKey, model, dryRun }) {
+  const byPath = new Map(packet.map((f) => [f.path, f]));
+  const results = [];
+
+  let parsed;
+  try {
+    parsed = await callGeminiJSON({
+      system: SYSTEM_INSTRUCTION,
+      user: buildUserPrompt(packet),
+      apiKey,
+      model,
+    });
+  } catch (error) {
+    for (const f of packet) {
+      results.push({ path: f.path, status: "error", reason: error.message });
+    }
+    return results;
+  }
+
+  const entries = Array.isArray(parsed?.files) ? parsed.files : [];
+  const seen = new Set();
+  for (const entry of entries) {
+    const f = byPath.get(entry.path);
+    if (!f) {
+      results.push({ path: entry.path, status: "error", reason: "unknown path in response" });
+      continue;
+    }
+    seen.add(entry.path);
+    const block = buildAnchorBlock(entry, {
+      expected_location: f.expected_location,
+      repo_root_depth: f.repo_root_depth,
+    });
+    if (dryRun) {
+      results.push({ path: f.path, status: "planned", existing: !!f.existing, issues: f.issues, block });
+      continue;
+    }
+    try {
+      if (f.existing) {
+        replaceAnchor(f.absPath, block);
+        results.push({ path: f.path, status: "updated", issues: f.issues, block });
+      } else {
+        const wrote = insertAnchor(f.absPath, block);
+        results.push({ path: f.path, status: wrote ? "anchored" : "skipped", block });
+      }
+    } catch (error) {
+      results.push({ path: f.path, status: "error", reason: error.message });
+    }
+  }
+
+  for (const f of packet) {
+    if (!seen.has(f.path)) {
+      results.push({ path: f.path, status: "error", reason: "missing from model response" });
+    }
+  }
+  return results;
+}
+
+module.exports = { processPacket };

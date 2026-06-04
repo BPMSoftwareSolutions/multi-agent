@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Creates and initializes new sessions
+// responsibility: Creates and initializes new sessions with all required state
 // actor: core_runtime
 // role: session_creator
 // source_truth: implementation

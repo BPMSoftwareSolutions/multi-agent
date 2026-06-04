@@ -1,54 +1,25 @@
 // warehouse:file
-// responsibility: Handles next-stage command: validates readiness and advances session workflow
+// responsibility: Next-stage command handler: validates, advances stage, and renders output
 // actor: cli
-// role: command_handler
+// role: orchestrator
 // source_truth: implementation
 
-const { getSession, getCurrentSessionId, saveSession } = require("../../core/session-store");
-const { advanceStage } = require("../../core/run-round");
+const { validateNextStage } = require("./next-stage-validator");
+const { executeNextStage } = require("./next-stage-executor");
+const { renderNextStageOutput } = require("./next-stage-renderer");
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: Validates current stage state and advances session to next workflow stage
+// responsibility: Orchestrates session validation, stage advancement, and output rendering
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 async function nextStage(sessionId = null, options = {}) {
   try {
-    const id = sessionId || getCurrentSessionId();
-    if (!id) {
-      exit(1, "Error: No active session. Use 'studio start <brief>' to begin.");
-    }
-
-    const session = getSession(id);
-    if (!session) {
-      exit(1, `Error: Session not found: ${id}`);
-    }
-
-    const nextStageId = await advanceStage(session);
-    saveSession(session);
-
-    if (options.json) {
-      console.log(
-        JSON.stringify(
-          {
-            ok: true,
-            sessionId: session.id,
-            previousStage: session.stages[nextStageId] ? session.currentStage : undefined,
-            currentStage: nextStageId,
-            completed: session.completed
-          },
-          null,
-          2
-        )
-      );
-    } else {
-      console.log(`Advanced to stage: ${nextStageId}`);
-      if (session.completed) {
-        console.log("\nSession completed! All stages finished.");
-      }
-    }
-
+    const { id, session } = validateNextStage(sessionId);
+    const nextStageId = await executeNextStage(session);
+    const output = renderNextStageOutput(session, nextStageId, options);
+    console.log(output);
     return session;
   } catch (error) {
     exit(

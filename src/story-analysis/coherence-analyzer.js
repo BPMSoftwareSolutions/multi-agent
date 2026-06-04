@@ -1,11 +1,13 @@
 // warehouse:file
-// responsibility: Provides evaluateFileCoherence, aggregateAnalysis functionality
+// responsibility: Evaluates single file coherence by analyzing method-to-file responsibility alignment
 // actor: coherence_analyzer
-// role: analyzer
+// role: file_analyzer
 // source_truth: implementation
 
 const { computeSimilarity } = require("./similarity-scorer");
-const { isBoilerplate, getAlignmentThreshold, detectRedFlags } = require("./boilerplate-classifier");
+const { detectRedFlags } = require("./red-flag-detector");
+const { getAlignmentThreshold } = require("./threshold-calculator");
+const { isBoilerplate } = require("./boilerplate-classifier");
 
 // warehouse:method
 // responsibility: Evaluates single file coherence by analyzing method-to-file responsibility alignment
@@ -61,35 +63,4 @@ function evaluateFileCoherence(file) {
   };
 }
 
-// warehouse:method
-// responsibility: Aggregates coherence analysis across all files and categorizes findings
-// actor: method_implementation
-// role: implementation
-// source_truth: implementation
-function aggregateAnalysis(taxonomyData) {
-  const analyses = [];
-
-  for (const file of taxonomyData.files) {
-    analyses.push({
-      path: file.path,
-      analysis: evaluateFileCoherence(file),
-    });
-  }
-
-  analyses.sort((a, b) => a.analysis.coherenceScore - b.analysis.coherenceScore);
-
-  const avgScore = Math.round(
-    analyses.reduce((sum, a) => sum + a.analysis.coherenceScore, 0) / analyses.length
-  );
-  const strongStories = analyses.filter((a) => a.analysis.coherenceScore >= 70).length;
-  const weakStories = analyses.filter((a) => a.analysis.coherenceScore < 50).length;
-
-  return {
-    overallHealth: avgScore,
-    strongStories,
-    weakStories,
-    analyses,
-  };
-}
-
-module.exports = { evaluateFileCoherence, aggregateAnalysis };
+module.exports = { evaluateFileCoherence };
