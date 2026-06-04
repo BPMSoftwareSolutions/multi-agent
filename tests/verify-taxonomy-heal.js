@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Verifies expected taxonomy JSON data drives anchor remediation worker from incoherent fixture to accepted coherent evidence
+// responsibility: Verifies expected taxonomy JSON data drives anchor remediation worker preserves script shebang and heals incoherent fixture to accepted coherent evidence
 // actor: taxonomy_heal_test
 // role: validator
 // source_truth: implementation
@@ -13,7 +13,7 @@ const { applyExpectedTaxonomy } = require("../bin/taxonomy-heal");
 const { buildFileEvidence } = require("../bin/taxonomy-evidence-bundle");
 
 // warehouse:method
-// responsibility: Verifies expected taxonomy JSON data drives anchor remediation worker from incoherent fixture to accepted coherent evidence
+// responsibility: Verifies expected taxonomy JSON data drives anchor remediation worker preserves script shebang and heals incoherent fixture to accepted coherent evidence
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -29,6 +29,7 @@ function verifyExpectedTaxonomyDrivesHealing() {
   fs.writeFileSync(
     fixturePath,
     [
+      "#!/usr/bin/env node",
       "// warehouse:file",
       "// responsibility: Provides readProgress, formatTimeDiff functionality",
       "// actor: progress_monitor",
@@ -63,10 +64,12 @@ function verifyExpectedTaxonomyDrivesHealing() {
     const expectedPath = path.join(root, before.case_dir, "expected-coherence.json");
     const result = applyExpectedTaxonomy(expectedPath, root);
     const evidence = buildFileEvidence(fixtureRelPath, root);
+    const healedContent = fs.readFileSync(fixturePath, "utf8");
 
     assert.strictEqual(result.accepted, true, "healer should satisfy expected target score");
     assert.strictEqual(result.score, 100, "healed fixture should reach 100/100 coherence");
     assert.strictEqual(evidence.trustworthy, true, "healed fixture evidence should be trustworthy");
+    assert.ok(healedContent.startsWith("#!/usr/bin/env node\n"), "healer should preserve script shebang");
   } finally {
     fs.rmSync(outputRoot, { recursive: true, force: true });
     fs.rmSync(fixturePath, { force: true });
@@ -74,7 +77,7 @@ function verifyExpectedTaxonomyDrivesHealing() {
 }
 
 // warehouse:method
-// responsibility: Verifies expected taxonomy JSON data drives anchor remediation worker from incoherent fixture to accepted coherent evidence
+// responsibility: Verifies expected taxonomy JSON data drives anchor remediation worker preserves script shebang and heals incoherent fixture to accepted coherent evidence
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

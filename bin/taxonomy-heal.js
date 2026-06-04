@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Applies expected taxonomy remediation JSON by updating declared file and method anchors then verifying coherence acceptance criteria
+// responsibility: Applies expected taxonomy remediation JSON by preserving script shebang updating declared file and method anchors then verifying coherence acceptance criteria
 // actor: taxonomy_healer
 // role: repair_worker
 // source_truth: implementation
@@ -11,7 +11,7 @@ const { extractFromFile } = require("../src/taxonomy/extractor");
 const { evaluateFileCoherence } = require("../src/story-analysis/coherence-evaluator");
 
 // warehouse:method
-// responsibility: Applies expected taxonomy remediation JSON by updating declared file and method anchors then verifying coherence acceptance criteria
+// responsibility: Applies expected taxonomy remediation JSON by preserving script shebang updating declared file and method anchors then verifying coherence acceptance criteria
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -26,7 +26,7 @@ function formatFileAnchor(fileTaxonomy) {
 }
 
 // warehouse:method
-// responsibility: Applies expected taxonomy remediation JSON by updating declared file and method anchors then verifying coherence acceptance criteria
+// responsibility: Applies expected taxonomy remediation JSON by preserving script shebang updating declared file and method anchors then verifying coherence acceptance criteria
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -41,17 +41,17 @@ function formatMethodAnchor(methodTaxonomy) {
 }
 
 // warehouse:method
-// responsibility: Applies expected taxonomy remediation JSON by updating declared file and method anchors then verifying coherence acceptance criteria
+// responsibility: Applies expected taxonomy remediation JSON by preserving script shebang updating declared file and method anchors then verifying coherence acceptance criteria
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 function replaceFileAnchor(content, fileTaxonomy) {
   const lines = content.split("\n");
-  let endIdx = 0;
-  for (let index = 0; index < lines.length; index += 1) {
+  const anchorStartIdx = lines[0] && lines[0].trim().startsWith("#!") ? 1 : 0;
+  let endIdx = anchorStartIdx;
+  for (let index = anchorStartIdx; index < lines.length; index += 1) {
     const trimmed = lines[index].trim();
-    if (index === 0 && trimmed.startsWith("#!")) continue;
-    if (trimmed === "" && endIdx > 0) {
+    if (trimmed === "" && endIdx > anchorStartIdx) {
       endIdx = index + 1;
       break;
     }
@@ -67,12 +67,12 @@ function replaceFileAnchor(content, fileTaxonomy) {
     }
     break;
   }
-  lines.splice(0, endIdx, ...formatFileAnchor(fileTaxonomy), "");
+  lines.splice(anchorStartIdx, endIdx - anchorStartIdx, ...formatFileAnchor(fileTaxonomy), "");
   return lines.join("\n");
 }
 
 // warehouse:method
-// responsibility: Applies expected taxonomy remediation JSON by updating declared file and method anchors then verifying coherence acceptance criteria
+// responsibility: Applies expected taxonomy remediation JSON by preserving script shebang updating declared file and method anchors then verifying coherence acceptance criteria
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -98,7 +98,7 @@ function replaceMethodAnchors(content, expectedMethods) {
 }
 
 // warehouse:method
-// responsibility: Applies expected taxonomy remediation JSON by updating declared file and method anchors then verifying coherence acceptance criteria
+// responsibility: Applies expected taxonomy remediation JSON by preserving script shebang updating declared file and method anchors then verifying coherence acceptance criteria
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -130,7 +130,7 @@ function applyExpectedTaxonomy(expectedPath, root) {
 }
 
 // warehouse:method
-// responsibility: Applies expected taxonomy remediation JSON by updating declared file and method anchors then verifying coherence acceptance criteria
+// responsibility: Applies expected taxonomy remediation JSON by preserving script shebang updating declared file and method anchors then verifying coherence acceptance criteria
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
