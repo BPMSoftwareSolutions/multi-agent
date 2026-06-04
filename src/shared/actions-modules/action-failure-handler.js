@@ -6,10 +6,9 @@
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function failAttempt({ operations, action, attempt, code, message, status = "failed" }) {
   const finishedAt = new Date().toISOString();
   action.status = status;

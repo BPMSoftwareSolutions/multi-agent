@@ -10,8 +10,8 @@ const { ensureOperationsState } = require("./operations-builder");
 
 // warehouse:method
 // responsibility: Executes failure handling within action execution: marks action as failed/blocked, records error state in attempt log
-// actor: shared
-// role: attempt_failure_handler
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function failAttempt({ operations, action, attempt, code, message, status = "failed" }) {
   const finishedAt = new Date().toISOString();
@@ -283,8 +283,8 @@ async function runWorker(session, options = {}) {
 
 // warehouse:method
 // responsibility: Summarizes operations: aggregates action execution counts by status, returns attempt and review metrics
-// actor: shared
-// role: operations_summarizer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function summarizeOperations(session) {
   const operations = ensureOperationsState(session);

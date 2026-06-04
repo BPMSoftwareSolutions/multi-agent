@@ -9,10 +9,9 @@ const { normalizeIntent } = require("../../core/run-round");
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 async function initializeSession(brief, apiKey) {
   const session = createSession(brief);
   const intent = await normalizeIntent(brief, apiKey);

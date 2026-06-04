@@ -8,8 +8,8 @@ const { readForPrompt } = require("./file-reader");
 
 // warehouse:method
 // responsibility: Formatter: formats method list for language model prompts with IDs, names, line numbers from metadata
-// actor: worker_bee_infrastructure
-// role: formatter
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function methodList(item) {
   if (!item.doMethods || !item.methodsNeeding.length) return "METHODS TO ANCHOR: none — return an empty methods array.";
@@ -18,8 +18,8 @@ function methodList(item) {
 
 // warehouse:method
 // responsibility: Builder: constructs language model prompts from work items combining file content and method metadata
-// actor: worker_bee_infrastructure
-// role: builder
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function buildPacketPrompt(packet, workload) {
   const blocks = packet.items.map((item) =>

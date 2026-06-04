@@ -31,8 +31,8 @@ const rl = readline.createInterface({ input: stream, crlfDelay: Infinity });
 
 // warehouse:method
 // responsibility: Watches worker-bee log stream for real-time packet completion events, extracts progress counts and fallback triggers with timestamps
-// actor: event_processor
-// role: stream_handler
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 const lineHandler = (line) => {
   // Match packet completion: [bee N] packet X/40 (NN files): NN ok, N error
@@ -65,8 +65,8 @@ const lineHandler = (line) => {
 
 // warehouse:method
 // responsibility: Outputs final progress summary with completion tallies from log watcher, reports recency status and stall indicators
-// actor: summary_printer
-// role: display_engine
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 const summaryHandler = () => {
   // Final summary

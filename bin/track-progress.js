@@ -19,8 +19,8 @@ if (!fs.existsSync(logFile)) {
 
 // warehouse:method
 // responsibility: Parses worker-bee log for packet completion events, extracts file success counts, tracks total work metrics and timestamps for progress monitoring
-// actor: log_parser
-// role: data_extractor
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function readProgress() {
   const content = fs.readFileSync(logFile, "utf8");
@@ -51,8 +51,8 @@ function readProgress() {
 
 // warehouse:method
 // responsibility: Formats elapsed milliseconds into human-readable time duration string (seconds/minutes/hours ago) for stall detection and progress alerts
-// actor: formatter
-// role: utility
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function formatTimeDiff(ms) {
   if (ms < 60000) return `${Math.floor(ms / 1000)}s ago`;

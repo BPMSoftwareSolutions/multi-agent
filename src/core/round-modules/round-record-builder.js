@@ -6,10 +6,9 @@
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function createRoundRecord({
   roundNumber,
   humanInterjection,
@@ -33,10 +32,9 @@ function createRoundRecord({
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function storeRoundResult(stageState, round, reviewerOutput) {
   stageState.rounds.push(round);
   stageState.proposedArtifact = reviewerOutput.suggested_artifact;

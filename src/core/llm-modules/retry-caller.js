@@ -9,8 +9,8 @@ const { extractJSON } = require("./json-extractor");
 
 // warehouse:method
 // responsibility: Calls Claude language model API with JSON parsing retry and repair logic up to maxAttempts
-// actor: core_runtime
-// role: retry_orchestrator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function callClaudeWithRetry(params, maxAttempts = 2) {
   const messages = [...(params.userMessages || [])];

@@ -10,8 +10,8 @@ const { readHeader, isComplete } = require("./header-parser");
 
 // warehouse:method
 // responsibility: Scans JavaScript files and classifies by taxonomy completeness
-// actor: auditor
-// role: classifier
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function auditFiles(root) {
   const binFiles = walk(path.join(root, "bin"));

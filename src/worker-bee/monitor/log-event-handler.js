@@ -6,10 +6,9 @@
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function createLineHandler(onProgress, onError, onFallback) {
   return (line) => {
     // Match packet completion: [bee N] packet X/40 (NN files): NN ok, N error

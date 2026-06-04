@@ -36,8 +36,8 @@ const TEST_PROMPT = {
 
 // warehouse:method
 // responsibility: Language model API validator: sends JSON POST request with timeout handling and error parsing
-// actor: http_client
-// role: network_requestor
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function postJson(url, body, timeoutMs = 10000) {
   const bodyStr = JSON.stringify(body);
@@ -88,8 +88,8 @@ function postJson(url, body, timeoutMs = 10000) {
 
 // warehouse:method
 // responsibility: Language model API validator: validates API key and model with quota/latency diagnostics
-// actor: api_validator
-// role: diagnostic_tool
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function testKey(keyName, keyValue, model) {
   if (!keyValue) {

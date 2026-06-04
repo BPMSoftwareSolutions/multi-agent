@@ -14,8 +14,8 @@ const { normalizeReviewerOutput } = require("./intent-normalizer");
 
 // warehouse:method
 // responsibility: Executes design workshop round by invoking planner and reviewer agents sequentially, orchestrating prompts and storing round results
-// actor: orchestration
-// role: round_execution
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function runRound({
   session,

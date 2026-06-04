@@ -8,8 +8,8 @@ const { queueActionRecommendations } = require("../../shared/actions");
 
 // warehouse:method
 // responsibility: Manages artifact acceptance and stage progression: accepts proposed artifact and queues action recommendations
-// actor: orchestration
-// role: artifact_acceptance
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function acceptArtifact(session) {
   const stageId = session.currentStage;
@@ -42,8 +42,8 @@ async function acceptArtifact(session) {
 
 // warehouse:method
 // responsibility: Manages artifact acceptance and stage progression: advances session to next stage after validating acceptance
-// actor: orchestration
-// role: stage_progression
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function advanceStage(session) {
   const { STAGE_ORDER } = require("../stages");

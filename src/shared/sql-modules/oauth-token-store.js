@@ -35,8 +35,8 @@ VALUES (source.provider, source.token_json, source.updated_at);
 
 // warehouse:method
 // responsibility: Persists and retrieves OAuth tokens: retrieves token JSON from database by provider
-// actor: shared
-// role: oauth_token_persistence
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function getOAuthToken(provider) {
   ensureSchema();

@@ -6,10 +6,9 @@
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function renderStatus(status, json) {
   if (!status) {
     console.log("No status ledger yet (reports/status-latest.json not found). Start a run first.");

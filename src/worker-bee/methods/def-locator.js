@@ -8,8 +8,8 @@ const DEF_RE = /^(\s*)(?:async\s+)?def\s+([A-Za-z_]\w*)/;
 
 // warehouse:method
 // responsibility: Locates all function/method definitions in source lines and assigns sequential IDs
-// actor: worker_bee_infrastructure
-// role: projection_compiler
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function findDefs(lines) {
   const defs = [];

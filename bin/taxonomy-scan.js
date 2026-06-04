@@ -25,8 +25,8 @@ const DEFAULT_REPO_ROOT =
 
 // warehouse:method
 // responsibility: Python taxonomy scanner: parses and validates command arguments for taxonomy scanning
-// actor: argument_parser
-// role: config_builder
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function parseArgs(argv) {
   const args = { repoRoot: DEFAULT_REPO_ROOT, target: null, layer: "both", mode: "all", output: null, json: false };
@@ -47,8 +47,8 @@ function parseArgs(argv) {
 
 // warehouse:method
 // responsibility: Python taxonomy scanner: scans target and writes tracking JSON marking TOUCHED vs UNTOUCHED
-// actor: taxonomy_scanner
-// role: scan_authority
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function main() {
   const args = parseArgs(process.argv.slice(2));

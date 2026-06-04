@@ -12,6 +12,7 @@ const REQUIRED_METHOD_FIELDS = ["responsibility", "input_contract", "output_cont
 
 // warehouse:method
 // warehouse:method
+// warehouse:method
 // responsibility: Finds existing warehouse:method anchor comment block above function definition by scanning upward
 // actor: method_implementation
 // role: implementation
@@ -48,8 +49,8 @@ function methodAnchorAbove(lines, defIdx) {
 
 // warehouse:method
 // responsibility: Assesses method anchor fields by validating completeness of required fields and detecting generic or problematic responsibility text
-// actor: worker_bee_infrastructure
-// role: projection_compiler
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function assessMethodAnchor(fields) {
   const issues = [];

@@ -9,10 +9,9 @@ const { exit } = require("../print");
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function validateNextStage(sessionId = null) {
   const id = sessionId || getCurrentSessionId();
   if (!id) {

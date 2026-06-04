@@ -8,10 +8,9 @@ const { STAGES } = require("./stage-schemas");
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function validateArtifact(stageId, artifact) {
   const stage = STAGES[stageId];
   if (!stage) {

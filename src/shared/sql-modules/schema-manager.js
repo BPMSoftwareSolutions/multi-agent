@@ -10,8 +10,8 @@ let schemaReady = false;
 
 // warehouse:method
 // responsibility: Ensures SQL Server schema exists and creates persistence tables (sessions, app_state, oauth_tokens)
-// actor: shared
-// role: schema_manager
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function ensureSchema() {
   if (schemaReady) {

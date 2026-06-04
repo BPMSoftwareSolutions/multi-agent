@@ -9,10 +9,9 @@ const DEFAULT_REPO_ROOT =
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function parseArgs(argv) {
   const args = { repoRoot: DEFAULT_REPO_ROOT, target: null, layer: "both", mode: "all", output: null, json: false };
   for (let i = 0; i < argv.length; i += 1) {

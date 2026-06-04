@@ -8,8 +8,8 @@ const fs = require("fs");
 
 // warehouse:method
 // responsibility: Parses taxonomy header fields from JavaScript file comments into key-value objects for header validation
-// actor: header_parser
-// role: extractor
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function readHeader(filePath) {
   try {
@@ -38,8 +38,8 @@ function readHeader(filePath) {
 
 // warehouse:method
 // responsibility: Validates taxonomy header completeness by checking all required fields (warehouse, responsibility, actor, role) have non-empty values
-// actor: header_validator
-// role: validator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function isComplete(header) {
   const required = ["warehouse", "responsibility", "actor", "role"];

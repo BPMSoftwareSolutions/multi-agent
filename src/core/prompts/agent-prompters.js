@@ -8,8 +8,8 @@ const { schemaToText, toJSONString } = require("./schema-formatter");
 
 // warehouse:method
 // responsibility: Constructs planner agent prompt for artifact development by combining stage goals, task intent, current artifact, and human interjection feedback
-// actor: core_runtime
-// role: agent_guidance
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function buildBuilderPrompt({ stage, intent, artifact, lastRound, humanInterjection, brief, roundNumber }) {
   const isStageOneFirstRound =
@@ -60,8 +60,8 @@ function buildBuilderPrompt({ stage, intent, artifact, lastRound, humanInterject
 
 // warehouse:method
 // responsibility: Constructs reviewer agent prompt to evaluate proposed artifact changes against task intent, identifying alignment issues and complexity assessment
-// actor: core_runtime
-// role: agent_guidance
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function buildReviewerPrompt({ intent, accepted, proposed }) {
   return {

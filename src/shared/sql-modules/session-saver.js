@@ -9,10 +9,9 @@ const { ensureSchema } = require("./schema-manager");
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function saveSessionRow(session) {
   ensureSchema();
   const { schema } = getSqlConfig();

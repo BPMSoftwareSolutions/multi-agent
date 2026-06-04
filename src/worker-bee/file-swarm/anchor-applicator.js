@@ -13,8 +13,8 @@ const { chunk } = require("./work-packer");
 
 // warehouse:method
 // responsibility: Applicator: applies anchors to single file item via language model API, returns status with written count
-// actor: worker_bee_infrastructure
-// role: applicator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function applyToItem(item, fileFields, methodsById, dryRun) {
   const methodItems = [];
@@ -45,8 +45,8 @@ function applyToItem(item, fileFields, methodsById, dryRun) {
 
 // warehouse:method
 // responsibility: Applicator: processes oversized file with adaptive packet splitting via batched language model calls with retry logic
-// actor: worker_bee_infrastructure
-// role: applicator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function processOversizeFile(item, { apiKey, model, dryRun, workload }) {
   const { readForPrompt } = require("./file-reader");
@@ -79,8 +79,8 @@ async function processOversizeFile(item, { apiKey, model, dryRun, workload }) {
 
 // warehouse:method
 // responsibility: Applicator: processes packet via language model API with adaptive splitting and retry logic on failures
-// actor: worker_bee_infrastructure
-// role: applicator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function processPacket(packet, opts) {
   if (packet.oversize) return processOversizeFile(packet.items[0], opts);

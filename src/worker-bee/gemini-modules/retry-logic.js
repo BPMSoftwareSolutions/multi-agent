@@ -35,8 +35,8 @@ function isRetryable(error) {
 
 // warehouse:method
 // responsibility: Calculates exponential backoff delay strategy for API retry attempts
-// actor: worker_bee_infrastructure
-// role: retry_manager
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function getBackoffDelay(attempt) {
   return Math.min(1000 * Math.pow(2, attempt - 1), 8000);

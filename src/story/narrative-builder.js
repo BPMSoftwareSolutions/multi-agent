@@ -6,8 +6,8 @@
 
 // warehouse:method
 // responsibility: Gets health indicator emoji and label based on coherence score
-// actor: story_reporter
-// role: formatter
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function getHealthIndicator(score) {
   if (score >= 70) return "✅ STRONG";
@@ -18,8 +18,8 @@ function getHealthIndicator(score) {
 
 // warehouse:method
 // responsibility: Builds narrative interpretation of file's story based on responsibility and methods
-// actor: story_narrator
-// role: interpreter
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function buildNarrative(file, analysis) {
   const narratives = [];

@@ -10,8 +10,8 @@ const { exit } = require("../print");
 
 // warehouse:method
 // responsibility: Status command: retrieves current session, renders state with operation summaries in JSON format
-// actor: cli
-// role: status_command
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function status(sessionId = null, options = {}) {
   try {

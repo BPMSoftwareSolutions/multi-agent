@@ -14,8 +14,8 @@ const SKIP_DIRS = new Set([
 
 // warehouse:method
 // responsibility: Recursively discovers and collects Python files in directory tree with skip list filtering and sorting
-// actor: worker_bee_infrastructure
-// role: scanner
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function listPythonFiles(root) {
   const out = [];

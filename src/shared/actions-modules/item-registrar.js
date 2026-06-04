@@ -6,8 +6,8 @@
 
 // warehouse:method
 // responsibility: Registers folder in operations state with metadata and current timestamp
-// actor: shared
-// role: folder_registrar
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function registerFolder(operations, folderId) {
   if (!folderId) {
@@ -24,8 +24,8 @@ function registerFolder(operations, folderId) {
 
 // warehouse:method
 // responsibility: Registers file in operations state from recommendation, merges with existing metadata, registers parent folders
-// actor: shared
-// role: file_registrar
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function registerFile(operations, recommendation) {
   const existing = operations.files[recommendation.fileId] || null;

@@ -6,10 +6,9 @@
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 async function advanceStage(session) {
   const { STAGE_ORDER } = require("../stages");
   const currentIndex = STAGE_ORDER.indexOf(session.currentStage);

@@ -6,10 +6,9 @@
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function formatReport(results) {
   const output = [];
 
@@ -31,10 +30,9 @@ function formatReport(results) {
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function formatSummary(results) {
   const output = [];
   const ok = results.filter((r) => r.status === "OK");
@@ -66,10 +64,9 @@ function formatSummary(results) {
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function getExitCode(results) {
   const ok = results.filter((r) => r.status === "OK");
   const errors = results.filter((r) => r.status === "ERROR");

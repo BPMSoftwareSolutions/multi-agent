@@ -12,8 +12,8 @@ const { parseFileAnchorLines } = require("./anchor-parser");
 
 // warehouse:method
 // responsibility: Assesses anchor completeness by validating all fields, checking vocabulary constraints, and detecting consistency issues across role, actor, and responsibility fields
-// actor: worker_bee_infrastructure
-// role: auditor
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function assessAnchor(fields, deterministic) {
   const issues = [];
@@ -33,8 +33,8 @@ function assessAnchor(fields, deterministic) {
 
 // warehouse:method
 // responsibility: Analyzes Python file for anchor completeness across file and method layers, identifies missing and low-quality work items for auditing
-// actor: worker_bee_infrastructure
-// role: auditor
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function analyzeFile(absPath, repoRoot, { layer = "both", mode = "all" } = {}) {
   let raw;
@@ -91,8 +91,8 @@ function analyzeFile(absPath, repoRoot, { layer = "both", mode = "all" } = {}) {
 
 // warehouse:method
 // responsibility: Finds Python files missing file anchors and precomputes deterministic audit fields (location, depth) for work planning
-// actor: worker_bee_infrastructure
-// role: auditor
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function findMissing(root, repoRoot, { limit } = {}) {
   const files = listPythonFiles(root);
@@ -120,8 +120,8 @@ function findMissing(root, repoRoot, { limit } = {}) {
 
 // warehouse:method
 // responsibility: Serializes work items into JSON-safe format for worker-bee packet consumption, preserving all deterministic and issue metadata
-// actor: worker_bee_infrastructure
-// role: auditor
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function serializeWork(work) {
   return work.map((w) => ({
@@ -146,8 +146,8 @@ function serializeWork(work) {
 
 // warehouse:method
 // responsibility: Finds Python files needing anchor work across layers (file/method), audits completeness issues, and categorizes work items for bee task planning
-// actor: worker_bee_infrastructure
-// role: auditor
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function findWork(root, repoRoot, { mode = "all", layer = "file", limit } = {}) {
   const files = listPythonFiles(root);

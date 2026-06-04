@@ -6,10 +6,9 @@
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function isBoilerplate(methodName) {
   const boilerplatePatterns = [
     /parse[_a-z]*(arg|option|flag|param)/i,

@@ -9,8 +9,8 @@ const { ensureSchema } = require("./schema-manager");
 
 // warehouse:method
 // responsibility: Persists and retrieves session objects: writes session to database using MERGE statement
-// actor: shared
-// role: session_persistence
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function saveSessionRow(session) {
   ensureSchema();
@@ -50,8 +50,8 @@ WHEN NOT MATCHED THEN INSERT (
 
 // warehouse:method
 // responsibility: Persists and retrieves session objects: retrieves session from database and converts to JSON
-// actor: shared
-// role: session_persistence
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function getSessionRow(sessionId) {
   ensureSchema();
@@ -76,8 +76,8 @@ FOR JSON PATH, WITHOUT_ARRAY_WRAPPER;
 
 // warehouse:method
 // responsibility: Persists and retrieves session objects: lists all sessions from database ordered by creation date
-// actor: shared
-// role: session_persistence
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function listSessionRows() {
   ensureSchema();

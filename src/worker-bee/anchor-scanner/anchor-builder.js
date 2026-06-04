@@ -11,8 +11,8 @@ const { hasFileAnchor } = require("./anchor-parser");
 
 // warehouse:method
 // responsibility: Constructs and applies file anchors: assembles file-anchor comment block from model fields with formatting
-// actor: worker_bee_infrastructure
-// role: builder
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function buildAnchorBlock(modelFields, deterministic) {
   const merged = {
@@ -38,8 +38,8 @@ function buildAnchorBlock(modelFields, deterministic) {
 
 // warehouse:method
 // responsibility: Constructs and applies file anchors: inserts anchor block with line-ending preservation
-// actor: worker_bee_infrastructure
-// role: writer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function insertAnchor(absPath, anchorBlock) {
   const raw = fs.readFileSync(absPath, "utf8");
@@ -66,8 +66,8 @@ const FILE_ANCHOR_BLOCK_RE = /[ \t]*#[ \t]+warehouse:file[ \t]*(?:\r?\n[ \t]*#[^
 
 // warehouse:method
 // responsibility: Constructs and applies file anchors: replaces existing anchor or inserts with formatting preservation
-// actor: worker_bee_infrastructure
-// role: writer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function replaceAnchor(absPath, anchorBlock) {
   const raw = fs.readFileSync(absPath, "utf8");

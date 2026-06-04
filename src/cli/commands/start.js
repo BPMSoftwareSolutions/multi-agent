@@ -10,8 +10,8 @@ const { renderSession, exit } = require("../print");
 
 // warehouse:method
 // responsibility: Start command handler: validates brief, creates session with normalized intent from user input
-// actor: cli
-// role: command_handler
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function start(brief, apiKey, options = {}) {
   if (!brief || typeof brief !== "string") {

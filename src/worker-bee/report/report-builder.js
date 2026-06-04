@@ -8,8 +8,8 @@ const { repoRelative } = require("../scan");
 
 // warehouse:method
 // responsibility: Assembles taxonomy report: compiles file/method anchors with coverage metrics and quality assessment
-// actor: worker_bee_infrastructure
-// role: telemetry_evidence
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function buildReport(root, repoRoot, { files, summary }) {
   return {

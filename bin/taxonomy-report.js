@@ -61,8 +61,8 @@ function topN(obj, n) {
 
 // warehouse:method
 // responsibility: Orchestrates taxonomy report generation: parses arguments, compiles coverage statistics, formats output
-// actor: report_generator
-// role: orchestrator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function main() {
   const args = parseArgs(process.argv.slice(2));

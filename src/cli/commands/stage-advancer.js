@@ -9,10 +9,9 @@ const { advanceStage } = require("../../core/run-round");
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 async function advanceToNextStage(session) {
   const nextStageId = await advanceStage(session);
   saveSession(session);

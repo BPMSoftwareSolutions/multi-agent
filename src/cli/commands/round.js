@@ -10,8 +10,8 @@ const { renderRound, exit } = require("../print");
 
 // warehouse:method
 // responsibility: Round command: executes planning and review cycle via orchestrator, saves session with new artifacts
-// actor: cli
-// role: round_command
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function round(note = "", apiKey = null, options = {}) {
   try {

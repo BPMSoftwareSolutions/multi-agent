@@ -23,8 +23,8 @@ const DEFAULT_TARGET = path.resolve(DEFAULT_REPO_ROOT, config.defaultTarget || "
 
 // warehouse:method
 // responsibility: Scans and traverses directory tree to collect all Python files for taxonomy audit coverage verification and completeness reporting
-// actor: file_scanner
-// role: traverser
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function walk(dir, ext = ".py") {
   const files = [];
@@ -46,8 +46,8 @@ function walk(dir, ext = ".py") {
 
 // warehouse:method
 // responsibility: Parses Python file header comments to extract taxonomy fields and validate TOUCHED/UNTOUCHED status classification from complete header blocks
-// actor: header_parser
-// role: extractor
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function readTaxonomyHeader(filePath) {
   try {
@@ -71,8 +71,8 @@ function readTaxonomyHeader(filePath) {
 
 // warehouse:method
 // responsibility: Validates taxonomy header completeness by checking all required fields (responsibility, actor, role, source_truth) for audit classification as TOUCHED or UNTOUCHED
-// actor: header_validator
-// role: validator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function isComplete(header) {
   const required = ["responsibility", "actor", "role", "source_truth"];

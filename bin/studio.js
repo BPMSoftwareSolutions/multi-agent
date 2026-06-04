@@ -21,8 +21,8 @@ const { exit } = require("../src/cli/print");
 
 // warehouse:method
 // responsibility: Orchestrates studio CLI by parsing command-line arguments and routing to appropriate command handlers for session, round, and workflow management
-// actor: command_router
-// role: orchestrator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function main() {
   const args = process.argv.slice(2);
@@ -128,8 +128,8 @@ Examples:
 
 // warehouse:method
 // responsibility: Parses CLI command-line arguments into structured studio configuration options and flags for handler routing
-// actor: argument_parser
-// role: config_builder
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function parseOptions(args) {
   const options = {

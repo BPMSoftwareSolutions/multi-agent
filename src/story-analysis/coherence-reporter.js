@@ -66,10 +66,9 @@ function writeReportFile(report, taxonomyPath) {
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function printReport(report, reportFile) {
   console.log(renderReport(report));
   console.log(`\n📊 Full analysis written to: ${reportFile}`);

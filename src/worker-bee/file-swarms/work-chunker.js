@@ -6,8 +6,8 @@
 
 // warehouse:method
 // responsibility: Partitions array into fixed-size chunks
-// actor: worker_bee_infrastructure
-// role: partitioner
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function chunk(items, size) {
   const out = [];

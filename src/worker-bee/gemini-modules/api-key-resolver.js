@@ -6,8 +6,8 @@
 
 // warehouse:method
 // responsibility: Resolves API keys for language model providers from override or environment variables
-// actor: worker_bee_infrastructure
-// role: credential_manager
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function getApiKey(override) {
   const key =

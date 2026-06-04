@@ -9,8 +9,8 @@ const { renderSession, exit } = require("../print");
 
 // warehouse:method
 // responsibility: Retrieves current session state and renders formatted output of stages and operations
-// actor: cli
-// role: command_handler
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function show(sessionId = null, options = {}) {
   try {

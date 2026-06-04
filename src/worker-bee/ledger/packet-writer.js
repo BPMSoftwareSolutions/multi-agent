@@ -9,8 +9,8 @@ const path = require("path");
 
 // warehouse:method
 // responsibility: Writes a packet result file with unique name to prevent write contention
-// actor: worker_bee_infrastructure
-// role: data_access
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function writePart(runDir, { pass, packetIndex, oversize, results }) {
   const name = `packet-p${pass || 1}-${String(packetIndex).padStart(4, "0")}.json`;

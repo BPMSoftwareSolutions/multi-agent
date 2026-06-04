@@ -11,8 +11,8 @@ const { exit } = require("../print");
 
 // warehouse:method
 // responsibility: Run-worker command: loads session, finds pending action, executes via worker handler, saves updated session state
-// actor: cli
-// role: run_worker_command
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 async function runWorkerCommand(actionId = null, options = {}) {
   try {

@@ -9,8 +9,8 @@ const { ensureSchema } = require("./schema-manager");
 
 // warehouse:method
 // responsibility: Persists application state value to SQL database using MERGE statement, creating or updating row by key with timestamp
-// actor: shared
-// role: app_state_persistence
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function setAppState(stateKey, stateValue) {
   ensureSchema();
@@ -35,8 +35,8 @@ VALUES (source.state_key, source.state_value, source.updated_at);
 
 // warehouse:method
 // responsibility: Retrieves application state value from SQL database by key, returns persisted value or null if not found
-// actor: shared
-// role: app_state_persistence
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function getAppState(stateKey) {
   ensureSchema();

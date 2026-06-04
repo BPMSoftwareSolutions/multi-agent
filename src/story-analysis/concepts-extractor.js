@@ -6,8 +6,8 @@
 
 // warehouse:method
 // responsibility: Extracts key concepts and verbs from responsibility text for semantic comparison
-// actor: text_analyzer
-// role: tokenizer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function extractConcepts(text) {
   if (!text) return { words: [], verbs: [], nouns: [] };

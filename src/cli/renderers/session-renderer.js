@@ -10,10 +10,9 @@ const { renderArtifact } = require("./artifact-renderer");
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function renderSession(session, options = {}) {
   const json = options.json || false;
   const operationsSummary = summarizeOperations(session);

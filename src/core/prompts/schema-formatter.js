@@ -6,8 +6,8 @@
 
 // warehouse:method
 // responsibility: Converts a schema object into human-readable field descriptions for prompt injection
-// actor: core_runtime
-// role: formatter
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function schemaToText(schema) {
   const lines = ["Fields required in your JSON response:"];
@@ -19,8 +19,8 @@ function schemaToText(schema) {
 
 // warehouse:method
 // responsibility: Serializes values to formatted JSON strings for prompt embedding
-// actor: core_runtime
-// role: formatter
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function toJSONString(value) {
   return JSON.stringify(value, null, 2);

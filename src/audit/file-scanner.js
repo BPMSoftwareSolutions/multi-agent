@@ -9,8 +9,8 @@ const path = require("path");
 
 // warehouse:method
 // responsibility: Recursively traverses directory tree collecting all JavaScript file paths
-// actor: file_scanner
-// role: traverser
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function walk(dir) {
   const files = [];

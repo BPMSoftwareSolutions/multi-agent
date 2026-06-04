@@ -107,8 +107,8 @@ Packet overrides:
 
 // warehouse:method
 // responsibility: Renders swarm status from ledger showing progress metrics, packet completion counts, error tallies, and live state for CLI monitoring
-// actor: status_renderer
-// role: display_engine
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function renderStatus(status, json) {
   if (!status) {

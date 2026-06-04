@@ -8,10 +8,9 @@ const { isObject } = require("./object-utils");
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function normalizePacketFormat(parsed) {
   // Accept either a bare packet or { packet: {...} }.
   return parsed.packet && isObject(parsed.packet) ? parsed.packet : parsed;

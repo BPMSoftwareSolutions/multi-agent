@@ -14,10 +14,9 @@ const { createRoundRecord } = require("./round-record-builder");
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 async function executeRoundAgents({
   session,
   apiKey,

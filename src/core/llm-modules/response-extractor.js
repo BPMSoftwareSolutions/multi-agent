@@ -6,10 +6,9 @@
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function extractTextFromResponse(response) {
   const text = (response.content || [])
     .filter((item) => item.type === "text")

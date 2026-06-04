@@ -16,8 +16,8 @@ const testDir = path.resolve(__dirname, "..", ".test-data");
 
 // warehouse:method
 // responsibility: Test-driven validation: creates test data directory with sample Python files for header validation
-// actor: test_setup
-// role: fixture_provider
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function setupTestData() {
   // Create test data directory
@@ -66,8 +66,8 @@ def authenticate():
 
 // warehouse:method
 // responsibility: Test-driven validation: removes test data directory and temporary Python test files
-// actor: test_cleanup
-// role: fixture_provider
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function cleanupTestData() {
   if (fs.existsSync(testDir)) {
@@ -79,8 +79,8 @@ function cleanupTestData() {
 
 // warehouse:method
 // responsibility: Test-driven validation: extracts taxonomy header fields from Python file comments
-// actor: header_parser
-// role: extractor
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function readTaxonomyHeader(filePath) {
   const content = fs.readFileSync(filePath, "utf8");
@@ -100,8 +100,8 @@ function readTaxonomyHeader(filePath) {
 
 // warehouse:method
 // responsibility: Test-driven validation: validates required taxonomy header fields are present and non-placeholder
-// actor: header_validator
-// role: validator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function isComplete(header) {
   // SIMPLE: check if all required fields are present

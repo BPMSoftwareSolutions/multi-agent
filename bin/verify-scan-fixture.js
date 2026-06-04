@@ -11,10 +11,9 @@ const testDir = path.resolve(__dirname, "..", ".test-data");
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function setupTestData() {
   // Create test data directory
   if (!fs.existsSync(testDir)) {

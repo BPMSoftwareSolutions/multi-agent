@@ -19,8 +19,8 @@ function chunk(items, size) {
 
 // warehouse:method
 // responsibility: Partitions work items into packets: calculates anchor budget cost for packing
-// actor: worker_bee_infrastructure
-// role: packer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function anchorCost(item) {
   return (item.doFile ? 1 : 0) + (item.doMethods ? item.methodsNeeding.length : 0);
@@ -28,8 +28,8 @@ function anchorCost(item) {
 
 // warehouse:method
 // responsibility: Partitions work items into packets: calculates file character size for packing budget
-// actor: worker_bee_infrastructure
-// role: packer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function fileChars(item) {
   try {
@@ -41,8 +41,8 @@ function fileChars(item) {
 
 // warehouse:method
 // responsibility: Partitions work items into packets: greedily packs within anchor, file, and char budgets
-// actor: worker_bee_infrastructure
-// role: packer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function packWork(work, workload) {
   const fileCap = workload.max_files_per_packet;

@@ -10,8 +10,8 @@ const FILE_ANCHOR_RE = /^#\s+warehouse:file\s*$/m;
 
 // warehouse:method
 // responsibility: Tests whether Python file text contains a warehouse:file anchor marker
-// actor: worker_bee_infrastructure
-// role: detector
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function hasFileAnchor(text) {
   return FILE_ANCHOR_RE.test(stripBom(text));
@@ -19,8 +19,8 @@ function hasFileAnchor(text) {
 
 // warehouse:method
 // responsibility: Parses first warehouse:file anchor block from Python text lines array
-// actor: worker_bee_infrastructure
-// role: parser
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function parseFileAnchorLines(lines) {
   let start = -1;
@@ -46,8 +46,8 @@ function parseFileAnchorLines(lines) {
 
 // warehouse:method
 // responsibility: Parses and extracts warehouse:file anchor from Python file text
-// actor: worker_bee_infrastructure
-// role: parser
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function parseFileAnchor(text) {
   return parseFileAnchorLines(stripBom(text).split(/\r?\n/));

@@ -10,8 +10,8 @@ const { computeSimilarity, isBoilerplate, getAlignmentThreshold, detectRedFlags 
 
 // warehouse:method
 // responsibility: Evaluates file coherence by computing semantic similarity between file responsibility and method responsibilities, applying weighted alignment thresholds and detecting misalignment issues
-// actor: report_generator
-// role: scorer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function evaluateFileCoherence(file) {
   if (file.methods.length === 0) {
@@ -64,8 +64,8 @@ function evaluateFileCoherence(file) {
 
 // warehouse:method
 // responsibility: Generates human-readable narrative coherence analysis by evaluating all files, aggregating coherence scores, and categorizing strong vs weak story findings
-// actor: report_generator
-// role: orchestrator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function generateReport(taxonomyData) {
   const analyses = [];
@@ -95,8 +95,8 @@ function generateReport(taxonomyData) {
 
 // warehouse:method
 // responsibility: Formats and writes coherence narrative findings to console output and JSON report file, rendering analysis metrics and weak story diagnostics
-// actor: report_generator
-// role: formatter
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function writeReport(report, taxonomyPath) {
   const reportRoot = path.dirname(taxonomyPath);
@@ -145,8 +145,8 @@ function writeReport(report, taxonomyPath) {
 
 // warehouse:method
 // responsibility: Orchestrates coherence analysis workflow by loading taxonomy data, generating aggregated coherence report, and writing narrative analysis findings
-// actor: report_generator
-// role: orchestrator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function main() {
   const taxonomyPath = path.resolve(__dirname, "..", "..", "reports", "taxonomy-extracted.json");

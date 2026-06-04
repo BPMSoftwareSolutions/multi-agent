@@ -8,10 +8,9 @@ const fs = require("fs");
 
 // warehouse:method
 // responsibility: undefined
-// actor: undefined
-// role: undefined
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
-
 function readHeader(filePath) {
   try {
     const content = fs.readFileSync(filePath, "utf8");

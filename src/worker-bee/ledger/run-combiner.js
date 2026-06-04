@@ -9,8 +9,8 @@ const path = require("path");
 
 // warehouse:method
 // responsibility: Merges manifest and packet parts into read-only live status view with aggregated metrics and completion tracking
-// actor: worker_bee_infrastructure
-// role: data_access
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function combineRun(runDir) {
   const manifestPath = path.join(runDir, "manifest.json");
@@ -70,8 +70,8 @@ function combineRun(runDir) {
 
 // warehouse:method
 // responsibility: Finalizes run by marking manifest done, combining packet parts status, and writing aggregated completion snapshot
-// actor: worker_bee_infrastructure
-// role: data_access
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function finalizeRun(reportsDir, runDir, { completionStatus } = {}) {
   const manifestPath = path.join(runDir, "manifest.json");
@@ -91,8 +91,8 @@ function finalizeRun(reportsDir, runDir, { completionStatus } = {}) {
 
 // warehouse:method
 // responsibility: Reads latest run's live status by following pointer and combining packet parts with aggregated metrics
-// actor: worker_bee_infrastructure
-// role: data_access
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function readLatestStatus(reportsDir) {
   const pointerPath = path.join(reportsDir, "latest-run.json");

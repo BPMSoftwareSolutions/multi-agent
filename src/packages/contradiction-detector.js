@@ -6,8 +6,8 @@
 
 // warehouse:method
 // responsibility: Aggregates files into package groups with role/actor distributions
-// actor: package_classifier
-// role: analyzer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function analyzePackages(taxonomyPath) {
   const fs = require("fs");
@@ -43,8 +43,8 @@ function analyzePackages(taxonomyPath) {
 
 // warehouse:method
 // responsibility: Detects contradictions in package taxonomy by checking name-responsibility mismatches and role inconsistency
-// actor: contradiction_detector
-// role: validator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function detectContradictions(pkg) {
   const issues = [];

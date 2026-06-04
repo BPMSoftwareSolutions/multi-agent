@@ -12,8 +12,8 @@ const { buildIntentPrompt } = require("./prompts/intent-prompter");
 // Planner Prompt
 // warehouse:method
 // responsibility: CLI aggregator: constructs agent prompt for planner to propose artifact improvements aligned with stage goals
-// actor: core_runtime
-// role: entry_point
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function buildBuilderPrompt({
   stage,
@@ -78,8 +78,8 @@ function buildBuilderPrompt({
 // Reviewer Prompt
 // warehouse:method
 // responsibility: CLI aggregator: constructs agent prompt for reviewer to identify issues in artifact proposals
-// actor: core_runtime
-// role: entry_point
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function buildReviewerPrompt({
   stage,

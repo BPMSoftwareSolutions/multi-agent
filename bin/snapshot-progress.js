@@ -14,8 +14,8 @@ const reportFile = path.resolve(__dirname, "..", "reports", "CURRENT-RUN.md");
 
 // warehouse:method
 // responsibility: Generates progress snapshot: formats markdown report with velocity metrics, completion calculations, forecast
-// actor: report_formatter
-// role: formatter
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function formatMarkdownReport(totalCompleted, completions, metadata, totalErrors = 0) {
   // Validate data

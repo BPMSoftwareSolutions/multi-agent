@@ -9,8 +9,8 @@ const { stripBom } = require("../text-utils");
 
 // warehouse:method
 // responsibility: Reads file and truncates content to character budget for prompt embedding with ellipsis marker
-// actor: worker_bee_infrastructure
-// role: reader
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 function readForPrompt(absPath, fileCharBudget) {
   let text;
