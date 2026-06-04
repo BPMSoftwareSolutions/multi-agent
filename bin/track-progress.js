@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides readProgress, formatTimeDiff functionality
+// responsibility: Monitors worker-bee log progress by reading completion counts formatting stall durations and reporting progress or stall alerts
 // actor: progress_monitor
 // role: watcher
 // source_truth: implementation
@@ -18,7 +18,7 @@ if (!fs.existsSync(logFile)) {
 }
 
 // warehouse:method
-// responsibility: Parses worker-bee log for packet completion events, extracts file success counts, tracks total work metrics and timestamps for progress monitoring
+// responsibility: Monitors worker-bee log progress by reading completion counts formatting stall durations and reporting progress or stall alerts
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -50,7 +50,7 @@ function readProgress() {
 }
 
 // warehouse:method
-// responsibility: Formats elapsed milliseconds into human-readable time duration string (seconds/minutes/hours ago) for stall detection and progress alerts
+// responsibility: Monitors worker-bee log progress by reading completion counts formatting stall durations and reporting progress or stall alerts
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
