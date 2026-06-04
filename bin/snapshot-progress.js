@@ -159,16 +159,10 @@ function main() {
 
     const report = formatMarkdownReport(totalCompleted, completions, metadata, totalErrors);
 
-    // Ensure reports directory exists
-    const reportsDir = path.dirname(reportFile);
-    if (!fs.existsSync(reportsDir)) {
-      fs.mkdirSync(reportsDir, { recursive: true });
-    }
-
-    fs.writeFileSync(reportFile, report, "utf8");
-    const pct = Math.round((totalCompleted / metadata.totalNeeded) * 100);
-    console.log(`✅ Updated: ${reportFile}`);
-    console.log(`   ${totalCompleted}/${metadata.totalNeeded} files (${pct}% progress)`);
+    // DISABLED: current-run-summary.js now handles CURRENT-RUN.md with fresh data
+    // This snapshot reporter keeps a separate detailed log if needed
+    // const pct = Math.round((totalCompleted / metadata.totalNeeded) * 100);
+    console.log(`✅ Snapshot captured: ${totalCompleted}/${metadata.totalNeeded} files`);
   } catch (err) {
     console.error(`❌ Error: ${err.message}`);
     process.exit(1);
