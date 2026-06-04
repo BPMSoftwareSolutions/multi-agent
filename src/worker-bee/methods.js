@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Locates function definitions, parses and assesses method anchors, and applies trustworthy replacements with minimal-diff writes
+// responsibility: Processes method anchors: locates and IDs function definitions, finds existing anchors, validates anchor quality, constructs new anchor blocks, applies or replaces anchors with minimal-diff line-ending-preserving writes
 // actor: worker_bee_infrastructure
 // role: projection_compiler
 // source_truth: implementation

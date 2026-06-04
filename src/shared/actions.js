@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Provides action queuing, approval workflow, and worker execution for file operations across the system
+// responsibility: Manages action workflows: initializes and maintains operations state, registers files and folders, queues actions for approval or human review, executes pending actions with retry tracking, records outcomes and attempts, aggregates operation summaries
 // actor: shared
 // role: action_handler
 // source_truth: implementation

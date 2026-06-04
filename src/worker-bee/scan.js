@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Scans filesystem for Python files, analyzes anchor state, applies file/method anchors with deterministic field computation
+// responsibility: Orchestrates end-to-end anchor lifecycle: discovers Python files, detects existing anchors, parses and assesses anchor quality, builds and applies new anchors, serializes work items for swarm processing
 // actor: worker_bee_infrastructure
 // role: script_executor
 // source_truth: implementation

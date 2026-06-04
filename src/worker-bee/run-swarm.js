@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Orchestrates concurrent bee agents pulling packets from a shared queue and writing anchors back to source files
+// responsibility: Coordinates concurrent bee agents: chunks files into packets, reads and truncates for token budgets, constructs Gemini prompts, processes packets through classification API, writes anchors back to files
 // actor: worker_bee_infrastructure
 // role: orchestration
 // source_truth: implementation

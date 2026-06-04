@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Analyzes extracted taxonomy to detect story coherence, contradictions, and false narratives across files and methods
+// responsibility: Analyzes taxonomy coherence through semantic similarity scoring, red flag detection, boilerplate classification, and weighted threshold evaluation to identify misaligned stories and generate narrative reports
 // actor: story_analyzer
 // role: validator
 // source_truth: implementation
