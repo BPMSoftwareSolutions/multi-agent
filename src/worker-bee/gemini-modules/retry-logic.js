@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Determines retry eligibility for API failures and implements exponential backoff strategy
+// responsibility: Retry policy enforcer: classifies API errors as retryable vs terminal and calculates exponential backoff delays for resilience
 // actor: worker_bee_infrastructure
 // role: retry_manager
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const RETRYABLE_STATUS = new Set([429, 500, 502, 503, 504, 529]);
 
 // warehouse:method
-// responsibility: Determines retry eligibility for error conditions excluding authentication failures
+// responsibility: Error classifier: determines whether error is retryable by status code and message pattern, excluding auth failures
 // actor: worker_bee_infrastructure
 // role: retry_manager
 // source_truth: implementation

@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Delegator: generates worker-bee execution reports from historical runs
+// responsibility: Orchestrates worker-bee execution report generation from historical runs by routing to appropriate report formatter
 // actor: run_ledger
-// role: reporter
+// role: report_router
 // source_truth: implementation
 
 const path = require("path");
 const fs = require("fs");
-const { parseArgs, readRuns, readRunDetails } = require("../src/reports/runs-loader");
-const { renderMarkdown, renderSummary, renderRun } = require("../src/reports/runs-renderer");
+const { parseArgs } = require("../src/reports/runs-loader");
+const { routeReportMode } = require("./runs-report-router");
 
 const root = path.resolve(__dirname, "..");
 const reportsDir = path.join(root, "reports");
@@ -20,9 +20,9 @@ if (fs.existsSync(configPath)) {
 }
 
 // warehouse:method
-// responsibility: Delegates worker-bee run reporting: routes command flow between summary/detailed modes, orchestrates report generation
-// actor: command_dispatcher
-// role: orchestrator
+// responsibility: Orchestrates worker-bee execution report by validating reports directory and routing to renderer
+// actor: run_ledger
+// role: report_router
 // source_truth: implementation
 function main() {
   const args = parseArgs(process.argv.slice(2));
@@ -32,25 +32,7 @@ function main() {
     return 0;
   }
 
-  if (args.summary) {
-    const runs = readRuns(reportsDir);
-
-    if (args.output) {
-      const markdown = renderMarkdown(runs);
-      const outPath = path.resolve(args.output);
-      fs.mkdirSync(path.dirname(outPath), { recursive: true });
-      fs.writeFileSync(outPath, markdown, "utf8");
-      console.log(`Written: ${outPath}`);
-      return 0;
-    }
-
-    renderSummary(runs, args.json);
-  } else {
-    const packets = readRunDetails(reportsDir, args.runId);
-    renderRun(args.runId, packets, args.json);
-  }
-
-  return 0;
+  return routeReportMode(args, reportsDir);
 }
 
 process.exit(main());

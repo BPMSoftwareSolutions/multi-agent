@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Orchestrates taxonomy report generation: parses CLI arguments, extracts top entries from distributions, compiles anchor coverage statistics by role and layer, formats and outputs snapshot
+// responsibility: Generates taxonomy report snapshot by parsing arguments, scanning target, compiling coverage statistics, and formatting output
 // actor: taxonomy_reporter
 // role: reporter
 // source_truth: implementation
@@ -32,9 +32,9 @@ const DEFAULT_TARGET =
   config.defaultTarget ? path.resolve(DEFAULT_REPO_ROOT, config.defaultTarget) : DEFAULT_REPO_ROOT;
 
 // warehouse:method
-// responsibility: Orchestrates taxonomy report generation: parses CLI arguments for report configuration
-// actor: argument_parser
-// role: config_builder
+// responsibility: Parses CLI arguments and builds report configuration with default values
+// actor: taxonomy_reporter
+// role: reporter
 // source_truth: implementation
 function parseArgs(argv) {
   const args = { repoRoot: DEFAULT_REPO_ROOT, target: DEFAULT_TARGET, output: null, json: false };
@@ -52,18 +52,18 @@ function parseArgs(argv) {
 }
 
 // warehouse:method
-// responsibility: Orchestrates taxonomy report generation: extracts top entries sorted by value for coverage
-// actor: sorter
-// role: utility
+// responsibility: Extracts and sorts top N entries by value from object for coverage display
+// actor: taxonomy_reporter
+// role: reporter
 // source_truth: implementation
 function topN(obj, n) {
   return Object.entries(obj).sort((a, b) => b[1] - a[1]).slice(0, n);
 }
 
 // warehouse:method
-// responsibility: Orchestrates taxonomy report generation: parses arguments, compiles coverage statistics, formats output
-// actor: report_generator
-// role: orchestrator
+// responsibility: Generates taxonomy report by parsing arguments, building report, and formatting output
+// actor: taxonomy_reporter
+// role: reporter
 // source_truth: implementation
 function main() {
   const args = parseArgs(process.argv.slice(2));

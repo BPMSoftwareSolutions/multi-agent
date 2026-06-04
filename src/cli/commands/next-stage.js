@@ -1,32 +1,23 @@
 // warehouse:file
-// responsibility: Next-stage command handler: validates current stage is accepted, advances to next stage in sequence, saves updated session state
+// responsibility: Next-stage command handler: coordinates validation and advancement
 // actor: cli
 // role: command_handler
 // source_truth: implementation
 
-const { getSession, getCurrentSessionId, saveSession } = require("../../core/session-store");
-const { advanceStage } = require("../../core/run-round");
+const { validateNextStage } = require("./next-stage-validator");
+const { advanceToNextStage } = require("./stage-advancer");
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: Validates stage acceptance status and advances session to next stage in workflow sequence, updates session state after progression
+// responsibility: Orchestrates next-stage command: validates, advances to next stage, and returns session
 // actor: cli
 // role: command_handler
 // source_truth: implementation
 async function nextStage(sessionId = null, options = {}) {
   try {
-    const id = sessionId || getCurrentSessionId();
-    if (!id) {
-      exit(1, "Error: No active session. Use 'studio start <brief>' to begin.");
-    }
+    const { id, session } = validateNextStage(sessionId);
 
-    const session = getSession(id);
-    if (!session) {
-      exit(1, `Error: Session not found: ${id}`);
-    }
-
-    const nextStageId = await advanceStage(session);
-    saveSession(session);
+    const nextStageId = await advanceToNextStage(session);
 
     if (options.json) {
       console.log(

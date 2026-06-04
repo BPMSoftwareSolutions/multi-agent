@@ -1,24 +1,10 @@
 // warehouse:file
-// responsibility: Assembles taxonomy report from scanned files and summary metrics
+// responsibility: Exports report building functions
 // actor: worker_bee_infrastructure
 // role: telemetry_evidence
 // source_truth: implementation
 
-const { repoRelative } = require("../scan");
+const { buildReport } = require("./report-assembler");
+const { formatReport } = require("./report-formatter");
 
-// warehouse:method
-// responsibility: Assembles taxonomy report: compiles file/method anchors with coverage metrics and quality assessment
-// actor: worker_bee_infrastructure
-// role: telemetry_evidence
-// source_truth: implementation
-function buildReport(root, repoRoot, { files, summary }) {
-  return {
-    schema: "taxonomy-report.v1",
-    generated_at: new Date().toISOString(),
-    repo_root: repoRelative(root, repoRoot) || ".",
-    summary,
-    files,
-  };
-}
-
-module.exports = { buildReport };
+module.exports = { buildReport, formatReport };

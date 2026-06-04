@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Normalizes packet JSON to bare packet format, unwrapping from wrapper if present
+// responsibility: Format normalizer: unwraps packet JSON from wrapper structure and converts to canonical bare packet object
 // actor: worker_bee_infrastructure
 // role: packet_normalizer
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const { isObject } = require("./object-utils");
 
 // warehouse:method
-// responsibility: Unwraps packet from wrapper structure if present, returns bare packet object
+// responsibility: Packet unwrapper: extracts bare packet from wrapper or returns input if already bare, enabling polymorphic packet loading
 // actor: worker_bee_infrastructure
 // role: packet_normalizer
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Show command handler: retrieves current session, renders complete state including stages and operations, outputs formatted state
+// responsibility: CLI delegator: show command retrieves session state and renders artifacts, stages, and pending operations for user inspection
 // actor: cli
 // role: command_handler
 // source_truth: implementation
@@ -8,7 +8,7 @@ const { getSession, getCurrentSessionId } = require("../../core/session-store");
 const { renderSession, exit } = require("../print");
 
 // warehouse:method
-// responsibility: Retrieves current session state and renders formatted output of stages and operations
+// responsibility: Command dispatcher: loads session and renders human-readable state with stages, artifacts, and operation summary
 // actor: cli
 // role: command_handler
 // source_truth: implementation

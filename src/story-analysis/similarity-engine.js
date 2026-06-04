@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Delegates similarity and boilerplate classification to focused modules
+// responsibility: Exports similarity scoring and boilerplate classification functions for anchor alignment analysis
 // actor: similarity_engine
-// role: orchestrator
+// role: classifier
 // source_truth: implementation
 
 const { computeSimilarity } = require("./similarity-scorer");

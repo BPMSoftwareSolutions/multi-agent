@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Test-driven validation suite: creates test data environments, extracts and verifies taxonomy headers from Python files, ensures required fields present and non-placeholder
+// responsibility: Delegator: test-driven validation suite for taxonomy header extraction and field validation
 // actor: test_suite
 // role: test
 // source_truth: implementation
@@ -11,104 +11,8 @@
 const assert = require("assert");
 const fs = require("fs");
 const path = require("path");
-
-// Mock a simple test setup
-const testDir = path.resolve(__dirname, "..", ".test-data");
-
-// warehouse:method
-// responsibility: Test-driven validation: creates test data directory with sample Python files for header validation
-// actor: test_setup
-// role: fixture_provider
-// source_truth: implementation
-function setupTestData() {
-  // Create test data directory
-  if (!fs.existsSync(testDir)) {
-    fs.mkdirSync(testDir, { recursive: true });
-  }
-
-  // Create a file WITH complete taxonomy
-  const goodFile = path.join(testDir, "good_file.py");
-  fs.writeFileSync(
-    goodFile,
-    `# warehouse:file
-# responsibility: Handles user authentication
-# actor: auth_service
-# role: gateway
-# source_truth: contract_backed
-
-def authenticate():
-    pass
-`
-  );
-
-  // Create a file WITH INCOMPLETE taxonomy (missing responsibility)
-  const missingResponsibility = path.join(testDir, "missing_responsibility.py");
-  fs.writeFileSync(
-    missingResponsibility,
-    `# warehouse:file
-# actor: auth_service
-# role: gateway
-# source_truth: contract_backed
-
-def authenticate():
-    pass
-`
-  );
-
-  // Create a file WITH NO taxonomy header
-  const noTaxonomy = path.join(testDir, "no_taxonomy.py");
-  fs.writeFileSync(
-    noTaxonomy,
-    `def authenticate():
-    pass
-`
-  );
-}
-
-// warehouse:method
-// responsibility: Test-driven validation: removes test data directory and temporary Python test files
-// actor: test_cleanup
-// role: fixture_provider
-// source_truth: implementation
-function cleanupTestData() {
-  if (fs.existsSync(testDir)) {
-    const files = fs.readdirSync(testDir);
-    files.forEach((f) => fs.unlinkSync(path.join(testDir, f)));
-    fs.rmdirSync(testDir);
-  }
-}
-
-// warehouse:method
-// responsibility: Test-driven validation: extracts taxonomy header fields from Python file comments
-// actor: header_parser
-// role: extractor
-// source_truth: implementation
-function readTaxonomyHeader(filePath) {
-  const content = fs.readFileSync(filePath, "utf8");
-  const lines = content.split("\n");
-  const header = {};
-
-  for (const line of lines) {
-    if (!line.trim().startsWith("#")) break;
-    const match = line.match(/^#\s*(\w+):\s*(.+)$/);
-    if (match) {
-      header[match[1]] = match[2].trim();
-    }
-  }
-
-  return header;
-}
-
-// warehouse:method
-// responsibility: Test-driven validation: validates required taxonomy header fields are present and non-placeholder
-// actor: header_validator
-// role: validator
-// source_truth: implementation
-function isComplete(header) {
-  // SIMPLE: check if all required fields are present
-  const required = ["responsibility", "actor", "role", "source_truth"];
-  return required.every((field) => field in header && header[field]);
-}
+const { setupTestData, cleanupTestData, testDir } = require("./verify-scan-fixture");
+const { readTaxonomyHeader, isComplete } = require("./verify-scan-validator");
 
 // ============= TESTS =============
 

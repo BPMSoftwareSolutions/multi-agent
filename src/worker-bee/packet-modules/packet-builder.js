@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: Builds and describes packet configurations
+// responsibility: Delegator: builds effective packet configurations by layering defaults and overrides
 // actor: worker_bee_infrastructure
 // role: infrastructure
 // source_truth: implementation
 
-const { isObject, prune } = require("./object-utils");
 const { loadPacketFile } = require("./packet-loader");
+const { mergePacket } = require("./packet-merger");
 
 const DEFAULT_PACKET = {
   schema: "worker-bee-packet.v1",
@@ -25,22 +25,6 @@ const DEFAULT_PACKET = {
     max_output_tokens: 32768,
   },
 };
-
-// warehouse:method
-// responsibility: Builds packet configurations: merges base and override with shallow-deep strategy for swarm and workload
-// actor: worker_bee_infrastructure
-// role: infrastructure
-// source_truth: implementation
-function mergePacket(base, override) {
-  if (!isObject(override)) return base;
-  const out = { ...base };
-  for (const [key, value] of Object.entries(override)) {
-    if (value === undefined || value === null) continue;
-    if (isObject(value) && isObject(base[key])) out[key] = { ...base[key], ...prune(value) };
-    else out[key] = value;
-  }
-  return out;
-}
 
 // warehouse:method
 // responsibility: Builds effective packet configuration by layering defaults, file configuration, and CLI overrides

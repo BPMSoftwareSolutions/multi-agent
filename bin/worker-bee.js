@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Worker-bee CLI orchestrator: parses runtime arguments and packet options, renders status from ledger, orchestrates swarm execution from scanning to packet distribution to result reporting
+// responsibility: Worker-bee CLI orchestrator: orchestrates swarm execution from scanning to packet distribution to result reporting
 // actor: worker_bee_swarm
 // role: orchestrator
 // source_truth: implementation
@@ -16,6 +16,8 @@
 
 const path = require("path");
 const fs = require("fs");
+const { parseArgs } = require("../src/worker-bee/cli/argument-parser");
+const { renderStatus } = require("../src/worker-bee/cli/status-renderer");
 
 // Load env from .env.local then .env (local wins), like the rest of the studio.
 const root = path.resolve(__dirname, "..");
@@ -38,47 +40,6 @@ const { newRunId, initRun, writePart, finalizeRun, readLatestStatus } = require(
 
 const DEFAULT_REPO_ROOT =
   process.env.WORKER_BEE_REPO_ROOT || config.repoRoot || "C:/source/repos/bpm/internal/ai-engine";
-
-// responsibility: Parses command-line arguments and packet overrides into swarm runtime configuration and execution parameters with defaults
-// actor: argument_parser
-// role: config_builder
-// source_truth: implementation
-function parseArgs(argv) {
-  const defaultTarget = config.defaultTarget ? path.resolve(DEFAULT_REPO_ROOT, config.defaultTarget) : null;
-  const rt = { repoRoot: DEFAULT_REPO_ROOT, target: defaultTarget, limit: 0, dryRun: false, json: false, packetFile: null, help: false };
-  const ov = { swarm: {}, workload: {} };
-  for (let i = 0; i < argv.length; i += 1) {
-    const a = argv[i];
-    const next = () => argv[++i];
-    switch (a) {
-      // runtime / location
-      case "--repo-root": rt.repoRoot = next(); break;
-      case "--target": rt.target = next(); break;
-      case "--limit": rt.limit = parseInt(next(), 10); break;
-      case "--dry-run": rt.dryRun = true; break;
-      case "--json": rt.json = true; break;
-      case "--status": rt.statusOnly = true; break;
-      case "--packet": rt.packetFile = next(); break;
-      case "--from": rt.fromFile = next(); break;
-      // packet overrides
-      case "--layer": ov.layer = next(); break;
-      case "--mode": ov.mode = next(); break;
-      case "--model": ov.model = next(); break;
-      case "--agents": ov.swarm.agents = parseInt(next(), 10); break;
-      case "--max-passes": ov.swarm.max_passes = parseInt(next(), 10); break;
-      case "--files-per-packet": ov.workload.max_files_per_packet = parseInt(next(), 10); break;
-      case "--anchor-budget": ov.workload.anchor_budget = parseInt(next(), 10); break;
-      case "--method-batch": ov.workload.method_batch = parseInt(next(), 10); break;
-      case "--max-output-tokens": ov.workload.max_output_tokens = parseInt(next(), 10); break;
-      case "-h":
-      case "--help": rt.help = true; break;
-      default:
-        console.error(`Unknown argument: ${a}`);
-        process.exit(1);
-    }
-  }
-  return { rt, ov };
-}
 
 const HELP = `Worker-bee: taxonomy-anchor swarm (Gemini)
 
@@ -106,32 +67,6 @@ Packet overrides:
   --max-output-tokens <n>           Model output cap per request
 `;
 
-// warehouse:method
-// responsibility: Renders swarm status from ledger showing progress metrics, packet completion counts, error tallies, and live state for CLI monitoring
-// actor: status_renderer
-// role: display_engine
-// source_truth: implementation
-function renderStatus(status, json) {
-  if (!status) {
-    console.log("No status ledger yet (reports/status-latest.json not found). Start a run first.");
-    return;
-  }
-  if (json) {
-    console.log(JSON.stringify(status, null, 2));
-    return;
-  }
-  const t = status.totals;
-  const pct = t.needs_work ? Math.round((t.done / t.needs_work) * 100) : 100;
-  console.log(`Worker-bee status [${status.state}]  run ${status.run_id}`);
-  console.log(`  target: ${status.target}   layer: ${status.layer}   ${status.packet.agents} bees x ${status.packet.files_per_packet}/packet`);
-  console.log(`  started: ${status.started_at}   updated: ${status.updated_at}`);
-  console.log(`  progress: ${t.done}/${t.needs_work} done (${pct}%)  remaining: ${t.remaining}  errors: ${t.outstanding_errors}  methods: ${t.methods_written}`);
-  console.log(`  packets completed: ${status.packets.completed}   pass: ${status.pass}`);
-  if (status.errors && status.errors.length) {
-    console.log("  outstanding errors:");
-    for (const e of status.errors.slice(0, 8)) console.log(`    - ${e.path}: ${e.reason}`);
-  }
-}
 
 // warehouse:method
 // responsibility: Orchestrates complete swarm execution workflow: scanning for work, distributing packets to bees, tracking progress via ledger, managing retries until convergence, and reporting results
@@ -139,7 +74,7 @@ function renderStatus(status, json) {
 // role: orchestrator
 // source_truth: implementation
 async function main() {
-  const { rt, ov } = parseArgs(process.argv.slice(2));
+  const { rt, ov } = parseArgs(process.argv.slice(2), DEFAULT_REPO_ROOT, config);
   if (rt.help) {
     process.stdout.write(HELP);
     return 0;

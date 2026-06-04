@@ -1,16 +1,16 @@
 // warehouse:file
-// responsibility: Delegates model calling to focused modules; orchestrates invocation and response extraction
+// responsibility: Orchestrates Claude API invocation and response text extraction by delegating to specialized modules
 // actor: core_runtime
-// role: model_caller_delegator
+// role: model_orchestrator
 // source_truth: implementation
 
 const { invokeModel } = require("./model-invoker");
 const { extractTextFromResponse } = require("./response-extractor");
 
 // warehouse:method
-// responsibility: Calls Claude API with system prompt and messages, returns extracted text response
+// responsibility: Invokes Claude API with system context and user messages, extracts and returns response text
 // actor: core_runtime
-// role: model_caller_delegator
+// role: model_orchestrator
 // source_truth: implementation
 async function callClaude({ system, userMessages, maxTokens, apiKey }) {
   const response = await invokeModel({
