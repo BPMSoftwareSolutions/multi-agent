@@ -8,7 +8,7 @@ const { STAGES } = require("../core/stages");
 const { summarizeOperations } = require("../shared/actions");
 
 // warehouse:method
-// responsibility: Formats stage artifact into human-readable key-value pairs with nested array handling
+// responsibility: Formats artifact into readable key-value pairs
 // actor: cli
 // role: artifact_formatter
 // source_truth: implementation
@@ -36,7 +36,7 @@ function renderArtifact(stageId, artifact) {
 }
 
 // warehouse:method
-// responsibility: Renders complete session state including stages, intent, artifact, and operations summary for display or JSON export
+// responsibility: Renders complete session state
 // actor: cli
 // role: session_renderer
 // source_truth: implementation
@@ -148,7 +148,7 @@ function renderSession(session, options = {}) {
 }
 
 // warehouse:method
-// responsibility: Renders round data including planner artifact, reviewer issues, recommendations, and execution timing
+// responsibility: Renders round data
 // actor: cli
 // role: round_renderer
 // source_truth: implementation
@@ -242,7 +242,7 @@ function renderRound(round, options = {}) {
 }
 
 // warehouse:method
-// responsibility: Logs exit message to stdout or stderr and terminates process with specified code
+// responsibility: Logs exit message and terminates process
 // actor: cli
 // role: process_terminator
 // source_truth: implementation

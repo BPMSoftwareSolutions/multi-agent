@@ -9,7 +9,7 @@ const { acceptArtifact } = require("../../core/run-round");
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: Validates proposed artifact exists, accepts it via core handler, queues actions, saves session, and displays feedback
+// responsibility: Validates and accepts proposed artifact
 // actor: cli
 // role: accept_command
 // source_truth: implementation

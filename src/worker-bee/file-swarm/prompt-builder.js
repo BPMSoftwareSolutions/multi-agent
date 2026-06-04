@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Constructs Gemini prompts from work items and method metadata
+// responsibility: Constructs language model prompts from work items and method metadata
 // actor: worker_bee_infrastructure
 // role: builder
 // source_truth: implementation

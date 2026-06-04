@@ -1,11 +1,11 @@
 {
-  "repoRoot": "C:/source/repos/bpm/internal/ai-engine",
-  "defaultTarget": "packages",
+  "repoRoot": "C:/source/repos/bpm/internal/multi-agent-studio",
+  "defaultTarget": ".",
   "defaultLayer": "file",
   "defaultMode": "all",
   "swarm": {
-    "agents": 5,
-    "files_per_packet": 50,
+    "agents": 6,
+    "files_per_packet": 10,
     "anchor_budget": 150
   }
 }

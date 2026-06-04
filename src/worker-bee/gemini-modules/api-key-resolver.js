@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: Resolves Gemini API key from environment or override parameter
+// responsibility: Resolves API keys for language model providers from environment or override parameters
 // actor: worker_bee_infrastructure
 // role: credential_manager
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Resolves Gemini API key from override or environment variables
+// responsibility: Resolves API keys for language model providers from override or environment variables
 // actor: worker_bee_infrastructure
 // role: credential_manager
 // source_truth: implementation

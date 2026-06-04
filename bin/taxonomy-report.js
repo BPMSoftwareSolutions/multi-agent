@@ -32,7 +32,7 @@ const DEFAULT_TARGET =
   config.defaultTarget ? path.resolve(DEFAULT_REPO_ROOT, config.defaultTarget) : DEFAULT_REPO_ROOT;
 
 // warehouse:method
-// responsibility: Parses command-line arguments for taxonomy report generation target and output options
+// responsibility: Parses command arguments for taxonomy report generation
 // actor: argument_parser
 // role: config_builder
 // source_truth: implementation
@@ -52,7 +52,7 @@ function parseArgs(argv) {
 }
 
 // warehouse:method
-// responsibility: Extracts top N entries from object by value in descending order
+// responsibility: Extracts top entries sorted by value
 // actor: sorter
 // role: utility
 // source_truth: implementation
@@ -61,7 +61,7 @@ function topN(obj, n) {
 }
 
 // warehouse:method
-// responsibility: Orchestrates taxonomy report generation, validating target existence and writing to file or console
+// responsibility: Orchestrates taxonomy report generation
 // actor: report_generator
 // role: orchestrator
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Anthropic API client aggregator - delegates to focused modules for key resolution, HTTP transport, JSON extraction, model invocation, and retry logic
+// responsibility: Language model API client aggregator - delegates to focused modules for key resolution, HTTP transport, JSON extraction, model invocation, and retry logic
 // actor: core_runtime
 // role: entry_point
 // source_truth: implementation

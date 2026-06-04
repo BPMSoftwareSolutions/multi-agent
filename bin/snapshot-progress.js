@@ -1,142 +1,17 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Progress snapshot reporter: parses worker-bee log for packet counts and metadata, validates data consistency, calculates velocity and completion forecasts, generates markdown output
+// responsibility: Delegator: generates progress snapshot with velocity calculations
 // actor: progress_snapshot
 // role: reporter
 // source_truth: implementation
 
-// Snapshot-based progress reporter: show time-bound increments with velocity
-
 const fs = require("fs");
 const path = require("path");
+const { readProgress, getRunMetadata } = require("../src/progress/log-parser");
+const { validateData } = require("../src/progress/data-validator");
 
 const logFile = path.resolve(__dirname, "..", ".worker-bee.log");
 const reportFile = path.resolve(__dirname, "..", "reports", "CURRENT-RUN.md");
-
-// warehouse:method
-// responsibility: Parses worker-bee log file and extracts packet completion counts and error tallies
-// actor: log_parser
-// role: data_extractor
-// source_truth: implementation
-function readProgress() {
-  if (!fs.existsSync(logFile)) return { totalCompleted: 0, completions: [], totalErrors: 0 };
-
-  const content = fs.readFileSync(logFile, "utf8");
-  const lines = content.split("\n");
-
-  let totalCompleted = 0;
-  let totalErrors = 0;
-  const completions = [];
-
-  for (const line of lines) {
-    // Match packet completion: [bee N] packet X/40 (NN files): NN ok, N error
-    // We ONLY count "ok" — errors from rate limiting are expected and handled by retry logic
-    const match = line.match(/\[bee \d+\] packet \d+\/\d+ \((\d+) files\): (\d+) ok, (\d+) error/);
-    if (match) {
-      const filesOk = parseInt(match[2]);
-      const filesError = parseInt(match[3]);
-
-      if (filesOk > 0) {
-        completions.push(filesOk);
-        totalCompleted += filesOk;
-      }
-
-      // Track errors separately — these are expected from rate limiting + fallback
-      totalErrors += filesError;
-    }
-  }
-
-  return { totalCompleted, completions, totalErrors };
-}
-
-// warehouse:method
-// responsibility: Extracts run metadata from log file including total scope, agent count, and start time
-// actor: metadata_extractor
-// role: data_loader
-// source_truth: implementation
-function getRunMetadata() {
-  // Extract true baseline from worker-bee log output, not from old status files
-  const logFile = path.resolve(__dirname, "..", ".worker-bee.log");
-  let totalNeeded = 0;
-  let agents = 3;
-  let startedAt = null;
-
-  try {
-    const content = fs.readFileSync(logFile, "utf8");
-    const lines = content.split("\n");
-
-    let firstCompletionTime = null;
-
-    // Find the "files needing work" line and first completion time
-    for (const line of lines) {
-      if (line.includes("files needing work:")) {
-        const match = line.match(/files needing work:\s+(\d+)/);
-        if (match) {
-          totalNeeded = parseInt(match[1]);
-        }
-      }
-      // Extract agent count: "swarm: 3 bees"
-      if (line.includes("bees,")) {
-        const match = line.match(/(\d+)\s+bees/);
-        if (match) {
-          agents = parseInt(match[1]);
-        }
-      }
-      // Find first packet completion to use as start time
-      if (line.includes("packet") && line.includes("ok") && !firstCompletionTime) {
-        // Use the current time minus an estimate of how long it took
-        // Better: use the log file's modification time as proxy
-        firstCompletionTime = true;
-      }
-    }
-
-    // Use log file's first modified time as start, or current time minus elapsed
-    const logStats = fs.statSync(logFile);
-    startedAt = logStats.birthtime || logStats.ctime; // File creation time
-  } catch (_e) {
-    // Fall back to current time
-    startedAt = new Date();
-  }
-
-  // Validate: if no totalNeeded found, use default
-  if (totalNeeded === 0) {
-    totalNeeded = 1259;
-  }
-
-  // Ensure startedAt is a valid Date
-  if (typeof startedAt === 'string') {
-    startedAt = new Date(startedAt);
-  }
-
-  return { startedAt, totalNeeded, agents };
-}
-
-// warehouse:method
-// responsibility: Validates progress data consistency and sanity checks for reasonable values
-// actor: data_validator
-// role: validator
-// source_truth: implementation
-function validateData(totalCompleted, metadata) {
-  const errors = [];
-
-  // Check: totalCompleted should not exceed totalNeeded
-  if (totalCompleted > metadata.totalNeeded) {
-    errors.push(`totalCompleted (${totalCompleted}) > totalNeeded (${metadata.totalNeeded})`);
-  }
-
-  // Check: totalNeeded should be reasonable (> 0)
-  if (metadata.totalNeeded <= 0) {
-    errors.push(`totalNeeded (${metadata.totalNeeded}) is invalid`);
-  }
-
-  // Check: percentage should be 0-100%
-  const pct = Math.round((totalCompleted / metadata.totalNeeded) * 100);
-  if (pct < 0 || pct > 100) {
-    errors.push(`percentage (${pct}%) out of range [0, 100]`);
-  }
-
-  return errors;
-}
 
 // warehouse:method
 // responsibility: Generates markdown snapshot with validated progress metrics, velocity calculations, and ETA forecast

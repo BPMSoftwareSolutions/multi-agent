@@ -31,7 +31,7 @@ const stream = fs.createReadStream(logFile, { encoding: "utf8" });
 const rl = readline.createInterface({ input: stream, crlfDelay: Infinity });
 
 // warehouse:method
-// responsibility: Processes log lines to extract and display completion events, errors, and fallback triggers
+// responsibility: Processes log lines for completion events
 // actor: event_processor
 // role: stream_handler
 // source_truth: implementation
@@ -65,7 +65,7 @@ const lineHandler = (line) => {
 };
 
 // warehouse:method
-// responsibility: Outputs final summary with completion tally and progress status assessment
+// responsibility: Outputs final summary with completion tally
 // actor: summary_printer
 // role: display_engine
 // source_truth: implementation

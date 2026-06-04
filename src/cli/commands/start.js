@@ -9,7 +9,7 @@ const { normalizeIntent } = require("../../core/run-round");
 const { renderSession, exit } = require("../print");
 
 // warehouse:method
-// responsibility: Validates brief argument, creates session, normalizes intent from brief, saves session, displays initialization feedback
+// responsibility: Validates brief and creates session
 // actor: cli
 // role: start_command
 // source_truth: implementation

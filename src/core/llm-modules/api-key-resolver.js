@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: Resolves Anthropic API key from environment or override parameter
+// responsibility: Resolves API keys for language model providers from environment or override parameters
 // actor: core_runtime
 // role: credential_manager
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Retrieves and validates the Anthropic API key from environment or override parameter
+// responsibility: Retrieves and validates API key for language model providers from environment or override
 // actor: core_runtime
 // role: credential_manager
 // source_truth: implementation

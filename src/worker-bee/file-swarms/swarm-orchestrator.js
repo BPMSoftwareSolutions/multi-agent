@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Orchestrates concurrent agents processing file packets and writing anchors via Gemini
+// responsibility: Orchestrates concurrent agents processing file packets and writing anchors via language model APIs
 // actor: worker_bee_infrastructure
 // role: orchestrator
 // source_truth: implementation

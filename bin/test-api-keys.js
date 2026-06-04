@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Gemini API validator: tests API keys and models, checks quota availability, measures latency, verifies fallback capability, generates diagnostic report
-// actor: gemini_validator
+// responsibility: Language model API validator: tests API keys and models, checks quota availability, measures latency, verifies fallback capability, generates diagnostic report
+// actor: api_validator
 // role: diagnostic_tool
 // source_truth: implementation
 
-// Test Gemini API keys and models to validate quota and performance
+// Test language model API keys and models to validate quota and performance
 
 const https = require("https");
 const path = require("path");
@@ -36,7 +36,7 @@ const TEST_PROMPT = {
 };
 
 // warehouse:method
-// responsibility: Sends JSON POST request to HTTPS endpoint with timeout handling and error extraction
+// responsibility: Sends JSON POST request to HTTPS endpoint
 // actor: http_client
 // role: network_requestor
 // source_truth: implementation
@@ -88,7 +88,7 @@ function postJson(url, body, timeoutMs = 10000) {
 }
 
 // warehouse:method
-// responsibility: Tests Gemini API key with specified model and measures latency, detecting quota exhaustion
+// responsibility: Tests language model API key and measures latency
 // actor: api_tester
 // role: diagnostic_tool
 // source_truth: implementation
@@ -135,12 +135,12 @@ async function testKey(keyName, keyValue, model) {
 }
 
 // warehouse:method
-// responsibility: Orchestrates Gemini API key testing across all configured keys/models and generates summary report
+// responsibility: Orchestrates API key testing across all configured keys
 // actor: test_runner
 // role: orchestrator
 // source_truth: implementation
 async function main() {
-  console.log("🔑 Gemini API Key Tester\n");
+  console.log("🔑 Language Model API Key Tester\n");
   console.log("Testing API keys and models...\n");
 
   const results = [];

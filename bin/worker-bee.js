@@ -40,7 +40,7 @@ const DEFAULT_REPO_ROOT =
   process.env.WORKER_BEE_REPO_ROOT || config.repoRoot || "C:/source/repos/bpm/internal/ai-engine";
 
 // warehouse:method
-// responsibility: Parses command-line arguments into runtime configuration and packet-level overrides
+// responsibility: Parses command arguments into runtime config
 // actor: argument_parser
 // role: config_builder
 // source_truth: implementation
@@ -108,7 +108,7 @@ Packet overrides:
 `;
 
 // warehouse:method
-// responsibility: Renders worker-bee status from ledger as human-readable or JSON output
+// responsibility: Renders worker-bee status from ledger
 // actor: status_renderer
 // role: display_engine
 // source_truth: implementation
@@ -135,7 +135,7 @@ function renderStatus(status, json) {
 }
 
 // warehouse:method
-// responsibility: Orchestrates worker-bee swarm execution including scanning, packet distribution, progress tracking, and result reporting
+// responsibility: Orchestrates worker-bee swarm execution
 // actor: bee_orchestrator
 // role: orchestrator
 // source_truth: implementation

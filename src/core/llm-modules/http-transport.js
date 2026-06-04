@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Performs HTTPS requests to Anthropic API with error handling
+// responsibility: Performs HTTPS requests to language model APIs with error handling
 // actor: core_runtime
 // role: http_transport
 // source_truth: implementation
@@ -7,7 +7,7 @@
 const https = require("https");
 
 // warehouse:method
-// responsibility: Performs low-level HTTPS request to Anthropic API and returns parsed JSON response with error handling
+// responsibility: Performs low-level HTTPS request to language model APIs and returns parsed JSON response with error handling
 // actor: core_runtime
 // role: http_transport
 // source_truth: implementation

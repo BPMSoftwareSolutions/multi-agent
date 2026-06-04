@@ -19,7 +19,7 @@ if (!fs.existsSync(logFile)) {
 }
 
 // warehouse:method
-// responsibility: Parses worker-bee log for packet completion events and extracts total completed count
+// responsibility: Parses log for completion events
 // actor: log_parser
 // role: data_extractor
 // source_truth: implementation
@@ -51,7 +51,7 @@ function readProgress() {
 }
 
 // warehouse:method
-// responsibility: Converts millisecond duration into human-readable time difference string
+// responsibility: Formats duration into human-readable string
 // actor: formatter
 // role: utility
 // source_truth: implementation

@@ -21,7 +21,7 @@ const { approveActionCommand } = require("../src/cli/commands/approve-action");
 const { exit } = require("../src/cli/print");
 
 // warehouse:method
-// responsibility: Routes CLI command dispatch to appropriate handler based on command argument
+// responsibility: Orchestrates CLI command routing
 // actor: command_router
 // role: orchestrator
 // source_truth: implementation
@@ -128,7 +128,7 @@ Examples:
 }
 
 // warehouse:method
-// responsibility: Parses command-line arguments into options object with positional and named parameters
+// responsibility: Parses command arguments into options
 // actor: argument_parser
 // role: config_builder
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Orchestrates Gemini API calls with retry, backoff, temperature variation, and model fallback
+// responsibility: Orchestrates language model API calls with retry, backoff, temperature variation, and fallback strategies
 // actor: worker_bee_infrastructure
 // role: orchestrator
 // source_truth: implementation
@@ -12,7 +12,7 @@ const { isRetryable, getBackoffDelay } = require("./retry-logic");
 const DEFAULT_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
 
 // warehouse:method
-// responsibility: Calls Gemini API with system instruction and user prompt, extracting text from response
+// responsibility: Calls language model API with system instruction and user prompt, extracting text from response
 // actor: worker_bee_infrastructure
 // role: api_caller
 // source_truth: implementation
@@ -46,7 +46,7 @@ async function callGemini({ system, user, apiKey, model, maxTokens, temperature 
 }
 
 // warehouse:method
-// responsibility: Calls Gemini with automatic retry, exponential backoff, temperature variation, and Flash→Pro quota fallback
+// responsibility: Calls language model with automatic retry, exponential backoff, temperature variation, and fallback strategy
 // actor: worker_bee_infrastructure
 // role: orchestrator
 // source_truth: implementation

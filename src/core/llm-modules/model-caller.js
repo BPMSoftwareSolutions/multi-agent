@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Invokes Claude API with system prompt and message chain
+// responsibility: Invokes language model APIs with system prompts and message chains
 // actor: core_runtime
 // role: model_invoker
 // source_truth: implementation
@@ -10,7 +10,7 @@ const { getApiKey } = require("./api-key-resolver");
 const model = process.env.MODEL || "claude-sonnet-4-6";
 
 // warehouse:method
-// responsibility: Invokes Claude API with system prompt and messages, extracting text from response
+// responsibility: Invokes language model API with system prompt and messages, extracting text from response
 // actor: core_runtime
 // role: model_invoker
 // source_truth: implementation

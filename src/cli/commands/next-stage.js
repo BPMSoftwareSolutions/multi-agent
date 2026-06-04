@@ -9,7 +9,7 @@ const { advanceStage } = require("../../core/run-round");
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: Validates current stage is accepted, advances to next stage, saves session, and displays progress feedback
+// responsibility: Advances to next stage
 // actor: cli
 // role: next_stage_command
 // source_truth: implementation
