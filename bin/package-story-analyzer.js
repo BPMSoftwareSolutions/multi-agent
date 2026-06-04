@@ -1,89 +1,13 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Package story analyzer: loads taxonomy report, aggregates file responsibilities by package, deduplicates narrative, generates markdown story output
+// responsibility: Delegator: analyzes packages and generates story report as JSON
 // actor: story_generator
 // role: analyzer
 // source_truth: implementation
 
-// Package story analyzer: read the taxonomy report and extract what each package does
-// from the aggregated responsibilities of its files.
-
 const fs = require("fs");
 const path = require("path");
-
-// warehouse:method
-// responsibility: Groups files from taxonomy by package name and extracts unique, high-quality responsibilities
-// actor: story_extractor
-// role: classifier
-// source_truth: implementation
-function analyzePackageStories(taxonomyPath) {
-  const taxonomy = JSON.parse(fs.readFileSync(taxonomyPath, "utf8"));
-
-  // Group files by package name
-  const packages = {};
-  for (const file of taxonomy.files) {
-    const match = file.path.match(/^packages\/([^/]+)\//);
-    if (!match) continue;
-
-    const pkgName = match[1];
-    if (!packages[pkgName]) {
-      packages[pkgName] = {
-        name: pkgName,
-        files: [],
-        responsibilities: [],
-        roles: {},
-        actors: {}
-      };
-    }
-
-    packages[pkgName].files.push({
-      path: file.path,
-      role: file.role,
-      responsibility: file.responsibility,
-      actor: file.actor
-    });
-
-    // Aggregate unique responsibilities (filter out noise)
-    if (file.responsibility &&
-        !file.responsibility.match(/^(__init__|noqa:|src\/|test_|\.py$)/i) &&
-        file.responsibility.length > 5) {
-      if (!packages[pkgName].responsibilities.includes(file.responsibility)) {
-        packages[pkgName].responsibilities.push(file.responsibility);
-      }
-    }
-
-    // Track roles
-    packages[pkgName].roles[file.role] = (packages[pkgName].roles[file.role] || 0) + 1;
-
-    // Track actors
-    packages[pkgName].actors[file.actor] = (packages[pkgName].actors[file.actor] || 0) + 1;
-  }
-
-  return packages;
-}
-
-// warehouse:method
-// responsibility: Synthesizes a package story by selecting dominant role/actor and formatting top responsibilities
-// actor: story_builder
-// role: synthesizer
-// source_truth: implementation
-function generateStory(pkg) {
-  const topRole = Object.entries(pkg.roles).sort((a, b) => b[1] - a[1])[0];
-  const topActor = Object.entries(pkg.actors).sort((a, b) => b[1] - a[1])[0];
-
-  const responsibilities = pkg.responsibilities
-    .filter(r => r.length > 8)
-    .slice(0, 5)
-    .join("\n  - ");
-
-  return {
-    package: pkg.name,
-    files: pkg.files.length,
-    topRole: topRole ? topRole[0] : "unknown",
-    topActor: topActor ? topActor[0] : "unknown",
-    story: responsibilities || "(responsibilities need clarity)"
-  };
-}
+const { analyzePackageStories, generateStory } = require("../src/packages/story-analyzer");
 
 const taxonomyPath = path.resolve(__dirname, "..", "reports", "taxonomy-packages.json");
 if (!fs.existsSync(taxonomyPath)) {
@@ -97,7 +21,6 @@ const stories = Object.values(packages)
   .map(generateStory)
   .sort((a, b) => a.package.localeCompare(b.package));
 
-// Output as JSON
 const report = {
   generated_at: new Date().toISOString(),
   total_packages: stories.length,
