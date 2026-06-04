@@ -64,6 +64,9 @@ const STATUS_ICON_MAPPINGS = {
   denied: { icon: "🚫", fallback: "[DENIED]" },
   evidence: { icon: "🧾", fallback: "[EVIDENCE]" },
   file: { icon: "📄", fallback: "[FILE]" },
+  folder: { icon: "📁", fallback: "[FS]" },
+  worker: { icon: "🐝", fallback: "[WORKER]" },
+  mutated: { icon: "✏", fallback: "[MUTATED]" },
   projection: { icon: "🖥", fallback: "[PROJECTION]" },
   ship: { icon: "🚚", fallback: "[SHIP]" },
 };

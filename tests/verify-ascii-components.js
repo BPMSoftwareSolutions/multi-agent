@@ -77,8 +77,13 @@ function verifyStatusIconComponentContract() {
   assert.strictEqual(renderStatusSignal("pass", "done", { contract: unicodeContract }), "✅ DONE", "unicode pass icon should be primary");
   assert.strictEqual(renderStatusSignal("fail", "no", { contract: unicodeContract }), "❌ NO", "unicode fail icon should be primary");
   assert.strictEqual(renderStatusSignal("locked", "no source mutation", { contract: unicodeContract }), "🔒 NO SOURCE MUTATION", "unicode lock icon should be primary");
+  assert.strictEqual(renderStatusSignal("folder", "src/**", { contract: unicodeContract }), "📁 SRC/**", "unicode folder icon should be primary");
+  assert.strictEqual(renderStatusSignal("worker", "3 workers", { contract: unicodeContract }), "🐝 3 WORKERS", "unicode worker icon should be primary");
+  assert.strictEqual(renderStatusSignal("mutated", "yes", { contract: unicodeContract }), "✏ YES", "unicode mutation icon should be primary");
   assert.strictEqual(renderStatusSignal("pass", "done", { contract: fallbackContract }), "[OK] DONE", "ASCII fallback should render pass safely");
   assert.strictEqual(renderStatusSignal("locked", "read-only", { contract: fallbackContract }), "[LOCKED] READ-ONLY", "ASCII fallback should render lock safely");
+  assert.strictEqual(renderStatusSignal("worker", "3 workers", { contract: fallbackContract }), "[WORKER] 3 WORKERS", "ASCII fallback should render worker safely");
+  assert.strictEqual(renderStatusSignal("mutated", "yes", { contract: fallbackContract }), "[MUTATED] YES", "ASCII fallback should render mutation safely");
 }
 
 // warehouse:method
