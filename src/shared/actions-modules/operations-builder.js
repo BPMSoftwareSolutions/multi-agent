@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Creates empty operations object with all required queue and state structures
-// actor: action_orchestrator
-// role: builder
+// responsibility: Creates empty operations object: action queues, sync state, file/folder dicts
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

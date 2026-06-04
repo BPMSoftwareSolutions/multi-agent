@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Generates governed README projections from latest verified taxonomy scan and codebase story review artifacts
 // actor: taxonomy_readme_cli

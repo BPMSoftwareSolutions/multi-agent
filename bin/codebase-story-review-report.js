@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Generates the current codebase story review report from latest taxonomy scan and swarm evidence without preserving legacy story narratives
 // actor: codebase_story_review_cli

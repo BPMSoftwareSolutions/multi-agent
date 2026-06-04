@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Parses command-line arguments into typed options object
-// actor: cli
-// role: argument_parser
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

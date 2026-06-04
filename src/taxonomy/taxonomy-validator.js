@@ -1,9 +1,11 @@
 // warehouse:file
-// responsibility: Validates that taxonomy objects contain required warehouse header fields
-// actor: taxonomy_analyzer
-// role: taxonomy_validator
+// responsibility: Validates that taxonomy object contains required warehouse:file and warehouse:method header fields
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
+// warehouse:method
+// warehouse:method
 // warehouse:method
 // responsibility: Validates that taxonomy object contains required warehouse:file and warehouse:method header fields
 // actor: method_implementation

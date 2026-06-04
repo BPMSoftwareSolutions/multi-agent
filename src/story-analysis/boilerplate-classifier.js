@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Classifies methods as boilerplate based on infrastructure naming patterns
-// actor: coherence_analyzer
-// role: boilerplate_classifier
+// responsibility: Classifies method as boilerplate by pattern matching against infrastructure naming conventions
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

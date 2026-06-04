@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Formats status output as JSON for CLI display
-// actor: cli
-// role: renderer
+// responsibility: Formats session status summary as JSON
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

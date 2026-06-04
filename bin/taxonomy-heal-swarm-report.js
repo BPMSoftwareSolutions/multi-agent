@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Generates taxonomy healing swarm run observability report artifacts from batch healing evidence JSON input
 // actor: taxonomy_swarm_report_cli

@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Coordinates normalizeApprovalStatus and normalizeRiskLevel behavior with documented file and method taxonomy evidence
-// actor: shared_infrastructure
-// role: validator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Generates read only taxonomy coherence scan report artifacts for a target path with latest root report copies
 // actor: taxonomy_scan_report_cli

@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Generates formatted coherence analysis reports from aggregated findings
-// actor: coherence_analyzer
-// role: report_generator
+// responsibility: Generates formatted coherence analysis report from aggregated findings with summary and breakdown
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

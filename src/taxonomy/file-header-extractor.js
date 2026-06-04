@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Extracts warehouse:file header from supported source files into taxonomy structure
-// actor: taxonomy_analyzer
-// role: file_header_extractor
+// responsibility: Extracts warehouse:file header from supported source files into taxonomy structure and key-value object
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

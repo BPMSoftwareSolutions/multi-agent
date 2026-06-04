@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Formats start command output for CLI display in JSON or text
-// actor: cli
-// role: renderer
+// responsibility: Formats session creation result as JSON or human-readable text
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

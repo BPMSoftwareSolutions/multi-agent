@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Produces taxonomy scan evidence bundle by detecting supported source functions extracting anchors comparing coverage evaluating coherence and writing audit JSON
 // actor: taxonomy_evidence

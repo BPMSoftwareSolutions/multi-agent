@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Coordinates sortAndSummarizeContradictions behavior with documented file and method taxonomy evidence
-// actor: report_formatter
-// role: data_aggregator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

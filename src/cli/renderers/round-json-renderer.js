@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Renders round results to JSON format for machine-readable output
-// actor: cli
-// role: renderer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

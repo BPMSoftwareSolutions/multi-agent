@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Formats elapsed milliseconds into human-readable time duration strings
-// actor: progress_monitor
-// role: formatter
+// responsibility: Formats elapsed milliseconds into human-readable time duration string (seconds/minutes/hours ago)
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

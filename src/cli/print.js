@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Outputs exit message and terminates process with specified exit code
-// actor: cli
-// role: process_terminator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

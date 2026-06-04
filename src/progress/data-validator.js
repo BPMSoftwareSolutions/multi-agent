@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Coordinates validateData behavior with documented file and method taxonomy evidence
-// actor: data_validator
-// role: validator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

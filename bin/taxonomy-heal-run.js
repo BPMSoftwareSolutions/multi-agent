@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Runs observable single file taxonomy healing by rendering contract driven ascii operator console markdown summaries case generation expected remediation repair evidence and verification status
 // actor: taxonomy_heal_runner

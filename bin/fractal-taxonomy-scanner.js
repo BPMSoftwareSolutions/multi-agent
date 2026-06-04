@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Orchestrates self first taxonomy coherence scan by extracting warehouse anchors evaluating claim evidence alignment writing live run status markdown observability and reporting scale readiness
 // actor: fractal_taxonomy_scanner

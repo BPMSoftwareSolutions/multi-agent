@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Renders round results to human-readable text format for CLI display
-// actor: cli
-// role: renderer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

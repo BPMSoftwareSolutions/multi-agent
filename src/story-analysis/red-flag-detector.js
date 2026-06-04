@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Detects alignment red flags in responsibility text
-// actor: coherence_analyzer
-// role: red_flag_detector
+// responsibility: Detects alignment red flags by analyzing responsibility text for generic terminology, maintenance tasks, error-only handling, and vagueness indicators
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

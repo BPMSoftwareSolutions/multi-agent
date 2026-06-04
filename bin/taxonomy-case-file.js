@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence deduplicating subsumed responsibilities planning expected coherent taxonomy and writing remediation evidence and Produces single file taxonomy case artifacts by scanning actual anchors diagnosing incoherence planning expected coherent taxonomy and writing remediation evidence
 // actor: taxonomy_case_builder

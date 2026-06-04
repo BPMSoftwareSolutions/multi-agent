@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Records folder metadata with exists flag and timestamp
-// actor: action_orchestrator
-// role: folder_registrar
+// responsibility: Records folder in state with exists flag and timestamp
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

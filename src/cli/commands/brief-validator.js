@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Validates brief input string format and presence
-// actor: cli
-// role: validator
+// responsibility: Validates brief is a non-empty string
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

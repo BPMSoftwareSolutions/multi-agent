@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Applies expected taxonomy remediation JSON by preserving script shebang updating declared file and method anchors then verifying coherence acceptance criteria
 // actor: taxonomy_healer

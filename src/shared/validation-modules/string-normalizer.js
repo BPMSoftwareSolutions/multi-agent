@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Coordinates toTrimmedString and toStringArray behavior with documented file and method taxonomy evidence
-// actor: shared_infrastructure
-// role: normalizer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

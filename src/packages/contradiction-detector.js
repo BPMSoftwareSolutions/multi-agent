@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Identifies naming-responsibility mismatches and role inconsistencies in packages
-// actor: analyzer
-// role: issue_detector
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

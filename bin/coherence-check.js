@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Enforces changed file coherence governance by extracting taxonomy evaluating anchors requiring perfect scores and reporting failures
 // actor: coherence_governance

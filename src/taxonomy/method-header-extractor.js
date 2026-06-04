@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Extracts warehouse method taxonomy for every supported function and marks undocumented functions as missing taxonomy
-// actor: taxonomy_analyzer
-// role: method_header_extractor
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

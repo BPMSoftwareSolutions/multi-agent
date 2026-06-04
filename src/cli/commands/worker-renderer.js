@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Formats worker execution results for CLI display in JSON or text
-// actor: cli
-// role: renderer
+// responsibility: Formats worker result as JSON or human-readable text with action details
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method
