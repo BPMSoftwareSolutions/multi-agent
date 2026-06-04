@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Routes commands to handlers and executes studio workflow commands
+// responsibility: Routes command to appropriate handler and executes command workflow
 // actor: command_orchestrator
 // role: router
 // source_truth: implementation

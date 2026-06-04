@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Evaluates JavaScript files for taxonomy header completeness and classification status
+// responsibility: Scans and classifies JavaScript files by taxonomy header completeness (complete, partial, missing)
 // actor: taxonomy_auditor
 // role: audit_tool
 // source_truth: implementation

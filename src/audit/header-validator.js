@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: undefined — isComplete
+// responsibility: undefined — isComplete and undefined — hasWarehouseField and undefined — getMissingFields
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: undefined — isComplete
+// responsibility: undefined — isComplete and undefined — hasWarehouseField and undefined — getMissingFields
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -15,7 +15,7 @@ function isComplete(header) {
 }
 
 // warehouse:method
-// responsibility: undefined — hasWarehouseField
+// responsibility: undefined — isComplete and undefined — hasWarehouseField and undefined — getMissingFields
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -24,7 +24,7 @@ function hasWarehouseField(header) {
 }
 
 // warehouse:method
-// responsibility: undefined — getMissingFields
+// responsibility: undefined — isComplete and undefined — hasWarehouseField and undefined — getMissingFields
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

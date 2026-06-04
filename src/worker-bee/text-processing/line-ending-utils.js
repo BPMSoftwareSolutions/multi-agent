@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: Detects whether text uses CRLF or LF as dominant line-ending style
+// responsibility: Detects whether text uses CRLF or LF as dominant line-ending style and Splits text into segments while preserving individual line endings for each line
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Detects whether text uses CRLF or LF as dominant line-ending style
+// responsibility: Detects whether text uses CRLF or LF as dominant line-ending style and Splits text into segments while preserving individual line endings for each line
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -16,7 +16,7 @@ function dominantEol(text) {
 }
 
 // warehouse:method
-// responsibility: Splits text into segments while preserving individual line endings for each line
+// responsibility: Detects whether text uses CRLF or LF as dominant line-ending style and Splits text into segments while preserving individual line endings for each line
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

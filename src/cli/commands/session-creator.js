@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Creates new session object with brief and optional intent
+// responsibility: Creates and persists new session with brief and intent
 // actor: cli
 // role: factory
 // source_truth: implementation

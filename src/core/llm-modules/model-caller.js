@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Invokes Claude API with system context and messages, extracts response text
+// responsibility: Calls Claude API with prompts, extracts response text from result
 // actor: core_runtime
 // role: model_orchestrator
 // source_truth: implementation

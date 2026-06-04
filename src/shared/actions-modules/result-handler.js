@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Aggregates action execution counts and metrics by status
+// responsibility: Computes and aggregates action execution counts and metrics by status for reporting
 // actor: action_executor
 // role: metrics_aggregator
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Formats planner prompt system message with schema and stage goals
+// responsibility: Composes system message with stage context, artifact schema, and instructions for planner
 // actor: prompt_builder
 // role: formatter
 // source_truth: implementation

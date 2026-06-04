@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: undefined — createRoundRecord
+// responsibility: undefined — createRoundRecord and undefined — storeRoundResult
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: undefined — createRoundRecord
+// responsibility: undefined — createRoundRecord and undefined — storeRoundResult
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -31,7 +31,7 @@ function createRoundRecord({
 }
 
 // warehouse:method
-// responsibility: undefined — storeRoundResult
+// responsibility: undefined — createRoundRecord and undefined — storeRoundResult
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Calls language model APIs with JSON parsing retry and repair logic
+// responsibility: Calls Claude language model API with JSON parsing retry and repair logic up to maxAttempts
 // actor: core_runtime
 // role: retry_orchestrator
 // source_truth: implementation

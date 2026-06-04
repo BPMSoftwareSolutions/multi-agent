@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Ensures SQL Server schema and persistence tables exist
+// responsibility: Ensures SQL Server schema and persistence tables (sessions, app_state, oauth_tokens) exist before application runtime
 // actor: persistence_layer
 // role: schema_manager
 // source_truth: implementation

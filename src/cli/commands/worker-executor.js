@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Executes pending worker action and persists session state
+// responsibility: Runs worker action on session and saves updated state
 // actor: cli
 // role: executor
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Recursively scans directory tree to collect Python files for taxonomy audit coverage
+// responsibility: Scans and traverses directory tree to collect all Python files for taxonomy audit coverage verification
 // actor: scanner
 // role: file_discoverer
 // source_truth: implementation

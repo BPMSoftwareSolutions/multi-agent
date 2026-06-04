@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Checks if artifact has all required fields with non-empty values
+// responsibility: Checks if all required stage fields have non-empty values
 // actor: core_runtime
 // role: completeness_checker
 // source_truth: implementation

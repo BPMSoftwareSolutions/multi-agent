@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Validates operations structure and merges with defaults to ensure correct types
+// responsibility: Validates session operations structure, merges with defaults, ensures correct types
 // actor: action_orchestrator
 // role: state_validator
 // source_truth: implementation

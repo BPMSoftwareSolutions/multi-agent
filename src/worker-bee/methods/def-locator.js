@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Locates function definitions in source code and assigns sequential IDs
+// responsibility: Locates all function/method definitions in source lines and assigns sequential IDs
 // actor: worker_bee_infrastructure
 // role: projection_compiler
 // source_truth: implementation

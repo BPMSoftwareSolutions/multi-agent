@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Routes human review items into review queue with deduplication
+// responsibility: Routes review item to queue with deduplication by recommendationId
 // actor: action_orchestrator
 // role: review_queue_manager
 // source_truth: implementation

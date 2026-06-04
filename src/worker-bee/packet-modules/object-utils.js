@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: Type-checks whether a value is a plain object (excludes arrays and nulls)
+// responsibility: Type-checks whether a value is a plain object (excludes arrays and nulls) and Removes undefined/null values from object to prevent blanking defaults during merge
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Type-checks whether a value is a plain object (excludes arrays and nulls)
+// responsibility: Type-checks whether a value is a plain object (excludes arrays and nulls) and Removes undefined/null values from object to prevent blanking defaults during merge
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -14,7 +14,7 @@ function isObject(v) {
 }
 
 // warehouse:method
-// responsibility: Removes undefined/null values from object to prevent blanking defaults during merge
+// responsibility: Type-checks whether a value is a plain object (excludes arrays and nulls) and Removes undefined/null values from object to prevent blanking defaults during merge
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

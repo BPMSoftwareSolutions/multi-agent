@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Determines alignment threshold percentage based on method boilerplate classification
+// responsibility: Determines alignment threshold percentage (30 for boilerplate, 50 for domain-specific) based on method boilerplate classification
 // actor: coherence_analyzer
 // role: threshold_calculator
 // source_truth: implementation

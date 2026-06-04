@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Constructs reviewer agent prompt for artifact evaluation against task intent
+// responsibility: Builds prompt for reviewer to assess artifact alignment with task goals
 // actor: core_runtime
 // role: prompt_builder
 // source_truth: implementation

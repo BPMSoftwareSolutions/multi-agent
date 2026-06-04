@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: Renders test results with status indicators and detailed diagnostics
+// responsibility: Renders test results with status indicators and detailed diagnostics and Computes and displays test summary with recommendations
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Renders test results with status indicators and detailed diagnostics
+// responsibility: Renders test results with status indicators and detailed diagnostics and Computes and displays test summary with recommendations
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -25,7 +25,7 @@ function displayResults(results) {
 }
 
 // warehouse:method
-// responsibility: Computes and displays test summary with recommendations
+// responsibility: Renders test results with status indicators and detailed diagnostics and Computes and displays test summary with recommendations
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Constructs human review queue items from recommendations
+// responsibility: Creates human review queue item from recommendation
 // actor: action_orchestrator
 // role: review_builder
 // source_truth: implementation

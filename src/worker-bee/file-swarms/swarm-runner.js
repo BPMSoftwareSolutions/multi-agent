@@ -28,6 +28,11 @@ async function runSwarm(missing, options = {}) {
   const allResults = [];
   let cursor = 0;
 
+// warehouse:method
+// responsibility: Orchestrates concurrent agents processing file packets with language model APIs from shared queue
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
   async function agentLoop(agentId) {
     while (true) {
       const item = cursor < queue.length ? queue[cursor++] : null;

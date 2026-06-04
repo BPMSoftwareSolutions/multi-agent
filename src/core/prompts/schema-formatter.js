@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: Converts schema definition to readable field descriptions
+// responsibility: Converts schema definition to readable field descriptions and Serializes values to formatted JSON for prompt embedding
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Converts schema definition to readable field descriptions
+// responsibility: Converts schema definition to readable field descriptions and Serializes values to formatted JSON for prompt embedding
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -18,7 +18,7 @@ function schemaToText(schema) {
 }
 
 // warehouse:method
-// responsibility: Serializes values to formatted JSON for prompt embedding
+// responsibility: Converts schema definition to readable field descriptions and Serializes values to formatted JSON for prompt embedding
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

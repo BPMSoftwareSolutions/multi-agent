@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: undefined — formatReport
+// responsibility: undefined — formatReport and undefined — formatSummary and undefined — getExitCode
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: undefined — formatReport
+// responsibility: undefined — formatReport and undefined — formatSummary and undefined — getExitCode
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -29,7 +29,7 @@ function formatReport(results) {
 }
 
 // warehouse:method
-// responsibility: undefined — formatSummary
+// responsibility: undefined — formatReport and undefined — formatSummary and undefined — getExitCode
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -63,7 +63,7 @@ function formatSummary(results) {
 }
 
 // warehouse:method
-// responsibility: undefined — getExitCode
+// responsibility: undefined — formatReport and undefined — formatSummary and undefined — getExitCode
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

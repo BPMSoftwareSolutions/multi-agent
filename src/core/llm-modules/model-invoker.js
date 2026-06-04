@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Sends messages to language model API and returns raw response
+// responsibility: Calls language model API with system prompt and user messages, returns response
 // actor: core_runtime
 // role: model_invoker
 // source_truth: implementation

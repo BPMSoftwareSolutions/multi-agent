@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Evaluates file coherence by computing semantic similarity between file and method responsibilities
+// responsibility: Evaluates file coherence by computing semantic similarity between file responsibility and method responsibilities, applying weighted alignment thresholds and detecting misalignment issues
 // actor: coherence_analyzer
 // role: analyzer
 // source_truth: implementation

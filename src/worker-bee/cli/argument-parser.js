@@ -17,6 +17,11 @@ function parseArgs(argv, DEFAULT_REPO_ROOT, config) {
   const ov = { swarm: {}, workload: {} };
   for (let i = 0; i < argv.length; i += 1) {
     const a = argv[i];
+// warehouse:method
+// responsibility: Parses command-line arguments and packet overrides into swarm runtime configuration and execution parameters with defaults
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
     const next = () => argv[++i];
     switch (a) {
       // runtime / location

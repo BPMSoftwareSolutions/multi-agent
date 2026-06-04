@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Assembles taxonomy report structure aggregating file and method anchors with coverage metrics and quality summary
+// responsibility: Assembles taxonomy report structure with schema version, timestamp, file anchors, method anchors, and coverage summary
 // actor: worker_bee_infrastructure
 // role: report_assembler
 // source_truth: implementation

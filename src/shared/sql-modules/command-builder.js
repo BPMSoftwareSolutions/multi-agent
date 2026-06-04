@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Builds sqlcmd command-line arguments from configuration
+// responsibility: Builds sqlcmd command-line arguments array from database configuration
 // actor: shared_infrastructure
 // role: command_builder
 // source_truth: implementation

@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: Gets health indicator emoji and label based on coherence score
+// responsibility: Gets health indicator emoji and label based on coherence score and Builds narrative interpretation of file's story based on responsibility and methods
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: Gets health indicator emoji and label based on coherence score
+// responsibility: Gets health indicator emoji and label based on coherence score and Builds narrative interpretation of file's story based on responsibility and methods
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -17,7 +17,7 @@ function getHealthIndicator(score) {
 }
 
 // warehouse:method
-// responsibility: Builds narrative interpretation of file's story based on responsibility and methods
+// responsibility: Gets health indicator emoji and label based on coherence score and Builds narrative interpretation of file's story based on responsibility and methods
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

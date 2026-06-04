@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Persists coherence analysis report to JSON file on disk
+// responsibility: Writes coherence analysis report object to JSON file in reports directory
 // actor: persistence_layer
 // role: writer
 // source_truth: implementation

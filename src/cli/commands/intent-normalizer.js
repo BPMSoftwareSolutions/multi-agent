@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Normalizes raw brief text into structured intent format via Claude
+// responsibility: Calls Claude API to normalize brief into structured intent with task_definition
 // actor: cli
 // role: transformer
 // source_truth: implementation
