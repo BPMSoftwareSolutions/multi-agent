@@ -24,13 +24,13 @@ function sampleScan() {
     run_id: "scan-test",
     target_path: ".",
     summary: {
-      files_scanned: 3,
-      file_anchors_found: 3,
+      files_scanned: 5,
+      file_anchors_found: 5,
       method_anchor_files: 2,
-      method_anchors_found: 4,
-      detected_methods: 4,
+      method_anchors_found: 5,
+      detected_methods: 5,
       folder_coherence: 100,
-      strong_count: 3,
+      strong_count: 5,
       moderate_count: 0,
       weak_count: 0,
       missing_count: 0,
@@ -40,6 +40,22 @@ function sampleScan() {
     file_ledger: [
       {
         file: "bin/demo.js",
+        file_anchor_found: true,
+        detected_methods: 1,
+        documented_methods: 1,
+        score: 100,
+        band: "strong",
+      },
+      {
+        file: "bin/generate-story-report.js",
+        file_anchor_found: true,
+        detected_methods: 0,
+        documented_methods: 0,
+        score: 100,
+        band: "strong",
+      },
+      {
+        file: "bin/story-report-formatter.js",
         file_anchor_found: true,
         detected_methods: 1,
         documented_methods: 1,
@@ -76,8 +92,11 @@ function verifyReportModel() {
   assert.strictEqual(report.summary.codebase_coherence, 100);
   assert.strictEqual(report.file_economy.status, "review required");
   assert.strictEqual(report.file_economy.provisional_score, 70);
-  assert.match(report.primary_review_question, /Do we need 3 files/);
+  assert.strictEqual(report.legacy_residue.status, "review required");
+  assert(report.legacy_residue.residue_pressure > 0);
+  assert.match(report.primary_review_question, /Do we need 5 files/);
   assert(report.file_economy.category_rows.some((row) => row.category === "Zero-method files"));
+  assert(report.legacy_residue.canonical_surface_map.some((row) => row.surface_type === "Story review report"));
   return report;
 }
 
@@ -93,6 +112,9 @@ function verifyMarkdown(report) {
   assert.match(markdown, /File Economy/);
   assert.match(markdown, /Coherence tells us whether the story is true/);
   assert.match(markdown, /File Economy Review/);
+  assert.match(markdown, /Legacy Idea Residue Review/);
+  assert.match(markdown, /Canonical Surface Map/);
+  assert.match(markdown, /Residue review proves the file still belongs/);
   assert.doesNotMatch(markdown, /Taxonomy Story Report/);
   return markdown;
 }

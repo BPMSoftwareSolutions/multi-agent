@@ -1,8 +1,8 @@
 {
   "schema": "codebase-story-review-report.v1",
-  "report_id": "codebase-story-review-2026-06-04T16-41-58-513Z",
-  "generated_at": "2026-06-04T16:41:58.514Z",
-  "source_scan_id": "scan-2026-06-04T16-41-53-684Z",
+  "report_id": "codebase-story-review-2026-06-04T16-49-07-161Z",
+  "generated_at": "2026-06-04T16:49:07.162Z",
+  "source_scan_id": "scan-2026-06-04T16-49-03-466Z",
   "source_swarm_id": "bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z",
   "target_path": ".",
   "headline_verdict": "Coherent architecture, but file-count justification requires boundary review",
@@ -14,8 +14,8 @@
     "weak_stories": 0,
     "missing_taxonomy": 0,
     "file_anchors_found": 326,
-    "method_anchors_found": 639,
-    "method_anchors_expected": 639,
+    "method_anchors_found": 643,
+    "method_anchors_expected": 643,
     "codebase_coherence": 100,
     "source_mutated": "none in latest scan",
     "healing_required": "no",
@@ -105,7 +105,7 @@
       }
     ],
     "signals": {
-      "average_methods_per_file": "1.96",
+      "average_methods_per_file": "1.97",
       "zero_method_count": 45,
       "one_method_count": 188,
       "large_file_count": 18,
@@ -114,5 +114,63 @@
       "consolidation_candidate_count": 233
     }
   },
-  "final_verdict": "The studio codebase now tells a coherent taxonomy story. The scan reviewed 326 files, found file anchors on all 326, found all 639 expected method anchors, and reported 100/100 coherence.\n\nThat means the codebase is semantically trustworthy at the taxonomy level. However, the file count should not be treated as automatically justified simply because coherence is 100/100.\n\nThe recommendation is to accept the taxonomy coherence result, preserve the responsibility-first architecture, and run a file-economy review pass before scaling the pattern to larger Python or LLC codebases."
+  "legacy_residue": {
+    "status": "review required",
+    "residue_pressure": 6,
+    "canonical_surfaces": 5,
+    "compatibility_shells": 1,
+    "deprecated_but_supported": 1,
+    "unclear_overlap": 4,
+    "remove_candidates": 1,
+    "canonical_surface_map": [
+      {
+        "surface_type": "Taxonomy scan report",
+        "canonical_surface": "src/observability/taxonomy-scan-report.js",
+        "legacy_or_alternate_surfaces": "bin/taxonomy-report.js, bin/taxonomy-scan.js, bin/verify-scan-fixture.js, bin/verify-scan-validator.js, bin/verify-scan.js, bin/verify-scan.test.js",
+        "relationship": "canonical renderer with CLI and verification surfaces",
+        "decision": "document boundary"
+      },
+      {
+        "surface_type": "Swarm report",
+        "canonical_surface": "src/observability/taxonomy-swarm-report.js",
+        "legacy_or_alternate_surfaces": "bin/run-report-router.js, bin/runs-report-router.js, bin/runs-report.js, src/worker-bee/report.js",
+        "relationship": "partial overlap with run progress and summary reporting",
+        "decision": "document boundary"
+      },
+      {
+        "surface_type": "Story review report",
+        "canonical_surface": "src/observability/codebase-story-review-report.js",
+        "legacy_or_alternate_surfaces": "bin/generate-story-report.js, bin/story-report-formatter.js",
+        "relationship": "legacy command redirected to canonical report",
+        "decision": "keep redirect only if needed; retire unused alternate surfaces"
+      },
+      {
+        "surface_type": "Anchor healing",
+        "canonical_surface": "bin/taxonomy-heal-run.js",
+        "legacy_or_alternate_surfaces": "bin/taxonomy-heal.js, scripts/test-update-anchors.js, scripts/update-anchors.js, tests/verify-taxonomy-heal.js",
+        "relationship": "operational overlap between expected taxonomy healing and direct anchor mutation",
+        "decision": "choose mutation path per governance policy"
+      },
+      {
+        "surface_type": "Worker reporting",
+        "canonical_surface": "src/worker-bee/report/file-scanner.js",
+        "legacy_or_alternate_surfaces": "src/worker-bee/report.js, src/worker-bee/report/report-assembler.js, src/worker-bee/report/report-builder.js, src/worker-bee/report/report-formatter.js, src/worker-bee/report/telemetry-counter.js",
+        "relationship": "worker-specific reporting versus global observability",
+        "decision": "classify as canonical worker-local or retire"
+      }
+    ],
+    "residue_queue": [
+      {
+        "file": "bin/generate-story-report.js",
+        "reason": "Compatibility shell remains after canonical report surface was introduced.",
+        "decision": "Keep only while documented, otherwise retire."
+      },
+      {
+        "file": "bin/story-report-formatter.js",
+        "reason": "Story-report naming overlaps with canonical Codebase Story Review narrative.",
+        "decision": "Retire, redirect, or justify as a distinct package artifact."
+      }
+    ]
+  },
+  "final_verdict": "The studio codebase now tells a coherent taxonomy story. The scan reviewed 326 files, found file anchors on all 326, found all 643 expected method anchors, and reported 100/100 coherence.\n\nThat means the codebase is semantically trustworthy at the taxonomy level. However, the file count should not be treated as automatically justified simply because coherence is 100/100.\n\nThe next review layer must also detect legacy idea residue: older scripts, reports, commands, wrappers, and documents that may remain after newer canonical solutions replaced their purpose. A file can be coherent and still be obsolete.\n\nThe recommendation is to accept the taxonomy coherence result, preserve the responsibility-first architecture, run a file-economy review pass, and keep the canonical-surface/residue review active before scaling the pattern to larger Python or LLC codebases."
 }

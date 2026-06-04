@@ -104,6 +104,7 @@ function formatConsole(report) {
     consoleLine("Methods", `${summary.method_anchors_found} anchored | ${summary.method_anchors_expected} tied out`),
     consoleLine("Coherence", `${summary.codebase_coherence}/100  ${progressBar(summary.codebase_coherence)}`),
     consoleLine("File Economy", renderStatusSignal("warning", report.file_economy.status)),
+    consoleLine("Residue", renderStatusSignal("warning", report.legacy_residue.status)),
     consoleLine("Main Question", report.primary_review_question),
     consoleLine("Verdict", report.headline_verdict),
     border,
@@ -247,10 +248,136 @@ function buildEconomySignals(fileLedger) {
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
+function fileExists(fileLedger, file) {
+  return fileLedger.some((row) => row.file === file);
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function matchingFiles(fileLedger, matcher) {
+  return fileLedger
+    .map((row) => row.file)
+    .filter(matcher)
+    .sort((a, b) => a.localeCompare(b));
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildCanonicalSurfaceMap(fileLedger) {
+  const compatibilityStory = fileExists(fileLedger, "bin/generate-story-report.js")
+    ? ["bin/generate-story-report.js"]
+    : [];
+  const alternateStory = matchingFiles(fileLedger, (file) =>
+    file.includes("story-report") && file !== "bin/generate-story-report.js"
+  );
+  const runReportSurfaces = matchingFiles(fileLedger, (file) =>
+    file.includes("runs-report") || file.includes("run-report") || file.endsWith("/report.js")
+  );
+  return [
+    {
+      surface_type: "Taxonomy scan report",
+      canonical_surface: "src/observability/taxonomy-scan-report.js",
+      legacy_or_alternate_surfaces: matchingFiles(fileLedger, (file) =>
+        file.includes("taxonomy-report") || file.includes("taxonomy-scan.js") || file.includes("verify-scan")
+      ).join(", ") || "none detected",
+      relationship: "canonical renderer with CLI and verification surfaces",
+      decision: "document boundary",
+    },
+    {
+      surface_type: "Swarm report",
+      canonical_surface: "src/observability/taxonomy-swarm-report.js",
+      legacy_or_alternate_surfaces: runReportSurfaces.join(", ") || "none detected",
+      relationship: "partial overlap with run progress and summary reporting",
+      decision: "document boundary",
+    },
+    {
+      surface_type: "Story review report",
+      canonical_surface: "src/observability/codebase-story-review-report.js",
+      legacy_or_alternate_surfaces: [...compatibilityStory, ...alternateStory].join(", ") || "none detected",
+      relationship: compatibilityStory.length ? "legacy command redirected to canonical report" : "canonical only",
+      decision: "keep redirect only if needed; retire unused alternate surfaces",
+    },
+    {
+      surface_type: "Anchor healing",
+      canonical_surface: "bin/taxonomy-heal-run.js",
+      legacy_or_alternate_surfaces: matchingFiles(fileLedger, (file) =>
+        file.includes("taxonomy-heal.js") || file.includes("update-anchors")
+      ).join(", ") || "none detected",
+      relationship: "operational overlap between expected taxonomy healing and direct anchor mutation",
+      decision: "choose mutation path per governance policy",
+    },
+    {
+      surface_type: "Worker reporting",
+      canonical_surface: "src/worker-bee/report/file-scanner.js",
+      legacy_or_alternate_surfaces: matchingFiles(fileLedger, (file) =>
+        file.includes("worker") && file.includes("report") && file !== "src/worker-bee/report/file-scanner.js"
+      ).join(", ") || "none detected",
+      relationship: "worker-specific reporting versus global observability",
+      decision: "classify as canonical worker-local or retire",
+    },
+  ];
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildLegacyResidueReview(fileLedger) {
+  const canonicalSurfaceMap = buildCanonicalSurfaceMap(fileLedger);
+  const compatibilityShells = matchingFiles(fileLedger, (file) =>
+    file === "bin/generate-story-report.js" || file.includes("compatibility")
+  );
+  const unclearOverlap = canonicalSurfaceMap.filter((row) =>
+    row.relationship.includes("overlap") || row.decision.includes("retire")
+  );
+  const removeCandidates = matchingFiles(fileLedger, (file) =>
+    file.includes("story-report") && file !== "bin/generate-story-report.js"
+  );
+  const deprecatedSupported = canonicalSurfaceMap.filter((row) =>
+    row.relationship.includes("redirected")
+  );
+  const residuePressure = compatibilityShells.length + unclearOverlap.length + removeCandidates.length;
+  return {
+    status: "review required",
+    residue_pressure: residuePressure,
+    canonical_surfaces: canonicalSurfaceMap.length,
+    compatibility_shells: compatibilityShells.length,
+    deprecated_but_supported: deprecatedSupported.length,
+    unclear_overlap: unclearOverlap.length,
+    remove_candidates: removeCandidates.length,
+    canonical_surface_map: canonicalSurfaceMap,
+    residue_queue: [
+      ...compatibilityShells.map((file) => ({
+        file,
+        reason: "Compatibility shell remains after canonical report surface was introduced.",
+        decision: "Keep only while documented, otherwise retire.",
+      })),
+      ...removeCandidates.map((file) => ({
+        file,
+        reason: "Story-report naming overlaps with canonical Codebase Story Review narrative.",
+        decision: "Retire, redirect, or justify as a distinct package artifact.",
+      })),
+    ],
+  };
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
 function buildReport(scan, swarm = null) {
   const summary = scan.summary;
   const fileLedger = scan.file_ledger || [];
   const economySignals = buildEconomySignals(fileLedger);
+  const legacyResidue = buildLegacyResidueReview(fileLedger);
   const report = {
     schema: "codebase-story-review-report.v1",
     report_id: `codebase-story-review-${new Date().toISOString().replace(/[:.]/g, "-")}`,
@@ -281,10 +408,12 @@ function buildReport(scan, swarm = null) {
       category_rows: buildCategoryRows(fileLedger),
       signals: economySignals,
     },
+    legacy_residue: legacyResidue,
     final_verdict: [
       `The studio codebase now tells a coherent taxonomy story. The scan reviewed ${summary.files_scanned} files, found file anchors on all ${summary.file_anchors_found}, found all ${summary.method_anchors_found} expected method anchors, and reported ${summary.folder_coherence}/100 coherence.`,
       "That means the codebase is semantically trustworthy at the taxonomy level. However, the file count should not be treated as automatically justified simply because coherence is 100/100.",
-      "The recommendation is to accept the taxonomy coherence result, preserve the responsibility-first architecture, and run a file-economy review pass before scaling the pattern to larger Python or LLC codebases.",
+      "The next review layer must also detect legacy idea residue: older scripts, reports, commands, wrappers, and documents that may remain after newer canonical solutions replaced their purpose. A file can be coherent and still be obsolete.",
+      "The recommendation is to accept the taxonomy coherence result, preserve the responsibility-first architecture, run a file-economy review pass, and keep the canonical-surface/residue review active before scaling the pattern to larger Python or LLC codebases.",
     ].join("\n\n"),
   };
   return report;
@@ -298,6 +427,7 @@ function buildReport(scan, swarm = null) {
 function formatMarkdown(report) {
   const summary = report.summary;
   const economy = report.file_economy;
+  const residue = report.legacy_residue;
   const categoryRows = economy.category_rows.map((row) => [
     row.category,
     row.count,
@@ -314,6 +444,18 @@ function formatMarkdown(report) {
     ["Strong files below 2 methods", economy.signals.small_strong_count, "Truthful small files are candidates for file-economy review."],
     ["Consolidation candidates", economy.signals.consolidation_candidate_count, "Candidate count is a review queue, not an automatic merge order."],
   ];
+  const canonicalSurfaceRows = residue.canonical_surface_map.map((row) => [
+    row.surface_type,
+    `\`${row.canonical_surface}\``,
+    row.legacy_or_alternate_surfaces === "none detected"
+      ? row.legacy_or_alternate_surfaces
+      : row.legacy_or_alternate_surfaces.split(", ").map((file) => `\`${file}\``).join(", "),
+    row.relationship,
+    row.decision,
+  ]);
+  const residueRows = residue.residue_queue.length
+    ? residue.residue_queue.map((row) => [`\`${row.file}\``, row.reason, row.decision])
+    : [["none", "No current residue queue items were detected from the scan ledger.", "continue monitoring"]];
   return [
     "# Codebase Story Review Report",
     "",
@@ -334,6 +476,7 @@ function formatMarkdown(report) {
     "```text",
     "1. Is the taxonomy coherent?",
     "2. Is the file count justified?",
+    "3. Does the file still belong in the current canonical system story?",
     "```",
     "",
     "A codebase can be coherent and still be over-decomposed. A codebase can also have many files because the architecture intentionally separates actors, commands, scanners, validators, reporters, evidence builders, and swarm workers into clear operational boundaries.",
@@ -363,6 +506,8 @@ function formatMarkdown(report) {
         ["Narrative status", summary.narrative_status],
         ["Economy status", economy.status],
         ["File economy score", `${economy.provisional_score}/100 provisional`],
+        ["Residue status", residue.status],
+        ["Residue pressure", residue.residue_pressure],
       ]
     ),
     "",
@@ -407,6 +552,43 @@ function formatMarkdown(report) {
     "",
     markdownTable(["Signal", "Value", "Interpretation"], signalRows),
     "",
+    "## Legacy Idea Residue Review",
+    "",
+    "Purpose: detect files that are locally coherent but globally obsolete, duplicated, or unclear after newer canonical surfaces were introduced.",
+    "",
+    "A file can pass taxonomy coherence and still be part of a false system narrative if it is an old report, old command, compatibility wrapper, or duplicate surface that no longer owns the canonical story.",
+    "",
+    "```text",
+    "Coherence proves each file tells the truth about itself.",
+    "File economy proves the file deserves its own boundary.",
+    "Residue review proves the file still belongs in the current system story.",
+    "```",
+    "",
+    "### Residue Signals",
+    "",
+    markdownTable(
+      ["Metric", "Value"],
+      [
+        ["Canonical surfaces", residue.canonical_surfaces],
+        ["Compatibility shells", residue.compatibility_shells],
+        ["Deprecated but supported", residue.deprecated_but_supported],
+        ["Unclear overlap", residue.unclear_overlap],
+        ["Remove candidates", residue.remove_candidates],
+        ["Residue pressure", residue.residue_pressure],
+      ]
+    ),
+    "",
+    "### Canonical Surface Map",
+    "",
+    markdownTable(
+      ["Surface Type", "Canonical Surface", "Legacy / Alternate Surfaces", "Relationship", "Decision"],
+      canonicalSurfaceRows
+    ),
+    "",
+    "### Residue Queue",
+    "",
+    markdownTable(["File", "Reason", "Decision"], residueRows),
+    "",
     "## Architecture Narrative",
     "",
     "The codebase currently reads as a governance-oriented studio rather than a compact runtime-only application. Its architecture separates command entry points, runtime modules, taxonomy extraction, story analysis, worker-bee packet handling, evidence bundles, report rendering, and verification surfaces.",
@@ -444,6 +626,7 @@ function formatMarkdown(report) {
       [
         ["Taxonomy trust", "Accept the 100/100 coherence result for the current studio snapshot."],
         ["File economy", "Mark as review required with a 70/100 provisional score."],
+        ["Legacy residue", "Keep canonical-surface review active and retire or justify alternate surfaces."],
         ["Consolidation", "Review zero-method and one-method files before merging anything."],
         ["Expansion to LLC codebase", "Classify first, then score coherence, then split only where responsibility boundaries justify it."],
         ["Expansion to Python codebase", "Do not mechanically explode thousands of files into tiny modules."],
@@ -464,6 +647,8 @@ function formatMarkdown(report) {
     "```",
     "",
     "Coherence tells us whether the story is true. File economy tells us whether the story needed its own file.",
+    "",
+    "Residue review tells us whether the story still belongs in the current canonical architecture.",
     "",
     "## Final Verdict",
     "",
