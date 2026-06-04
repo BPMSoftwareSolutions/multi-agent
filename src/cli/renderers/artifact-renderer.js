@@ -7,7 +7,7 @@
 const { STAGES } = require("../../core/stages");
 
 // warehouse:method
-// responsibility: undefined
+// responsibility: Renders artifact state to human-readable CLI output for display — renderArtifact
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

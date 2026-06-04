@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Converts a schema object into human-readable field descriptions for prompt injection
-// actor: core_runtime
-// role: formatter
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

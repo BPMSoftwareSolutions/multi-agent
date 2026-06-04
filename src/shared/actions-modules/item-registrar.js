@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Registers folder in operations state with metadata and current timestamp
-// actor: shared
-// role: folder_registrar
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

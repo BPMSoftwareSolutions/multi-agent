@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Type-checks whether a value is a plain object (excludes arrays and nulls)
-// actor: worker_bee_infrastructure
-// role: infrastructure
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

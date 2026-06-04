@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Gets health indicator emoji and label based on coherence score
-// actor: story_reporter
-// role: formatter
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

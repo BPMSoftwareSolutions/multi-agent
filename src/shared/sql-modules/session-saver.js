@@ -8,7 +8,7 @@ const { getSqlConfig, sqlStringLiteral, runSql } = require("../sql-helpers");
 const { ensureSchema } = require("./schema-manager");
 
 // warehouse:method
-// responsibility: undefined
+// responsibility: Persists session objects to SQL Server database using MERGE statement — saveSessionRow
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

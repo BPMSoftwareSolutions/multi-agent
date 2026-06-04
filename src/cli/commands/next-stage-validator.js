@@ -8,7 +8,7 @@ const { getSession, getCurrentSessionId } = require("../../core/session-store");
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: undefined
+// responsibility: Validates session state and stage readiness for next-stage command execution — validateNextStage
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

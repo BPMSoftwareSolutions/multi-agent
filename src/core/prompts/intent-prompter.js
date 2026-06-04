@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Constructs prompt for intent clarification agent to extract task, criteria, constraints, and questions from user brief
-// actor: core_runtime
-// role: intent_elicitation
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

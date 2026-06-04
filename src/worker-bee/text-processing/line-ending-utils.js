@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Detects whether text uses CRLF or LF as dominant line-ending style
-// actor: worker_bee_infrastructure
-// role: text_analyzer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

@@ -13,7 +13,7 @@ const { normalizeReviewerOutput } = require("./intent-normalizer");
 const { createRoundRecord } = require("./round-record-builder");
 
 // warehouse:method
-// responsibility: undefined
+// responsibility: Orchestrates planner and reviewer agent execution for design workshop rounds — function
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

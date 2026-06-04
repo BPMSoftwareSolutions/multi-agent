@@ -7,7 +7,7 @@
 const { STAGES } = require("./stage-schemas");
 
 // warehouse:method
-// responsibility: undefined
+// responsibility: Validates artifact structure against stage schema and enforces type compliance — validateArtifact
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

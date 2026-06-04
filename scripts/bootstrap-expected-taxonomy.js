@@ -15,7 +15,9 @@ const expected = {
     role: file.file.role,
     source_truth: file.file.source_truth || 'implementation',
     methods: (file.methods || []).reduce((acc, m) => {
-      acc[m.name] = m.responsibility;
+      if (m.name && m.taxonomy && m.taxonomy.responsibility) {
+        acc[m.name] = m.taxonomy.responsibility;
+      }
       return acc;
     }, {})
   }))

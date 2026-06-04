@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: undefined — findDuplicateApprovedAction
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: undefined
+// responsibility: undefined — findDuplicateApprovedAction
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -16,7 +16,7 @@ function findDuplicateApprovedAction(approvedActions, idempotencyKey) {
 }
 
 // warehouse:method
-// responsibility: undefined
+// responsibility: undefined — findDuplicateReviewItem
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

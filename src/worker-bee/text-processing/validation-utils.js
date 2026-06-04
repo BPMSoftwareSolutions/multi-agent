@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Validates whether a value is a placeholder or missing (null, undefined, or empty)
-// actor: worker_bee_infrastructure
-// role: validator
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

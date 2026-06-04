@@ -8,7 +8,7 @@ const { saveSession } = require("../../core/session-store");
 const { advanceStage } = require("../../core/run-round");
 
 // warehouse:method
-// responsibility: undefined
+// responsibility: Advances session to next stage and saves state — function
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

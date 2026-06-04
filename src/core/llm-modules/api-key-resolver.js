@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Retrieves and validates API key for language model providers from environment or override
-// actor: core_runtime
-// role: credential_manager
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

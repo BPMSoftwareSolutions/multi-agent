@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Aggregates files into package groups with role/actor distributions
-// actor: package_classifier
-// role: analyzer
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

@@ -65,7 +65,7 @@ function writeReportFile(report, taxonomyPath) {
 }
 
 // warehouse:method
-// responsibility: undefined
+// responsibility: Formats and outputs coherence analysis findings to console and JSON file — printReport
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

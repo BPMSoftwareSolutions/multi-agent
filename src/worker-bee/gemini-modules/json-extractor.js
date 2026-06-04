@@ -1,7 +1,7 @@
 // warehouse:file
 // responsibility: Extracts JSON from model output, handling bare JSON, markdown fence blocks, and substring ranges
-// actor: worker_bee_infrastructure
-// role: parser
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method

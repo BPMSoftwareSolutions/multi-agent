@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: undefined
-// actor: undefined
-// role: undefined
+// responsibility: undefined — renderRound
+// actor: method_implementation
+// role: implementation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: undefined
+// responsibility: undefined — renderRound
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

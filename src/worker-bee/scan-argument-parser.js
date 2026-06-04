@@ -8,7 +8,7 @@ const DEFAULT_REPO_ROOT =
   process.env.WORKER_BEE_REPO_ROOT || "C:/source/repos/bpm/internal/ai-engine";
 
 // warehouse:method
-// responsibility: undefined
+// responsibility: Parses and validates command arguments for taxonomy scanning operations — parseArgs
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

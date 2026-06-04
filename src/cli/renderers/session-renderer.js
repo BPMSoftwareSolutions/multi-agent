@@ -9,7 +9,7 @@ const { summarizeOperations } = require("../../shared/actions");
 const { renderArtifact } = require("./artifact-renderer");
 
 // warehouse:method
-// responsibility: undefined
+// responsibility: Renders session state to human-readable CLI output for display — renderSession
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

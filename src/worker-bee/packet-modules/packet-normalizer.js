@@ -7,7 +7,7 @@
 const { isObject } = require("./object-utils");
 
 // warehouse:method
-// responsibility: undefined
+// responsibility: Normalizes packet JSON to bare packet format, unwrapping from wrapper if present — normalizePacketFormat
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

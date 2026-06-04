@@ -9,7 +9,7 @@ const fs = require("fs");
 const { serializeWork } = require("./scan");
 
 // warehouse:method
-// responsibility: undefined
+// responsibility: Generates and persists taxonomy tracking JSON from scan results with reporting — generateTracking
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

@@ -10,7 +10,7 @@ const path = require("path");
 const testDir = path.resolve(__dirname, "..", ".test-data");
 
 // warehouse:method
-// responsibility: undefined
+// responsibility: Creates test data files with complete, incomplete, and missing taxonomy headers for validation testing
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

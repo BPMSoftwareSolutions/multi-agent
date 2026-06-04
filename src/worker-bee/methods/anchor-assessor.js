@@ -13,6 +13,7 @@ const REQUIRED_METHOD_FIELDS = ["responsibility", "input_contract", "output_cont
 // warehouse:method
 // warehouse:method
 // warehouse:method
+// warehouse:method
 // responsibility: Finds existing warehouse:method anchor comment block above function definition by scanning upward
 // actor: method_implementation
 // role: implementation

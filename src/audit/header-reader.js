@@ -7,7 +7,7 @@
 const fs = require("fs");
 
 // warehouse:method
-// responsibility: undefined
+// responsibility: Reads JavaScript file and extracts warehouse taxonomy header fields from comments
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

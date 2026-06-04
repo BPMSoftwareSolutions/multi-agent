@@ -7,7 +7,7 @@
 const { exit } = require("../print");
 
 // warehouse:method
-// responsibility: undefined
+// responsibility: Formats and outputs worker execution results to CLI with JSON or human-readable formatting — printWorkerResult
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
