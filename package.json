@@ -29,6 +29,8 @@
     "test:taxonomy-swarm-report": "node tests/verify-taxonomy-swarm-report.js",
     "taxonomy-coherence-scan": "node bin/taxonomy-coherence-scan.js",
     "test:taxonomy-scan-report": "node tests/verify-taxonomy-scan-report.js",
+    "codebase-story-review-report": "node bin/codebase-story-review-report.js",
+    "test:codebase-story-review-report": "node tests/verify-codebase-story-review-report.js",
     "test:ascii-components": "node tests/verify-ascii-components.js",
     "fractal-scan": "node bin/fractal-taxonomy-scanner.js",
     "worker-bee": "node bin/worker-bee.js"

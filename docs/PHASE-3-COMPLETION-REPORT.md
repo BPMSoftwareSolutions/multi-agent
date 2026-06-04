@@ -220,7 +220,7 @@ Create new focused modules:
 
 ### Generated
 - `reports/story-analysis.json` — Updated with new scores
-- `reports/STORY-REPORT.md` — Regenerated
+- `reports/CODEBASE-STORY-REVIEW-LATEST.md` — Regenerated
 
 ---
 

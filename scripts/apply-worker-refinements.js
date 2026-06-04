@@ -58,5 +58,5 @@ console.log(`✅ Applied ${applied} Worker 1 refinements`);
 execSync('node scripts/update-anchors.js reports/expected_taxonomy.json 2>&1 | tail -3', { stdio: 'inherit' });
 
 // Measure
-console.log('\n📊 Measuring coherence...\n');
-execSync('node bin/generate-story-report.js 2>&1 | tail -6', { stdio: 'inherit' });
+console.log('\n📊 Measuring codebase story review...\n');
+execSync('node bin/codebase-story-review-report.js 2>&1 | tail -6', { stdio: 'inherit' });

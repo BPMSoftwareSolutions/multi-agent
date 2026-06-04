@@ -102,7 +102,7 @@ Action: Repair / Split / Re-anchor / Govern
 - Generates human-readable markdown narrative
 - Shows what each file claims vs. what methods do
 - Explains reasoning for coherence verdict
-- Outputs: `reports/STORY-REPORT.md`
+- Outputs: `reports/CODEBASE-STORY-REVIEW-LATEST.md`
 
 ---
 
@@ -228,14 +228,14 @@ node bin/analyze-story.js
 ### Step 3: Generate Report
 
 ```bash
-node bin/generate-story-report.js
-# Output: reports/STORY-REPORT.md
+node bin/codebase-story-review-report.js
+# Output: reports/CODEBASE-STORY-REVIEW-LATEST.md
 ```
 
 ### All at once
 
 ```bash
-node bin/extract-taxonomy.js && node bin/analyze-story.js && node bin/generate-story-report.js
+node bin/extract-taxonomy.js && node bin/analyze-story.js && node bin/codebase-story-review-report.js
 ```
 
 ---
@@ -278,6 +278,6 @@ node bin/extract-taxonomy.js && node bin/analyze-story.js && node bin/generate-s
 
 - Architect Feedback #1: Governance and enforcement model
 - Architect Feedback #2: Root cause analysis and fix strategies
-- `reports/STORY-REPORT.md`: Full narrative analysis of current state
+- `reports/CODEBASE-STORY-REVIEW-LATEST.md`: Current codebase story review of taxonomy coherence and file economy
 - `reports/taxonomy-extracted.json`: Raw taxonomy data
 - `reports/story-analysis.json`: Coherence analysis data

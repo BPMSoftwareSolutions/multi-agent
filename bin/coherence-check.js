@@ -6,6 +6,7 @@
 // source_truth: implementation
 
 const { execFileSync } = require("child_process");
+const fs = require("fs");
 const path = require("path");
 const { extractFromFile } = require("../src/taxonomy/extractor");
 const { evaluateFileCoherence } = require("../src/story-analysis/coherence-evaluator");
@@ -28,6 +29,7 @@ function runCoherenceCheck() {
         .join("\n")
         .split(/\r?\n/)
         .filter((file) => file.endsWith(".js"))
+        .filter((file) => fs.existsSync(path.resolve(root, file)))
     : explicitFiles;
 
   if (files.length === 0) {

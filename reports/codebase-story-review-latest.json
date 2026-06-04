@@ -1,0 +1,118 @@
+{
+  "schema": "codebase-story-review-report.v1",
+  "report_id": "codebase-story-review-2026-06-04T16-41-58-513Z",
+  "generated_at": "2026-06-04T16:41:58.514Z",
+  "source_scan_id": "scan-2026-06-04T16-41-53-684Z",
+  "source_swarm_id": "bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z",
+  "target_path": ".",
+  "headline_verdict": "Coherent architecture, but file-count justification requires boundary review",
+  "primary_review_question": "Do we need 326 files to pull off this taxonomy scanning and swarming solution?",
+  "summary": {
+    "review_status": "story coherent",
+    "files_reviewed": 326,
+    "trusted_stories": 326,
+    "weak_stories": 0,
+    "missing_taxonomy": 0,
+    "file_anchors_found": 326,
+    "method_anchors_found": 639,
+    "method_anchors_expected": 639,
+    "codebase_coherence": 100,
+    "source_mutated": "none in latest scan",
+    "healing_required": "no",
+    "narrative_status": "trusted"
+  },
+  "file_economy": {
+    "status": "review required",
+    "provisional_score": 70,
+    "score_meaning": "Mostly justified; review zero-method and one-method boundaries before scaling.",
+    "category_rows": [
+      {
+        "category": "Application and server surfaces",
+        "count": 80,
+        "coherence": 99,
+        "economy_verdict": "review coherence first",
+        "notes": "Justified when API, browser, route, and integration boundaries stay navigable."
+      },
+      {
+        "category": "CLI and command surfaces",
+        "count": 51,
+        "coherence": 100,
+        "economy_verdict": "directionally justified",
+        "notes": "Justified when command behavior and operator entry points stay isolated."
+      },
+      {
+        "category": "Core runtime",
+        "count": 40,
+        "coherence": 100,
+        "economy_verdict": "directionally justified",
+        "notes": "Justified when each module owns one runtime responsibility."
+      },
+      {
+        "category": "Observability and reports",
+        "count": 2,
+        "coherence": 100,
+        "economy_verdict": "directionally justified",
+        "notes": "Justified when report rendering stays isolated from scoring and healing."
+      },
+      {
+        "category": "Shared utilities",
+        "count": 42,
+        "coherence": 99,
+        "economy_verdict": "review coherence first",
+        "notes": "Review for helper fragmentation and repeated one-method modules."
+      },
+      {
+        "category": "Story analysis",
+        "count": 18,
+        "coherence": 99,
+        "economy_verdict": "review coherence first",
+        "notes": "Justified when evaluator pieces remain independently testable."
+      },
+      {
+        "category": "Taxonomy scanning",
+        "count": 14,
+        "coherence": 100,
+        "economy_verdict": "directionally justified",
+        "notes": "Justified when scanning, extraction, evidence, and healing stay separable."
+      },
+      {
+        "category": "Tests and verification",
+        "count": 6,
+        "coherence": 100,
+        "economy_verdict": "directionally justified",
+        "notes": "Justified when tests protect coherence governance and report contracts."
+      },
+      {
+        "category": "Worker-bee swarm",
+        "count": 73,
+        "coherence": 100,
+        "economy_verdict": "directionally justified",
+        "notes": "Justified when decomposition keeps agent work packets small and governable."
+      },
+      {
+        "category": "Zero-method files",
+        "count": 45,
+        "coherence": 100,
+        "economy_verdict": "review required",
+        "notes": "Justified only for wrappers, config, registry, boundary, or executable surfaces."
+      },
+      {
+        "category": "One-method files",
+        "count": 188,
+        "coherence": 99,
+        "economy_verdict": "review required",
+        "notes": "Review whether the single method has durable semantic weight."
+      }
+    ],
+    "signals": {
+      "average_methods_per_file": "1.96",
+      "zero_method_count": 45,
+      "one_method_count": 188,
+      "large_file_count": 18,
+      "largest_method_file": "public/app.js (48 methods)",
+      "small_strong_count": 233,
+      "consolidation_candidate_count": 233
+    }
+  },
+  "final_verdict": "The studio codebase now tells a coherent taxonomy story. The scan reviewed 326 files, found file anchors on all 326, found all 639 expected method anchors, and reported 100/100 coherence.\n\nThat means the codebase is semantically trustworthy at the taxonomy level. However, the file count should not be treated as automatically justified simply because coherence is 100/100.\n\nThe recommendation is to accept the taxonomy coherence result, preserve the responsibility-first architecture, and run a file-economy review pass before scaling the pattern to larger Python or LLC codebases."
+}

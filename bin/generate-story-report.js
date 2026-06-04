@@ -1,21 +1,11 @@
 // warehouse:file
-// responsibility: Delegator: orchestrates loading analysis files and writing story report
-// actor: story_reporter
-// role: narrator
+// responsibility: Delegates legacy story report command usage to the current codebase story review report so stale taxonomy narratives cannot be regenerated
+// actor: codebase_story_review_cli
+// role: compatibility_command
 // source_truth: implementation
 
-const path = require("path");
-const { loadAnalysis } = require("./analysis-file-loader");
-const { writeStoryReport } = require("./story-report-writer");
+const { runCodebaseStoryReviewReport } = require("./codebase-story-review-report");
 
-const root = path.resolve(__dirname, "..");
-const analysisPath = path.resolve(root, "reports", "story-analysis.json");
-const taxonomyPath = path.resolve(root, "reports", "taxonomy-extracted.json");
-const reportPath = path.resolve(root, "reports", "STORY-REPORT.md");
-
-console.log("📖 Generating Story Report...\n");
-
-const analysisData = loadAnalysis(analysisPath);
-const taxonomyData = loadAnalysis(taxonomyPath);
-
-writeStoryReport(analysisData, taxonomyData, reportPath);
+if (require.main === module) {
+  process.exit(runCodebaseStoryReviewReport());
+}

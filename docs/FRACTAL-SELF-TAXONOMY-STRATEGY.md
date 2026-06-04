@@ -2,7 +2,7 @@
 
 Date: 2026-06-04
 Status: Continuation strategy after Claude thread rate limit
-Baseline source: Fresh local run of `node bin/extract-taxonomy.js`, `node bin/analyze-story.js`, and `node bin/generate-story-report.js`
+Baseline source: Fresh local run of `node bin/extract-taxonomy.js`, `node bin/analyze-story.js`, and `node bin/codebase-story-review-report.js`
 
 ## Executive Summary
 
@@ -200,7 +200,7 @@ Steps:
 
 1. Run `node bin/extract-taxonomy.js`.
 2. Run `node bin/analyze-story.js`.
-3. Run `node bin/generate-story-report.js`.
+3. Run `node bin/codebase-story-review-report.js`.
 4. Store baseline in a coherence run manifest.
 5. Add an `unproven` bucket for zero-method files so they stop inflating the score.
 
@@ -299,7 +299,7 @@ Run after every packet:
 ```bash
 node bin/extract-taxonomy.js
 node bin/analyze-story.js
-node bin/generate-story-report.js
+node bin/codebase-story-review-report.js
 ```
 
 Additional gates:
