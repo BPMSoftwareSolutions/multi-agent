@@ -1,8 +1,8 @@
 # Codebase Story Review Report
 
-**Subtitle:** A narrative review of taxonomy coherence, responsibility boundaries, and file-count justification.
+**Subtitle:** A narrative review of taxonomy coherence, filesystem language, README alignment, canonical ownership, and file-boundary justification.
 
-**Generated:** 2026-06-04T19:58:27.746Z
+**Generated:** 2026-06-04T20:14:50.965Z
 **Source scan:** `scan-2026-06-04T19-57-04-115Z`
 **Source swarm:** `bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z`
 
@@ -292,8 +292,8 @@ The standing doctrine remains: local truth is not automatically whole truth. Fut
 
 | Field | Value |
 | --- | --- |
-| Report ID | codebase-story-review-2026-06-04T19-58-27-745Z |
+| Report ID | codebase-story-review-2026-06-04T20-14-50-964Z |
 | Source scan ID | scan-2026-06-04T19-57-04-115Z |
 | Source swarm ID | bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z |
 | Target path | . |
-| Generated at | 2026-06-04T19:58:27.746Z |
+| Generated at | 2026-06-04T20:14:50.965Z |

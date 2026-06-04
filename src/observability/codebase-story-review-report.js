@@ -684,7 +684,7 @@ function formatMarkdown(report) {
   return [
     "# Codebase Story Review Report",
     "",
-    "**Subtitle:** A narrative review of taxonomy coherence, responsibility boundaries, and file-count justification.",
+    "**Subtitle:** A narrative review of taxonomy coherence, filesystem language, README alignment, canonical ownership, and file-boundary justification.",
     "",
     `**Generated:** ${report.generated_at}`,
     `**Source scan:** \`${report.source_scan_id}\``,

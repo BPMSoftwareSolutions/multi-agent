@@ -9,7 +9,7 @@ This README is a generated architecture projection over verified taxonomy scan a
 <!--
 generated_from:
   source_scan: scan-2026-06-04T19-57-04-115Z
-  source_story_review: codebase-story-review-2026-06-04T19-58-27-745Z
+  source_story_review: codebase-story-review-2026-06-04T20-14-50-964Z
   source_truth: taxonomy_scan_plus_codebase_story_review
   do_not_hand_edit: true
   regeneration_command: npm run taxonomy:readme

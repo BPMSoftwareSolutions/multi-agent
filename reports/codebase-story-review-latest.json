@@ -1,7 +1,7 @@
 {
   "schema": "codebase-story-review-report.v1",
-  "report_id": "codebase-story-review-2026-06-04T19-58-27-745Z",
-  "generated_at": "2026-06-04T19:58:27.746Z",
+  "report_id": "codebase-story-review-2026-06-04T20-14-50-964Z",
+  "generated_at": "2026-06-04T20:14:50.965Z",
   "source_scan_id": "scan-2026-06-04T19-57-04-115Z",
   "source_swarm_id": "bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z",
   "target_path": ".",
