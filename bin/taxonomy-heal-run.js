@@ -1,6 +1,5 @@
-#!/usr/bin/env node
 // warehouse:file
-// responsibility: Runs observable single file taxonomy healing by reporting case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by reporting executive markdown summaries case generation expected remediation repair evidence and verification status
 // actor: taxonomy_heal_runner
 // role: orchestrator
 // source_truth: implementation
@@ -12,32 +11,130 @@ const { applyExpectedTaxonomy } = require("./taxonomy-heal");
 const { buildFileEvidence } = require("./taxonomy-evidence-bundle");
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by reporting case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by reporting executive markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function markdownValue(value) {
+  if (value === null || typeof value === "undefined" || value === "") {
+    return "_Pending_";
+  }
+  return String(value).replace(/\|/g, "\\|");
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by reporting executive markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function markdownTable(headers, rows) {
+  return [
+    `| ${headers.map(markdownValue).join(" | ")} |`,
+    `| ${headers.map(() => "---").join(" | ")} |`,
+    ...rows.map((row) => `| ${row.map(markdownValue).join(" | ")} |`),
+  ].join("\n");
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by reporting executive markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function formatScore(score) {
+  return typeof score === "number" ? `${score}/100` : null;
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by reporting executive markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function formatBoolean(value) {
+  if (typeof value !== "boolean") {
+    return null;
+  }
+  return value ? "Yes" : "No";
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by reporting executive markdown summaries case generation expected remediation repair evidence and verification status
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function formatScoreDelta(before, after) {
+  if (typeof before !== "number" || typeof after !== "number") {
+    return null;
+  }
+  const delta = after - before;
+  return delta >= 0 ? `+${delta}` : String(delta);
+}
+
+// warehouse:method
+// responsibility: Runs observable single file taxonomy healing by reporting executive markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 function formatHealingMarkdown(status) {
+  const targetMet = typeof status.score_after === "number" ? status.score_after === 100 : null;
+  const scopeRows = [
+    ["Files in run", "1"],
+    ["Files completed", status.phase === "verify" ? "1" : "0"],
+    ["Files at 100/100", status.score_after === 100 ? "1" : "0"],
+    ["Files requiring model refactor", "0"],
+  ];
   const lines = [
     "# Taxonomy Healing Run",
     "",
-    `Status: ${String(status.state).toUpperCase()}`,
+    "## Executive Summary",
     "",
-    `Run: ${status.run_id}`,
-    `Target file: ${status.target_file}`,
-    `Phase: ${status.phase}`,
-    `Current action: ${status.current_action}`,
-    `Expected taxonomy: ${status.expected_taxonomy || "(pending)"}`,
-    `Case directory: ${status.case_dir || "(pending)"}`,
-    `Score before: ${typeof status.score_before === "number" ? `${status.score_before}/100` : "(pending)"}`,
-    `Score after: ${typeof status.score_after === "number" ? `${status.score_after}/100` : "(pending)"}`,
-    `Evidence trustworthy: ${typeof status.evidence_trustworthy === "boolean" ? (status.evidence_trustworthy ? "yes" : "no") : "(pending)"}`,
+    markdownTable(
+      ["Signal", "Value"],
+      [
+        ["Status", String(status.state || "unknown").toUpperCase()],
+        ["Target file", status.target_file],
+        ["Phase", status.phase],
+        ["Current action", status.current_action],
+        ["Evidence trustworthy", formatBoolean(status.evidence_trustworthy)],
+      ]
+    ),
+    "",
+    "## Score Impact",
+    "",
+    markdownTable(
+      ["Before", "After", "Delta", "Target Met"],
+      [[formatScore(status.score_before), formatScore(status.score_after), formatScoreDelta(status.score_before, status.score_after), formatBoolean(targetMet)]]
+    ),
+    "",
+    "## Run Scope",
+    "",
+    markdownTable(["Metric", "Value"], scopeRows),
+    "",
+    "## Evidence Artifacts",
+    "",
+    markdownTable(
+      ["Artifact", "Path"],
+      [
+        ["Expected taxonomy", status.expected_taxonomy],
+        ["Case directory", status.case_dir],
+      ]
+    ),
+    "",
+    "## Run Metadata",
+    "",
+    markdownTable(
+      ["Field", "Value"],
+      [
+        ["Run ID", status.run_id],
+        ["Updated at", status.updated_at],
+      ]
+    ),
     "",
   ];
   return lines.join("\n");
 }
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by reporting case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by reporting executive markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -51,7 +148,7 @@ function writeHealingStatus(reportsDir, runDir, status) {
 }
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by reporting case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by reporting executive markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -117,7 +214,7 @@ function runObservableTaxonomyHeal(filePath, root, reportsDir) {
 }
 
 // warehouse:method
-// responsibility: Runs observable single file taxonomy healing by reporting case generation expected remediation repair evidence and verification status
+// responsibility: Runs observable single file taxonomy healing by reporting executive markdown summaries case generation expected remediation repair evidence and verification status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -147,6 +244,8 @@ if (require.main === module) {
 
 module.exports = {
   formatHealingMarkdown,
+  markdownTable,
+  markdownValue,
   writeHealingStatus,
   runObservableTaxonomyHeal,
   runTaxonomyHealRun,

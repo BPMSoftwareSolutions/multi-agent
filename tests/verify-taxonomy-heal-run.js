@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // warehouse:file
-// responsibility: Verifies observable taxonomy healing run updates markdown status while data driven expected remediation heals an incoherent fixture
+// responsibility: Verifies observable taxonomy healing run updates executive markdown status while data driven expected remediation heals an incoherent fixture
 // actor: taxonomy_heal_run_test
 // role: validator
 // source_truth: implementation
@@ -11,7 +11,7 @@ const path = require("path");
 const { runObservableTaxonomyHeal } = require("../bin/taxonomy-heal-run");
 
 // warehouse:method
-// responsibility: Verifies observable taxonomy healing run updates markdown status while data driven expected remediation heals an incoherent fixture
+// responsibility: Verifies observable taxonomy healing run updates executive markdown status while data driven expected remediation heals an incoherent fixture
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -62,9 +62,15 @@ function verifyObservableHealingRun() {
     assert.ok(status.score_before < 100, "fixture should start incoherent");
     assert.strictEqual(status.score_after, 100, "fixture should heal to 100/100");
     assert.strictEqual(status.evidence_trustworthy, true, "post-heal evidence should be trustworthy");
-    assert.ok(currentRun.includes(`Target file: ${fixtureRelPath}`), "markdown should show target file");
-    assert.ok(currentRun.includes("Phase: verify"), "markdown should show final phase");
-    assert.ok(currentRun.includes("Score after: 100/100"), "markdown should show healing impact");
+    assert.ok(currentRun.includes("## Executive Summary"), "markdown should include executive summary");
+    assert.ok(currentRun.includes(`| Target file | ${fixtureRelPath} |`), "markdown should show target file");
+    assert.ok(currentRun.includes("| Phase | verify |"), "markdown should show final phase");
+    assert.ok(currentRun.includes("## Score Impact"), "markdown should include score impact");
+    assert.ok(
+      currentRun.includes(`| ${status.score_before}/100 | 100/100 | +${100 - status.score_before} | Yes |`),
+      "markdown should show healing impact"
+    );
+    assert.ok(currentRun.includes("## Evidence Artifacts"), "markdown should include artifact table");
   } finally {
     fs.rmSync(reportsDir, { recursive: true, force: true });
     fs.rmSync(fixturePath, { force: true });
@@ -72,7 +78,7 @@ function verifyObservableHealingRun() {
 }
 
 // warehouse:method
-// responsibility: Verifies observable taxonomy healing run updates markdown status while data driven expected remediation heals an incoherent fixture
+// responsibility: Verifies observable taxonomy healing run updates executive markdown status while data driven expected remediation heals an incoherent fixture
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
