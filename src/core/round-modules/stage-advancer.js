@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Manages artifact acceptance and stage progression: advances session to next stage after validating acceptance
-// actor: orchestration
-// role: stage_progression
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
 
 // warehouse:method

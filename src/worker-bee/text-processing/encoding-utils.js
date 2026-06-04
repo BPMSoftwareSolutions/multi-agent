@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Removes UTF-8 BOM and normalizes text encoding
+// responsibility: Removes leading UTF-8 BOM from text to ensure clean parsing
 // actor: worker_bee_infrastructure
 // role: text_normalizer
 // source_truth: implementation

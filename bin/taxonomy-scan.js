@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Python taxonomy scanner: recursively scans target folder, classifies files as TOUCHED/UNTOUCHED, validates anchors, writes deterministic tracking JSON for worker-bee
 // actor: taxonomy_scanner

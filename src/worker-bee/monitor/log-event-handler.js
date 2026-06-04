@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Watches worker-bee log stream for real-time packet completion events, extracts progress counts and fallback triggers with timestamps
-// actor: event_processor
-// role: stream_handler
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
 
 // warehouse:method

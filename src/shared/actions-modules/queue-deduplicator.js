@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Checks if approved action already exists by idempotency key, returns existing action or null
-// actor: shared
-// role: queue_deduplicator
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
 
 // warehouse:method

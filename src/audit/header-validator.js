@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Validates that header contains all required taxonomy fields with non-empty values
-// actor: audit
-// role: header_validator
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
 
 // warehouse:method

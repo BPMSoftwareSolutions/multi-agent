@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Test-driven validation suite: creates test data environments, extracts and verifies taxonomy headers from Python files, ensures required fields present and non-placeholder
 // actor: test_suite

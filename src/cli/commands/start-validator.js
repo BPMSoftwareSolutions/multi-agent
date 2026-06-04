@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Validates that brief argument is present and properly typed
-// actor: cli
-// role: validator
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
 
 // warehouse:method

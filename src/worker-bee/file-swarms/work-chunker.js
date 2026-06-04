@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Partitions work items into fixed-size chunks for concurrent processing
+// responsibility: Partitions array into fixed-size chunks
 // actor: worker_bee_infrastructure
 // role: partitioner
 // source_truth: implementation

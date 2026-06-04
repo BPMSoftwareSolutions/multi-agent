@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Computes directory depth from repo root, using explicit parentsLevel metadata or calculated from path
-// actor: worker_bee_infrastructure
-// role: path_calculator
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
 
 // warehouse:method

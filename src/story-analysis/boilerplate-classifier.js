@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Classifies method boilerplate status by pattern matching infrastructure naming conventions
-// actor: coherence_analyzer
-// role: classifier
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
 
 // warehouse:method

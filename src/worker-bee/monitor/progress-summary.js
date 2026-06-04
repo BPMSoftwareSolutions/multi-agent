@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Outputs final progress summary with completion tallies from log watcher, reports recency status and stall indicators
-// actor: summary_printer
-// role: display_engine
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
 
 // warehouse:method

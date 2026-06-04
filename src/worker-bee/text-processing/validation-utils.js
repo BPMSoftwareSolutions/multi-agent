@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Validates field completeness and responsibility specificity
+// responsibility: Validates whether a value is a placeholder or missing (null, undefined, or empty)
 // actor: worker_bee_infrastructure
 // role: validator
 // source_truth: implementation

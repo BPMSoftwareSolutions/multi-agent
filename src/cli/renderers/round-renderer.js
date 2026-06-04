@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Formats and renders round data to human-readable CLI output with planner, reviewer results, and change summaries
-// actor: cli
-// role: round_renderer
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
 
 // warehouse:method

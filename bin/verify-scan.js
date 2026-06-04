@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Python taxonomy verifier: scans configured folder, collects all Python files, validates taxonomy header completeness, reports TOUCHED/UNTOUCHED counts and status
 // actor: taxonomy_verifier

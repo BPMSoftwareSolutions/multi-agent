@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Creates round record with metadata and agent execution results, returns record structure
-// actor: orchestration
-// role: round_record_builder
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
 
 // warehouse:method

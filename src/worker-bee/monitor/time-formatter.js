@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Formats elapsed milliseconds into human-readable time duration string (seconds/minutes/hours ago) for stall detection and progress alerts
-// actor: formatter
-// role: utility
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
 
 // warehouse:method

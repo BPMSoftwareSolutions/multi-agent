@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Extracts JSON from model output with multiple parsing strategies
+// responsibility: Extracts valid JSON from model output, attempting multiple parsing strategies (direct, code fence, brace extraction)
 // actor: core_runtime
 // role: parser
 // source_truth: implementation

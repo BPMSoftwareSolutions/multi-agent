@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // warehouse:file
 // responsibility: Delegator: loads analysis data and writes markdown story report
 // actor: story_reporter

@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Formats taxonomy report structure into human-readable or machine-readable output
-// actor: worker_bee_infrastructure
-// role: telemetry_formatter
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
 
 // warehouse:method

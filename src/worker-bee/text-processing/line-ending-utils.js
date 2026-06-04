@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Detects and preserves platform-specific line endings in text
+// responsibility: Detects whether text uses CRLF or LF as dominant line-ending style
 // actor: worker_bee_infrastructure
 // role: text_analyzer
 // source_truth: implementation

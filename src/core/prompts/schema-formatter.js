@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Converts schemas to formatted JSON for prompt embedding
+// responsibility: Converts a schema object into human-readable field descriptions for prompt injection
 // actor: core_runtime
 // role: formatter
 // source_truth: implementation

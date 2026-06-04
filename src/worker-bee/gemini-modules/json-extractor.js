@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Extracts JSON from model output with multiple parsing strategies
+// responsibility: Extracts JSON from model output, handling bare JSON, markdown fence blocks, and substring ranges
 // actor: worker_bee_infrastructure
 // role: parser
 // source_truth: implementation

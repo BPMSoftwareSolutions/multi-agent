@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Object type checking and pruning utilities
+// responsibility: Type-checks whether a value is a plain object (excludes arrays and nulls)
 // actor: worker_bee_infrastructure
 // role: infrastructure
 // source_truth: implementation

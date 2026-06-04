@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Analyzes package taxonomy and detects contradictions between names/responsibilities/roles
-// actor: contradiction_analyzer
-// role: validator
+// responsibility: Aggregates files into package groups with role/actor distributions
+// actor: package_classifier
+// role: analyzer
 // source_truth: implementation
 
 // warehouse:method

@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Builds narrative interpretation of file's story based on responsibility and methods
-// actor: story_narrator
-// role: interpreter
+// responsibility: Gets health indicator emoji and label based on coherence score
+// actor: story_reporter
+// role: formatter
 // source_truth: implementation
 
 // warehouse:method

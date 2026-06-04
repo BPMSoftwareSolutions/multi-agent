@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Generates formatted report from diagnostic results with detailed status, latency, and recommendations
-// actor: report_formatter
-// role: output_renderer
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
 
 // warehouse:method

@@ -1,5 +1,5 @@
 // warehouse:file
-// responsibility: Resolves API keys for language model providers from environment or override parameters
+// responsibility: Retrieves and validates API key for language model providers from environment or override
 // actor: core_runtime
 // role: credential_manager
 // source_truth: implementation

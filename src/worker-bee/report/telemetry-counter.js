@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Increments telemetry counter in map for given key, tracking cumulative evidence metrics during file scanning
-// actor: worker_bee_infrastructure
-// role: infrastructure
+// responsibility: undefined
+// actor: undefined
+// role: undefined
 // source_truth: implementation
 
 // warehouse:method

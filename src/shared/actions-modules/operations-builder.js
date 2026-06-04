@@ -1,7 +1,7 @@
 // warehouse:file
-// responsibility: Initializes and validates operations state
+// responsibility: Initializes operations state with empty action queues, sync state, and file/folder registries
 // actor: shared
-// role: state_initializer, state_validator
+// role: state_initializer
 // source_truth: implementation
 
 // warehouse:method
