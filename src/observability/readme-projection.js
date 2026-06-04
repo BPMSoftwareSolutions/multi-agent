@@ -53,6 +53,11 @@ function buildReadmeProjection(scan, storyReview) {
   const summary = scan.summary;
   const governance = storyReview.story_governance;
   const economy = storyReview.file_economy;
+  const filesystem = storyReview.filesystem_story;
+  const readme = storyReview.readme_alignment || {
+    status: "review required",
+    stale_count: 1,
+  };
   const residue = storyReview.legacy_residue;
   return {
     schema: "taxonomy-readme-projection.v1",
@@ -73,6 +78,11 @@ function buildReadmeProjection(scan, storyReview) {
       missing: summary.missing_count,
       method_anchors: `${summary.method_anchors_found}/${summary.detected_methods}`,
       local_tie_out: `${summary.folder_coherence}/100`,
+      filesystem_story_score: `${filesystem.score}/100`,
+      filesystem_story_status: filesystem.status,
+      path_language_issues: filesystem.path_language_issues,
+      readme_alignment_status: readme.status,
+      readme_stale_count: readme.stale_count,
       overall_story_coherence: governance.overall_story_coherence,
       residue_pressure: residue.residue_pressure,
       small_boundaries_reviewed: economy.signals.small_boundary_reviewed_count,
@@ -154,6 +164,11 @@ function formatReadmeProjection(projection) {
         ["Story posture", projection.story_posture],
         ["Overall story coherence", summary.overall_story_coherence],
         ["Local taxonomy tie-out", summary.local_tie_out],
+        ["Filesystem story", summary.filesystem_story_score],
+        ["Filesystem status", summary.filesystem_story_status],
+        ["Path-language issues", summary.path_language_issues],
+        ["README alignment", summary.readme_alignment_status],
+        ["README stale artifacts", summary.readme_stale_count],
         ["Files reviewed", summary.files_reviewed],
         ["Locally trusted files", summary.locally_trusted],
         ["Weak files", summary.weak],

@@ -8,8 +8,8 @@ This README is a generated architecture projection over verified taxonomy scan a
 
 <!--
 generated_from:
-  source_scan: scan-2026-06-04T19-15-06-170Z
-  source_story_review: codebase-story-review-2026-06-04T19-15-14-975Z
+  source_scan: scan-2026-06-04T19-57-04-115Z
+  source_story_review: codebase-story-review-2026-06-04T19-58-27-745Z
   source_truth: taxonomy_scan_plus_codebase_story_review
   do_not_hand_edit: true
   regeneration_command: npm run taxonomy:readme
@@ -26,11 +26,16 @@ generated_from:
 | Story posture | earned |
 | Overall story coherence | 100/100 earned |
 | Local taxonomy tie-out | 100/100 |
+| Filesystem story | 100/100 |
+| Filesystem status | pass |
+| Path-language issues | 0 |
+| README alignment | pass |
+| README stale artifacts | 0 |
 | Files reviewed | 330 |
 | Locally trusted files | 330 |
 | Weak files | 0 |
 | Missing taxonomy | 0 |
-| Method anchors | 680/680 |
+| Method anchors | 684/684 |
 | Canonical residue pressure | 0 |
 | File economy posture | pass |
 | Small boundaries reviewed | 231 |

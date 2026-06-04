@@ -199,6 +199,9 @@ function normalizeFile(file) {
     documented_methods: numeric(file.documented_methods),
     score: numeric(file.score),
     scorer_review: file.scorer_review === true,
+    file_responsibility: file.file_responsibility || "",
+    file_actor: file.file_actor || "",
+    file_role: file.file_role || "",
   };
   normalized.verdict = file.verdict || classifyVerdict(normalized);
   normalized.next_action = file.next_action || nextActionFor(normalized);
@@ -612,6 +615,9 @@ function scanFile(filePath, root) {
   return {
     file: relPath,
     file_anchor_found: !!taxonomy && isValidTaxonomy(taxonomy.file),
+    file_responsibility: taxonomy && taxonomy.file ? taxonomy.file.responsibility || "" : "",
+    file_actor: taxonomy && taxonomy.file ? taxonomy.file.actor || "" : "",
+    file_role: taxonomy && taxonomy.file ? taxonomy.file.role || "" : "",
     detected_methods: detectedMethods,
     documented_methods: documentedMethods,
     score,

@@ -116,6 +116,12 @@ function verifyReportModel() {
   assert.strictEqual(report.summary.local_taxonomy_tie_out, 100);
   assert.strictEqual(report.story_governance.status, "earned");
   assert.strictEqual(report.story_governance.overall_story_coherence, "100/100 earned");
+  assert.strictEqual(report.story_governance.filesystem_story_gate, "pass");
+  assert.strictEqual(report.story_governance.readme_alignment_gate, "pass");
+  assert.strictEqual(report.filesystem_story.status, "pass");
+  assert.strictEqual(report.filesystem_story.score, 100);
+  assert.strictEqual(report.readme_alignment.status, "pass");
+  assert.strictEqual(report.readme_alignment.stale_count, 0);
   assert.strictEqual(report.file_economy.status, "pass");
   assert.strictEqual(report.file_economy.provisional_score, 100);
   assert.strictEqual(report.legacy_residue.status, "pass");
@@ -152,6 +158,8 @@ function verifyBlockedModel() {
   const report = buildReport(scan, { run_id: "swarm-test" });
   assert.strictEqual(report.summary.local_taxonomy_tie_out, 100);
   assert.strictEqual(report.story_governance.status, "not_yet_earned");
+  assert.strictEqual(report.story_governance.filesystem_story_gate, "review required");
+  assert.strictEqual(report.filesystem_story.path_language_issues, 1);
   assert.strictEqual(report.file_economy.status, "review required");
   assert.strictEqual(report.file_economy.signals.consolidation_candidate_count, 1);
 }
@@ -168,6 +176,10 @@ function verifyMarkdown(report) {
   assert.match(markdown, /File Economy/);
   assert.match(markdown, /STORY COHERENCE EARNED/);
   assert.match(markdown, /Local Tie-Out/);
+  assert.match(markdown, /Filesystem Story Review/);
+  assert.match(markdown, /Filesystem story gate/);
+  assert.match(markdown, /README Alignment Review/);
+  assert.match(markdown, /README alignment gate/);
   assert.match(markdown, /Local Tie-Out is not the same as Codebase Story Coherence/);
   assert.match(markdown, /Overall story coherence/);
   assert.match(markdown, /100\/100 earned/);
@@ -179,7 +191,7 @@ function verifyMarkdown(report) {
   assert.match(markdown, /Canonical Surface Map/);
   assert.match(markdown, /standing doctrine remains: local truth is not automatically whole truth/);
   assert.match(markdown, /Residue review proves the file still belongs/);
-  assert.match(markdown, /local taxonomy, file economy, and canonical story all clear/);
+  assert.match(markdown, /Overall story coherence \| 100\/100 earned/);
   assert.match(markdown, /File economy score \| 100\/100 earned/);
   assert.match(markdown, /Accept the 100\/100 file-economy pass/);
   assert.match(markdown, /No consolidation required from this scan/);

@@ -1,8 +1,8 @@
 {
   "schema": "codebase-story-review-report.v1",
-  "report_id": "codebase-story-review-2026-06-04T19-15-14-975Z",
-  "generated_at": "2026-06-04T19:15:14.977Z",
-  "source_scan_id": "scan-2026-06-04T19-15-06-170Z",
+  "report_id": "codebase-story-review-2026-06-04T19-58-27-745Z",
+  "generated_at": "2026-06-04T19:58:27.746Z",
+  "source_scan_id": "scan-2026-06-04T19-57-04-115Z",
   "source_swarm_id": "bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z",
   "target_path": ".",
   "headline_verdict": "Codebase story coherence earned",
@@ -14,8 +14,8 @@
     "weak_stories": 0,
     "missing_taxonomy": 0,
     "file_anchors_found": 330,
-    "method_anchors_found": 680,
-    "method_anchors_expected": 680,
+    "method_anchors_found": 684,
+    "method_anchors_expected": 684,
     "local_taxonomy_tie_out": 100,
     "source_mutated": "none in latest scan",
     "healing_required": "no",
@@ -105,7 +105,7 @@
       }
     ],
     "signals": {
-      "average_methods_per_file": "2.06",
+      "average_methods_per_file": "2.07",
       "zero_method_count": 44,
       "one_method_count": 187,
       "large_file_count": 23,
@@ -115,6 +115,23 @@
       "small_boundary_unearned_count": 0,
       "consolidation_candidate_count": 0
     }
+  },
+  "filesystem_story": {
+    "status": "pass",
+    "score": 100,
+    "files_reviewed": 330,
+    "path_language_issues": 0,
+    "misplaced_files": 0,
+    "ambiguous_folders": 0,
+    "issue_ledger": []
+  },
+  "readme_alignment": {
+    "status": "pass",
+    "source_truth": "projection-ready from current scan and story review",
+    "source_scan_id": "scan-2026-06-04T19-57-04-115Z",
+    "source_story_review_id": "this report",
+    "staleness_check": "covered by README projection report",
+    "stale_count": 0
   },
   "legacy_residue": {
     "status": "pass",
@@ -173,10 +190,12 @@
     "status_signal": "pass",
     "status_label": "story coherence earned",
     "local_taxonomy_clean": true,
+    "filesystem_story_gate": "pass",
+    "readme_alignment_gate": "pass",
     "file_economy_gate": "pass",
     "canonical_residue_gate": "pass",
     "overall_story_coherence": "100/100 earned",
-    "overall_label": "✅ 100% earned | local taxonomy, file economy, and canonical story all clear"
+    "overall_label": "✅ 100% earned | local taxonomy, filesystem story, README, file economy, and canonical story all clear"
   },
-  "final_verdict": "The studio has achieved 100/100 local taxonomy tie-out: all scanned files have file anchors, all detected method anchors are represented, and no weak or missing taxonomy stories remain.\n\nThe current verdict is: local taxonomy is clean, canonical boundaries are distinct, and the small-file decomposition is justified by strong evidence.\n\nFor this studio snapshot, local truth and whole-story truth now agree.\n\nThe standing doctrine remains: local truth is not automatically whole truth. Future files must continue to earn canonical ownership and boundary justification before the codebase can keep the green badge."
+  "final_verdict": "The studio has achieved 100/100 local taxonomy tie-out: all scanned files have file anchors, all detected method anchors are represented, and no weak or missing taxonomy stories remain.\n\nThe current verdict is: local taxonomy is clean, filesystem boundaries align, README projection is governed, canonical boundaries are distinct, and the small-file decomposition is justified by strong evidence.\n\nFor this studio snapshot, local truth and whole-story truth now agree.\n\nThe standing doctrine remains: local truth is not automatically whole truth. Future files must continue to earn canonical ownership and boundary justification before the codebase can keep the green badge."
 }

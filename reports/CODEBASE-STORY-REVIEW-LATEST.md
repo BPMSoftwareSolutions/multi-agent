@@ -2,8 +2,8 @@
 
 **Subtitle:** A narrative review of taxonomy coherence, responsibility boundaries, and file-count justification.
 
-**Generated:** 2026-06-04T19:15:14.977Z
-**Source scan:** `scan-2026-06-04T19-15-06-170Z`
+**Generated:** 2026-06-04T19:58:27.746Z
+**Source scan:** `scan-2026-06-04T19-57-04-115Z`
 **Source swarm:** `bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z`
 
 ```text
@@ -13,29 +13,32 @@
 | Status        ✅ STORY COHERENCE EARNED                                                         |
 | Target        📁 .                                                                             |
 | Files         330 reviewed | 330 locally trusted | 0 weak | 0 missing                          |
-| Methods       680 anchored | 680 locally tied out                                              |
+| Methods       684 anchored | 684 locally tied out                                              |
 | Local Tie-Out ✅ 100/100  ████████████████████████ 100%                                         |
+| Filesystem    ✅ 100/100 | 0 path-language issue(s)                                             |
 | Canonical     ✅ PASS | residue pressure: 0                                                     |
 | File Economy  ✅ PASS | 0 small-file boundary candidates                                        |
+| README Align  ✅ PASS | projection-ready from current scan and story review                     |
 | Legacy        ✅ CLEAR | 0 remove candidate | 0 unclear overlaps | 0 compatibility shell        |
-| Overall       ✅ 100% earned | local taxonomy, file economy, and canonical story all clear      |
+| Overall       ✅ 100% earned | local taxonomy, filesystem story, README, file economy, and c... |
 | Main Question Do all 330 files earn their boundaries and belong in the canonical story?        |
 | Verdict       Codebase story coherence earned                                                  |
 +------------------------------------------------------------------------------------------------+
 ```
 
-Important: Local Tie-Out is not the same as Codebase Story Coherence. Local Tie-Out verifies file/method truth. Codebase Story Coherence also requires canonical ownership and earned file boundaries.
+Important: Local Tie-Out is not the same as Codebase Story Coherence. Local Tie-Out verifies file/method truth. Codebase Story Coherence also requires filesystem placement, canonical ownership, earned file boundaries, and README projection alignment.
 
 ## Narrative Purpose
 
 This report reviews whether the codebase tells a coherent architectural story and whether the current file structure is justified by responsibility boundaries, navigability, testability, and swarm execution needs.
 
-The review answers three different questions:
+The review answers four different questions:
 
 ```text
 1. Is the local taxonomy coherent?
 2. Is the file count justified?
 3. Does the file still belong in the current canonical system story?
+4. Does the README projection reflect the current scan and story review?
 ```
 
 A codebase can have clean local taxonomy and still fail codebase story coherence. A file does not earn codebase coherence merely because it describes itself correctly. It earns codebase coherence when it describes itself correctly, deserves its boundary, and still belongs in the canonical system story.
@@ -44,7 +47,7 @@ A codebase can have clean local taxonomy and still fail codebase story coherence
 
 The studio has reached a trusted local taxonomy state. Every scanned file has a file anchor, every detected method anchor ties out, and the system currently reports 100/100 local taxonomy tie-out.
 
-For this snapshot, whole-codebase story coherence has also been earned because residue pressure is closed and small-file boundary evidence is documented.
+For this snapshot, whole-codebase story coherence has also been earned because filesystem placement aligns, README projection is governed, residue pressure is closed, and small-file boundary evidence is documented.
 
 The current governance posture is 100/100 earned. This review evaluates whether 330 files represent healthy responsibility separation or unnecessary fragmentation, and whether any legacy surfaces still preserve old system ideas that should be retired, redirected, or explicitly justified.
 
@@ -57,8 +60,13 @@ The current governance posture is 100/100 earned. This review evaluates whether 
 | Weak stories | 0 |
 | Missing taxonomy | 0 |
 | File anchors | 330/330 |
-| Method anchors | 680/680 |
+| Method anchors | 684/684 |
 | Local taxonomy tie-out | 100/100 |
+| Filesystem story score | 100/100 |
+| Filesystem status | pass |
+| Path-language issues | 0 |
+| README alignment | pass |
+| README staleness check | covered by README projection report |
 | Overall story coherence | 100/100 earned |
 | Source mutation | none in latest scan |
 | Healing required | no |
@@ -75,12 +83,46 @@ The local taxonomy tie-out result is accepted. The scanner found complete file-l
 | Evidence Layer | Result | Meaning |
 | --- | --- | --- |
 | File anchors | 330/330 | Every scanned file has a file-level taxonomy story. |
-| Method anchors | 680/680 | Detected behavior is represented in method taxonomy. |
+| Method anchors | 684/684 | Detected behavior is represented in method taxonomy. |
 | File-method tie-out | 100/100 | File responsibilities and method responsibilities align locally. |
+| Filesystem story | 100/100 | Folder paths, file names, and canonical domain boundaries align with the codebase story. |
+| README alignment | pass | Generated documentation is governed by the current scan and codebase story review sources. |
 | Missing taxonomy | 0 | No dark files remain in the latest scan. |
 | Weak stories | 0 | No contradictory file stories remain in the latest scan. |
 | Canonical residue gate | pass | Overall codebase story coherence requires residue pressure to be closed or explicitly justified. |
+| Filesystem story gate | pass | Overall codebase story coherence requires path and file placement to earn its domain boundary. |
+| README alignment gate | pass | Overall codebase story coherence requires generated docs to be tied to current evidence. |
 | File economy gate | pass | Overall codebase story coherence requires small-file boundaries to be reviewed and earned. |
+
+## Filesystem Story Review
+
+The file system is the first README. A file earns whole-story coherence only when its path, file name, file anchor, methods, and canonical role tell the same story.
+
+| Signal | Value |
+| --- | --- |
+| Filesystem coherence | 100/100 |
+| Status | pass |
+| Files reviewed | 330 |
+| Path-language issues | 0 |
+| Misplaced files | 0 |
+| Ambiguous folders | 0 |
+
+| File | Issue | Evidence | Recommendation |
+| --- | --- | --- | --- |
+| none | pass | All scanned files sit under known canonical filesystem boundaries. | continue monitoring |
+
+## README Alignment Review
+
+The README projection is not independent source truth. It earns alignment when it is generated from the current taxonomy scan and codebase story review evidence.
+
+| Signal | Value |
+| --- | --- |
+| Status | pass |
+| Source truth | projection-ready from current scan and story review |
+| Source scan | `scan-2026-06-04T19-57-04-115Z` |
+| Source story review | this report |
+| Staleness check | covered by README projection report |
+| Stale artifact count | 0 |
 
 ## File Count Question
 
@@ -120,7 +162,7 @@ Zero-method and one-method files were reviewed under the file-economy lens. The 
 
 | Signal | Value | Interpretation |
 | --- | --- | --- |
-| Average methods per file | 2.06 | Low averages are currently justified by agent-safe boundaries and remain monitored. |
+| Average methods per file | 2.07 | Low averages are currently justified by agent-safe boundaries and remain monitored. |
 | Files with 0 methods | 44 | Boundary, config, executable, and registry files may be legitimate. |
 | Files with 1 method | 187 | One-method files need semantic weight or test/governance value. |
 | Files with 5+ methods | 23 | Larger files are monitored for cohesion rather than split mechanically. |
@@ -240,7 +282,7 @@ Residue review tells us whether the story still belongs in the current canonical
 
 The studio has achieved 100/100 local taxonomy tie-out: all scanned files have file anchors, all detected method anchors are represented, and no weak or missing taxonomy stories remain.
 
-The current verdict is: local taxonomy is clean, canonical boundaries are distinct, and the small-file decomposition is justified by strong evidence.
+The current verdict is: local taxonomy is clean, filesystem boundaries align, README projection is governed, canonical boundaries are distinct, and the small-file decomposition is justified by strong evidence.
 
 For this studio snapshot, local truth and whole-story truth now agree.
 
@@ -250,8 +292,8 @@ The standing doctrine remains: local truth is not automatically whole truth. Fut
 
 | Field | Value |
 | --- | --- |
-| Report ID | codebase-story-review-2026-06-04T19-15-14-975Z |
-| Source scan ID | scan-2026-06-04T19-15-06-170Z |
+| Report ID | codebase-story-review-2026-06-04T19-58-27-745Z |
+| Source scan ID | scan-2026-06-04T19-57-04-115Z |
 | Source swarm ID | bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z |
 | Target path | . |
-| Generated at | 2026-06-04T19:15:14.977Z |
+| Generated at | 2026-06-04T19:58:27.746Z |

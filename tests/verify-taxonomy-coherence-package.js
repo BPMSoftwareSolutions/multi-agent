@@ -78,8 +78,14 @@ function verifySdkFlow() {
   const story = buildCodebaseStoryReview({ rootDir: root, writeReports: true });
   assert.strictEqual(story.verdict.overall.earned, true);
   assert.strictEqual(story.verdict.fileEconomy.status, "pass");
+  assert.strictEqual(story.verdict.filesystemStory.status, "pass");
+  assert.strictEqual(story.verdict.filesystemStory.score, 100);
+  assert.strictEqual(story.verdict.readmeAlignment.status, "pass");
+  assert.strictEqual(story.verdict.readmeAlignment.staleCount, 0);
   const verdict = getGovernanceVerdict(story.report);
   assert.strictEqual(verdict.status, "story_coherence_earned");
+  assert.strictEqual(verdict.filesystemStory.pathLanguageIssues, 0);
+  assert.strictEqual(verdict.readmeAlignment.status, "pass");
   const readme = generateReadmeProjection({ rootDir: root, out: "README.md" });
   assert.strictEqual(readme.stale, false);
   assert.match(readme.markdown, /Generated from verified taxonomy and story-review evidence/);

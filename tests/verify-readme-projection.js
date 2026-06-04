@@ -59,6 +59,19 @@ function sampleStoryReview() {
         consolidation_candidate_count: 0,
       },
     },
+    filesystem_story: {
+      status: "pass",
+      score: 100,
+      path_language_issues: 0,
+    },
+    readme_alignment: {
+      status: "pass",
+      source_truth: "projection-ready from current scan and story review",
+      source_scan_id: "scan-readme-test",
+      source_story_review_id: "this report",
+      staleness_check: "covered by README projection report",
+      stale_count: 0,
+    },
     legacy_residue: {
       residue_pressure: 0,
       canonical_surface_map: [
@@ -88,6 +101,9 @@ function verifyProjectionModel() {
   assert.strictEqual(projection.regeneration_command, "npm run taxonomy:readme");
   assert.strictEqual(projection.coherence_posture, "local_taxonomy_clean");
   assert.strictEqual(projection.story_posture, "earned");
+  assert.strictEqual(projection.summary.filesystem_story_score, "100/100");
+  assert.strictEqual(projection.summary.readme_alignment_status, "pass");
+  assert.strictEqual(projection.summary.readme_stale_count, 0);
   assert.strictEqual(projection.summary.overall_story_coherence, "100/100 earned");
   return projection;
 }
@@ -106,6 +122,10 @@ function verifyMarkdownProjection(projection) {
   assert.match(markdown, /source_story_review: codebase-story-review-test/);
   assert.match(markdown, /do_not_hand_edit: true/);
   assert.match(markdown, /README Integrity Rule/);
+  assert.match(markdown, /Filesystem story/);
+  assert.match(markdown, /Path-language issues/);
+  assert.match(markdown, /README alignment/);
+  assert.match(markdown, /README stale artifacts/);
   assert.match(markdown, /Taxonomy scan report/);
   assert.match(markdown, /SDK Package Surface/);
   assert.match(markdown, /@loc\/taxonomy-coherence/);

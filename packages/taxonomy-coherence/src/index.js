@@ -101,6 +101,12 @@ function buildCodebaseStoryReview(options = {}) {
 function getGovernanceVerdict(storyReview) {
   const governance = storyReview.story_governance;
   const economy = storyReview.file_economy;
+  const filesystem = storyReview.filesystem_story;
+  const readme = storyReview.readme_alignment || {
+    status: "review required",
+    source_truth: "missing README alignment evidence",
+    stale_count: 1,
+  };
   const residue = storyReview.legacy_residue;
   return {
     status: governance.status === "earned" ? "story_coherence_earned" : "story_coherence_not_yet_earned",
@@ -114,6 +120,18 @@ function getGovernanceVerdict(storyReview) {
       score: economy.provisional_score,
       smallBoundariesReviewed: economy.signals.small_boundary_reviewed_count,
       smallBoundariesUnearned: economy.signals.small_boundary_unearned_count,
+    },
+    filesystemStory: {
+      status: filesystem.status === "pass" ? "pass" : "review_required",
+      score: filesystem.score,
+      pathLanguageIssues: filesystem.path_language_issues,
+      misplacedFiles: filesystem.misplaced_files,
+      ambiguousFolders: filesystem.ambiguous_folders,
+    },
+    readmeAlignment: {
+      status: readme.status === "pass" ? "pass" : "review_required",
+      sourceTruth: readme.source_truth,
+      staleCount: readme.stale_count,
     },
     residue: {
       status: residue.status === "pass" ? "pass" : "review_required",
