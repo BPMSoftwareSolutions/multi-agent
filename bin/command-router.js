@@ -4,15 +4,15 @@
 // role: router
 // source_truth: implementation
 
-const { start } = require("./commands/start");
-const { show } = require("./commands/show");
-const { round } = require("./commands/round");
-const { accept } = require("./commands/accept");
-const { nextStage } = require("./commands/next-stage");
-const { status } = require("./commands/status");
-const { runWorkerCommand } = require("./commands/run-worker");
-const { approveActionCommand } = require("./commands/approve-action");
-const { exit } = require("./print");
+const { start } = require("../src/cli/commands/start");
+const { show } = require("../src/cli/commands/show");
+const { round } = require("../src/cli/commands/round");
+const { accept } = require("../src/cli/commands/accept");
+const { nextStage } = require("../src/cli/commands/next-stage");
+const { status } = require("../src/cli/commands/status");
+const { runWorkerCommand } = require("../src/cli/commands/run-worker");
+const { approveActionCommand } = require("../src/cli/commands/approve-action");
+const { exit } = require("../src/cli/print");
 
 // warehouse:method
 // responsibility: Routes command to appropriate handler and executes command workflow
