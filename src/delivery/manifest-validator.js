@@ -1,8 +1,19 @@
+// warehouse:file
+// responsibility: validate delivery manifest instances against canonical LOC delivery taxonomy rules
+// actor: delivery_contract_consumer
+// role: validator
+// source_truth: taxonomy/loc-delivery-chain.json
+
 const fs = require("fs");
 const path = require("path");
 
 const TAXONOMY_PATH = path.resolve(__dirname, "../../taxonomy/loc-delivery-chain.json");
 
+// warehouse:method
+// responsibility: read canonical delivery taxonomy data from the source truth file
+// actor: method_implementation
+// role: implementation
+// source_truth: taxonomy/loc-delivery-chain.json
 function loadTaxonomy() {
   return JSON.parse(fs.readFileSync(TAXONOMY_PATH, "utf8"));
 }
@@ -13,18 +24,38 @@ const GATE_POLICY = new Map(
 );
 const REQUIRED_RELEASE_GATES = [...GATE_POLICY.keys()];
 
+// warehouse:method
+// responsibility: determine whether a value is a plain object suitable for manifest validation
+// actor: method_implementation
+// role: implementation
+// source_truth: taxonomy/loc-delivery-chain.json
 function isObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
 }
 
+// warehouse:method
+// responsibility: determine whether a string contains non-whitespace content for manifest validation
+// actor: method_implementation
+// role: implementation
+// source_truth: taxonomy/loc-delivery-chain.json
 function nonEmptyString(value) {
   return typeof value === "string" && value.trim().length > 0;
 }
 
+// warehouse:method
+// responsibility: append a validation error message to the manifest error list
+// actor: method_implementation
+// role: implementation
+// source_truth: taxonomy/loc-delivery-chain.json
 function pushError(errors, message) {
   errors.push(message);
 }
 
+// warehouse:method
+// responsibility: index waiver records by gate for deterministic waiver lookups
+// actor: method_implementation
+// role: implementation
+// source_truth: taxonomy/loc-delivery-chain.json
 function waiverByGate(waivers) {
   const map = new Map();
   for (const waiver of waivers) {
@@ -36,6 +67,11 @@ function waiverByGate(waivers) {
   return map;
 }
 
+// warehouse:method
+// responsibility: return deterministic manifest validation errors from taxonomy rules
+// actor: method_implementation
+// role: implementation
+// source_truth: taxonomy/loc-delivery-chain.json
 function validateDeliveryManifest(manifest) {
   const errors = [];
 

@@ -84,12 +84,49 @@ function assertManifestLoaderTaxonomy() {
   assert.strictEqual(taxonomy.documentedMethods, taxonomy.totalMethods, "manifest loader should document all detected methods");
 }
 
+function assertManifestValidatorTaxonomy() {
+  const rootDir = path.resolve(__dirname, "..");
+  const taxonomy = extractFromFile(path.join(rootDir, "src", "delivery", "manifest-validator.js"), rootDir);
+  assert(taxonomy, "manifest validator should expose scanner-readable taxonomy");
+  assert.strictEqual(taxonomy.file.responsibility, "validate delivery manifest instances against canonical LOC delivery taxonomy rules");
+  assert.strictEqual(taxonomy.file.actor, "delivery_contract_consumer");
+  assert.strictEqual(taxonomy.file.role, "validator");
+  assert.strictEqual(taxonomy.file.source_truth, "taxonomy/loc-delivery-chain.json");
+
+  const methods = new Map(taxonomy.methods.map((method) => [method.name, method.taxonomy]));
+  const expectedMethods = [
+    "loadTaxonomy",
+    "isObject",
+    "nonEmptyString",
+    "pushError",
+    "waiverByGate",
+    "validateDeliveryManifest",
+  ];
+  for (const methodName of expectedMethods) {
+    assert(methods.has(methodName), `manifest validator should anchor ${methodName}`);
+  }
+  assert.strictEqual(
+    methods.get("loadTaxonomy").responsibility,
+    "read canonical delivery taxonomy data from the source truth file"
+  );
+  assert.strictEqual(
+    methods.get("waiverByGate").responsibility,
+    "index waiver records by gate for deterministic waiver lookups"
+  );
+  assert.strictEqual(
+    methods.get("validateDeliveryManifest").responsibility,
+    "return deterministic manifest validation errors from taxonomy rules"
+  );
+  assert.strictEqual(taxonomy.documentedMethods, taxonomy.totalMethods, "manifest validator should document all detected methods");
+}
+
 const valid = loadFixture("honest-coherence.manifest.json");
 valid.release_gates.waivers = [];
 const validResult = validateDeliveryManifest(valid);
 assert.strictEqual(validResult.valid, true, validResult.errors.join("; "));
 assertSchemaParity();
 assertManifestLoaderTaxonomy();
+assertManifestValidatorTaxonomy();
 
 const fixturePath = path.join("tests", "fixtures", "delivery", "honest-coherence.manifest.json");
 const firstLoad = loadDeliveryManifest(fixturePath, {
