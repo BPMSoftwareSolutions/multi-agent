@@ -138,6 +138,9 @@ function scoreBand(file) {
   if (file.verdict === "missing_taxonomy") {
     return "missing";
   }
+  if (file.verdict === "false_taxonomy") {
+    return "false";
+  }
   if (file.score >= 80) {
     return "strong";
   }
@@ -147,7 +150,8 @@ function scoreBand(file) {
   if (file.score > 0) {
     return "weak";
   }
-  return "missing";
+  // Present anchor that earns nothing is false taxonomy, not missing taxonomy.
+  return file.file_anchor_found ? "false" : "missing";
 }
 
 // warehouse:method
@@ -156,8 +160,13 @@ function scoreBand(file) {
 // role: implementation
 // source_truth: implementation
 function classifyVerdict(file) {
-  if (!file.file_anchor_found || file.score === 0) {
+  if (!file.file_anchor_found) {
     return "missing_taxonomy";
+  }
+  if (file.score === 0) {
+    // Anchor is present but earns no coherence (e.g. copied responsibilities).
+    // This is false taxonomy, distinct from missing taxonomy.
+    return "false_taxonomy";
   }
   if (file.score >= 80) {
     return "trusted_story";
@@ -182,6 +191,9 @@ function nextActionFor(file) {
   }
   if (file.verdict === "weak_story") {
     return file.scorer_review ? "review semantic tie-out before healing" : "healing recommended";
+  }
+  if (file.verdict === "false_taxonomy") {
+    return "repair copied or false anchors";
   }
   return "add file/method anchors";
 }
@@ -237,9 +249,10 @@ function buildSummary(files) {
     strong_count: files.filter((file) => file.band === "strong").length,
     moderate_count: files.filter((file) => file.band === "moderate").length,
     weak_count: files.filter((file) => file.band === "weak").length,
+    false_count: files.filter((file) => file.band === "false").length,
     missing_count: files.filter((file) => file.band === "missing").length,
     scorer_review_count: files.filter((file) => file.scorer_review).length,
-    healing_recommended_count: files.filter((file) => file.band === "weak" || file.band === "missing").length,
+    healing_recommended_count: files.filter((file) => file.band === "weak" || file.band === "false" || file.band === "missing").length,
   };
 }
 

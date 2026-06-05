@@ -72,17 +72,29 @@ function synthesizeExpectedResponsibility(taxonomy, evidence) {
 function buildExpectedCoherence(filePath, taxonomy, analysis, evidence) {
   const methodNames = evidence.detected_functions.map((fn) => fn.name);
   const hasGeneratedProvidesAnchor = /^Provides .+ functionality$/i.test(taxonomy.file.responsibility || "");
-  const sharedResponsibility = synthesizeExpectedResponsibility(taxonomy, evidence);
-  const expectedMethods = methodNames.map((name) => ({
-    name,
-    taxonomy: {
-      warehouse: "method",
-      responsibility: sharedResponsibility,
-      actor: "method_implementation",
-      role: "implementation",
-      source_truth: "implementation",
-    },
-  }));
+
+  // Honest coherence: each method keeps its OWN distinct responsibility (collapsed
+  // if it has repeated/merged text). The file gets a distinct umbrella derived from
+  // the method names. We never copy one shared responsibility onto every method —
+  // that is the vanity pattern the honest metric scores zero.
+  const byName = new Map(taxonomy.methods.map((m) => [m.name, m]));
+  const expectedMethods = methodNames.map((name) => {
+    const m = byName.get(name);
+    const own = m && m.taxonomy && m.taxonomy.responsibility
+      ? collapseRepeatedResponsibility(m.taxonomy.responsibility.replace(/\s+/g, " ").trim())
+      : `Implements ${name} behavior`;
+    return {
+      name,
+      taxonomy: {
+        warehouse: "method",
+        responsibility: own,
+        actor: "method_implementation",
+        role: "implementation",
+        source_truth: "implementation",
+      },
+    };
+  });
+  const fileResponsibility = `Coordinates ${methodNames.join(", ")} behavior with documented file and method taxonomy evidence`;
 
   return {
     schema: "expected-coherence-remediation.v1",
@@ -97,7 +109,7 @@ function buildExpectedCoherence(filePath, taxonomy, analysis, evidence) {
     expected_taxonomy: {
       file: {
         warehouse: "file",
-        responsibility: sharedResponsibility,
+        responsibility: fileResponsibility,
         actor: taxonomy.file.actor || "progress_monitor",
         role: taxonomy.file.role || "watcher",
         source_truth: taxonomy.file.source_truth || "implementation",
