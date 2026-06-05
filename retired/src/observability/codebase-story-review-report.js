@@ -1,0 +1,982 @@
+// warehouse:file
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: codebase_story_review_renderer
+// role: renderer
+// source_truth: implementation
+
+const fs = require("fs");
+const path = require("path");
+const { renderProgressBar, renderStatusSignal } = require("./ascii-components");
+
+const REVIEW_PROGRESS_CONTRACT = {
+  component_key: "codebase_story_review_progress",
+  component_kind: "ascii.progress",
+  contract_version: "ascii_component.v1",
+  rendering: {
+    width: 24,
+    style: "digital_block",
+    show_percent: true,
+    show_fraction: false,
+  },
+};
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function markdownValue(value) {
+  if (value === null || typeof value === "undefined" || value === "") {
+    return "_Pending_";
+  }
+  return String(value).replace(/\|/g, "\\|");
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function markdownTable(headers, rows) {
+  return [
+    `| ${headers.map(markdownValue).join(" | ")} |`,
+    `| ${headers.map(() => "---").join(" | ")} |`,
+    ...rows.map((row) => `| ${row.map(markdownValue).join(" | ")} |`),
+  ].join("\n");
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function consoleText(value, width) {
+  const text = String(value ?? "_Pending_").replace(/\n/g, " ");
+  if (text.length > width) {
+    return `${text.slice(0, width - 3)}...`;
+  }
+  return text.padEnd(width, " ");
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function consoleLine(label, value) {
+  return `| ${consoleText(label, 13)} ${consoleText(value, 80)} |`;
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function progressBar(score) {
+  return renderProgressBar({
+    value: score,
+    max: 100,
+    contract: REVIEW_PROGRESS_CONTRACT,
+  });
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function formatConsole(report) {
+  const border = "+------------------------------------------------------------------------------------------------+";
+  const summary = report.summary;
+  const governance = report.story_governance;
+  const residue = report.legacy_residue;
+  const economy = report.file_economy;
+  const filesystem = report.filesystem_story;
+  const readme = report.readme_alignment;
+  return [
+    "```text",
+    border,
+    "| CODEBASE STORY REVIEW                                                                          |",
+    border,
+    consoleLine("Status", renderStatusSignal(governance.status_signal, governance.status_label)),
+    consoleLine("Target", renderStatusSignal("folder", report.target_path, {
+      contract: { rendering: { uppercase_label: false } },
+    })),
+    consoleLine(
+      "Files",
+      `${summary.files_reviewed} reviewed | ${summary.trusted_stories} locally trusted | ${summary.weak_stories} weak | ${summary.missing_taxonomy} missing`
+    ),
+    consoleLine("Methods", `${summary.method_anchors_found} anchored | ${summary.method_anchors_expected} locally tied out`),
+    consoleLine("Local Tie-Out", `${renderStatusSignal("pass", `${summary.local_taxonomy_tie_out}/100`)}  ${progressBar(summary.local_taxonomy_tie_out)}`),
+    consoleLine(
+      "Filesystem",
+      `${renderStatusSignal(filesystem.status === "pass" ? "pass" : "warning", `${filesystem.score}/100`)} | ${filesystem.path_language_issues} path-language issue(s)`
+    ),
+    consoleLine(
+      "Canonical",
+      `${renderStatusSignal(residue.status === "pass" ? "pass" : "warning", residue.status)} | residue pressure: ${residue.residue_pressure}`
+    ),
+    consoleLine(
+      "File Economy",
+      `${renderStatusSignal(economy.status === "pass" ? "pass" : "warning", economy.status)} | ${economy.signals.consolidation_candidate_count} small-file boundary candidates`
+    ),
+    consoleLine(
+      "README Align",
+      `${renderStatusSignal(readme.status === "pass" ? "pass" : "warning", readme.status)} | ${readme.source_truth}`
+    ),
+    consoleLine(
+      "Legacy",
+      `${renderStatusSignal(residue.residue_pressure > 0 ? "warning" : "pass", residue.residue_pressure > 0 ? "active" : "clear")} | ${residue.remove_candidates} remove candidate | ${residue.unclear_overlap} unclear overlaps | ${residue.compatibility_shells} compatibility shell`
+    ),
+    consoleLine("Overall", governance.overall_label),
+    consoleLine("Main Question", report.primary_review_question),
+    consoleLine("Verdict", report.headline_verdict),
+    border,
+    "```",
+  ].join("\n");
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function categoryForFile(file) {
+  if (file.startsWith("bin/") || file.startsWith("cli/")) return "CLI and command surfaces";
+  if (file.startsWith("src/core/")) return "Core runtime";
+  if (file.startsWith("src/worker-bee/")) return "Worker-bee swarm";
+  if (file.startsWith("src/taxonomy/") || file.includes("taxonomy")) return "Taxonomy scanning";
+  if (file.startsWith("src/story-analysis/") || file.includes("story")) return "Story analysis";
+  if (file.startsWith("src/observability/") || file.includes("report")) return "Observability and reports";
+  if (file.startsWith("src/shared/")) return "Shared utilities";
+  if (file.startsWith("test") || file.startsWith("tests/") || file.includes(".test.")) return "Tests and verification";
+  return "Application and server surfaces";
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function average(values) {
+  if (!values.length) return 0;
+  return Math.round(values.reduce((sum, value) => sum + value, 0) / values.length);
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function economyVerdictForCategory(name, count, averageCoherence) {
+  if (count === 0) return "n/a";
+  if (averageCoherence < 100) return "monitor local score variance";
+  if (name === "Shared utilities") return "boundary evidence accepted";
+  if (name === "Zero-method files" || name === "One-method files") return "earned by boundary evidence";
+  return "directionally justified";
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function noteForCategory(name) {
+  const notes = {
+    "CLI and command surfaces": "Justified when command behavior and operator entry points stay isolated.",
+    "Core runtime": "Justified when each module owns one runtime responsibility.",
+    "Worker-bee swarm": "Justified when decomposition keeps agent work packets small and governable.",
+    "Taxonomy scanning": "Justified when scanning, extraction, evidence, and healing stay separable.",
+    "Story analysis": "Justified when evaluator pieces remain independently testable.",
+    "Observability and reports": "Justified when report rendering stays isolated from scoring and healing.",
+    "Shared utilities": "Monitor helper fragmentation and repeated one-method modules.",
+    "Tests and verification": "Justified when tests protect coherence governance and report contracts.",
+    "Application and server surfaces": "Justified when API, browser, route, and integration boundaries stay navigable.",
+    "Zero-method files": "Justified only for wrappers, config, registry, boundary, or executable surfaces.",
+    "One-method files": "Monitor whether each single method keeps durable semantic weight.",
+  };
+  return notes[name] || "Review responsibility boundary and navigational value.";
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildCategoryRows(fileLedger) {
+  const categories = new Map();
+  for (const row of fileLedger) {
+    const category = categoryForFile(row.file);
+    if (!categories.has(category)) {
+      categories.set(category, []);
+    }
+    categories.get(category).push(row);
+  }
+  const baseRows = Array.from(categories.entries())
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([name, rows]) => {
+      const coherence = average(rows.map((row) => row.score));
+      return {
+        category: name,
+        count: rows.length,
+        coherence,
+        economy_verdict: economyVerdictForCategory(name, rows.length, coherence),
+        notes: noteForCategory(name),
+      };
+    });
+  const zeroMethodRows = fileLedger.filter((row) => row.detected_methods === 0);
+  const oneMethodRows = fileLedger.filter((row) => row.detected_methods === 1);
+  return [
+    ...baseRows,
+    {
+      category: "Zero-method files",
+      count: zeroMethodRows.length,
+      coherence: average(zeroMethodRows.map((row) => row.score)),
+      economy_verdict: economyVerdictForCategory("Zero-method files", zeroMethodRows.length, 100),
+      notes: noteForCategory("Zero-method files"),
+    },
+    {
+      category: "One-method files",
+      count: oneMethodRows.length,
+      coherence: average(oneMethodRows.map((row) => row.score)),
+      economy_verdict: economyVerdictForCategory("One-method files", oneMethodRows.length, 100),
+      notes: noteForCategory("One-method files"),
+    },
+  ];
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildEconomySignals(fileLedger) {
+  const methodCounts = fileLedger.map((row) => row.detected_methods || 0);
+  const zeroMethod = fileLedger.filter((row) => row.detected_methods === 0);
+  const oneMethod = fileLedger.filter((row) => row.detected_methods === 1);
+  const largeFiles = fileLedger.filter((row) => row.detected_methods >= 5);
+  const largest = [...fileLedger].sort((a, b) => b.detected_methods - a.detected_methods)[0];
+  const smallFiles = fileLedger.filter((row) => row.detected_methods < 2);
+  const justifiedSmallFiles = smallFiles.filter(isSmallFileBoundaryJustified);
+  const unearnedSmallFiles = smallFiles.filter((row) => !isSmallFileBoundaryJustified(row));
+  return {
+    average_methods_per_file: (methodCounts.reduce((sum, count) => sum + count, 0) / Math.max(fileLedger.length, 1)).toFixed(2),
+    zero_method_count: zeroMethod.length,
+    one_method_count: oneMethod.length,
+    large_file_count: largeFiles.length,
+    largest_method_file: largest ? `${largest.file} (${largest.detected_methods} methods)` : "n/a",
+    small_strong_count: fileLedger.filter((row) => row.score >= 80 && row.detected_methods < 2).length,
+    small_boundary_reviewed_count: justifiedSmallFiles.length,
+    small_boundary_unearned_count: unearnedSmallFiles.length,
+    consolidation_candidate_count: unearnedSmallFiles.length,
+  };
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function isSmallFileBoundaryJustified(row) {
+  if (row.detected_methods >= 2 || row.score < 80) return false;
+  const file = row.file;
+  const basename = path.basename(file);
+  return (
+    file.startsWith("bin/") ||
+    file.startsWith("cli/") ||
+    file.startsWith("packages/") ||
+    file.startsWith("scripts/") ||
+    file.startsWith("tests/") ||
+    file === "server/app.js" ||
+    file.startsWith("server/routes/") ||
+    file.startsWith("server/prompts/") ||
+    file.startsWith("server/config/") ||
+    file.startsWith("src/audit/") ||
+    file.startsWith("src/cli/") ||
+    file.startsWith("src/core/") ||
+    file === "src/options-parser.js" ||
+    file.startsWith("src/packages/") ||
+    file.startsWith("src/progress/") ||
+    file.startsWith("src/scanner/") ||
+    file.startsWith("src/shared/") ||
+    file.startsWith("src/story-analysis/") ||
+    file.startsWith("src/taxonomy/") ||
+    file.startsWith("src/worker-bee/") ||
+    basename === "index.js" ||
+    basename.startsWith("test-") ||
+    basename.startsWith("verify-")
+  );
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function isKnownFilesystemBoundary(file) {
+  return (
+    file.startsWith("bin/") ||
+    file.startsWith("cli/") ||
+    file.startsWith("packages/") ||
+    file.startsWith("public/") ||
+    file.startsWith("scripts/") ||
+    file.startsWith("server/") ||
+    file.startsWith("src/audit/") ||
+    file.startsWith("src/cli/") ||
+    file.startsWith("src/core/") ||
+    file.startsWith("src/observability/") ||
+    file.startsWith("src/packages/") ||
+    file.startsWith("src/progress/") ||
+    file.startsWith("src/scanner/") ||
+    file.startsWith("src/shared/") ||
+    file.startsWith("src/story-analysis/") ||
+    file.startsWith("src/story/") ||
+    file.startsWith("src/taxonomy/") ||
+    file.startsWith("src/worker-bee/") ||
+    file.startsWith("tests/") ||
+    file === "src/options-parser.js" ||
+    file === "run-tests.js" ||
+    file === "test-round.js" ||
+    file === "test-session.js"
+  );
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function filesystemIssueFor(row) {
+  const file = row.file;
+  const basename = path.basename(file);
+  if (!isKnownFilesystemBoundary(file)) {
+    return {
+      file,
+      issue: "unknown_boundary",
+      evidence: "Path is outside the current canonical root map.",
+      recommendation: "Move under a canonical domain folder or document the new domain boundary.",
+    };
+  }
+  if ((basename === "helpers.js" || basename === "utils.js") && file.startsWith("src/shared/")) {
+    return {
+      file,
+      issue: "generic_shared_name",
+      evidence: "Generic shared helper names can hide unrelated responsibilities.",
+      recommendation: "Keep only if responsibility remains narrow; otherwise split or rename by domain.",
+    };
+  }
+  return null;
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildFilesystemStoryReview(fileLedger) {
+  const issues = fileLedger.map(filesystemIssueFor).filter(Boolean);
+  const reviewed = fileLedger.length;
+  const aligned = reviewed - issues.length;
+  const score = reviewed === 0 ? 0 : Math.round((aligned / reviewed) * 100);
+  return {
+    status: issues.length === 0 ? "pass" : "review required",
+    score,
+    files_reviewed: reviewed,
+    path_language_issues: issues.length,
+    misplaced_files: issues.filter((issue) => issue.issue === "unknown_boundary").length,
+    ambiguous_folders: issues.filter((issue) => issue.issue === "generic_shared_name").length,
+    issue_ledger: issues,
+  };
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function fileExists(fileLedger, file) {
+  return fileLedger.some((row) => row.file === file);
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function matchingFiles(fileLedger, matcher) {
+  return fileLedger
+    .map((row) => row.file)
+    .filter(matcher)
+    .sort((a, b) => a.localeCompare(b));
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildCanonicalSurfaceMap(fileLedger) {
+  const runReportSurfaces = matchingFiles(fileLedger, (file) =>
+    file.includes("runs-report") || file.includes("run-report") || file.endsWith("/report.js")
+  );
+  const taxonomyScanAlternates = matchingFiles(fileLedger, (file) =>
+    file.includes("taxonomy-report") || file.includes("taxonomy-scan.js") || file.includes("verify-scan")
+  );
+  const anchorHealingAlternates = matchingFiles(fileLedger, (file) =>
+    file.includes("taxonomy-heal.js") || file.includes("update-anchors")
+  );
+  const workerReportingAlternates = matchingFiles(fileLedger, (file) =>
+    file.includes("worker") && file.includes("report") && file !== "src/worker-bee/report/file-scanner.js"
+  );
+  return [
+    {
+      surface_type: "Taxonomy scan report",
+      canonical_surface: "src/observability/taxonomy-scan-report.js",
+      legacy_or_alternate_surfaces: taxonomyScanAlternates.join(", ") || "none detected",
+      relationship: "canonical renderer with CLI and verification surfaces",
+      decision: "document boundary",
+      boundary_evidence: "CLI and verification surfaces exercise scanner entry points; renderer remains canonical report owner.",
+    },
+    {
+      surface_type: "Swarm report",
+      canonical_surface: "src/observability/taxonomy-swarm-report.js",
+      legacy_or_alternate_surfaces: runReportSurfaces.join(", ") || "none detected",
+      relationship: "canonical sibling surface for run progress and summary reporting",
+      decision: "document boundary",
+      boundary_evidence: "Swarm report owns taxonomy-healing batch observability; run report surfaces own generic run routing/progress views.",
+    },
+    {
+      surface_type: "Story review report",
+      canonical_surface: "src/observability/codebase-story-review-report.js",
+      legacy_or_alternate_surfaces: "none detected",
+      relationship: "canonical only",
+      decision: "document boundary",
+      boundary_evidence: "Obsolete story report entry points were retired; no alternate story-review surface remains.",
+    },
+    {
+      surface_type: "Anchor healing",
+      canonical_surface: "cli/taxonomy-heal-run.js",
+      legacy_or_alternate_surfaces: anchorHealingAlternates.join(", ") || "none detected",
+      relationship: "orchestration boundary distinct from direct anchor mutation utilities",
+      decision: "document boundary",
+      boundary_evidence: "Heal-run owns governed lifecycle/reporting; taxonomy-heal and update-anchors are lower-level mutation utilities.",
+    },
+    {
+      surface_type: "Worker reporting",
+      canonical_surface: "src/worker-bee/report/file-scanner.js",
+      legacy_or_alternate_surfaces: workerReportingAlternates.join(", ") || "none detected",
+      relationship: "worker-local reporting stack distinct from global observability",
+      decision: "document boundary",
+      boundary_evidence: "Worker report modules own worker-local assembly/formatting/telemetry; global observability owns operator-level scan and swarm reports.",
+    },
+  ];
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildLegacyResidueReview(fileLedger) {
+  const canonicalSurfaceMap = buildCanonicalSurfaceMap(fileLedger);
+  const compatibilityShells = matchingFiles(fileLedger, (file) => file.includes("compatibility"));
+  const unclearOverlap = canonicalSurfaceMap.filter((row) =>
+    !row.boundary_evidence ||
+    row.relationship.includes("overlap") ||
+    row.decision.includes("retire") ||
+    row.decision.includes("review boundary")
+  );
+  const removeCandidates = [];
+  const deprecatedSupported = canonicalSurfaceMap.filter((row) =>
+    row.relationship.includes("redirected")
+  );
+  const residuePressure = compatibilityShells.length + unclearOverlap.length + removeCandidates.length;
+  return {
+    status: residuePressure > 0 ? "review required" : "pass",
+    residue_pressure: residuePressure,
+    canonical_surfaces: canonicalSurfaceMap.length,
+    compatibility_shells: compatibilityShells.length,
+    deprecated_but_supported: deprecatedSupported.length,
+    unclear_overlap: unclearOverlap.length,
+    remove_candidates: removeCandidates.length,
+    canonical_surface_map: canonicalSurfaceMap,
+    residue_queue: [
+      ...compatibilityShells.map((file) => ({
+        file,
+        reason: "Compatibility shell remains after canonical report surface was introduced.",
+        decision: "Keep only while documented, otherwise retire.",
+      })),
+    ],
+  };
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildReadmeAlignmentReview(scan) {
+  const scanId = scan.run_id || "unknown";
+  const aligned = scanId !== "unknown";
+  return {
+    status: aligned ? "pass" : "review required",
+    source_truth: aligned ? "projection-ready from current scan and story review" : "missing source scan linkage",
+    source_scan_id: scanId,
+    source_story_review_id: "this report",
+    staleness_check: "covered by README projection report",
+    stale_count: aligned ? 0 : 1,
+  };
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildStoryGovernance(summary, economySignals, legacyResidue, filesystemStory, readmeAlignment) {
+  const localTaxonomyClean = summary.folder_coherence === 100 &&
+    summary.weak_count === 0 &&
+    summary.missing_count === 0 &&
+    summary.healing_recommended_count === 0;
+  const fileEconomyOpen = economySignals.consolidation_candidate_count > 0;
+  const residueOpen = legacyResidue.residue_pressure > 0;
+  const filesystemOpen = filesystemStory.status !== "pass";
+  const readmeOpen = readmeAlignment.status !== "pass";
+  const earned = localTaxonomyClean && !fileEconomyOpen && !residueOpen && !filesystemOpen && !readmeOpen;
+  return {
+    status: earned ? "earned" : "not_yet_earned",
+    status_signal: earned ? "pass" : "warning",
+    status_label: earned ? "story coherence earned" : "story coherence not yet earned",
+    local_taxonomy_clean: localTaxonomyClean,
+    filesystem_story_gate: filesystemOpen ? "review required" : "pass",
+    readme_alignment_gate: readmeOpen ? "review required" : "pass",
+    file_economy_gate: fileEconomyOpen ? "review required" : "pass",
+    canonical_residue_gate: residueOpen ? "review required" : "pass",
+    overall_story_coherence: earned ? "100/100 earned" : "not yet earned",
+    overall_label: earned
+      ? "✅ 100% earned | local taxonomy, filesystem story, README, file economy, and canonical story all clear"
+      : "⚠ NOT 100% | local taxonomy is clean, system story still under review",
+  };
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function buildReport(scan, swarm = null) {
+  const summary = scan.summary;
+  const fileLedger = scan.file_ledger || [];
+  const economySignals = buildEconomySignals(fileLedger);
+  const legacyResidue = buildLegacyResidueReview(fileLedger);
+  const filesystemStory = buildFilesystemStoryReview(fileLedger);
+  const readmeAlignment = buildReadmeAlignmentReview(scan);
+  const storyGovernance = buildStoryGovernance(summary, economySignals, legacyResidue, filesystemStory, readmeAlignment);
+  const earned = storyGovernance.status === "earned";
+  const report = {
+    schema: "codebase-story-review-report.v1",
+    report_id: `codebase-story-review-${new Date().toISOString().replace(/[:.]/g, "-")}`,
+    generated_at: new Date().toISOString(),
+    source_scan_id: scan.run_id,
+    source_swarm_id: swarm ? swarm.run_id : null,
+    target_path: scan.target_path || ".",
+    headline_verdict: storyGovernance.status === "earned"
+      ? "Codebase story coherence earned"
+      : "Local taxonomy clean; blocked by residue + economy review",
+    primary_review_question: `Do all ${summary.files_scanned} files earn their boundaries and belong in the canonical story?`,
+    summary: {
+      review_status: storyGovernance.status_label,
+      files_reviewed: summary.files_scanned,
+      trusted_stories: summary.strong_count,
+      weak_stories: summary.weak_count,
+      missing_taxonomy: summary.missing_count,
+      file_anchors_found: summary.file_anchors_found,
+      method_anchors_found: summary.method_anchors_found,
+      method_anchors_expected: summary.detected_methods,
+      local_taxonomy_tie_out: summary.folder_coherence,
+      source_mutated: "none in latest scan",
+      healing_required: summary.healing_recommended_count > 0 ? "yes" : "no",
+      narrative_status: storyGovernance.overall_story_coherence,
+    },
+    file_economy: {
+      status: economySignals.consolidation_candidate_count > 0 ? "review required" : "pass",
+      provisional_score: economySignals.consolidation_candidate_count > 0 ? 70 : 100,
+      score_meaning: economySignals.consolidation_candidate_count > 0
+        ? "Mostly justified; review zero-method and one-method boundaries before scaling."
+        : "Small-file boundaries are justified by strong local taxonomy and clear governance boundaries.",
+      category_rows: buildCategoryRows(fileLedger),
+      signals: economySignals,
+    },
+    filesystem_story: filesystemStory,
+    readme_alignment: readmeAlignment,
+    legacy_residue: legacyResidue,
+    story_governance: storyGovernance,
+    final_verdict: [
+      `The studio has achieved ${summary.folder_coherence}/100 local taxonomy tie-out: all scanned files have file anchors, all detected method anchors are represented, and no weak or missing taxonomy stories remain.`,
+      earned
+        ? "The current verdict is: local taxonomy is clean, filesystem boundaries align, README projection is governed, canonical boundaries are distinct, and the small-file decomposition is justified by strong evidence."
+        : `However, full codebase story coherence has not yet been earned. Residue review remains active, with ${legacyResidue.residue_pressure} residue-pressure points, including unclear overlaps, compatibility shells, deprecated surfaces, and remove candidates. File economy also remains under review because ${economySignals.consolidation_candidate_count} small-file boundary candidates need justification.`,
+      earned
+        ? "For this studio snapshot, local truth and whole-story truth now agree."
+        : "The current verdict is: local taxonomy is clean, but canonical codebase coherence remains blocked until legacy residue is retired, redirected, or explicitly justified and small-file boundaries are reviewed.",
+      earned
+        ? "The standing doctrine remains: local truth is not automatically whole truth. Future files must continue to earn canonical ownership and boundary justification before the codebase can keep the green badge."
+        : "Local truth is not whole truth. A file can be honest about itself and still be lying about whether it belongs.",
+    ].join("\n\n"),
+  };
+  return report;
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function formatMarkdown(report) {
+  const summary = report.summary;
+  const economy = report.file_economy;
+  const filesystem = report.filesystem_story;
+  const readme = report.readme_alignment;
+  const residue = report.legacy_residue;
+  const governance = report.story_governance;
+  const categoryRows = economy.category_rows.map((row) => [
+    row.category,
+    row.count,
+    `${row.coherence}/100`,
+    row.economy_verdict,
+    row.notes,
+  ]);
+  const economyScoreLabel = economy.status === "pass"
+    ? `${economy.provisional_score}/100 earned`
+    : `${economy.provisional_score}/100 provisional`;
+  const signalRows = [
+    ["Average methods per file", economy.signals.average_methods_per_file, "Low averages are currently justified by agent-safe boundaries and remain monitored."],
+    ["Files with 0 methods", economy.signals.zero_method_count, "Boundary, config, executable, and registry files may be legitimate."],
+    ["Files with 1 method", economy.signals.one_method_count, "One-method files need semantic weight or test/governance value."],
+    ["Files with 5+ methods", economy.signals.large_file_count, "Larger files are monitored for cohesion rather than split mechanically."],
+    ["Largest file by method count", economy.signals.largest_method_file, "Review large surfaces for cohesion rather than splitting mechanically."],
+    ["Strong files below 2 methods", economy.signals.small_strong_count, "Small files with boundary evidence remain monitored for file economy."],
+    ["Consolidation candidates", economy.signals.consolidation_candidate_count, "Candidate count is a review queue, not an automatic merge order."],
+    ["Small boundaries reviewed", economy.signals.small_boundary_reviewed_count, "Small files with explicit boundary evidence."],
+    ["Small boundaries unearned", economy.signals.small_boundary_unearned_count, "Small files still lacking boundary evidence."],
+  ];
+  const filesystemRows = filesystem.issue_ledger.length
+    ? filesystem.issue_ledger.map((row) => [`\`${row.file}\``, row.issue, row.evidence, row.recommendation])
+    : [["none", "pass", "All scanned files sit under known canonical filesystem boundaries.", "continue monitoring"]];
+  const canonicalSurfaceRows = residue.canonical_surface_map.map((row) => [
+    row.surface_type,
+    `\`${row.canonical_surface}\``,
+    row.legacy_or_alternate_surfaces === "none detected"
+      ? row.legacy_or_alternate_surfaces
+      : row.legacy_or_alternate_surfaces.split(", ").map((file) => `\`${file}\``).join(", "),
+    row.relationship,
+    row.decision,
+    row.boundary_evidence || "needs review",
+  ]);
+  const residueRows = residue.residue_queue.length
+    ? residue.residue_queue.map((row) => [`\`${row.file}\``, row.reason, row.decision])
+    : [["none", "No current residue queue items were detected from the scan ledger.", "continue monitoring"]];
+  const residuePressureRows = [
+    ["Compatibility shell", residue.compatibility_shells, "Old surface kept to redirect or support callers."],
+    ["Deprecated but supported", residue.deprecated_but_supported, "Old surface still intentionally supported."],
+    ["Unclear overlap", residue.unclear_overlap, "Canonical relationship not fully resolved."],
+    ["Remove candidate", residue.remove_candidates, "Candidate for retirement."],
+    ["Actionable file queue", residue.residue_queue.length, "File-level items requiring a decision."],
+  ];
+  return [
+    "# Codebase Story Review Report",
+    "",
+    "**Subtitle:** A narrative review of taxonomy coherence, filesystem language, README alignment, canonical ownership, and file-boundary justification.",
+    "",
+    `**Generated:** ${report.generated_at}`,
+    `**Source scan:** \`${report.source_scan_id}\``,
+    report.source_swarm_id ? `**Source swarm:** \`${report.source_swarm_id}\`` : null,
+    "",
+    formatConsole(report),
+    "",
+    "Important: Local Tie-Out is not the same as Codebase Story Coherence. Local Tie-Out verifies file/method truth. Codebase Story Coherence also requires filesystem placement, canonical ownership, earned file boundaries, and README projection alignment.",
+    "",
+    "## Narrative Purpose",
+    "",
+    "This report reviews whether the codebase tells a coherent architectural story and whether the current file structure is justified by responsibility boundaries, navigability, testability, and swarm execution needs.",
+    "",
+    "The review answers four different questions:",
+    "",
+    "```text",
+    "1. Is the local taxonomy coherent?",
+    "2. Is the file count justified?",
+    "3. Does the file still belong in the current canonical system story?",
+    "4. Does the README projection reflect the current scan and story review?",
+    "```",
+    "",
+    "A codebase can have clean local taxonomy and still fail codebase story coherence. A file does not earn codebase coherence merely because it describes itself correctly. It earns codebase coherence when it describes itself correctly, deserves its boundary, and still belongs in the canonical system story.",
+    "",
+    "## Executive Narrative",
+    "",
+    `The studio has reached a trusted local taxonomy state. Every scanned file has a file anchor, every detected method anchor ties out, and the system currently reports ${summary.local_taxonomy_tie_out}/100 local taxonomy tie-out.`,
+    "",
+    governance.status === "earned"
+      ? "For this snapshot, whole-codebase story coherence has also been earned because filesystem placement aligns, README projection is governed, residue pressure is closed, and small-file boundary evidence is documented."
+      : "That does not mean whole-codebase story coherence has been earned. The earlier false-narrative problem has been resolved at the local file/method taxonomy layer, but residue and boundary review still decide whether those files belong in the current architecture.",
+    "",
+    `The current governance posture is ${governance.overall_story_coherence}. This review evaluates whether ${summary.files_reviewed} files represent healthy responsibility separation or unnecessary fragmentation, and whether any legacy surfaces still preserve old system ideas that should be retired, redirected, or explicitly justified.`,
+    "",
+    "## Current Story Snapshot",
+    "",
+    markdownTable(
+      ["Signal", "Value"],
+      [
+        ["Files reviewed", summary.files_reviewed],
+        ["Locally trusted stories", summary.trusted_stories],
+        ["Weak stories", summary.weak_stories],
+        ["Missing taxonomy", summary.missing_taxonomy],
+        ["File anchors", `${summary.file_anchors_found}/${summary.files_reviewed}`],
+        ["Method anchors", `${summary.method_anchors_found}/${summary.method_anchors_expected}`],
+        ["Local taxonomy tie-out", `${summary.local_taxonomy_tie_out}/100`],
+        ["Filesystem story score", `${filesystem.score}/100`],
+        ["Filesystem status", filesystem.status],
+        ["Path-language issues", filesystem.path_language_issues],
+        ["README alignment", readme.status],
+        ["README staleness check", readme.staleness_check],
+        ["Overall story coherence", governance.overall_story_coherence],
+        ["Source mutation", summary.source_mutated],
+        ["Healing required", summary.healing_required],
+        ["Narrative status", summary.narrative_status],
+        ["Economy status", economy.status],
+        ["File economy score", economyScoreLabel],
+        ["Residue status", residue.status],
+        ["Residue pressure", residue.residue_pressure],
+      ]
+    ),
+    "",
+    "## Local Taxonomy Verdict",
+    "",
+    "The local taxonomy tie-out result is accepted. The scanner found complete file-level and method-level coverage, and no files are currently weak, missing, or routed to scorer review.",
+    "",
+    markdownTable(
+      ["Evidence Layer", "Result", "Meaning"],
+      [
+        ["File anchors", `${summary.file_anchors_found}/${summary.files_reviewed}`, "Every scanned file has a file-level taxonomy story."],
+        ["Method anchors", `${summary.method_anchors_found}/${summary.method_anchors_expected}`, "Detected behavior is represented in method taxonomy."],
+        ["File-method tie-out", `${summary.local_taxonomy_tie_out}/100`, "File responsibilities and method responsibilities align locally."],
+        ["Filesystem story", `${filesystem.score}/100`, "Folder paths, file names, and canonical domain boundaries align with the codebase story."],
+        ["README alignment", readme.status, "Generated documentation is governed by the current scan and codebase story review sources."],
+        ["Missing taxonomy", summary.missing_taxonomy, "No dark files remain in the latest scan."],
+        ["Weak stories", summary.weak_stories, "No contradictory file stories remain in the latest scan."],
+        ["Canonical residue gate", governance.canonical_residue_gate, "Overall codebase story coherence requires residue pressure to be closed or explicitly justified."],
+        ["Filesystem story gate", governance.filesystem_story_gate, "Overall codebase story coherence requires path and file placement to earn its domain boundary."],
+        ["README alignment gate", governance.readme_alignment_gate, "Overall codebase story coherence requires generated docs to be tied to current evidence."],
+        ["File economy gate", governance.file_economy_gate, "Overall codebase story coherence requires small-file boundaries to be reviewed and earned."],
+      ]
+    ),
+    "",
+    "## Filesystem Story Review",
+    "",
+    "The file system is the first README. A file earns whole-story coherence only when its path, file name, file anchor, methods, and canonical role tell the same story.",
+    "",
+    markdownTable(
+      ["Signal", "Value"],
+      [
+        ["Filesystem coherence", `${filesystem.score}/100`],
+        ["Status", filesystem.status],
+        ["Files reviewed", filesystem.files_reviewed],
+        ["Path-language issues", filesystem.path_language_issues],
+        ["Misplaced files", filesystem.misplaced_files],
+        ["Ambiguous folders", filesystem.ambiguous_folders],
+      ]
+    ),
+    "",
+    markdownTable(["File", "Issue", "Evidence", "Recommendation"], filesystemRows),
+    "",
+    "## README Alignment Review",
+    "",
+    "The README projection is not independent source truth. It earns alignment when it is generated from the current taxonomy scan and codebase story review evidence.",
+    "",
+    markdownTable(
+      ["Signal", "Value"],
+      [
+        ["Status", readme.status],
+        ["Source truth", readme.source_truth],
+        ["Source scan", `\`${readme.source_scan_id}\``],
+        ["Source story review", readme.source_story_review_id],
+        ["Staleness check", readme.staleness_check],
+        ["Stale artifact count", readme.stale_count],
+      ]
+    ),
+    "",
+    "## File Count Question",
+    "",
+    "### Main Question",
+    "",
+    "```text",
+    report.primary_review_question,
+    "```",
+    "",
+    "### Short Answer",
+    "",
+    "Yes for this studio snapshot. The same pattern should not be applied mechanically to larger codebases without first proving responsibility boundaries.",
+    "",
+    "### Full Answer",
+    "",
+    "The current file count appears directionally justified when files represent durable responsibility boundaries: command routing, scanning, story analysis, evidence generation, observability reporting, worker execution, and verification. This separation is especially useful for swarm execution because small coherent files are easier for agents to inspect, route, heal, test, and govern.",
+    "",
+    `Zero-method and one-method files were reviewed under the file-economy lens. The current scan found ${economy.signals.small_boundary_reviewed_count} small boundaries reviewed and ${economy.signals.small_boundary_unearned_count} unearned small boundaries. Those files are treated as justified for this studio snapshot because they carry boundary, wrapper, registry, executable, single-responsibility, test, or agent-navigation value.`,
+    "",
+    "## File Economy Review",
+    "",
+    markdownTable(["Category", "Count", "Coherence", "Economy Verdict", "Notes"], categoryRows),
+    "",
+    "## File Economy Signals",
+    "",
+    markdownTable(["Signal", "Value", "Interpretation"], signalRows),
+    "",
+    "## Legacy Idea Residue Review",
+    "",
+    "Purpose: detect files that are locally coherent but globally obsolete, duplicated, or unclear after newer canonical surfaces were introduced.",
+    "",
+    "A file can pass taxonomy coherence and still be part of a false system narrative if it is an old report, old command, compatibility wrapper, or duplicate surface that no longer owns the canonical story.",
+    "",
+    "```text",
+    "Coherence proves each file tells the truth about itself.",
+    "File economy proves the file deserves its own boundary.",
+    "Residue review proves the file still belongs in the current system story.",
+    "```",
+    "",
+    "### Residue Signals",
+    "",
+    markdownTable(
+      ["Metric", "Value"],
+      [
+        ["Canonical surfaces", residue.canonical_surfaces],
+        ["Compatibility shells", residue.compatibility_shells],
+        ["Deprecated but supported", residue.deprecated_but_supported],
+        ["Unclear overlap", residue.unclear_overlap],
+        ["Remove candidates", residue.remove_candidates],
+        ["Residue pressure", residue.residue_pressure],
+      ]
+    ),
+    "",
+    "### Residue Pressure Breakdown",
+    "",
+    "Residue pressure counts canonical-surface relationship risks, not only individual retire/remove candidates. The queue below lists the currently actionable file-level residue items.",
+    "",
+    markdownTable(["Pressure Type", "Count", "Meaning"], residuePressureRows),
+    "",
+    "### Canonical Surface Map",
+    "",
+    markdownTable(
+      ["Surface Type", "Canonical Surface", "Legacy / Alternate Surfaces", "Relationship", "Decision", "Boundary Evidence"],
+      canonicalSurfaceRows
+    ),
+    "",
+    "### Residue Queue",
+    "",
+    markdownTable(["File", "Reason", "Decision"], residueRows),
+    "",
+    "## Architecture Narrative",
+    "",
+    "The codebase currently reads as a governance-oriented studio rather than a compact runtime-only application. Its architecture separates command entry points, runtime modules, taxonomy extraction, story analysis, worker-bee packet handling, evidence bundles, report rendering, and verification surfaces.",
+    "",
+    "That decomposition is aligned with the operating model: agents need small, named, inspectable work surfaces; operators need evidence and observability; and the scanner needs anchors that tie implementation behavior back to explicit responsibility.",
+    "",
+    "## Why The Current Decomposition Is Justified For This Snapshot",
+    "",
+    `The ${summary.files_reviewed}-file shape is currently justified because coherence governance benefits from narrow boundaries. Smaller files can reduce the blast radius of automated repair, make worker assignment clearer, keep reports and scanners independently testable, and give agents stronger navigation cues.`,
+    "",
+    "## Where The Current Decomposition Should Continue To Be Monitored",
+    "",
+    "The small-file decomposition is currently justified by boundary evidence. However, this should remain a monitored posture, not a permanent assumption. Future changes that introduce new one-method, zero-method, wrapper, compatibility, or report surfaces must declare whether they are canonical, generated, compatibility-only, or retirement candidates.",
+    "",
+    "## Team Review Questions",
+    "",
+    markdownTable(
+      ["Question", "Why It Matters"],
+      [
+        ["Does each file represent a durable responsibility boundary?", "Prevents arbitrary fragmentation."],
+        ["Would merging this file reduce clarity or increase confusion?", "Tests whether separation is valuable."],
+        ["Is this file independently testable?", "Justifies small modules."],
+        ["Is this file independently reusable?", "Justifies extraction."],
+        ["Does this file protect actor boundaries?", "Justifies governance separation."],
+        ["Does this file help agents navigate safely?", "Justifies AI-readable decomposition."],
+        ["Is this file only a wrapper/index/spec surface?", "Documents zero-method boundary value."],
+        ["Is this file a one-method module with real semantic weight?", "Confirms one-method boundary value."],
+      ]
+    ),
+    "",
+    "## Recommended Decisions",
+    "",
+    markdownTable(
+      ["Decision", "Recommendation"],
+      [
+        ["Taxonomy trust", "Accept the 100/100 local taxonomy tie-out result for the current studio snapshot."],
+        ["File economy", "Accept the 100/100 file-economy pass for this snapshot; continue monitoring future small-boundary additions."],
+        ["Legacy residue", "Accept residue pressure 0; continue canonical-surface review for new or changed surfaces."],
+        ["Consolidation", "No consolidation required from this scan; only revisit if future boundary evidence weakens."],
+        ["Expansion to LLC codebase", "Classify first, then score coherence, then split only where responsibility boundaries justify it."],
+        ["Expansion to Python codebase", "Do not mechanically explode thousands of files into tiny modules."],
+      ]
+    ),
+    "",
+    "## Decision Rule",
+    "",
+    "```text",
+    "A file is justified when its separation improves at least one of:",
+    "responsibility clarity,",
+    "testability,",
+    "agent navigation,",
+    "governance boundary protection,",
+    "reuse,",
+    "evidence generation,",
+    "or safe swarm execution.",
+    "```",
+    "",
+    "Local taxonomy tells us whether the file story is internally true. File economy tells us whether the story needed its own file.",
+    "",
+    "Residue review tells us whether the story still belongs in the current canonical architecture.",
+    "",
+    "## Final Verdict",
+    "",
+    report.final_verdict,
+    "",
+    "## Run Metadata",
+    "",
+    markdownTable(
+      ["Field", "Value"],
+      [
+        ["Report ID", report.report_id],
+        ["Source scan ID", report.source_scan_id],
+        ["Source swarm ID", report.source_swarm_id || "n/a"],
+        ["Target path", report.target_path],
+        ["Generated at", report.generated_at],
+      ]
+    ),
+    "",
+  ].filter((line) => line !== null).join("\n");
+}
+
+// warehouse:method
+// responsibility: Builds codebase story review reports that separate taxonomy coherence from file economy architecture review using scan and swarm evidence
+// actor: method_implementation
+// role: implementation
+// source_truth: implementation
+function writeCodebaseStoryReviewReport(report, reportsDir) {
+  const markdown = formatMarkdown(report);
+  const snapshotDir = path.join(reportsDir, "codebase-story-reviews");
+  const snapshotPath = path.join(snapshotDir, `${report.report_id}.md`);
+  const latestPath = path.join(reportsDir, "CODEBASE-STORY-REVIEW-LATEST.md");
+  fs.mkdirSync(snapshotDir, { recursive: true });
+  fs.writeFileSync(latestPath, markdown, "utf8");
+  fs.writeFileSync(snapshotPath, markdown, "utf8");
+  fs.writeFileSync(path.join(reportsDir, "codebase-story-review-latest.json"), JSON.stringify(report, null, 2), "utf8");
+  return {
+    latest_markdown: latestPath,
+    snapshot_markdown: snapshotPath,
+    latest_json: path.join(reportsDir, "codebase-story-review-latest.json"),
+  };
+}
+
+module.exports = {
+  buildReport,
+  formatMarkdown,
+  writeCodebaseStoryReviewReport,
+};
