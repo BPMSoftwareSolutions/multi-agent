@@ -1,0 +1,186 @@
+{
+  "packet_version": "3.0",
+  "name": "value-chain-cleanup",
+  "description": "Execute codebase lean alignment: retire 95 false narratives, remove 80 dead weight, heal 70 valuable files with missing anchors",
+  "phase": "value-delivery-alignment",
+  "scope": "deterministic-cleanup-with-healing",
+  "self_healing": true,
+  "verification_required": true,
+
+  "operations": [
+    {
+      "name": "phase-1-retire-false-narratives",
+      "description": "Move 95 files claiming importance but delivering no value to /retired/ directory",
+      "action": "move-to-retired",
+      "files_to_retire": [
+        "cli/codebase-story-review-report.js",
+        "cli/coherence-check.js",
+        "cli/taxonomy-coherence-scan.js",
+        "cli/taxonomy-evidence-bundle.js",
+        "cli/taxonomy-case-file.js",
+        "cli/taxonomy-heal-run.js",
+        "cli/taxonomy-heal-swarm-report.js",
+        "cli/taxonomy-heal.js",
+        "cli/taxonomy-readme.js",
+        "cli/taxonomy-report.js",
+        "cli/runs-report.js",
+        "src/core/prompt-builders.js",
+        "src/packages/story-coherence/bin/loc-story.js",
+        "src/packages/story-coherence/src/index.js",
+        "src/cli/cli-router.js",
+        "src/cli/command-router.js",
+        "src/cli/commands/accept.js",
+        "src/cli/commands/approval-processor.js",
+        "src/cli/commands/next-stage.js",
+        "src/cli/commands/next-stage-validator.js",
+        "src/cli/commands/round.js",
+        "src/cli/commands/run-worker.js",
+        "src/cli/commands/session-initializer.js",
+        "src/cli/commands/show.js",
+        "src/cli/commands/stage-advancer.js",
+        "src/cli/commands/start.js",
+        "src/cli/commands/start-validator.js",
+        "src/cli/commands/status.js",
+        "src/cli/commands/worker-result-printer.js",
+        "src/cli/commands/worker-session-loader.js",
+        "src/cli/renderers/artifact-renderer.js",
+        "src/cli/renderers/round-renderer.js",
+        "src/cli/renderers/session-renderer.js",
+        "src/reports/console-renderer.js",
+        "src/reports/markdown-renderer.js",
+        "src/reports/run-detail-renderer.js",
+        "src/reports/run-status-loader.js",
+        "src/reports/run-summary-formatter.js",
+        "src/reports/runs-loader.js",
+        "src/reports/runs-renderer.js",
+        "src/reports/runs-summarizer.js",
+        "src/observability/codebase-story-review-report.js",
+        "src/observability/readme-projection.js",
+        "src/observability/taxonomy-swarm-report.js",
+        "src/story/markdown-generator.js",
+        "src/story/narrative-builder.js",
+        "src/story-analysis/boilerplate-classifier.js",
+        "src/story-analysis/coherence-analyzer.js",
+        "src/story-analysis/coherence-evaluator.js",
+        "src/story-analysis/coherence-reporter.js",
+        "src/story-analysis/concepts-extractor.js",
+        "src/story-analysis/report-formatter.js",
+        "src/story-analysis/similarity-engine.js",
+        "src/story-analysis/similarity-scorer.js"
+      ],
+      "self_healing": {
+        "on_move": "Update any require() statements in non-retired files that reference moved files to point to /retired/ versions if needed",
+        "on_not_found": "Log files that don't exist (may have been already retired or deleted)"
+      }
+    },
+
+    {
+      "name": "phase-2-remove-dead-weight",
+      "description": "Delete 80 completely orphaned files with zero usage",
+      "action": "delete",
+      "files_to_delete": [
+        "src/audit/auditor.js",
+        "src/audit/file-scanner.js",
+        "src/audit/header-parser.js",
+        "src/audit/header-reader.js",
+        "src/audit/header-validator.js",
+        "src/scanner/file-walker.js",
+        "src/scanner/header-parser.js",
+        "src/progress/data-validator.js",
+        "src/progress/log-parser.js",
+        "public/app.js",
+        "tests/verify-evidence-bundle.js",
+        "tests/verify-taxonomy-case-file.js",
+        "tests/verify-taxonomy-heal.js"
+      ],
+      "self_healing": {
+        "on_delete": "Search for any require() statements referencing deleted files and flag for review (don't auto-delete callers)",
+        "on_not_found": "Log files that don't exist, proceed with deletions"
+      }
+    },
+
+    {
+      "name": "phase-3-heal-valuable-modules",
+      "description": "Add proper taxonomy anchors to 70 valuable files missing headers",
+      "action": "add-anchors",
+      "target_files": [
+        "src/worker-bee/methods.js",
+        "src/worker-bee/key-validator.js",
+        "src/worker-bee/worker-bee-config-loader.js",
+        "src/worker-bee/tracking-generator.js",
+        "src/worker-bee/text-utils.js",
+        "src/worker-bee/scan-argument-parser.js",
+        "src/worker-bee/file-swarms/file-reader.js",
+        "src/worker-bee/file-swarms/swarm-orchestrator.js",
+        "src/worker-bee/file-swarms/work-chunker.js",
+        "src/worker-bee/file-swarm/anchor-applicator.js",
+        "src/worker-bee/file-swarm/file-reader.js",
+        "src/worker-bee/file-swarm/partition-logic.js",
+        "src/worker-bee/file-swarm/prompt-builder.js",
+        "src/worker-bee/file-swarm/swarm-orchestrator.js",
+        "src/worker-bee/file-swarm/work-packer.js",
+        "src/worker-bee/ledger/packet-writer.js",
+        "src/worker-bee/ledger/run-combiner.js",
+        "src/worker-bee/ledger/run-init.js",
+        "src/worker-bee/monitor/log-event-handler.js",
+        "src/worker-bee/monitor/progress-reader.js",
+        "src/worker-bee/monitor/progress-summary.js",
+        "src/worker-bee/monitor/time-formatter.js",
+        "src/worker-bee/methods/anchor-assessor.js",
+        "src/worker-bee/methods/anchor-writer.js",
+        "src/worker-bee/methods/def-locator.js",
+        "src/worker-bee/packet-modules/object-utils.js",
+        "src/worker-bee/packet-modules/packet-builder.js",
+        "src/worker-bee/packet-modules/packet-file-reader.js",
+        "src/worker-bee/packet-modules/packet-loader.js",
+        "src/worker-bee/packet-modules/packet-merger.js",
+        "src/worker-bee/packet-modules/packet-normalizer.js",
+        "src/worker-bee/text-processing/depth-calculator.js",
+        "src/worker-bee/text-processing/encoding-utils.js",
+        "src/worker-bee/text-processing/line-ending-utils.js",
+        "src/worker-bee/text-processing/path-normalizer.js",
+        "src/worker-bee/text-processing/path-utils.js",
+        "src/worker-bee/text-processing/validation-utils.js",
+        "src/core/stages-modules/artifact-initializer.js",
+        "src/core/stages-modules/artifact-validator.js",
+        "src/core/stages-modules/stage-schemas.js",
+        "src/shared/validation-helpers.js",
+        "src/shared/validation-modules/recommendation-validator.js",
+        "src/shared/validation-modules/status-validator.js",
+        "src/shared/validation-modules/string-normalizer.js"
+      ],
+      "anchor_strategy": "Extract actual responsibility from code implementation, set role to primary function, actor to module type",
+      "self_healing": {
+        "on_missing_file": "Log and skip, proceed to next",
+        "on_existing_anchor": "Verify existing anchor aligns with code; update if mismatched"
+      }
+    },
+
+    {
+      "name": "phase-4-validate-cleanup",
+      "description": "Verify cleanup integrity: no broken requires, all valuable files intact, coherence maintained",
+      "checks": [
+        "All 95 false-narrative files moved to /retired/",
+        "All 80 dead-weight files deleted",
+        "All 70 healing-needed files have proper anchors",
+        "No require() statements pointing to retired/deleted files (flag for review if found)",
+        "All 120 PROMOTABLE files still exist and intact",
+        "No new MODULE_NOT_FOUND errors introduced",
+        "Delivery pipeline files all load correctly"
+      ]
+    }
+  ],
+
+  "execution_guidelines": {
+    "deterministic": "Follow this packet spec exactly. No creative interpretation.",
+    "batch_safety": "Execute in phases with validation between each phase. Don't proceed to next phase if previous failed.",
+    "logging": "Log every action: which files moved, deleted, anchored. Which failed. Why.",
+    "rollback": "If validation fails, rollback entire cleanup and report the failure."
+  },
+
+  "rollback_plan": {
+    "on_broken_requires": "Revert all moves/deletes and report broken references",
+    "on_missing_promotable": "Revert and report which PROMOTABLE files were accidentally affected",
+    "on_test_failure": "Revert and report which tests failed"
+  }
+}

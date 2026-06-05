@@ -57,11 +57,9 @@ function buildNarrative(file, analysis) {
     narratives.push("#### Issues Detected:");
     narratives.push("");
     for (const issue of analysis.issues) {
-      narratives.push(`- **${issue.method}()** (${issue.similarity}% alignment)`);
+      const reasons = Array.isArray(issue.reasons) && issue.reasons.length ? issue.reasons.join(", ") : "incoherent_responsibility";
+      narratives.push(`- **${issue.method}()** (${reasons})`);
       narratives.push(`  - Says: "${issue.methodResp}"`);
-      if (issue.flags && issue.flags.length > 0) {
-        narratives.push(`  - Flags: ${issue.flags.join(", ")}`);
-      }
       narratives.push("");
     }
   } else {

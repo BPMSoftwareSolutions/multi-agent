@@ -1,0 +1,128 @@
+{
+  "packet_version": "2.0",
+  "name": "codebase-reorganization-template",
+  "description": "Reusable template for systematic codebase reorganization. Define file movements, require() updates, and validation. Swarm executes deterministically with self-healing.",
+  "phase": "codebase-governance",
+  "scope": "deterministic-refactoring",
+  "self_healing": true,
+  "verification_required": true,
+
+  "template_instructions": {
+    "how_to_use": "Copy this template and replace PLACEHOLDER sections with specific file paths and directory mappings. Pass to worker-bee swarm to execute.",
+    "benefits": [
+      "Deterministic execution (no random manual edits)",
+      "Self-healing on MODULE_NOT_FOUND errors",
+      "Systematic require() path updates across codebase",
+      "Automated validation at each phase",
+      "Rollback capability if coherence regresses"
+    ]
+  },
+
+  "operations": [
+    {
+      "name": "move-and-organize",
+      "description": "Move files from source to target directories, organized by concern",
+      "batches": [
+        {
+          "batch_id": "BATCH_N",
+          "concern": "CONCERN_NAME (e.g., cli, observability, analysis)",
+          "target_directory": "src/CONCERN/ or cli/CONCERN/",
+          "files": [
+            "source/path/file1.js",
+            "source/path/file2.js"
+          ],
+          "updates_required": {
+            "path/to/file/that/requires/file1.js": "update require() to ../relative/path",
+            "path/to/another/file.js": "update require() paths"
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "update-requires-systematically",
+      "description": "Walk entire codebase and update require() calls to point to new file locations",
+      "process": [
+        "For each moved file, find all files that require() it via grep",
+        "Calculate relative path from requiring file to new location",
+        "Update require() statement with new path",
+        "Log each update: [file] -> [old require] to [new require]",
+        "On MODULE_NOT_FOUND after update:",
+        "  1. Verify new path exists",
+        "  2. Check if file was moved to different location than expected",
+        "  3. Create re-export stub if needed",
+        "  4. Update caller to use re-export path",
+        "  5. Record self-healing action taken"
+      ]
+    },
+
+    {
+      "name": "verify-structure",
+      "description": "Validate that reorganization matches intended structure",
+      "checks": [
+        "All source files moved from source directories",
+        "No orphaned require() statements pointing to old locations",
+        "Target directories contain expected files",
+        "Directory structure matches concern-based organization"
+      ]
+    },
+
+    {
+      "name": "validate-functionality",
+      "description": "Verify reorganized code still works",
+      "checks": [
+        "Entry points in bin/ or cli/ can load without MODULE_NOT_FOUND",
+        "All require() paths resolve correctly",
+        "No circular dependency issues introduced",
+        "Existing tests pass (if available)"
+      ]
+    },
+
+    {
+      "name": "validate-semantics",
+      "description": "Verify reorganization maintains code governance and coherence",
+      "checks": [
+        "File anchors still reflect single responsibility",
+        "Concern-based organization makes semantic sense",
+        "No coherence regression (run coherence scan)",
+        "Governance structure intact"
+      ]
+    }
+  ],
+
+  "self_healing_strategy": {
+    "on_module_not_found": [
+      "Attempt to locate file in alternative expected locations",
+      "If found elsewhere, update require() path to correct location",
+      "If not found, create re-export stub in original location pointing to new location",
+      "Log the healing action taken"
+    ],
+    "on_path_mismatch": [
+      "Identify what path was expected vs. actual",
+      "Update require() to correct actual path",
+      "Log the mismatch and fix for review"
+    ],
+    "on_require_cycle": [
+      "Detect circular dependencies introduced by reorganization",
+      "Report the cycle for human review (don't auto-fix)",
+      "Suggest: move responsibility to third module or use dependency injection"
+    ],
+    "max_retries": 3,
+    "log_all_changes": true,
+    "recovery_strategy": "If unrecoverable after 3 retries, trigger rollback"
+  },
+
+  "rollback_plan": {
+    "on_failure": "Revert all file moves and require() updates to restore original state",
+    "on_coherence_regression": "If coherence drops >2%, automatically rollback and report",
+    "on_test_failure": "If tests fail after reorganization, rollback unless explicitly overridden"
+  },
+
+  "execution_guidelines": {
+    "batch_approach": "Execute in logical batches (concern-based). Validate after each batch before proceeding.",
+    "parallelization": "Batches can run in parallel if they don't share file dependencies.",
+    "logging": "Log every action: moves, require() updates, self-healing attempts, validation results.",
+    "transparency": "Produce detailed report of all changes, decisions, and self-healing actions.",
+    "safety": "When in doubt, stop and report rather than guess. Coherence and governance trump speed."
+  }
+}

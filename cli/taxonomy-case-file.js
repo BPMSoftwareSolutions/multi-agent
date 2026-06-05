@@ -166,7 +166,7 @@ function formatIncoherenceReport(filePath, analysis, evidence, expected) {
     lines.push("No method-level issues reported.");
   } else {
     for (const issue of analysis.issues) {
-      lines.push(`- ${issue.method}: similarity ${issue.similarity}% below threshold ${issue.threshold}%`);
+      lines.push(`- ${issue.method}: ${Array.isArray(issue.reasons) && issue.reasons.length ? issue.reasons.join(", ") : "incoherent_responsibility"}`);
     }
   }
 

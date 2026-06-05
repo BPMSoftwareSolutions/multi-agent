@@ -27,7 +27,7 @@ function formatReport(report) {
         if (a.analysis.issues.length > 0) {
           for (const issue of a.analysis.issues) {
             output.push(`   └─ ${issue.method}: "${issue.methodResp.substring(0, 60)}..."`);
-            output.push(`      Alignment: ${issue.similarity}% ${issue.flags.length > 0 ? `| Flags: ${issue.flags.join(", ")}` : ""}`);
+            output.push(`      Reasons: ${Array.isArray(issue.reasons) && issue.reasons.length ? issue.reasons.join(", ") : "incoherent_responsibility"}`);
           }
         }
         output.push("");

@@ -1,0 +1,165 @@
+{
+  "packet_version": "1.0",
+  "name": "bin-reorganization",
+  "description": "Reorganize bin/ directory: move 35 implementation modules to src/ by concern, keep 15 entry points in bin/, update all require() paths systematically with self-healing",
+  "phase": "codebase-governance",
+  "scope": "deterministic-refactoring",
+  "self_healing": true,
+  "verification_required": true,
+
+  "operations": [
+    {
+      "name": "move-and-organize",
+      "description": "Move 35 modules from bin/ to src/ subdirectories by concern, preserving functionality",
+      "batches": [
+        {
+          "batch_id": 1,
+          "concern": "cli-parsing-and-routing",
+          "target_directory": "src/cli/",
+          "files": [
+            "bin/argument-parser.js",
+            "bin/options-parser.js",
+            "bin/command-router.js",
+            "bin/status-renderer.js",
+            "bin/main-orchestrator.js"
+          ],
+          "updates_required": {
+            "bin/studio.js": "update requires to ../src/cli/",
+            "bin/worker-bee.js": "update requires to ../src/cli/",
+            "src/cli/commands/status.js": "update require to ../status-renderer",
+            "src/cli/command-router.js": "update requires to ./commands/"
+          }
+        },
+        {
+          "batch_id": 2,
+          "concern": "story-analysis-and-reporting",
+          "target_directory": "src/story-analysis/",
+          "files": [
+            "bin/analyze-story.js",
+            "bin/story-analyzer.js",
+            "bin/contradiction-analyzer.js",
+            "bin/contradiction-sorter.js",
+            "bin/package-story-analyzer.js"
+          ]
+        },
+        {
+          "batch_id": 3,
+          "concern": "observability-and-reporting",
+          "target_directory": "src/observability/",
+          "files": [
+            "bin/analysis-file-loader.js",
+            "bin/analysis-formatter.js",
+            "bin/report-builder.js",
+            "bin/results-formatter.js",
+            "bin/snapshot-calculator.js",
+            "bin/snapshot-formatter.js",
+            "bin/snapshot-progress.js",
+            "bin/run-report-router.js",
+            "bin/runs-report-router.js",
+            "bin/track-progress.js",
+            "bin/watch-progress.js"
+          ]
+        },
+        {
+          "batch_id": 4,
+          "concern": "worker-bee-infrastructure",
+          "target_directory": "src/worker-bee/",
+          "files": [
+            "bin/worker-bee-config-loader.js",
+            "bin/key-validator.js"
+          ]
+        },
+        {
+          "batch_id": 5,
+          "concern": "taxonomy-operations",
+          "target_directory": "src/taxonomy/",
+          "files": [
+            "bin/extract-taxonomy.js"
+          ]
+        },
+        {
+          "batch_id": 6,
+          "concern": "testing-and-verification",
+          "target_directory": "src/verification/",
+          "files": [
+            "bin/verify-scan-fixture.js",
+            "bin/verify-scan-validator.js",
+            "bin/verify-scan.js",
+            "bin/verify-scan.test.js",
+            "bin/audit-our-code.js",
+            "bin/test-api-keys.js"
+          ]
+        }
+      ]
+    },
+
+    {
+      "name": "update-requires-systematically",
+      "description": "Walk codebase and update all require() calls to point to new locations with self-healing for broken references",
+      "process": [
+        "For each moved file, find all files that require() it",
+        "Update the require() path based on relative directory distance",
+        "Log all updates for verification",
+        "If a require() path breaks (MODULE_NOT_FOUND), attempt self-healing by:",
+        "  1. Checking if the file exists in an alternative location",
+        "  2. Creating a re-export stub if needed",
+        "  3. Recording the issue for manual review if unrecoverable"
+      ]
+    },
+
+    {
+      "name": "keep-entry-points-in-bin",
+      "description": "Ensure only 15 true CLI entry points remain in bin/",
+      "entry_points": [
+        "bin/studio.js",
+        "bin/worker-bee.js",
+        "bin/taxonomy-scan.js",
+        "bin/taxonomy-report.js",
+        "bin/coherence-check.js",
+        "bin/current-run-summary.js",
+        "bin/generate-story-report.js",
+        "bin/package-contradiction-detector.js",
+        "bin/package-story-analyzer.js",
+        "bin/extract-taxonomy.js",
+        "bin/runs-report.js",
+        "bin/verify-scan.js",
+        "bin/audit-our-code.js",
+        "bin/test-api-keys.js",
+        "bin/watch-progress.js"
+      ],
+      "action": "Verify these are the only .js files remaining in bin/ after moves"
+    }
+  ],
+
+  "validation": {
+    "phase_1_structural": [
+      "All 35 files moved from bin/ to src/ by concern",
+      "Exactly 15 entry points remain in bin/",
+      "Directory structure matches concern-based organization"
+    ],
+    "phase_2_functional": [
+      "All require() paths updated correctly",
+      "No MODULE_NOT_FOUND errors when requiring moved files",
+      "Entry points in bin/ can still load and execute",
+      "Tests pass (if test suite exists)"
+    ],
+    "phase_3_semantic": [
+      "File anchors still reflect single responsibility after move",
+      "No new coherence regressions introduced",
+      "All moved files maintain their governance and semantic intent"
+    ]
+  },
+
+  "self_healing_strategy": {
+    "on_module_not_found": "Attempt to locate file in alternative locations and create re-export if needed",
+    "on_path_mismatch": "Log mismatches and suggest corrections",
+    "on_require_cycle": "Detect and report but don't auto-fix (requires human judgment)",
+    "max_retries": 3,
+    "log_all_changes": true
+  },
+
+  "rollback_plan": {
+    "on_failure": "Revert all file moves and require() updates to restore original state",
+    "on_semantic_regression": "If coherence drops >2%, trigger rollback and review before retry"
+  }
+}
