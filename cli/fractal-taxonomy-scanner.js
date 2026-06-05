@@ -12,7 +12,7 @@ const { generateReport } = require("../src/taxonomy/report-generator");
 const { evaluateFileCoherence } = require("../src/story-analysis/coherence-evaluator");
 
 // warehouse:method
-// responsibility: Orchestrates self first taxonomy coherence scan by extracting warehouse anchors evaluating claim evidence alignment writing live run status markdown observability and reporting scale readiness
+// responsibility: Converts an absolute file path into a repo-relative posix path
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -21,7 +21,7 @@ function rel(root, filePath) {
 }
 
 // warehouse:method
-// responsibility: Orchestrates self first taxonomy coherence scan by extracting warehouse anchors evaluating claim evidence alignment writing live run status markdown observability and reporting scale readiness
+// responsibility: Renders a scan run's status object as a human-readable markdown summary
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -56,7 +56,7 @@ function formatCurrentRunMarkdown(status) {
 }
 
 // warehouse:method
-// responsibility: Orchestrates self first taxonomy coherence scan by extracting warehouse anchors evaluating claim evidence alignment writing live run status markdown observability and reporting scale readiness
+// responsibility: Persists a scan run's manifest, status, and current-run markdown into the reports directory
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -82,7 +82,7 @@ function writeRunObservability({ root, reportsDir, runDir, outputPath, status, m
 }
 
 // warehouse:method
-// responsibility: Orchestrates self first taxonomy coherence scan by extracting warehouse anchors evaluating claim evidence alignment writing live run status markdown observability and reporting scale readiness
+// responsibility: Prints the latest persisted fractal scan status as markdown or JSON, or reports when none exists
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
@@ -105,7 +105,7 @@ function readLatestStatus(root, json) {
 }
 
 // warehouse:method
-// responsibility: Orchestrates self first taxonomy coherence scan by extracting warehouse anchors evaluating claim evidence alignment writing live run status markdown observability and reporting scale readiness
+// responsibility: Runs the self-scan end to end - walks source files, evaluates each file's coherence, and writes run status
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

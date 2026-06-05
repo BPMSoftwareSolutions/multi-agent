@@ -37,7 +37,7 @@ function makeFixtureRepo() {
     "// source_truth: implementation",
     "",
     "// warehouse:method",
-    "// responsibility: Provides example package fixture behavior",
+    "// responsibility: Returns a constant true value to exercise the scan path",
     "// actor: method_implementation",
     "// role: implementation",
     "// source_truth: implementation",
@@ -56,7 +56,7 @@ function makeFixtureRepo() {
     "# source_truth: implementation",
     "",
     "# warehouse:method",
-    "# responsibility: Provides Python package fixture behavior",
+    "# responsibility: Returns True to exercise the Python fixture scan path",
     "# actor: method_implementation",
     "# role: implementation",
     "# source_truth: implementation",
@@ -77,7 +77,13 @@ function verifySdkFlow() {
   const scan = scanTaxonomy({ rootDir: root, targetPath: ".", writeReports: true });
   assert.strictEqual(scan.report.summary.files_scanned, 2);
   assert(scan.report.file_ledger.some((row) => row.file === "bin/example.py"));
-  assert.strictEqual(scan.report.summary.folder_coherence, 100);
+  // Honest assertion: clean, DISTINCT anchors land in the strong band. We do not
+  // assert an exact 100 — that score was only reachable by copying the file
+  // responsibility onto the method, which is the false narrative we now penalize.
+  assert.ok(
+    scan.report.summary.folder_coherence >= 80 && scan.report.summary.folder_coherence <= 100,
+    `folder coherence should be strong-band, got ${scan.report.summary.folder_coherence}`
+  );
   assert.match(scan.markdown, /TAXONOMY COHERENCE SCAN/);
   const story = buildCodebaseStoryReview({ rootDir: root, writeReports: true });
   assert.strictEqual(story.verdict.overall.earned, true);
@@ -97,7 +103,7 @@ function verifySdkFlow() {
   const packet = buildStoryReasoningPacket({ rootDir: root });
   assert.strictEqual(packet.schema, "story-coherence-reasoning-packet.v1");
   assert.strictEqual(packet.status, "story_coherence_earned");
-  assert.strictEqual(packet.localTieOut.score, 100);
+  assert.ok(packet.localTieOut.score >= 80 && packet.localTieOut.score <= 100, `local tie-out strong-band, got ${packet.localTieOut.score}`);
   assert.strictEqual(packet.filesystemStory.status, "pass");
   assert.strictEqual(packet.readmeAlignment.status, "pass");
   assert.deepStrictEqual(packet.openQuestions, []);

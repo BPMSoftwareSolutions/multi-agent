@@ -96,7 +96,7 @@ function verifyPythonEvidence() {
       "# source_truth: test_fixture",
       "",
       "# warehouse:method",
-      "# responsibility: Provides Python taxonomy evidence fixture scanning behavior",
+      "# responsibility: Returns True to stand in for a scanned Python fixture function",
       "# actor: method_implementation",
       "# role: implementation",
       "# source_truth: implementation",
