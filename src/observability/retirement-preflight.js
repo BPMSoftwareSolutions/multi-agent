@@ -11,6 +11,25 @@ const DEFAULT_SKIP_DIRS = new Set([".git", "node_modules", ".studio", "retired",
 const SOURCE_EXTENSIONS = new Set([".js", ".json", ".md", ".txt"]);
 
 // warehouse:method
+// responsibility: Escape retirement preflight values for deterministic markdown tables
+function markdownValue(value) {
+  if (value === null || typeof value === "undefined" || value === "") {
+    return "_Pending_";
+  }
+  return String(value).replace(/\|/g, "\\|");
+}
+
+// warehouse:method
+// responsibility: Render a deterministic markdown table for retirement preflight report sections
+function markdownTable(headers, rows) {
+  return [
+    `| ${headers.map(markdownValue).join(" | ")} |`,
+    `| ${headers.map(() => "---").join(" | ")} |`,
+    ...rows.map((row) => `| ${row.map(markdownValue).join(" | ")} |`),
+  ].join("\n");
+}
+
+// warehouse:method
 // responsibility: Normalize a repository-relative path to deterministic slash-separated form
 function normalizePath(candidate) {
   return candidate.replace(/\\/g, "/").replace(/^\.\/+/, "");
@@ -250,7 +269,107 @@ function buildRetirementPreflight(repoRoot, candidates, options = {}) {
   };
 }
 
+// warehouse:method
+// responsibility: Render candidate scan blockers as short deterministic markdown text
+function formatCandidateBlockers(candidate) {
+  if (!candidate.blocking_reasons.length) return "_None_";
+  return candidate.blocking_reasons.map((reason) => `- ${reason}`).join("\n");
+}
+
+// warehouse:method
+// responsibility: Render retirement preflight scan details into human-readable markdown
+function formatRetirementPreflightMarkdown(report) {
+  const candidateRows = report.candidates.map((candidate) => [
+    candidate.path,
+    candidate.status,
+    candidate.safe_to_remove ? "true" : "false",
+    candidate.blocking_reasons.length,
+  ]);
+
+  const scanRows = [];
+  for (const candidate of report.candidates) {
+    for (const scan of Object.values(candidate.scans)) {
+      scanRows.push([
+        candidate.path,
+        scan.name,
+        scan.status,
+        scan.references ? scan.references.length : 0,
+        scan.reason || (scan.pending && scan.pending.length ? scan.pending.join(", ") : ""),
+      ]);
+    }
+  }
+
+  const blockerSections = report.candidates.map((candidate) => [
+    `### ${candidate.path}`,
+    "",
+    formatCandidateBlockers(candidate),
+  ].join("\n"));
+
+  return [
+    "# Retirement Preflight",
+    "",
+    "> Read-only retirement gate. This report proves whether files can be moved or deleted before any mutation happens.",
+    "",
+    "## Summary",
+    "",
+    markdownTable(
+      ["Field", "Value"],
+      [
+        ["Status", report.status],
+        ["Candidates", report.summary.candidate_count],
+        ["Passed", report.summary.pass_count],
+        ["Blocked", report.summary.blocked_count],
+        ["Safe to remove", report.summary.safe_to_remove_count],
+      ]
+    ),
+    "",
+    "## Candidate Ledger",
+    "",
+    markdownTable(["Candidate", "Status", "Safe To Remove", "Blocking Reasons"], candidateRows),
+    "",
+    "## Scan Ledger",
+    "",
+    markdownTable(["Candidate", "Scan", "Status", "References", "Reason"], scanRows),
+    "",
+    "## Blockers",
+    "",
+    blockerSections.join("\n\n") || "_None_",
+    "",
+    "## Decision",
+    "",
+    report.status === "pass"
+      ? "All candidates passed retirement preflight. Mutation still requires an approved execution packet."
+      : "Retirement is blocked. Resolve the blockers above before moving or deleting files.",
+    "",
+  ].join("\n");
+}
+
+// warehouse:method
+// responsibility: Write visible retirement preflight JSON and markdown reports under the reports directory
+function writeRetirementPreflightReport(repoRoot, report, options = {}) {
+  const reportsDir = path.resolve(repoRoot, options.reportsDir || "reports");
+  const preflightDir = path.join(reportsDir, "retirement-preflight");
+  fs.mkdirSync(preflightDir, { recursive: true });
+
+  const latestJsonPath = path.join(preflightDir, "latest.json");
+  const latestMdPath = path.join(preflightDir, "latest.md");
+  const rootLatestMdPath = path.join(reportsDir, "RETIREMENT-PREFLIGHT-LATEST.md");
+
+  const markdown = formatRetirementPreflightMarkdown(report);
+  fs.writeFileSync(latestJsonPath, `${JSON.stringify(report, null, 2)}\n`, "utf8");
+  fs.writeFileSync(latestMdPath, `${markdown}\n`, "utf8");
+  fs.writeFileSync(rootLatestMdPath, `${markdown}\n`, "utf8");
+
+  return {
+    latestJsonPath,
+    latestMdPath,
+    rootLatestMdPath,
+  };
+}
+
 module.exports = {
+  markdownValue,
+  markdownTable,
   normalizePath,
   isScannableFile,
   listActiveFiles,
@@ -260,4 +379,6 @@ module.exports = {
   loadRetirementEvidence,
   evaluateCandidate,
   buildRetirementPreflight,
+  formatRetirementPreflightMarkdown,
+  writeRetirementPreflightReport,
 };

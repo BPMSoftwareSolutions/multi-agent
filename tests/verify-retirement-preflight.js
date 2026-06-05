@@ -8,7 +8,11 @@ const assert = require("assert");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
-const { buildRetirementPreflight } = require("../src/observability/retirement-preflight");
+const {
+  buildRetirementPreflight,
+  formatRetirementPreflightMarkdown,
+  writeRetirementPreflightReport,
+} = require("../src/observability/retirement-preflight");
 
 // warehouse:method
 // responsibility: Write a fixture file inside the temporary preflight repository
@@ -85,6 +89,24 @@ function verifyCompleteEvidenceCanPass() {
   assert.strictEqual(candidate.scans.retirement_evidence_scan.status, "pass");
 }
 
+// warehouse:method
+// responsibility: Prove retirement preflight writes visible latest JSON and markdown reports
+function verifyVisibleReports() {
+  const root = createReferencedRepo();
+  const report = buildRetirementPreflight(root, ["cli/active.js"]);
+  const markdown = formatRetirementPreflightMarkdown(report);
+  assert.ok(markdown.includes("# Retirement Preflight"), "markdown title should be visible");
+  assert.ok(markdown.includes("Retirement is blocked"), "markdown should explain the decision");
+
+  const artifacts = writeRetirementPreflightReport(root, report);
+  assert.ok(fs.existsSync(artifacts.latestJsonPath), "latest JSON report should exist");
+  assert.ok(fs.existsSync(artifacts.latestMdPath), "latest markdown report should exist");
+  assert.ok(fs.existsSync(artifacts.rootLatestMdPath), "root latest markdown report should exist");
+  const saved = JSON.parse(fs.readFileSync(artifacts.latestJsonPath, "utf8"));
+  assert.strictEqual(saved.status, "blocked");
+}
+
 verifyReferencedCandidateBlocks();
 verifyCompleteEvidenceCanPass();
+verifyVisibleReports();
 console.log("Retirement preflight verification passed.");
