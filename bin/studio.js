@@ -8,8 +8,8 @@ require("dotenv").config();
 require("dotenv").config({ path: ".env.local", override: true });
 require("dotenv").config({ path: "bin/.env.local", override: false });
 
-const { parseOptions } = require("./options-parser");
-const { routeAndExecuteCommand } = require("./command-router");
+const { parseOptions } = require("../src/cli/options-parser");
+const { routeAndExecuteCommand } = require("../src/cli/command-router");
 const { exit } = require("../src/cli/print");
 
 // warehouse:method

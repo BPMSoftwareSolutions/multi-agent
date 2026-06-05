@@ -6,7 +6,7 @@
 
 const { lookupSession } = require("./session-lookup");
 const { summarizeOperations } = require("../../shared/actions");
-const { renderStatusOutput } = require("./status-renderer");
+const { renderStatusOutput } = require("../status-renderer");
 const { exit } = require("../print");
 
 // warehouse:method
