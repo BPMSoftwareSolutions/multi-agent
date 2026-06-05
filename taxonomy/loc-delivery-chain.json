@@ -1,0 +1,707 @@
+{
+  "schema": "loc-delivery-chain-taxonomy.v1",
+  "generated_at": "2026-06-05T00:00:00.000Z",
+  "taxonomy_id": "loc-delivery-chain",
+  "status": "canonical",
+  "value_chain": [
+    "value",
+    "actor",
+    "story",
+    "acceptance",
+    "boundary",
+    "anchor",
+    "evidence",
+    "gate_decision",
+    "learning"
+  ],
+  "stories": [
+    {
+      "story_id": "STORY-HONEST-COHERENCE-001",
+      "title": "Honest coherence must be earned, not copied",
+      "actor": "studio_operator",
+      "need": "know whether coherence scores are earned rather than copied",
+      "value": "prevent false governance narratives from passing release",
+      "source": "docs/claude-thread-2.txt",
+      "primary_boundary_ids": [
+        "taxonomy_source",
+        "manifest_contract",
+        "delivery_readiness_orchestrator",
+        "delivery_readiness_projection",
+        "delivery_cli",
+        "delivery_manifest_tests",
+        "delivery_readiness_tests"
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "actor_id": "studio_operator",
+      "name": "Studio Operator",
+      "role": "release_requester",
+      "responsibility": "requests or reviews delivery readiness and receives release guidance",
+      "value_received": "confidence that release decisions are backed by evidence instead of narrative drift"
+    },
+    {
+      "actor_id": "delivery_taxonomy_owner",
+      "name": "Delivery Taxonomy Owner",
+      "role": "source_of_truth_owner",
+      "responsibility": "defines canonical delivery value chain data before implementation exists",
+      "value_received": "stable taxonomy that can explain why each planned file exists"
+    },
+    {
+      "actor_id": "delivery_contract_consumer",
+      "name": "Delivery Contract Consumer",
+      "role": "contract_consumer",
+      "responsibility": "validates manifests against taxonomy-defined shape and gate semantics",
+      "value_received": "manifest checks that do not invent policy in code"
+    },
+    {
+      "actor_id": "delivery_orchestrator",
+      "name": "Delivery Orchestrator",
+      "role": "readiness_orchestrator",
+      "responsibility": "combines taxonomy, evidence, story checks, and readiness decisions",
+      "value_received": "deterministic readiness outcomes from declared evidence"
+    },
+    {
+      "actor_id": "delivery_report_renderer",
+      "name": "Delivery Report Renderer",
+      "role": "projection_renderer",
+      "responsibility": "renders read-only delivery readiness and taxonomy projections",
+      "value_received": "human-readable evidence without mutating source truth"
+    },
+    {
+      "actor_id": "delivery_cli_operator",
+      "name": "Delivery CLI Operator",
+      "role": "entrypoint_operator",
+      "responsibility": "invokes validate and check commands without adding policy",
+      "value_received": "thin operator entrypoint for governed delivery checks"
+    },
+    {
+      "actor_id": "delivery_test_author",
+      "name": "Delivery Test Author",
+      "role": "fixture_and_verification_author",
+      "responsibility": "codifies contract behavior and exploit protection in deterministic tests",
+      "value_received": "regression coverage for fake evidence and missing file exploits"
+    },
+    {
+      "actor_id": "documentation_projection_agent",
+      "name": "Documentation Projection Agent",
+      "role": "read_only_projection_agent",
+      "responsibility": "projects the taxonomy into artifacts other agents can consume without chat context",
+      "value_received": "a packet and markdown summary that explain the work independently"
+    }
+  ],
+  "acceptance_scenarios": [
+    {
+      "scenario_id": "SCN-HC-001",
+      "story_id": "STORY-HONEST-COHERENCE-001",
+      "name": "copied method responsibility lowers coherence",
+      "responsibility": "prove copied method responsibility does not earn honest coherence",
+      "evidence_contract": "executed_test_or_structured_artifact",
+      "evidence_artifact_types": [
+        "executed_test_command",
+        "story_review_snapshot"
+      ],
+      "preferred_test_command": "npm run test:evidence"
+    },
+    {
+      "scenario_id": "SCN-HC-002",
+      "story_id": "STORY-HONEST-COHERENCE-001",
+      "name": "distinct method responsibility raises coherence",
+      "responsibility": "prove distinct responsibilities are treated as coherent when anchors and evidence align",
+      "evidence_contract": "executed_test_or_structured_artifact",
+      "evidence_artifact_types": [
+        "executed_test_command",
+        "taxonomy_scan_snapshot"
+      ],
+      "preferred_test_command": "npm run test:taxonomy-case"
+    },
+    {
+      "scenario_id": "SCN-HC-003",
+      "story_id": "STORY-HONEST-COHERENCE-001",
+      "name": "fake evidence or missing files cannot earn release_ready",
+      "responsibility": "prove missing evidence and nonexistent changed files are blocked",
+      "evidence_contract": "structured_artifact_with_path_and_content_check",
+      "evidence_artifact_types": [
+        "structured_artifact",
+        "file_existence_proof",
+        "readiness_report"
+      ],
+      "preferred_test_command": "npm run test:delivery-readiness"
+    }
+  ],
+  "evidence_artifact_types": [
+    {
+      "type_id": "executed_test_command",
+      "description": "Terminal output from an executed command that proves a scenario ran.",
+      "required_fields": ["command", "exit_code", "timestamp", "summary"],
+      "consumer": "delivery_test_author"
+    },
+    {
+      "type_id": "structured_artifact",
+      "description": "A file-based evidence artifact whose path can be resolved and inspected.",
+      "required_fields": ["path", "exists", "summary"],
+      "consumer": "delivery_orchestrator"
+    },
+    {
+      "type_id": "file_existence_proof",
+      "description": "A proof that a declared file path exists and is a readable file.",
+      "required_fields": ["path", "exists", "absolute_path"],
+      "consumer": "delivery_orchestrator"
+    },
+    {
+      "type_id": "story_review_snapshot",
+      "description": "The latest codebase story review used to decide local taxonomy, filesystem story, residue, and file economy states.",
+      "required_fields": ["report_id", "generated_at", "status"],
+      "consumer": "delivery_report_renderer"
+    },
+    {
+      "type_id": "taxonomy_scan_snapshot",
+      "description": "The latest taxonomy scan used to explain file anchors and local tie-out.",
+      "required_fields": ["run_id", "generated_at", "summary"],
+      "consumer": "delivery_report_renderer"
+    },
+    {
+      "type_id": "readiness_report",
+      "description": "A deterministic delivery readiness report generated from manifest and evidence data.",
+      "required_fields": ["schema", "delivery_id", "status", "blocking_gates"],
+      "consumer": "studio_operator"
+    },
+    {
+      "type_id": "waiver_record",
+      "description": "A governed waiver artifact with authority, reason, expiration, and follow-up.",
+      "required_fields": ["gate", "authority", "reason", "expiration", "follow_up"],
+      "consumer": "delivery_contract_consumer"
+    },
+    {
+      "type_id": "learning_record",
+      "description": "A persisted delivery lesson record that captures drift, gates, and future regressions.",
+      "required_fields": ["delivery_id", "story_id", "lessons", "future_regressions"],
+      "consumer": "delivery_orchestrator"
+    }
+  ],
+  "gate_semantics": {
+    "decision_states": {
+      "release_ready": "all required gates passed and any waivers are valid, explicit, and time-bound",
+      "release_blocked": "at least one required gate failed, evidence is missing, or a waiver is invalid or expired",
+      "review_required": "evidence is insufficient for automation, so a human decision is required before release"
+    },
+    "per_gate_policy": [
+      {
+        "gate": "acceptance",
+        "allowed_states": ["required", "waived", "review_required"],
+        "release_effect": {
+          "required": "must_pass_from_evidence",
+          "waived": "requires_valid_waiver_record_and_still_remains_governed",
+          "review_required": "cannot_release_without_human_decision"
+        },
+        "evidence_contracts": ["executed_test_command", "structured_artifact"]
+      },
+      {
+        "gate": "local_taxonomy",
+        "allowed_states": ["required", "review_required"],
+        "release_effect": {
+          "required": "must_pass_from_latest_taxonomy_scan",
+          "review_required": "blocks_automation_until_taxonomy_tie_out_is_resolved"
+        },
+        "evidence_contracts": ["taxonomy_scan_snapshot"]
+      },
+      {
+        "gate": "filesystem_story",
+        "allowed_states": ["required", "review_required"],
+        "release_effect": {
+          "required": "must_pass_from_filesystem_story_review",
+          "review_required": "blocks_automation_until_boundary_story_is_clear"
+        },
+        "evidence_contracts": ["story_review_snapshot"]
+      },
+      {
+        "gate": "readme_alignment",
+        "allowed_states": ["required", "review_required"],
+        "release_effect": {
+          "required": "must_pass_from_latest_readme_projection",
+          "review_required": "blocks_automation_until_readme_staleness_is_resolved"
+        },
+        "evidence_contracts": ["structured_artifact", "readiness_report"]
+      },
+      {
+        "gate": "canonical_residue",
+        "allowed_states": ["required", "review_required"],
+        "release_effect": {
+          "required": "must_pass_from_residue_review",
+          "review_required": "blocks_automation_until_residue_pressure_is_explicitly_reviewed"
+        },
+        "evidence_contracts": ["story_review_snapshot"]
+      },
+      {
+        "gate": "file_economy",
+        "allowed_states": ["required", "review_required"],
+        "release_effect": {
+          "required": "must_pass_from_file_economy_review",
+          "review_required": "blocks_automation_until_boundary_economy_is_justified"
+        },
+        "evidence_contracts": ["story_review_snapshot"]
+      },
+      {
+        "gate": "learning_record",
+        "allowed_states": ["required", "review_required"],
+        "release_effect": {
+          "required": "must_pass_from_persisted_learning_record",
+          "review_required": "cannot_release_without_learning_record_or_human_decision"
+        },
+        "evidence_contracts": ["learning_record"]
+      }
+    ]
+  },
+  "waiver_semantics": {
+    "schema": "loc-delivery-waiver.v1",
+    "allowed_states": [
+      "not_requested",
+      "requested",
+      "approved",
+      "rejected",
+      "expired"
+    ],
+    "required_fields": [
+      "gate",
+      "authority",
+      "reason",
+      "expiration",
+      "follow_up"
+    ],
+    "rules": [
+      "A waiver does not erase evidence requirements; it only permits a governed exception for a named gate.",
+      "A waiver must be time-bound; an expired waiver is invalid and cannot produce release_ready.",
+      "A waiver must name authority; unnamed authority is not a waiver.",
+      "A waiver must name follow-up work; otherwise the risk is unbounded.",
+      "A waived gate remains visible in the report and cannot silently disappear from the blocking discussion."
+    ],
+    "release_behavior": {
+      "required": "failure to pass evidence blocks release",
+      "review_required": "human decision required; no automated release",
+      "waived": "release may proceed only when a valid, unexpired waiver is present and all other required gates pass"
+    }
+  },
+  "learning_record_semantics": {
+    "schema": "delivery-learning-record.v1",
+    "path_template": "reports/delivery-learning/<delivery_id>.json",
+    "required_fields": [
+      "delivery_id",
+      "story_id",
+      "gates_evaluated",
+      "blocking_gates",
+      "lessons",
+      "future_regressions"
+    ],
+    "capture_rules": [
+      "Persist a learning record whenever a delivery is blocked or a repair is performed.",
+      "Name at least one regression candidate when a gate catches a real defect.",
+      "Record the evidence types used to make the decision.",
+      "Record any waiver that influenced the decision."
+    ],
+    "status_semantics": {
+      "pass": "learning record exists and is populated enough to explain the outcome",
+      "review_required": "learning record is missing or incomplete and therefore blocks automation"
+    }
+  },
+  "delivery_boundaries": [
+    {
+      "boundary_id": "taxonomy_source",
+      "canonical_path": "taxonomy/loc-delivery-chain.json",
+      "actor": "delivery_taxonomy_owner",
+      "role": "source_of_truth",
+      "responsibility": "define the canonical delivery value chain and gate semantics before implementation exists",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-001", "SCN-HC-002", "SCN-HC-003"],
+      "allowed_outputs": ["taxonomy_projection", "agent_packet", "human_review_summary"]
+    },
+    {
+      "boundary_id": "manifest_contract",
+      "canonical_path": "contracts/loc-delivery-manifest.schema.json",
+      "actor": "delivery_contract_consumer",
+      "role": "contract",
+      "responsibility": "define the canonical delivery manifest shape and allowed gate states derived from taxonomy",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-001", "SCN-HC-003"],
+      "allowed_outputs": ["json_schema"]
+    },
+    {
+      "boundary_id": "manifest_loader",
+      "canonical_path": "src/delivery/manifest-loader.js",
+      "actor": "delivery_orchestrator",
+      "role": "loader",
+      "responsibility": "load delivery manifest artifacts deterministically without mutating source truth",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["manifest_object"]
+    },
+    {
+      "boundary_id": "manifest_validator",
+      "canonical_path": "src/delivery/manifest-validator.js",
+      "actor": "delivery_contract_consumer",
+      "role": "validator",
+      "responsibility": "validate delivery manifest instances against canonical LOC delivery taxonomy rules",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-001", "SCN-HC-003"],
+      "allowed_outputs": ["validation_result"]
+    },
+    {
+      "boundary_id": "delivery_readiness_orchestrator",
+      "canonical_path": "src/delivery/release-readiness.js",
+      "actor": "delivery_orchestrator",
+      "role": "orchestrator",
+      "responsibility": "combine manifest, evidence, and story gate data into deterministic readiness decisions",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["readiness_report"]
+    },
+    {
+      "boundary_id": "delivery_readiness_projection",
+      "canonical_path": "src/observability/delivery-readiness-report.js",
+      "actor": "delivery_report_renderer",
+      "role": "renderer",
+      "responsibility": "render read-only delivery readiness reports from computed readiness data",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["readiness_json", "readiness_markdown"]
+    },
+    {
+      "boundary_id": "delivery_cli",
+      "canonical_path": "cli/loc-delivery.js",
+      "actor": "delivery_cli_operator",
+      "role": "entrypoint",
+      "responsibility": "expose validate and check commands without introducing new policy or mutation",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["exit_code", "stdout_json"]
+    },
+    {
+      "boundary_id": "delivery_manifest_tests",
+      "canonical_path": "tests/verify-loc-delivery-manifest.js",
+      "actor": "delivery_test_author",
+      "role": "verifier",
+      "responsibility": "protect the manifest contract and reject fake links or missing story fields",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-001", "SCN-HC-003"],
+      "allowed_outputs": ["test_pass_fail"]
+    },
+    {
+      "boundary_id": "delivery_readiness_tests",
+      "canonical_path": "tests/verify-delivery-readiness-report.js",
+      "actor": "delivery_test_author",
+      "role": "verifier",
+      "responsibility": "prove fake evidence and nonexistent files cannot earn release_ready",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["test_pass_fail"]
+    },
+    {
+      "boundary_id": "delivery_fixture_honest",
+      "canonical_path": "tests/fixtures/delivery/honest-coherence.manifest.json",
+      "actor": "delivery_test_author",
+      "role": "fixture",
+      "responsibility": "represent the honest coherence delivery chain as a canonical positive fixture",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-001", "SCN-HC-002"],
+      "allowed_outputs": ["fixture_manifest"]
+    },
+    {
+      "boundary_id": "delivery_fixture_missing_story",
+      "canonical_path": "tests/fixtures/delivery/invalid-missing-story.manifest.json",
+      "actor": "delivery_test_author",
+      "role": "fixture",
+      "responsibility": "model a manifest missing story identity and prove it fails validation",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["fixture_manifest"]
+    },
+    {
+      "boundary_id": "delivery_fixture_missing_acceptance",
+      "canonical_path": "tests/fixtures/delivery/invalid-missing-acceptance.manifest.json",
+      "actor": "delivery_test_author",
+      "role": "fixture",
+      "responsibility": "model a manifest missing executable acceptance and prove it fails validation",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["fixture_manifest"]
+    },
+    {
+      "boundary_id": "delivery_taxonomy_projection",
+      "canonical_path": "reports/loc-delivery-taxonomy/latest/taxonomy.json",
+      "actor": "documentation_projection_agent",
+      "role": "projection",
+      "responsibility": "publish a read-only taxonomy projection for downstream agents and reviewers",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-001", "SCN-HC-003"],
+      "allowed_outputs": ["projection_json"]
+    },
+    {
+      "boundary_id": "delivery_agent_packet",
+      "canonical_path": "reports/loc-delivery-taxonomy/latest/agent-packet.json",
+      "actor": "documentation_projection_agent",
+      "role": "packet",
+      "responsibility": "provide a chat-free work packet derived from canonical taxonomy data",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["agent_packet_json"]
+    },
+    {
+      "boundary_id": "delivery_taxonomy_markdown",
+      "canonical_path": "reports/LOC-DELIVERY-TAXONOMY.md",
+      "actor": "documentation_projection_agent",
+      "role": "projection",
+      "responsibility": "provide a human-readable summary of the canonical delivery taxonomy",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["markdown_summary"]
+    },
+    {
+      "boundary_id": "delivery_worker_packets",
+      "canonical_path": "reports/loc-delivery-taxonomy/latest/worker-packets/",
+      "actor": "documentation_projection_agent",
+      "role": "deferred_projection",
+      "responsibility": "defer worker packet generation for this read-only taxonomy pass until implementation boundaries are resumed",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["deferred_note", "future_packet_plan"]
+    }
+  ],
+  "planned_files": [
+    {
+      "path": "taxonomy/loc-delivery-chain.json",
+      "boundary_id": "taxonomy_source",
+      "actor": "delivery_taxonomy_owner",
+      "role": "source_of_truth",
+      "responsibility": "define the canonical delivery value chain and gate semantics before implementation exists",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-001", "SCN-HC-002", "SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "define the canonical delivery value chain and gate semantics before implementation exists",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "contracts/loc-delivery-manifest.schema.json",
+      "boundary_id": "manifest_contract",
+      "actor": "delivery_contract_consumer",
+      "role": "contract",
+      "responsibility": "define the canonical delivery manifest shape and allowed gate states derived from taxonomy",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-001", "SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "define the canonical delivery manifest shape and allowed gate states derived from taxonomy",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "src/delivery/manifest-loader.js",
+      "boundary_id": "manifest_loader",
+      "actor": "delivery_orchestrator",
+      "role": "loader",
+      "responsibility": "load delivery manifest artifacts deterministically without mutating source truth",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "load delivery manifest artifacts deterministically without mutating source truth",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "src/delivery/manifest-validator.js",
+      "boundary_id": "manifest_validator",
+      "actor": "delivery_contract_consumer",
+      "role": "validator",
+      "responsibility": "validate delivery manifest instances against canonical LOC delivery taxonomy rules",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-001", "SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "validate delivery manifest instances against canonical LOC delivery taxonomy rules",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      },
+      "method_anchors": [
+        {
+          "name": "validateDeliveryManifest",
+          "responsibility": "return deterministic manifest validity errors from canonical delivery taxonomy rules"
+        }
+      ]
+    },
+    {
+      "path": "src/delivery/release-readiness.js",
+      "boundary_id": "delivery_readiness_orchestrator",
+      "actor": "delivery_orchestrator",
+      "role": "orchestrator",
+      "responsibility": "combine manifest, evidence, and story gate data into deterministic readiness decisions",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "combine manifest, evidence, and story gate data into deterministic readiness decisions",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      },
+      "method_anchors": [
+        {
+          "name": "buildDeliveryReadiness",
+          "responsibility": "assemble delivery readiness from manifest, evidence, and story check data"
+        }
+      ]
+    },
+    {
+      "path": "src/observability/delivery-readiness-report.js",
+      "boundary_id": "delivery_readiness_projection",
+      "actor": "delivery_report_renderer",
+      "role": "renderer",
+      "responsibility": "render read-only delivery readiness reports from computed readiness data",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "render read-only delivery readiness reports from computed readiness data",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "cli/loc-delivery.js",
+      "boundary_id": "delivery_cli",
+      "actor": "delivery_cli_operator",
+      "role": "entrypoint",
+      "responsibility": "expose validate and check commands without introducing new policy or mutation",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "expose validate and check commands without introducing new policy or mutation",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      },
+      "method_anchors": [
+        {
+          "name": "main",
+          "responsibility": "route delivery commands to deterministic validation or readiness logic"
+        }
+      ]
+    },
+    {
+      "path": "tests/verify-loc-delivery-manifest.js",
+      "boundary_id": "delivery_manifest_tests",
+      "actor": "delivery_test_author",
+      "role": "verifier",
+      "responsibility": "protect the manifest contract and reject fake links or missing story fields",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-001", "SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "protect the manifest contract and reject fake links or missing story fields",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "tests/verify-delivery-readiness-report.js",
+      "boundary_id": "delivery_readiness_tests",
+      "actor": "delivery_test_author",
+      "role": "verifier",
+      "responsibility": "prove fake evidence and nonexistent files cannot earn release_ready",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "prove fake evidence and nonexistent files cannot earn release_ready",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "tests/fixtures/delivery/honest-coherence.manifest.json",
+      "boundary_id": "delivery_fixture_honest",
+      "actor": "delivery_test_author",
+      "role": "fixture",
+      "responsibility": "represent the honest coherence delivery chain as a canonical positive fixture",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-001", "SCN-HC-002"],
+      "file_anchor": {
+        "responsibility": "represent the honest coherence delivery chain as a canonical positive fixture",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "tests/fixtures/delivery/invalid-missing-story.manifest.json",
+      "boundary_id": "delivery_fixture_missing_story",
+      "actor": "delivery_test_author",
+      "role": "fixture",
+      "responsibility": "model a manifest missing story identity and prove it fails validation",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "model a manifest missing story identity and prove it fails validation",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "tests/fixtures/delivery/invalid-missing-acceptance.manifest.json",
+      "boundary_id": "delivery_fixture_missing_acceptance",
+      "actor": "delivery_test_author",
+      "role": "fixture",
+      "responsibility": "model a manifest missing executable acceptance and prove it fails validation",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "model a manifest missing executable acceptance and prove it fails validation",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "reports/loc-delivery-taxonomy/latest/taxonomy.json",
+      "boundary_id": "delivery_taxonomy_projection",
+      "actor": "documentation_projection_agent",
+      "role": "projection",
+      "responsibility": "publish a read-only taxonomy projection for downstream agents and reviewers",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-001", "SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "publish a read-only taxonomy projection for downstream agents and reviewers",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "reports/loc-delivery-taxonomy/latest/agent-packet.json",
+      "boundary_id": "delivery_agent_packet",
+      "actor": "documentation_projection_agent",
+      "role": "packet",
+      "responsibility": "provide a chat-free work packet derived from canonical taxonomy data",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "provide a chat-free work packet derived from canonical taxonomy data",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "reports/LOC-DELIVERY-TAXONOMY.md",
+      "boundary_id": "delivery_taxonomy_markdown",
+      "actor": "documentation_projection_agent",
+      "role": "projection",
+      "responsibility": "provide a human-readable summary of the canonical delivery taxonomy",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "provide a human-readable summary of the canonical delivery taxonomy",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "reports/loc-delivery-taxonomy/latest/worker-packets/deferred.json",
+      "boundary_id": "delivery_worker_packets",
+      "actor": "documentation_projection_agent",
+      "role": "deferred_projection",
+      "responsibility": "explain why worker packet generation is deferred during the read-only taxonomy pass",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "explain why worker packet generation is deferred during the read-only taxonomy pass",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    }
+  ],
+  "worker_packet_policy": {
+    "status": "deferred",
+    "reason": "This pass is read-only taxonomy projection only, so worker-bee packet drafts are deferred until implementation resumes.",
+    "criteria_to_generate": [
+      "taxonomy projection reviewed",
+      "planned files still map cleanly to boundaries",
+      "implementation boundaries are re-enabled",
+      "agent requests packetization for file groups"
+    ]
+  }
+}

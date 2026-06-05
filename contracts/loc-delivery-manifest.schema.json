@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LOC Delivery Manifest",
+  "description": "Canonical bridge between user value, implementation trace, and delivery readiness evidence.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schema", "delivery_id", "intent", "acceptance", "implementation", "coherence_sources", "release_gates", "learning"],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "loc-delivery-manifest.v1"
+    },
+    "delivery_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "intent": {
+      "type": "object",
+      "required": ["story_id", "actor", "need", "value"],
+      "properties": {
+        "type": { "type": "string" },
+        "story_id": { "type": "string", "minLength": 1 },
+        "actor": { "type": "string", "minLength": 1 },
+        "need": { "type": "string", "minLength": 1 },
+        "value": { "type": "string", "minLength": 1 },
+        "source": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "acceptance": {
+      "type": "object",
+      "required": ["scenarios"],
+      "properties": {
+        "source": { "type": "string" },
+        "scenarios": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "name"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "name": { "type": "string", "minLength": 1 },
+              "test_command": { "type": "string" },
+              "evidence": { "type": "string" },
+              "expected_result": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "implementation": {
+      "type": "object",
+      "required": ["changed_files"],
+      "properties": {
+        "changed_files": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["path", "reason", "value_link", "acceptance_links"],
+            "properties": {
+              "path": { "type": "string", "minLength": 1 },
+              "reason": { "type": "string", "minLength": 1 },
+              "value_link": { "type": "string", "minLength": 1 },
+              "acceptance_links": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "type": "string", "minLength": 1 }
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "coherence_sources": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "release_gates": {
+      "type": "object",
+      "required": [
+        "acceptance",
+        "local_taxonomy",
+        "filesystem_story",
+        "readme_alignment",
+        "canonical_residue",
+        "file_economy",
+        "learning_record",
+        "waivers"
+      ],
+      "properties": {
+        "acceptance": { "type": "string", "enum": ["required", "waived", "review_required"] },
+        "local_taxonomy": { "type": "string", "enum": ["required", "review_required"] },
+        "filesystem_story": { "type": "string", "enum": ["required", "review_required"] },
+        "readme_alignment": { "type": "string", "enum": ["required", "review_required"] },
+        "canonical_residue": { "type": "string", "enum": ["required", "review_required"] },
+        "file_economy": { "type": "string", "enum": ["required", "review_required"] },
+        "learning_record": { "type": "string", "enum": ["required", "review_required"] },
+        "waivers": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "object",
+            "required": ["gate", "authority", "reason", "expiration", "follow_up"],
+            "properties": {
+              "gate": { "type": "string", "minLength": 1 },
+              "authority": { "type": "string", "minLength": 1 },
+              "reason": { "type": "string", "minLength": 1 },
+              "expiration": { "type": "string", "minLength": 1 },
+              "follow_up": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "learning": {
+      "type": "object",
+      "required": ["record_path"],
+      "properties": {
+        "record_path": { "type": "string", "minLength": 1 },
+        "future_regressions": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

@@ -34,9 +34,13 @@
     "story:readme": "node packages/story-coherence/bin/loc-story.js readme . --out README.md",
     "story:check": "node packages/story-coherence/bin/loc-story.js check",
     "story:packet": "node packages/story-coherence/bin/loc-story.js packet --for-ai --write",
+    "delivery:validate": "node cli/loc-delivery.js validate",
+    "delivery:check": "node cli/loc-delivery.js check",
     "taxonomy:readme": "node cli/taxonomy-readme.js",
     "test:readme-projection": "node tests/verify-readme-projection.js",
     "test:story-coherence-package": "node tests/verify-story-coherence-package.js",
+    "test:delivery-manifest": "node tests/verify-loc-delivery-manifest.js",
+    "test:delivery-readiness": "node tests/verify-delivery-readiness-report.js",
     "test:ascii-components": "node tests/verify-ascii-components.js",
     "fractal-scan": "node cli/fractal-taxonomy-scanner.js",
     "worker-bee": "node cli/worker-bee.js"

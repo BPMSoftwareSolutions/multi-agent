@@ -1,0 +1,47 @@
+{
+  "schema": "loc-delivery-manifest.v1",
+  "delivery_id": "delivery-invalid-missing-story",
+  "intent": {
+    "type": "user_story",
+    "actor": "studio_operator",
+    "need": "know whether coherence scores are earned rather than copied",
+    "value": "prevent false governance narratives from passing release"
+  },
+  "acceptance": {
+    "scenarios": [
+      {
+        "id": "SCN-INVALID-001",
+        "name": "sample scenario",
+        "test_command": "npm run test:evidence"
+      }
+    ]
+  },
+  "implementation": {
+    "changed_files": [
+      {
+        "path": "src/story-analysis/coherence-evaluator.js",
+        "reason": "replace similarity scoring with responsibility integrity scoring",
+        "value_link": "STORY-HONEST-COHERENCE-001",
+        "acceptance_links": ["SCN-INVALID-001"]
+      }
+    ]
+  },
+  "coherence_sources": {
+    "taxonomy_scan": "reports/scan-report-latest.json",
+    "story_review": "reports/codebase-story-review-latest.json",
+    "readme_projection": "README.md"
+  },
+  "release_gates": {
+    "acceptance": "required",
+    "local_taxonomy": "required",
+    "filesystem_story": "required",
+    "readme_alignment": "required",
+    "canonical_residue": "required",
+    "file_economy": "required",
+    "learning_record": "required"
+  },
+  "learning": {
+    "record_path": "reports/delivery-learning/delivery-invalid-missing-story.json",
+    "future_regressions": []
+  }
+}
