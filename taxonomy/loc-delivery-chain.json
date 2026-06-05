@@ -615,6 +615,36 @@
       "allowed_outputs": ["test_pass_fail"]
     },
     {
+      "boundary_id": "delivery_lean_value_engine",
+      "canonical_path": "src/observability/delivery-lean-value.js",
+      "actor": "delivery_report_renderer",
+      "role": "renderer",
+      "responsibility": "score delivery boundaries for lean value deterministically and derive disposition and retirement candidate views",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["value_ledger_json", "candidate_json", "lean_delta_json", "markdown_summary"]
+    },
+    {
+      "boundary_id": "delivery_lean_cli",
+      "canonical_path": "cli/delivery-lean.js",
+      "actor": "delivery_cli_operator",
+      "role": "entrypoint",
+      "responsibility": "generate the deterministic delivery lean-value ledger without acting on dispositions",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["exit_code", "stdout_summary"]
+    },
+    {
+      "boundary_id": "delivery_lean_value_tests",
+      "canonical_path": "tests/verify-delivery-lean-value.js",
+      "actor": "delivery_test_author",
+      "role": "verifier",
+      "responsibility": "prove lean-value scoring is deterministic and never marks a file safe to remove without retirement evidence",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["test_pass_fail"]
+    },
+    {
       "boundary_id": "delivery_taxonomy_projection",
       "canonical_path": "reports/loc-delivery-taxonomy/latest/taxonomy.json",
       "actor": "documentation_projection_agent",
