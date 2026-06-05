@@ -585,6 +585,36 @@
       ]
     },
     {
+      "boundary_id": "delivery_taxonomy_projection_engine",
+      "canonical_path": "src/observability/delivery-taxonomy-projection.js",
+      "actor": "delivery_report_renderer",
+      "role": "renderer",
+      "responsibility": "build deterministic read-only delivery taxonomy projections from the canonical chain without wall-clock input",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["projection_json", "agent_packet_json", "markdown_summary"]
+    },
+    {
+      "boundary_id": "delivery_taxonomy_cli",
+      "canonical_path": "cli/delivery-taxonomy.js",
+      "actor": "delivery_cli_operator",
+      "role": "entrypoint",
+      "responsibility": "generate or verify the deterministic delivery taxonomy projection without adding policy",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["exit_code", "stdout_summary"]
+    },
+    {
+      "boundary_id": "delivery_taxonomy_projection_tests",
+      "canonical_path": "tests/verify-delivery-taxonomy-projection.js",
+      "actor": "delivery_test_author",
+      "role": "verifier",
+      "responsibility": "prove the delivery taxonomy projection is deterministic, read-only, and explains every delivery file",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["test_pass_fail"]
+    },
+    {
       "boundary_id": "delivery_taxonomy_projection",
       "canonical_path": "reports/loc-delivery-taxonomy/latest/taxonomy.json",
       "actor": "documentation_projection_agent",

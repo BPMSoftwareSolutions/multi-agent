@@ -36,6 +36,8 @@
     "story:packet": "node packages/story-coherence/bin/loc-story.js packet --for-ai --write",
     "delivery:validate": "node cli/loc-delivery.js validate",
     "delivery:check": "node cli/loc-delivery.js check",
+    "delivery:taxonomy": "node cli/delivery-taxonomy.js",
+    "test:delivery-taxonomy": "node tests/verify-delivery-taxonomy-projection.js",
     "taxonomy:readme": "node cli/taxonomy-readme.js",
     "test:readme-projection": "node tests/verify-readme-projection.js",
     "test:story-coherence-package": "node tests/verify-story-coherence-package.js",
