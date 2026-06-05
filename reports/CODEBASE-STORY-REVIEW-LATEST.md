@@ -2,9 +2,8 @@
 
 **Subtitle:** A narrative review of taxonomy coherence, filesystem language, README alignment, canonical ownership, and file-boundary justification.
 
-**Generated:** 2026-06-04T21:15:36.474Z
-**Source scan:** `scan-2026-06-04T21-15-35-835Z`
-**Source swarm:** `bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z`
+**Generated:** 2026-06-05T00:25:22.260Z
+**Source scan:** `scan-2026-06-05T00-25-22-138Z`
 
 ```text
 +------------------------------------------------------------------------------------------------+
@@ -119,7 +118,7 @@ The README projection is not independent source truth. It earns alignment when i
 | --- | --- |
 | Status | pass |
 | Source truth | projection-ready from current scan and story review |
-| Source scan | `scan-2026-06-04T21-15-35-835Z` |
+| Source scan | `scan-2026-06-05T00-25-22-138Z` |
 | Source story review | this report |
 | Staleness check | covered by README projection report |
 | Stale artifact count | 0 |
@@ -292,8 +291,8 @@ The standing doctrine remains: local truth is not automatically whole truth. Fut
 
 | Field | Value |
 | --- | --- |
-| Report ID | codebase-story-review-2026-06-04T21-15-36-473Z |
-| Source scan ID | scan-2026-06-04T21-15-35-835Z |
-| Source swarm ID | bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z |
+| Report ID | codebase-story-review-2026-06-05T00-25-22-259Z |
+| Source scan ID | scan-2026-06-05T00-25-22-138Z |
+| Source swarm ID | n/a |
 | Target path | . |
-| Generated at | 2026-06-04T21:15:36.474Z |
+| Generated at | 2026-06-05T00:25:22.260Z |

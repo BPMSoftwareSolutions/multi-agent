@@ -605,11 +605,44 @@ function discoverJavaScriptFiles(targetPath) {
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
+// A responsibility describes ONE concern. Two clauses joined by " and " where the
+// second starts a new capitalized phrase signals a merged, overloaded responsibility.
+function isMergedResponsibility(value) {
+  return / and [A-Z]/.test(String(value || ""));
+}
+
+// Single-responsibility tie-out penalty. A file can score perfect "tie-out" while
+// saying nothing per-method, because identical/copied/merged responsibilities tie
+// out trivially. This penalizes that false coherence so it shows as needing rework.
+function responsibilityIntegrityPenalty(taxonomy) {
+  const issues = [];
+  if (!taxonomy) return { penalty: 0, issues };
+  const fileResp = (taxonomy.file && taxonomy.file.responsibility ? taxonomy.file.responsibility : "").trim();
+  const methodResps = (taxonomy.methods || [])
+    .map((m) => (m.taxonomy && m.taxonomy.responsibility ? m.taxonomy.responsibility : "").trim())
+    .filter(Boolean);
+
+  let penalty = 0;
+  if (isMergedResponsibility(fileResp)) { issues.push("file_responsibility_merged"); penalty += 20; }
+  if (methodResps.length >= 2) {
+    const duplicates = methodResps.length - new Set(methodResps).size;
+    if (duplicates > 0) { issues.push(`duplicate_method_responsibility:${duplicates}`); penalty += Math.min(50, duplicates * 15); }
+  }
+  const copied = methodResps.filter((r) => fileResp && r === fileResp).length;
+  if (copied > 0) { issues.push(`method_responsibility_copied_from_file:${copied}`); penalty += Math.min(40, copied * 15); }
+  const merged = methodResps.filter(isMergedResponsibility).length;
+  if (merged > 0) { issues.push(`merged_method_responsibility:${merged}`); penalty += Math.min(30, merged * 8); }
+
+  return { penalty: Math.min(penalty, 75), issues }; // cap so it lands "weak", not "missing"
+}
+
 function scanFile(filePath, root) {
   const relPath = path.relative(root, filePath).replace(/\\/g, "/");
   const taxonomy = extractFromFile(filePath, root);
   const evidence = buildFileEvidence(relPath, root);
-  const score = evidence.coherence ? evidence.coherence.score : 0;
+  const baseScore = evidence.coherence ? evidence.coherence.score : 0;
+  const { penalty, issues } = responsibilityIntegrityPenalty(taxonomy);
+  const score = Math.max(0, baseScore - penalty);
   const detectedMethods = evidence.coverage.detected_function_count;
   const documentedMethods = evidence.coverage.documented_method_count;
   return {
@@ -620,6 +653,9 @@ function scanFile(filePath, root) {
     file_role: taxonomy && taxonomy.file ? taxonomy.file.role || "" : "",
     detected_methods: detectedMethods,
     documented_methods: documentedMethods,
+    base_score: baseScore,
+    responsibility_penalty: penalty,
+    responsibility_issues: issues,
     score,
     scorer_review: score > 0 && score < 50 && documentedMethods === detectedMethods && detectedMethods > 0,
   };

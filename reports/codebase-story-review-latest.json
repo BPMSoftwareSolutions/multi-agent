@@ -1,9 +1,9 @@
 {
   "schema": "codebase-story-review-report.v1",
-  "report_id": "codebase-story-review-2026-06-04T21-15-36-473Z",
-  "generated_at": "2026-06-04T21:15:36.474Z",
-  "source_scan_id": "scan-2026-06-04T21-15-35-835Z",
-  "source_swarm_id": "bootstrap-missing-taxonomy-72-2026-06-04T16-30-12-831Z",
+  "report_id": "codebase-story-review-2026-06-05T00-25-22-259Z",
+  "generated_at": "2026-06-05T00:25:22.260Z",
+  "source_scan_id": "scan-2026-06-05T00-25-22-138Z",
+  "source_swarm_id": null,
   "target_path": ".",
   "headline_verdict": "Codebase story coherence earned",
   "primary_review_question": "Do all 330 files earn their boundaries and belong in the canonical story?",
@@ -128,7 +128,7 @@
   "readme_alignment": {
     "status": "pass",
     "source_truth": "projection-ready from current scan and story review",
-    "source_scan_id": "scan-2026-06-04T21-15-35-835Z",
+    "source_scan_id": "scan-2026-06-05T00-25-22-138Z",
     "source_story_review_id": "this report",
     "staleness_check": "covered by README projection report",
     "stale_count": 0
