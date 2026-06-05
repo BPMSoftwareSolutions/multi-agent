@@ -675,6 +675,36 @@
       "allowed_outputs": ["test_pass_fail"]
     },
     {
+      "boundary_id": "package_taxonomy_census_engine",
+      "canonical_path": "src/observability/package-taxonomy-census.js",
+      "actor": "delivery_report_renderer",
+      "role": "renderer",
+      "responsibility": "extract deterministic package taxonomy, Python anchor, and worker-input census reports from the neighboring ai-engine packages",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["package_taxonomy_census_json", "worker_input_json", "markdown_report"]
+    },
+    {
+      "boundary_id": "package_taxonomy_census_cli",
+      "canonical_path": "cli/package-taxonomy-census.js",
+      "actor": "delivery_cli_operator",
+      "role": "entrypoint",
+      "responsibility": "generate or check deterministic package taxonomy census reports for the neighboring ai-engine packages",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["exit_code", "stdout_summary", "visible_reports"]
+    },
+    {
+      "boundary_id": "package_taxonomy_census_tests",
+      "canonical_path": "tests/verify-package-taxonomy-census.js",
+      "actor": "delivery_test_author",
+      "role": "verifier",
+      "responsibility": "verify package taxonomy census extraction is deterministic, BOM-safe, anchor-aware, and drift-checkable",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["test_pass_fail"]
+    },
+    {
       "boundary_id": "delivery_taxonomy_projection",
       "canonical_path": "reports/loc-delivery-taxonomy/latest/taxonomy.json",
       "actor": "documentation_projection_agent",
@@ -1084,6 +1114,45 @@
       "acceptance_links": ["SCN-HC-003"],
       "file_anchor": {
         "responsibility": "prove retirement preflight blocks active references and only passes with complete retirement evidence",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "src/observability/package-taxonomy-census.js",
+      "boundary_id": "package_taxonomy_census_engine",
+      "actor": "delivery_report_renderer",
+      "role": "renderer",
+      "responsibility": "extract deterministic package taxonomy, Python anchor, and worker-input census reports from the neighboring ai-engine packages",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "extract deterministic package taxonomy, Python anchor, and worker-input census reports from the neighboring ai-engine packages",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "cli/package-taxonomy-census.js",
+      "boundary_id": "package_taxonomy_census_cli",
+      "actor": "delivery_cli_operator",
+      "role": "entrypoint",
+      "responsibility": "generate or check deterministic package taxonomy census reports for the neighboring ai-engine packages",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "generate or check deterministic package taxonomy census reports for the neighboring ai-engine packages",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "tests/verify-package-taxonomy-census.js",
+      "boundary_id": "package_taxonomy_census_tests",
+      "actor": "delivery_test_author",
+      "role": "verifier",
+      "responsibility": "verify package taxonomy census extraction is deterministic, BOM-safe, anchor-aware, and drift-checkable",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "verify package taxonomy census extraction is deterministic, BOM-safe, anchor-aware, and drift-checkable",
         "source_truth": "taxonomy/loc-delivery-chain.json"
       }
     },
