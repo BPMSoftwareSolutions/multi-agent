@@ -6,7 +6,7 @@
 
 const path = require("path");
 const fs = require("fs");
-const { evaluateFileCoherence } = require("../src/story-analysis/coherence-evaluator");
+const { evaluateFileCoherence } = require("./coherence-evaluator");
 
 // warehouse:method
 // responsibility: Loads taxonomy data and evaluates coherence for all files and Computes overall health metrics from coherence analysis

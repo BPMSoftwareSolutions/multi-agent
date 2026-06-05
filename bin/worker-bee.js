@@ -15,9 +15,9 @@
 
 const path = require("path");
 const fs = require("fs");
-const { parseArgs, HELP } = require("./argument-parser");
-const { renderStatus } = require("./status-renderer");
-const { main: runOrchestration } = require("./main-orchestrator");
+const { parseArgs, HELP } = require("../src/cli/argument-parser");
+const { renderStatus } = require("../src/cli/status-renderer");
+const { main: runOrchestration } = require("../src/cli/main-orchestrator");
 
 // Load env from .env.local then .env (local wins), like the rest of the studio.
 const root = path.resolve(__dirname, "..");

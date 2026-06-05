@@ -8,7 +8,7 @@
 
 const path = require("path");
 const fs = require("fs");
-const { testKey } = require("./key-validator");
+const { testKey } = require("../worker-bee/key-validator");
 const { displayResults, displaySummary } = require("./test-result-formatter");
 
 const root = path.resolve(__dirname, "..");

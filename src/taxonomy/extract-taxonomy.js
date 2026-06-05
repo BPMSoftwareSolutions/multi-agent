@@ -6,9 +6,9 @@
 
 const fs = require("fs");
 const path = require("path");
-const { walk } = require("../src/audit/file-scanner");
-const { extractFromFile } = require("../src/taxonomy/extractor");
-const { generateReport } = require("../src/taxonomy/report-generator");
+const { walk } = require("../audit/file-scanner");
+const { extractFromFile } = require("./extractor");
+const { generateReport } = require("./report-generator");
 
 const root = path.resolve(__dirname, "..");
 

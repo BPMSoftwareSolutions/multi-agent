@@ -6,8 +6,8 @@
 
 const path = require("path");
 const { loadPackageTaxonomy } = require("./package-loader");
-const { analyzePackageStories, generateStory } = require("../src/packages/story-analyzer");
-const { formatStoryReport } = require("../src/story-analysis/report-formatter");
+const { analyzePackageStories, generateStory } = require("./story-analyzer");
+const { formatStoryReport } = require("../story-analysis/report-formatter");
 
 const root = path.resolve(__dirname, "..");
 const taxonomyPath = path.resolve(root, "reports", "taxonomy-packages.json");

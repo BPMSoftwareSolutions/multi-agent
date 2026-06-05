@@ -4,7 +4,7 @@
 // role: formatter
 // source_truth: implementation
 
-const { validateData } = require("../src/progress/data-validator");
+const { validateData } = require("./data-validator");
 
 // warehouse:method
 // responsibility: Generates progress snapshot: formats markdown report with velocity metrics, completion calculations, forecast

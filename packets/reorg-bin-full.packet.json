@@ -1,0 +1,126 @@
+{
+  "operation": "reorganize",
+  "_comment": "Full bin/ tidy: leaked modules -> src/ homes. Engine recomputes all requires.",
+  "moves": [
+    {
+      "from": "bin/analysis-file-loader.js",
+      "to": "src/story-analysis/analysis-file-loader.js"
+    },
+    {
+      "from": "bin/analysis-formatter.js",
+      "to": "src/story-analysis/analysis-formatter.js"
+    },
+    {
+      "from": "bin/analyze-story.js",
+      "to": "src/story-analysis/analyze-story.js"
+    },
+    {
+      "from": "bin/audit-our-code.js",
+      "to": "src/audit/audit-our-code.js"
+    },
+    {
+      "from": "bin/continuous-snapshot.js",
+      "to": "src/progress/continuous-snapshot.js"
+    },
+    {
+      "from": "bin/contradiction-analyzer.js",
+      "to": "src/story-analysis/contradiction-analyzer.js"
+    },
+    {
+      "from": "bin/contradiction-sorter.js",
+      "to": "src/story-analysis/contradiction-sorter.js"
+    },
+    {
+      "from": "bin/current-run-summary.js",
+      "to": "src/reports/current-run-summary.js"
+    },
+    {
+      "from": "bin/extract-taxonomy.js",
+      "to": "src/taxonomy/extract-taxonomy.js"
+    },
+    {
+      "from": "bin/key-validator.js",
+      "to": "src/worker-bee/key-validator.js"
+    },
+    {
+      "from": "bin/package-contradiction-detector.js",
+      "to": "src/packages/package-contradiction-detector.js"
+    },
+    {
+      "from": "bin/package-loader.js",
+      "to": "src/packages/package-loader.js"
+    },
+    {
+      "from": "bin/package-story-analyzer.js",
+      "to": "src/packages/package-story-analyzer.js"
+    },
+    {
+      "from": "bin/report-builder.js",
+      "to": "src/reports/report-builder.js"
+    },
+    {
+      "from": "bin/results-formatter.js",
+      "to": "src/reports/results-formatter.js"
+    },
+    {
+      "from": "bin/run-report-router.js",
+      "to": "src/reports/run-report-router.js"
+    },
+    {
+      "from": "bin/runs-report-router.js",
+      "to": "src/reports/runs-report-router.js"
+    },
+    {
+      "from": "bin/snapshot-calculator.js",
+      "to": "src/progress/snapshot-calculator.js"
+    },
+    {
+      "from": "bin/snapshot-formatter.js",
+      "to": "src/progress/snapshot-formatter.js"
+    },
+    {
+      "from": "bin/snapshot-progress.js",
+      "to": "src/progress/snapshot-progress.js"
+    },
+    {
+      "from": "bin/story-analyzer.js",
+      "to": "src/story-analysis/story-analyzer.js"
+    },
+    {
+      "from": "bin/test-api-keys.js",
+      "to": "src/audit/test-api-keys.js"
+    },
+    {
+      "from": "bin/test-result-formatter.js",
+      "to": "src/audit/test-result-formatter.js"
+    },
+    {
+      "from": "bin/track-progress.js",
+      "to": "src/progress/track-progress.js"
+    },
+    {
+      "from": "bin/verify-scan-fixture.js",
+      "to": "src/audit/verify-scan-fixture.js"
+    },
+    {
+      "from": "bin/verify-scan-validator.js",
+      "to": "src/audit/verify-scan-validator.js"
+    },
+    {
+      "from": "bin/verify-scan.js",
+      "to": "src/audit/verify-scan.js"
+    },
+    {
+      "from": "bin/verify-scan.test.js",
+      "to": "src/audit/verify-scan.test.js"
+    },
+    {
+      "from": "bin/watch-progress.js",
+      "to": "src/progress/watch-progress.js"
+    },
+    {
+      "from": "bin/worker-bee-config-loader.js",
+      "to": "src/worker-bee/worker-bee-config-loader.js"
+    }
+  ]
+}

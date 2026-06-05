@@ -14,8 +14,8 @@
 
 const path = require("path");
 const fs = require("fs");
-const { parseReportArgs } = require("./report-builder");
-const { outputReport } = require("./results-formatter");
+const { parseReportArgs } = require("../src/reports/report-builder");
+const { outputReport } = require("../src/reports/results-formatter");
 const { buildReport } = require("../src/worker-bee/report");
 
 // Load config from .worker-bee.json

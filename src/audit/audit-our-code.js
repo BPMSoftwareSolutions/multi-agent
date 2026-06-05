@@ -5,7 +5,7 @@
 // source_truth: implementation
 
 const path = require("path");
-const { auditFiles } = require("../src/audit/auditor");
+const { auditFiles } = require("./auditor");
 
 // warehouse:method
 // responsibility: Main workflow that loads audit state, renders file-by-file status with emoji indicators, computes coverage metrics, and outputs results

@@ -1,0 +1,10 @@
+{
+  "operation": "reorganize",
+  "_comment": "Move CLI helper modules out of bin/ (entry points only) into src/cli/. The bee recomputes every require() deterministically; the agent declares only the moves.",
+  "moves": [
+    { "from": "bin/argument-parser.js", "to": "src/cli/argument-parser.js" },
+    { "from": "bin/command-router.js", "to": "src/cli/command-router.js" },
+    { "from": "bin/main-orchestrator.js", "to": "src/cli/main-orchestrator.js" },
+    { "from": "bin/status-renderer.js", "to": "src/cli/status-renderer.js" }
+  ]
+}

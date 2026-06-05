@@ -7,12 +7,14 @@
     "worker-bee": "bin/worker-bee.js",
     "taxonomy-scan": "bin/taxonomy-scan.js",
     "taxonomy-report": "bin/taxonomy-report.js",
-    "runs-report": "bin/runs-report.js"
+    "runs-report": "bin/runs-report.js",
+    "worker-bee-reorganize": "bin/worker-bee-reorganize.js"
   },
   "engines": {
     "node": ">=18.0.0"
   },
   "scripts": {
+    "reorganize": "node bin/worker-bee-reorganize.js",
     "start": "node server/index.js",
     "dev": "node --watch server/index.js",
     "cli": "node bin/studio.js",

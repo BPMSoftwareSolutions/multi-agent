@@ -6,9 +6,9 @@
 
 const path = require("path");
 const { loadPackageTaxonomy } = require("./package-loader");
-const { analyzePackagesForContradictions } = require("./contradiction-analyzer");
-const { sortAndSummarizeContradictions } = require("./contradiction-sorter");
-const { analyzePackages } = require("../src/packages/contradiction-detector");
+const { analyzePackagesForContradictions } = require("../story-analysis/contradiction-analyzer");
+const { sortAndSummarizeContradictions } = require("../story-analysis/contradiction-sorter");
+const { analyzePackages } = require("./contradiction-detector");
 
 const root = path.resolve(__dirname, "..");
 const taxonomyPath = path.resolve(root, "reports", "taxonomy-packages.json");

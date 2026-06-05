@@ -6,10 +6,10 @@
 
 const path = require("path");
 const fs = require("fs");
-const { findWork } = require("../src/worker-bee/scan");
-const { runFileSwarm } = require("../src/worker-bee/run-file-swarm");
-const { buildPacket, describePacket } = require("../src/worker-bee/packet");
-const { newRunId, initRun, writePart, finalizeRun } = require("../src/worker-bee/ledger");
+const { findWork } = require("../worker-bee/scan");
+const { runFileSwarm } = require("../worker-bee/run-file-swarm");
+const { buildPacket, describePacket } = require("../worker-bee/packet");
+const { newRunId, initRun, writePart, finalizeRun } = require("../worker-bee/ledger");
 
 // warehouse:method
 // responsibility: Orchestrates complete swarm execution workflow: scanning for work, distributing packets to bees, tracking progress via ledger, managing retries until convergence, and reporting results

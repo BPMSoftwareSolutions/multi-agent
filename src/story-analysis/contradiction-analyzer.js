@@ -4,7 +4,7 @@
 // role: validator
 // source_truth: implementation
 
-const { analyzePackages, detectContradictions } = require("../src/packages/contradiction-detector");
+const { analyzePackages, detectContradictions } = require("../packages/contradiction-detector");
 
 // warehouse:method
 // responsibility: Coordinates analyzePackagesForContradictions behavior with documented file and method taxonomy evidence

@@ -6,9 +6,9 @@
 
 const fs = require("fs");
 const path = require("path");
-const { readProgress, getRunMetadata } = require("../src/progress/log-parser");
-const { validateData } = require("../src/progress/data-validator");
-const { formatMarkdownReport } = require("../src/reports/progress-report-formatter");
+const { readProgress, getRunMetadata } = require("./log-parser");
+const { validateData } = require("./data-validator");
+const { formatMarkdownReport } = require("../reports/progress-report-formatter");
 
 const logFile = path.resolve(__dirname, "..", ".worker-bee.log");
 const reportFile = path.resolve(__dirname, "..", "reports", "CURRENT-RUN.md");

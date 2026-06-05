@@ -6,8 +6,8 @@
 
 const path = require("path");
 const { parseArgs } = require("../src/reports/runs-loader");
-const { loadWorkerBeeConfig } = require("./worker-bee-config-loader");
-const { routeReportRequest } = require("./run-report-router");
+const { loadWorkerBeeConfig } = require("../src/worker-bee/worker-bee-config-loader");
+const { routeReportRequest } = require("../src/reports/run-report-router");
 
 const root = path.resolve(__dirname, "..");
 const reportsDir = path.join(root, "reports");
