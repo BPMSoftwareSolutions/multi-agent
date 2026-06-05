@@ -75,10 +75,14 @@ The lean governance loop is:
 taxonomy scan
   -> story/value trace
   -> value score
+  -> value score confidence
   -> maintenance-cost signal
+  -> low-value vs low-visibility classification
   -> quarantine/demotion candidates
+  -> retirement evidence when removal is proposed
   -> review packet
   -> approved action
+  -> lean delta
   -> scan again
 ```
 
@@ -106,14 +110,102 @@ Suggested disposition taxonomy:
 
 The goal is a high-value codebase, not a large coherent one. A file can be well-anchored and still not be worth keeping.
 
+Lean is not fewer files. Lean is fewer unjustified files, removed with evidence and without losing value.
+
 Lean gates should appear in taxonomy projections and worker packets:
 
 - `value_score`
+- `value_score_confidence`
+- `confidence_reason`
 - `maintenance_cost`
 - `runtime_use`
+- `runtime_use_confidence`
 - `canonical_overlap`
+- `value_visibility_finding`
 - `recommended_disposition`
+- `quarantine_mode`
+- `retirement_evidence_status`
+- `safe_to_remove`
+- `lean_delta_impact`
 - `review_required_reason`
+
+Value scores must carry confidence because incomplete usage detection can make valuable code look disposable.
+
+Confidence levels:
+
+| Confidence | Meaning |
+| --- | --- |
+| `high` | Usage, value trace, and references were scanned and agree. |
+| `medium` | Core evidence exists, but at least one reference surface is incomplete. |
+| `low` | Evidence is partial or indirect; route to review before demotion. |
+| `unknown` | The system cannot score safely; route to review. |
+
+Low-confidence scores must not trigger demotion, quarantine escalation, or removal without review.
+
+Separate low value from low visibility:
+
+| Finding | Meaning | Default Action |
+| --- | --- | --- |
+| `low_value` | Evidence shows the file does not contribute enough value for its cost. | Candidate for quarantine or demotion. |
+| `low_visibility` | Scanner cannot prove contribution even though value may exist. | Review and improve evidence before disposition. |
+| `unknown_runtime_use` | Runtime usage was not proven. | Do not remove; gather retirement evidence. |
+| `external_surface_possible` | The file could be used by package exports, CLI users, generated workflows, docs, or dynamic imports. | Treat as protected until disproven. |
+
+Quarantine modes must be explicit:
+
+| Quarantine Mode | Meaning |
+| --- | --- |
+| `observe_only` | Do not mutate; monitor usage and value evidence. |
+| `no_new_dependencies` | Existing callers may remain, but new callers are blocked. |
+| `redirect_to_canonical` | New or changed calls should move to the canonical surface. |
+| `test_fixture_only` | Only tests may depend on the file. |
+| `archive_candidate` | Candidate for removal after retirement evidence passes. |
+| `blocked_runtime_use` | Runtime code must not use the file. |
+
+Retirement evidence is required before removal. Default `safe_to_remove` must be `false`.
+
+```json
+{
+  "retirement_evidence": {
+    "caller_scan": "pending",
+    "export_scan": "pending",
+    "script_reference_scan": "pending",
+    "test_reference_scan": "pending",
+    "doc_reference_scan": "pending",
+    "runtime_use_scan": "pending",
+    "generated_projection_scan": "pending",
+    "safe_to_remove": false
+  }
+}
+```
+
+Before a removal candidate can become an approved removal, the system must prove:
+
+- no callers
+- no exports
+- no package entrypoint
+- no tests depend on it
+- no README/docs reference it
+- no workflow/script invokes it
+- no generated projection expects it
+- no runtime or external surface still needs it
+
+Every release should also include a lean delta:
+
+```json
+{
+  "lean_delta": {
+    "files_added": 3,
+    "files_removed": 1,
+    "value_added": 85,
+    "maintenance_cost_added": 22,
+    "maintenance_cost_removed": 10,
+    "value_density_delta": 14
+  }
+}
+```
+
+This turns lean into a continuous delivery metric, not a cleanup report.
 
 Worker bees can help at scale by scanning many files for value signals, usage signals, anchor quality, and overlap candidates. They should emit packets of candidates; humans or governance agents approve quarantine, demotion, consolidation, or removal.
 
@@ -167,6 +259,21 @@ Suggested schema:
       "runtime_necessity": "0-15",
       "maintenance_cost_inverse": "0-15"
     },
+    "confidence_levels": ["high", "medium", "low", "unknown"],
+    "value_visibility_findings": [
+      "low_value",
+      "low_visibility",
+      "unknown_runtime_use",
+      "external_surface_possible"
+    ],
+    "quarantine_modes": [
+      "observe_only",
+      "no_new_dependencies",
+      "redirect_to_canonical",
+      "test_fixture_only",
+      "archive_candidate",
+      "blocked_runtime_use"
+    ],
     "dispositions": [
       "keep_high_value",
       "keep_watchlist",
@@ -174,7 +281,10 @@ Suggested schema:
       "demotion_candidate",
       "consolidation_candidate",
       "removal_candidate"
-    ]
+    ],
+    "retirement_evidence_required_before_removal": true,
+    "safe_to_remove_default": false,
+    "lean_delta_required_per_release": true
   },
   "gate_semantics": [
     {
@@ -400,6 +510,9 @@ Suggested outputs:
 reports/loc-delivery-taxonomy/latest/value-ledger.json
 reports/loc-delivery-taxonomy/latest/quarantine-candidates.json
 reports/loc-delivery-taxonomy/latest/demotion-candidates.json
+reports/loc-delivery-taxonomy/latest/retirement-evidence.json
+reports/loc-delivery-taxonomy/latest/quarantine-plan.json
+reports/loc-delivery-taxonomy/latest/lean-delta.json
 reports/LOC-DELIVERY-LEAN-VALUE.md
 ```
 
@@ -409,10 +522,18 @@ The value ledger should include:
 - boundary id
 - story/value links
 - value score
+- value score confidence
+- confidence reason
 - maintenance-cost signal
 - runtime-use signal
+- runtime-use confidence
 - canonical-overlap signal
+- value visibility finding
 - recommended disposition
+- quarantine mode
+- retirement evidence status
+- safe to remove
+- lean delta impact
 - review reason
 
 Worker-bee packets should be used if this spans many files.
@@ -421,6 +542,10 @@ Exit gate:
 
 - Low-value or high-cost files are visible before further investment.
 - Quarantine/demotion candidates are reviewable as data.
+- Low-value and low-visibility findings are separated.
+- Low-confidence value scores route to review.
+- Retirement evidence exists before any removal is approved.
+- Lean delta is visible for each release.
 - No file is removed or demoted without an approved packet and verification pass.
 
 ### Phase 3: Anchor The Planned Implementation
@@ -525,6 +650,7 @@ value
   -> gate decision
   -> learning
   -> lean value disposition
+  -> retirement evidence when removal is proposed
 ```
 
 That is the North Star. Code comes after that chain is visible.

@@ -3,11 +3,16 @@ const fs = require("fs");
 const path = require("path");
 const { loadDeliveryManifest } = require("../src/delivery/manifest-loader");
 const { validateDeliveryManifest } = require("../src/delivery/manifest-validator");
+const { extractFromFile } = require("../src/taxonomy/extractor");
 
 function loadFixture(name) {
   return loadDeliveryManifest(path.join("tests", "fixtures", "delivery", name), {
     baseDir: path.resolve(__dirname, ".."),
   });
+}
+
+function deepClone(value) {
+  return JSON.parse(JSON.stringify(value));
 }
 
 function expectInvalid(manifest, messagePart) {
@@ -25,6 +30,14 @@ function assertSchemaParity() {
   const schema = readJson("contracts/loc-delivery-manifest.schema.json");
   const releaseGateSchema = schema.properties?.release_gates?.properties || {};
   const policy = taxonomy.gate_semantics?.per_gate_policy || [];
+  const taxonomyGateNames = policy.map((gatePolicy) => gatePolicy.gate);
+  const schemaGateNames = Object.keys(releaseGateSchema).filter((gate) => gate !== "waivers");
+  assert.deepStrictEqual(
+    schemaGateNames.sort(),
+    taxonomyGateNames.slice().sort(),
+    "schema release gate properties should match taxonomy gate list"
+  );
+
   for (const gatePolicy of policy) {
     const schemaEnum = releaseGateSchema[gatePolicy.gate]?.enum || [];
     assert.deepStrictEqual(
@@ -33,8 +46,42 @@ function assertSchemaParity() {
       `schema enum drift for gate ${gatePolicy.gate}`
     );
   }
+
+  const schemaRequired = schema.properties?.release_gates?.required || [];
+  for (const gateName of [...taxonomyGateNames, "waivers"]) {
+    assert(
+      schemaRequired.includes(gateName),
+      `schema.release_gates.required should include ${gateName}`
+    );
+  }
+
   const waiverEnum = releaseGateSchema.waivers?.items?.properties?.gate?.enum || [];
-  assert.deepStrictEqual(waiverEnum, ["acceptance"], "schema waiver gate enum should be acceptance-only");
+  const waiverCapableGates = policy
+    .filter((gatePolicy) => (gatePolicy.allowed_states || []).includes("waived"))
+    .map((gatePolicy) => gatePolicy.gate);
+  assert.deepStrictEqual(
+    waiverEnum.slice().sort(),
+    waiverCapableGates.slice().sort(),
+    "schema waiver gate enum should match taxonomy waiver-capable gates"
+  );
+}
+
+function assertManifestLoaderTaxonomy() {
+  const rootDir = path.resolve(__dirname, "..");
+  const taxonomy = extractFromFile(path.join(rootDir, "src", "delivery", "manifest-loader.js"), rootDir);
+  assert(taxonomy, "manifest loader should expose scanner-readable taxonomy");
+  assert.strictEqual(taxonomy.file.responsibility, "load delivery manifest artifacts deterministically without mutating source truth");
+  assert.strictEqual(taxonomy.file.actor, "delivery_orchestrator");
+  assert.strictEqual(taxonomy.file.role, "loader");
+  assert.strictEqual(taxonomy.file.source_truth, "taxonomy/loc-delivery-chain.json");
+  const methods = new Map(taxonomy.methods.map((method) => [method.name, method.taxonomy]));
+  assert(methods.has("isObject"), "manifest loader should anchor isObject");
+  assert(methods.has("loadDeliveryManifest"), "manifest loader should anchor loadDeliveryManifest");
+  assert.strictEqual(
+    methods.get("loadDeliveryManifest").responsibility,
+    "resolve a manifest path deterministically and return the parsed manifest object without mutating inputs"
+  );
+  assert.strictEqual(taxonomy.documentedMethods, taxonomy.totalMethods, "manifest loader should document all detected methods");
 }
 
 const valid = loadFixture("honest-coherence.manifest.json");
@@ -42,6 +89,23 @@ valid.release_gates.waivers = [];
 const validResult = validateDeliveryManifest(valid);
 assert.strictEqual(validResult.valid, true, validResult.errors.join("; "));
 assertSchemaParity();
+assertManifestLoaderTaxonomy();
+
+const fixturePath = path.join("tests", "fixtures", "delivery", "honest-coherence.manifest.json");
+const firstLoad = loadDeliveryManifest(fixturePath, {
+  baseDir: path.resolve(__dirname, ".."),
+});
+const secondLoad = loadDeliveryManifest(fixturePath, {
+  baseDir: path.resolve(__dirname, ".."),
+});
+assert.deepStrictEqual(firstLoad, secondLoad, "loading the same manifest twice should be deterministic");
+const snapshot = deepClone(firstLoad);
+firstLoad.intent.need = "mutated in test only";
+assert.notDeepStrictEqual(firstLoad, snapshot, "test should be able to mutate the returned object copy");
+const thirdLoad = loadDeliveryManifest(fixturePath, {
+  baseDir: path.resolve(__dirname, ".."),
+});
+assert.deepStrictEqual(thirdLoad, snapshot, "reloading should return an unmutated manifest from source");
 
 const missingStory = loadFixture("invalid-missing-story.manifest.json");
 expectInvalid(missingStory, "intent.story_id is required");
