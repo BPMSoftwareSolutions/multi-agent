@@ -108,7 +108,7 @@
             "type": "object",
             "required": ["gate", "authority", "reason", "expiration", "follow_up"],
             "properties": {
-              "gate": { "type": "string", "minLength": 1 },
+              "gate": { "type": "string", "enum": ["acceptance"] },
               "authority": { "type": "string", "minLength": 1 },
               "reason": { "type": "string", "minLength": 1 },
               "expiration": { "type": "string", "minLength": 1 },

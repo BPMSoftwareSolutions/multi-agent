@@ -46,6 +46,7 @@ The LOC delivery system should answer, deterministically:
 7. Which evidence artifacts prove the acceptance scenarios?
 8. Which governance gates are blocking, waived, or review-only?
 9. Which learning record prevents future regression?
+10. Which files provide enough value to keep, and which should be quarantined, demoted, consolidated, or removed?
 
 If the taxonomy cannot answer those questions from data, implementation should not proceed.
 
@@ -60,6 +61,61 @@ That means:
 - No release gate state without a declared semantic meaning first.
 - No readiness status without deterministic derivation from data.
 - No code acceptance without file and method anchors tied to the story/value chain.
+- No long-term maintenance commitment without an explicit value score.
+
+## Lean Value Governance
+
+The delivery taxonomy should not only prove that code is coherent. It should help the codebase stay lean.
+
+Every maintained boundary should earn its cost by showing real value. Files that do not show clear value should become candidates for quarantine, demotion, consolidation, or removal. This is part of the continuous delivery pipeline, not a one-time cleanup.
+
+The lean governance loop is:
+
+```text
+taxonomy scan
+  -> story/value trace
+  -> value score
+  -> maintenance-cost signal
+  -> quarantine/demotion candidates
+  -> review packet
+  -> approved action
+  -> scan again
+```
+
+Suggested value scoring dimensions:
+
+| Dimension | Question | Signal |
+| --- | --- | --- |
+| User value trace | Does the file connect to a story, actor, acceptance scenario, or operator value? | Missing links lower value. |
+| Boundary clarity | Does the file have one clear responsibility? | Split, merge, or demote unclear boundaries. |
+| Evidence contribution | Does the file produce, validate, or protect evidence? | Evidence-producing files rank higher. |
+| Runtime necessity | Is the file actually used by a CLI, package export, route, test, or workflow? | Unused files become quarantine candidates. |
+| Maintenance cost | Does the file add complexity, duplication, or broad blast radius? | High cost requires high value. |
+| Replacement pressure | Is there a canonical surface that already does this job? | Duplicates become demotion/consolidation candidates. |
+
+Suggested disposition taxonomy:
+
+| Disposition | Meaning | Action |
+| --- | --- | --- |
+| `keep_high_value` | Clear story/value trace and low or justified maintenance cost. | Keep and protect with tests. |
+| `keep_watchlist` | Useful but has unclear boundary, weak evidence, or cost concerns. | Keep temporarily; require follow-up. |
+| `quarantine_candidate` | Low value trace or uncertain usage. | Move behind review; no new dependencies. |
+| `demotion_candidate` | Useful only as compatibility, fixture, legacy adapter, or generated artifact. | Demote from canonical surface. |
+| `consolidation_candidate` | Responsibility overlaps a stronger canonical boundary. | Merge or redirect into canonical owner. |
+| `removal_candidate` | No current value, no runtime use, no evidence contribution. | Remove after verification. |
+
+The goal is a high-value codebase, not a large coherent one. A file can be well-anchored and still not be worth keeping.
+
+Lean gates should appear in taxonomy projections and worker packets:
+
+- `value_score`
+- `maintenance_cost`
+- `runtime_use`
+- `canonical_overlap`
+- `recommended_disposition`
+- `review_required_reason`
+
+Worker bees can help at scale by scanning many files for value signals, usage signals, anchor quality, and overlap candidates. They should emit packets of candidates; humans or governance agents approve quarantine, demotion, consolidation, or removal.
 
 ## Canonical Data Model First
 
@@ -102,6 +158,24 @@ Suggested schema:
       "allowed_methods": []
     }
   ],
+  "lean_value_governance": {
+    "enabled": true,
+    "scoring": {
+      "user_value_trace": "0-30",
+      "boundary_clarity": "0-20",
+      "evidence_contribution": "0-20",
+      "runtime_necessity": "0-15",
+      "maintenance_cost_inverse": "0-15"
+    },
+    "dispositions": [
+      "keep_high_value",
+      "keep_watchlist",
+      "quarantine_candidate",
+      "demotion_candidate",
+      "consolidation_candidate",
+      "removal_candidate"
+    ]
+  },
   "gate_semantics": [
     {
       "gate": "acceptance",
@@ -190,12 +264,15 @@ Use worker bees for:
 - scan-and-classify passes across many files
 - repetitive taxonomy normalization
 - generating before/after packet evidence
+- value scoring across many files
+- quarantine, demotion, consolidation, and removal candidate discovery
 
 Do not use worker bees for:
 
 - inventing the canonical delivery taxonomy
 - deciding gate semantics
 - approving waivers
+- approving quarantine or removal
 - making architecture decisions without a packet
 - broad implementation refactors before the taxonomy declares boundaries
 
@@ -313,6 +390,39 @@ Exit gate:
 - Worker output can be reviewed from ledger evidence.
 - No large taxonomy sweep depends on chat memory.
 
+### Phase 2C: Score Lean Value And Candidate Dispositions
+
+Before implementation resumes at scale, produce a value-disposition view from taxonomy and scan evidence.
+
+Suggested outputs:
+
+```text
+reports/loc-delivery-taxonomy/latest/value-ledger.json
+reports/loc-delivery-taxonomy/latest/quarantine-candidates.json
+reports/loc-delivery-taxonomy/latest/demotion-candidates.json
+reports/LOC-DELIVERY-LEAN-VALUE.md
+```
+
+The value ledger should include:
+
+- file path
+- boundary id
+- story/value links
+- value score
+- maintenance-cost signal
+- runtime-use signal
+- canonical-overlap signal
+- recommended disposition
+- review reason
+
+Worker-bee packets should be used if this spans many files.
+
+Exit gate:
+
+- Low-value or high-cost files are visible before further investment.
+- Quarantine/demotion candidates are reviewable as data.
+- No file is removed or demoted without an approved packet and verification pass.
+
 ### Phase 3: Anchor The Planned Implementation
 
 Before changing code, create an implementation anchor plan:
@@ -398,6 +508,7 @@ Implementation may resume only when all are true:
 - Every planned method has a method anchor or is explicitly not needed.
 - Acceptance scenarios link to evidence contracts.
 - The agent packet can be consumed without chat context.
+- Lean value scoring exists for the boundary being implemented, or the boundary is explicitly marked as required infrastructure.
 
 ## Definition Of Done
 
@@ -413,6 +524,7 @@ value
   -> evidence
   -> gate decision
   -> learning
+  -> lean value disposition
 ```
 
 That is the North Star. Code comes after that chain is visible.

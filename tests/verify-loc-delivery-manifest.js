@@ -1,4 +1,5 @@
 const assert = require("assert");
+const fs = require("fs");
 const path = require("path");
 const { loadDeliveryManifest } = require("../src/delivery/manifest-loader");
 const { validateDeliveryManifest } = require("../src/delivery/manifest-validator");
@@ -15,10 +16,32 @@ function expectInvalid(manifest, messagePart) {
   assert(result.errors.some((error) => error.includes(messagePart)), `expected error containing: ${messagePart}\nActual: ${result.errors.join("\n")}`);
 }
 
+function readJson(relativePath) {
+  return JSON.parse(fs.readFileSync(path.join(__dirname, "..", relativePath), "utf8"));
+}
+
+function assertSchemaParity() {
+  const taxonomy = readJson("taxonomy/loc-delivery-chain.json");
+  const schema = readJson("contracts/loc-delivery-manifest.schema.json");
+  const releaseGateSchema = schema.properties?.release_gates?.properties || {};
+  const policy = taxonomy.gate_semantics?.per_gate_policy || [];
+  for (const gatePolicy of policy) {
+    const schemaEnum = releaseGateSchema[gatePolicy.gate]?.enum || [];
+    assert.deepStrictEqual(
+      schemaEnum,
+      gatePolicy.allowed_states,
+      `schema enum drift for gate ${gatePolicy.gate}`
+    );
+  }
+  const waiverEnum = releaseGateSchema.waivers?.items?.properties?.gate?.enum || [];
+  assert.deepStrictEqual(waiverEnum, ["acceptance"], "schema waiver gate enum should be acceptance-only");
+}
+
 const valid = loadFixture("honest-coherence.manifest.json");
 valid.release_gates.waivers = [];
 const validResult = validateDeliveryManifest(valid);
 assert.strictEqual(validResult.valid, true, validResult.errors.join("; "));
+assertSchemaParity();
 
 const missingStory = loadFixture("invalid-missing-story.manifest.json");
 expectInvalid(missingStory, "intent.story_id is required");
