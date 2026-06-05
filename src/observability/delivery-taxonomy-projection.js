@@ -142,6 +142,7 @@ function buildAgentPacket(chain, coverage) {
       acceptance_links: b.acceptance_links,
     })),
     gate_states: (chain.gate_semantics || {}).decision_states,
+    lean_value_governance: chain.lean_value_governance,
     coverage,
     next_actions: nextActions,
   };

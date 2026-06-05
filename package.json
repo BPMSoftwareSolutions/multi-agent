@@ -40,6 +40,8 @@
     "test:delivery-taxonomy": "node tests/verify-delivery-taxonomy-projection.js",
     "delivery:lean": "node cli/delivery-lean.js",
     "test:delivery-lean": "node tests/verify-delivery-lean-value.js",
+    "retirement:preflight": "node cli/retirement-preflight.js",
+    "test:retirement-preflight": "node tests/verify-retirement-preflight.js",
     "taxonomy:readme": "node cli/taxonomy-readme.js",
     "test:readme-projection": "node tests/verify-readme-projection.js",
     "test:story-coherence-package": "node tests/verify-story-coherence-package.js",

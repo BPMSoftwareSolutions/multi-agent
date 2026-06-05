@@ -645,6 +645,36 @@
       "allowed_outputs": ["test_pass_fail"]
     },
     {
+      "boundary_id": "retirement_preflight_engine",
+      "canonical_path": "src/observability/retirement-preflight.js",
+      "actor": "delivery_orchestrator",
+      "role": "retirement_guard",
+      "responsibility": "validate retirement candidates against active references and retirement evidence before any move or delete",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["preflight_report"]
+    },
+    {
+      "boundary_id": "retirement_preflight_cli",
+      "canonical_path": "cli/retirement-preflight.js",
+      "actor": "delivery_cli_operator",
+      "role": "entrypoint",
+      "responsibility": "run deterministic retirement preflight checks without moving or deleting candidate files",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["exit_code", "stdout_json"]
+    },
+    {
+      "boundary_id": "retirement_preflight_tests",
+      "canonical_path": "tests/verify-retirement-preflight.js",
+      "actor": "delivery_test_author",
+      "role": "verifier",
+      "responsibility": "prove retirement preflight blocks active references and only passes with complete retirement evidence",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "allowed_outputs": ["test_pass_fail"]
+    },
+    {
       "boundary_id": "delivery_taxonomy_projection",
       "canonical_path": "reports/loc-delivery-taxonomy/latest/taxonomy.json",
       "actor": "documentation_projection_agent",
@@ -937,6 +967,123 @@
       ],
       "file_anchor": {
         "responsibility": "model a manifest missing executable acceptance and prove it fails validation",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "src/observability/delivery-taxonomy-projection.js",
+      "boundary_id": "delivery_taxonomy_projection_engine",
+      "actor": "delivery_report_renderer",
+      "role": "renderer",
+      "responsibility": "build deterministic read-only delivery taxonomy projections from the canonical chain without wall-clock input",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "build deterministic read-only delivery taxonomy projections from the canonical chain without wall-clock input",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "cli/delivery-taxonomy.js",
+      "boundary_id": "delivery_taxonomy_cli",
+      "actor": "delivery_cli_operator",
+      "role": "entrypoint",
+      "responsibility": "generate or verify the deterministic delivery taxonomy projection without adding policy",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "generate or verify the deterministic delivery taxonomy projection without adding policy",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "tests/verify-delivery-taxonomy-projection.js",
+      "boundary_id": "delivery_taxonomy_projection_tests",
+      "actor": "delivery_test_author",
+      "role": "verifier",
+      "responsibility": "prove the delivery taxonomy projection is deterministic, read-only, and explains every delivery file",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "prove the delivery taxonomy projection is deterministic, read-only, and explains every delivery file",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "src/observability/delivery-lean-value.js",
+      "boundary_id": "delivery_lean_value_engine",
+      "actor": "delivery_report_renderer",
+      "role": "renderer",
+      "responsibility": "score delivery boundaries for lean value deterministically and derive disposition and retirement candidate views",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "score delivery boundaries for lean value deterministically and derive disposition and retirement candidate views",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "cli/delivery-lean.js",
+      "boundary_id": "delivery_lean_cli",
+      "actor": "delivery_cli_operator",
+      "role": "entrypoint",
+      "responsibility": "generate the deterministic delivery lean-value ledger without acting on dispositions",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "generate the deterministic delivery lean-value ledger without acting on dispositions",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "tests/verify-delivery-lean-value.js",
+      "boundary_id": "delivery_lean_value_tests",
+      "actor": "delivery_test_author",
+      "role": "verifier",
+      "responsibility": "prove lean-value scoring is deterministic and never marks a file safe to remove without retirement evidence",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "prove lean-value scoring is deterministic and never marks a file safe to remove without retirement evidence",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "src/observability/retirement-preflight.js",
+      "boundary_id": "retirement_preflight_engine",
+      "actor": "delivery_orchestrator",
+      "role": "retirement_guard",
+      "responsibility": "validate retirement candidates against active references and retirement evidence before any move or delete",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "validate retirement candidates against active references and retirement evidence before any move or delete",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "cli/retirement-preflight.js",
+      "boundary_id": "retirement_preflight_cli",
+      "actor": "delivery_cli_operator",
+      "role": "entrypoint",
+      "responsibility": "run deterministic retirement preflight checks without moving or deleting candidate files",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "run deterministic retirement preflight checks without moving or deleting candidate files",
+        "source_truth": "taxonomy/loc-delivery-chain.json"
+      }
+    },
+    {
+      "path": "tests/verify-retirement-preflight.js",
+      "boundary_id": "retirement_preflight_tests",
+      "actor": "delivery_test_author",
+      "role": "verifier",
+      "responsibility": "prove retirement preflight blocks active references and only passes with complete retirement evidence",
+      "story_links": ["STORY-HONEST-COHERENCE-001"],
+      "acceptance_links": ["SCN-HC-003"],
+      "file_anchor": {
+        "responsibility": "prove retirement preflight blocks active references and only passes with complete retirement evidence",
         "source_truth": "taxonomy/loc-delivery-chain.json"
       }
     },

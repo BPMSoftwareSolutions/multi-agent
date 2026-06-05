@@ -24,6 +24,7 @@ function verifyDeterministic() {
   assert.strictEqual(a.markdown, b.markdown, "markdown must be deterministic");
   assert.strictEqual(a.projection.schema, "loc-delivery-taxonomy-projection.v1");
   assert.strictEqual(a.agentPacket.schema, "loc-delivery-taxonomy-agent-packet.v1");
+  assert.ok(a.agentPacket.lean_value_governance, "agent packet must carry lean governance");
 }
 
 // warehouse:method
@@ -40,6 +41,28 @@ function verifyCoverage() {
   assert.ok(coverage.discovered_delivery_file_count > 0, "at least one delivery file should be discovered");
 }
 
+// warehouse:method
+// responsibility: Prove every source boundary has a planned-file entry with matching taxonomy metadata
+// actor: method_implementation
+// role: implementation
+// source_truth: taxonomy/loc-delivery-chain.json
+function verifyPlannedFileParity() {
+  const chain = loadChain(root);
+  const plannedByPath = new Map((chain.planned_files || []).map((file) => [file.path, file]));
+  const sourceBoundaries = (chain.delivery_boundaries || []).filter(
+    (boundary) => !boundary.canonical_path.startsWith("reports/") && !boundary.canonical_path.endsWith("/")
+  );
+  for (const boundary of sourceBoundaries) {
+    const planned = plannedByPath.get(boundary.canonical_path);
+    assert.ok(planned, `planned_files must include ${boundary.canonical_path}`);
+    assert.strictEqual(planned.boundary_id, boundary.boundary_id, `${boundary.canonical_path} boundary_id must match`);
+    assert.strictEqual(planned.actor, boundary.actor, `${boundary.canonical_path} actor must match`);
+    assert.strictEqual(planned.role, boundary.role, `${boundary.canonical_path} role must match`);
+    assert.strictEqual(planned.responsibility, boundary.responsibility, `${boundary.canonical_path} responsibility must match`);
+  }
+}
+
 verifyDeterministic();
 verifyCoverage();
+verifyPlannedFileParity();
 console.log("Delivery taxonomy projection verification passed.");
