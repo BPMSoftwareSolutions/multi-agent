@@ -12,7 +12,7 @@ const {
   formatHealingMarkdown,
   runObservableTaxonomyHeal,
   writeHealingStatus,
-} = require("../bin/taxonomy-heal-run");
+} = require("../cli/taxonomy-heal-run");
 
 // warehouse:method
 // responsibility: Verifies observable taxonomy healing run keeps status JSON markdown mutation ledger coherence story and semantic tie out projections aligned while data driven expected remediation heals an incoherent fixture

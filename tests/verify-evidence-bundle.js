@@ -8,7 +8,7 @@
 const assert = require("assert");
 const fs = require("fs");
 const path = require("path");
-const { buildFileEvidence } = require("../bin/taxonomy-evidence-bundle");
+const { buildFileEvidence } = require("../cli/taxonomy-evidence-bundle");
 
 // warehouse:method
 // responsibility: Verifies taxonomy evidence bundle ties detected functions to extracted anchors coverage coherence and red signal failure cases for trusted scanner files
@@ -17,7 +17,7 @@ const { buildFileEvidence } = require("../bin/taxonomy-evidence-bundle");
 // source_truth: implementation
 function verifyFractalScannerEvidence() {
   const root = path.resolve(__dirname, "..");
-  const evidence = buildFileEvidence("bin/fractal-taxonomy-scanner.js", root);
+  const evidence = buildFileEvidence("cli/fractal-taxonomy-scanner.js", root);
 
   assert.strictEqual(evidence.coverage.detected_function_count, 5, "fractal scanner should expose five functions");
   assert.strictEqual(evidence.coverage.taxonomy_method_count, 5, "taxonomy should include every detected function");

@@ -415,7 +415,7 @@ function domainGuidanceForPath(targetPath) {
       guidance: "Do not add healing mutation or provider-specific AI authority inside this package.",
     };
   }
-  if (target === "bin" || target.startsWith("bin/")) {
+  if (target === "bin" || target.startsWith("bin/") || target === "cli" || target.startsWith("cli/")) {
     return {
       role: "Operator CLI entry points and command orchestration surfaces.",
       guidance: "Keep CLI wrappers thin; durable logic belongs in src or package SDK modules.",

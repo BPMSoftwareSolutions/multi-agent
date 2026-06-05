@@ -1,11 +1,11 @@
 // warehouse:file
-// responsibility: undefined — parseOptions
+// responsibility: Parses CLI command-line arguments into structured studio configuration options and flags for handler routing
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation
 
 // warehouse:method
-// responsibility: undefined — parseOptions
+// responsibility: Parses CLI command-line arguments into structured studio configuration options and flags for handler routing
 // actor: method_implementation
 // role: implementation
 // source_truth: implementation

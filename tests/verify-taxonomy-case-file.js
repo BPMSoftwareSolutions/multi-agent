@@ -12,7 +12,7 @@ const {
   buildTaxonomyCaseFile,
   collapseRepeatedResponsibility,
   removeSubsumedResponsibilities,
-} = require("../bin/taxonomy-case-file");
+} = require("../cli/taxonomy-case-file");
 
 // warehouse:method
 // responsibility: Verifies taxonomy case file workflow scans incoherent code deduplicates subsumed responsibilities and produces actual evidence diagnosis expected taxonomy and remediation artifacts

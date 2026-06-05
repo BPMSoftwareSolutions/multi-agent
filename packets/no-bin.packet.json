@@ -1,0 +1,74 @@
+{
+  "operation": "reorganize",
+  "_comment": "Remove bin/: entry points -> root-level cli/ (depth preserved = zero internal edits); studio->workshop; options-parser module -> src/cli",
+  "moves": [
+    {
+      "from": "bin/codebase-story-review-report.js",
+      "to": "cli/codebase-story-review-report.js"
+    },
+    {
+      "from": "bin/coherence-check.js",
+      "to": "cli/coherence-check.js"
+    },
+    {
+      "from": "bin/fractal-taxonomy-scanner.js",
+      "to": "cli/fractal-taxonomy-scanner.js"
+    },
+    {
+      "from": "bin/options-parser.js",
+      "to": "src/cli/options-parser.js"
+    },
+    {
+      "from": "bin/runs-report.js",
+      "to": "cli/runs-report.js"
+    },
+    {
+      "from": "bin/studio.js",
+      "to": "cli/workshop.js"
+    },
+    {
+      "from": "bin/taxonomy-case-file.js",
+      "to": "cli/taxonomy-case-file.js"
+    },
+    {
+      "from": "bin/taxonomy-coherence-scan.js",
+      "to": "cli/taxonomy-coherence-scan.js"
+    },
+    {
+      "from": "bin/taxonomy-evidence-bundle.js",
+      "to": "cli/taxonomy-evidence-bundle.js"
+    },
+    {
+      "from": "bin/taxonomy-heal-run.js",
+      "to": "cli/taxonomy-heal-run.js"
+    },
+    {
+      "from": "bin/taxonomy-heal-swarm-report.js",
+      "to": "cli/taxonomy-heal-swarm-report.js"
+    },
+    {
+      "from": "bin/taxonomy-heal.js",
+      "to": "cli/taxonomy-heal.js"
+    },
+    {
+      "from": "bin/taxonomy-readme.js",
+      "to": "cli/taxonomy-readme.js"
+    },
+    {
+      "from": "bin/taxonomy-report.js",
+      "to": "cli/taxonomy-report.js"
+    },
+    {
+      "from": "bin/taxonomy-scan.js",
+      "to": "cli/taxonomy-scan.js"
+    },
+    {
+      "from": "bin/worker-bee-reorganize.js",
+      "to": "cli/worker-bee-reorganize.js"
+    },
+    {
+      "from": "bin/worker-bee.js",
+      "to": "cli/worker-bee.js"
+    }
+  ]
+}

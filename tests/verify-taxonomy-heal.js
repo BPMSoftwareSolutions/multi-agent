@@ -8,9 +8,9 @@
 const assert = require("assert");
 const fs = require("fs");
 const path = require("path");
-const { buildTaxonomyCaseFile } = require("../bin/taxonomy-case-file");
-const { applyExpectedTaxonomy } = require("../bin/taxonomy-heal");
-const { buildFileEvidence } = require("../bin/taxonomy-evidence-bundle");
+const { buildTaxonomyCaseFile } = require("../cli/taxonomy-case-file");
+const { applyExpectedTaxonomy } = require("../cli/taxonomy-heal");
+const { buildFileEvidence } = require("../cli/taxonomy-evidence-bundle");
 
 // warehouse:method
 // responsibility: Verifies expected taxonomy JSON data drives anchor remediation worker preserves script shebang and heals incoherent fixture to accepted coherent evidence

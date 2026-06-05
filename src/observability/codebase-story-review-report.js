@@ -142,7 +142,7 @@ function formatConsole(report) {
 // role: implementation
 // source_truth: implementation
 function categoryForFile(file) {
-  if (file.startsWith("bin/")) return "CLI and command surfaces";
+  if (file.startsWith("bin/") || file.startsWith("cli/")) return "CLI and command surfaces";
   if (file.startsWith("src/core/")) return "Core runtime";
   if (file.startsWith("src/worker-bee/")) return "Worker-bee swarm";
   if (file.startsWith("src/taxonomy/") || file.includes("taxonomy")) return "Taxonomy scanning";
@@ -283,6 +283,7 @@ function isSmallFileBoundaryJustified(row) {
   const basename = path.basename(file);
   return (
     file.startsWith("bin/") ||
+    file.startsWith("cli/") ||
     file.startsWith("packages/") ||
     file.startsWith("scripts/") ||
     file.startsWith("tests/") ||
@@ -315,6 +316,7 @@ function isSmallFileBoundaryJustified(row) {
 function isKnownFilesystemBoundary(file) {
   return (
     file.startsWith("bin/") ||
+    file.startsWith("cli/") ||
     file.startsWith("packages/") ||
     file.startsWith("public/") ||
     file.startsWith("scripts/") ||
@@ -453,7 +455,7 @@ function buildCanonicalSurfaceMap(fileLedger) {
     },
     {
       surface_type: "Anchor healing",
-      canonical_surface: "bin/taxonomy-heal-run.js",
+      canonical_surface: "cli/taxonomy-heal-run.js",
       legacy_or_alternate_surfaces: anchorHealingAlternates.join(", ") || "none detected",
       relationship: "orchestration boundary distinct from direct anchor mutation utilities",
       decision: "document boundary",

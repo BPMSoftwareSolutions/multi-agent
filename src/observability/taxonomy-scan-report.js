@@ -6,7 +6,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const { buildFileEvidence } = require("../../bin/taxonomy-evidence-bundle");
+const { buildFileEvidence } = require("../../cli/taxonomy-evidence-bundle");
 const { extractFromFile } = require("../taxonomy/extractor");
 const { isValidTaxonomy } = require("../taxonomy/taxonomy-validator");
 const { renderProgressBar, renderStatusSignal } = require("./ascii-components");
