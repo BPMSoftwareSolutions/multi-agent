@@ -51,4 +51,4 @@ async function callGeminiJSON(params, maxAttempts = 5) {
   throw lastError;
 }
 
-module.exports = { callGeminiJSON };
+module.exports = { callGeminiJSON, DEFAULT_MODEL };
